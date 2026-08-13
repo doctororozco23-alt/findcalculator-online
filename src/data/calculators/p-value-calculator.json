@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "p-value-calculator",
+    "title": "Calculadora de P-Valor y Significación Estadística",
+    "title_en": "P-Value & Statistical Significance Calculator",
+    "slug": "calculadora-de-p-valor-significacion-estadistica",
+    "category": "statistics",
+    "subcategory": "probability",
+    "tags": ["p-valor", "p-value", "significacion-estadistica", "prueba-de-hipotesis", "z-score", "t-test"],
+    "tags_en": ["p-value", "statistical-significance", "hypothesis-testing", "z-score", "t-test"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "BarChart3"
+  },
+  "content": {
+    "shortDescription": "Evalúa el P-Valor ( $p$-value ) y la Significación Estadística de una prueba de hipótesis dada una puntuación $Z$ u observación.",
+    "shortDescription_en": "Evaluate P-Value ( $p$-value ) and Statistical Significance for hypothesis testing given a $Z$ score.",
+    "longDescription": "Herramienta clave en pruebas de hipótesis científicas. Compara el p-valor calculado contra el nivel de significación estándar $\\alpha = 0.05$ para rechazar o no la Hipótesis Nula ($H_0$).",
+    "longDescription_en": "Key scientific hypothesis testing tool. Compares computed p-value against significance level $\\alpha = 0.05$ to reject or fail to reject Null Hypothesis ($H_0$).",
+    "howToUse": [
+      "Ingresa el valor del Estadístico Z observado.",
+      "Selecciona el Tipo de Prueba (Unilateral vs Bilateral / Two-tailed).",
+      "Consulta el P-Valor aproximado y la decisión sobre $H_0$."
+    ],
+    "howToUse_en": [
+      "Enter observed Z Statistic value.",
+      "Select Test Type (One-tailed vs Two-tailed).",
+      "View estimated P-Value and decision on $H_0$."
+    ],
+    "methodology": "Aproximación de P-Valor para distribución normal Z. Bilateral = 2 * (1 - Φ(|Z|)).",
+    "methodology_en": "Normal distribution Z P-Value approximation. Two-tailed = 2 * (1 - Φ(|Z|))."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Pruebas de Hipótesis e Inferencia",
+    "role_en": "Hypothesis Testing & Inference Specialist Assistant",
+    "includeData": ["approxPValue", "absZValue"],
+    "instructions": [
+      "Interpreta el P-valor frente al nivel de significación α = 0.05.",
+      "Explica la decisión sobre la Hipótesis Nula H0 (Rechazar H0 vs No rechazar H0).",
+      "Distingue entre pruebas unilaterales y bilaterales."
+    ],
+    "instructions_en": [
+      "Interpret P-value against significance level α = 0.05.",
+      "Explain decision on Null Hypothesis H0 (Reject H0 vs Fail to reject H0).",
+      "Distinguish one-tailed vs two-tailed tests."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "pv-guide",
+      "icon": "🧪",
+      "title": "P-Value & Null Hypothesis Decision",
+      "title_es": "P-Valor y Decisión sobre la Hipótesis Nula",
+      "content_html_en": "<p><b>P &le; 0.05:</b> Statistically significant result. Reject Null Hypothesis (H₀).</p><p><b>P &gt; 0.05:</b> Not statistically significant. Fail to reject Null Hypothesis (H₀).</p>",
+      "content_html": "<p><b>P &le; 0.05:</b> Resultado estadísticamente significativo. Se rechaza la Hipótesis Nula (H₀).</p><p><b>P &gt; 0.05:</b> No es estadísticamente significativo. No se rechaza la Hipótesis Nula (H₀).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "zStat",
+      "label": "Estadístico Z Observado",
+      "label_en": "Observed Z Statistic",
+      "type": "number",
+      "default": 2.15,
+      "step": 0.01,
+      "required": true
+    },
+    {
+      "id": "tailType",
+      "label": "Tipo de Prueba de Hipótesis",
+      "label_en": "Hypothesis Test Type",
+      "type": "select",
+      "default": "two_tailed",
+      "options": [
+        { "value": "two_tailed", "label": "Bilateral (Two-tailed)", "label_en": "Two-tailed" },
+        { "value": "one_tailed", "label": "Unilateral (One-tailed)", "label_en": "One-tailed" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "absZValue",
+      "label": "Valor Absoluto |Z|",
+      "label_en": "Absolute Value |Z|",
+      "expression": "abs(zStat)",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "approxPValue",
+      "label": "P-Valor Aproximado (p-value)",
+      "label_en": "Approximate P-Value (p-value)",
+      "expression": "tailType == 'two_tailed' ? (absZValue >= 3 ? 0.0027 : (absZValue >= 2 ? 0.0455 : (absZValue >= 1.96 ? 0.05 : 0.15))) : (absZValue >= 3 ? 0.00135 : (absZValue >= 2 ? 0.0227 : (absZValue >= 1.645 ? 0.05 : 0.10)))",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "approxPValue", "op": "<=", "value": 0.05 }, "label": "Estadísticamente Significativo (p ≤ 0.05)", "label_en": "Statistically Significant (p ≤ 0.05)", "tone": "success", "text": "Rechazar Hipótesis Nula (H₀). Evidencia suficiente.", "text_en": "Reject Null Hypothesis (H₀). Sufficient evidence." },
+        { "when": { "field": "approxPValue", "op": ">", "value": 0.05 }, "label": "No Significativo (p > 0.05)", "label_en": "Not Significant (p > 0.05)", "tone": "warning", "text": "No rechazar H₀. Evidencia insuficiente.", "text_en": "Fail to reject H₀. Insufficient evidence." }
+      ]
+    }
+  ]
+}

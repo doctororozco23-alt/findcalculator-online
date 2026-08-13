@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "date-add-subtract-days-calculator",
+    "title": "Calculadora para Sumar o Restar Días, Semanas, Meses o Años a una Fecha",
+    "title_en": "Add or Subtract Days, Weeks, Months or Years From Date Calculator",
+    "slug": "calculadora-para-sumar-o-restar-dias-semanas-meses-anos-a-una-fecha",
+    "category": "datetime",
+    "subcategory": "dates",
+    "tags": ["sumar-dias-a-fecha", "restar-dias-a-fecha", "sumar-meses", "calculo-de-fechas", "plazos", "vencimiento", "fecha-y-tiempo"],
+    "tags_en": ["add-days-to-date", "subtract-days-from-date", "add-months", "date-calculator", "deadlines", "due-date", "date-time"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.1.0",
+    "icon": "Calendar"
+  },
+  "content": {
+    "shortDescription": "Suma o resta días, semanas, meses o años a cualquier fecha inicial para determinar la fecha exacta de vencimiento o evento.",
+    "shortDescription_en": "Add or subtract days, weeks, months, or years to any start date to find exact future or past target date.",
+    "longDescription": "Herramienta avanzada de cálculo de vencimientos legales, plazos de contratos, garantías y preavisos. Soporta unidades de días, semanas, meses y años.",
+    "longDescription_en": "Advanced legal expiration, contract period, warranty, and notice tool. Supports day, week, month, and year units.",
+    "howToUse": [
+      "Ingresa el Año, Mes y Día Inicial.",
+      "Selecciona la Operación (Sumar + o Restar -).",
+      "Selecciona la Unidad Temporal (Días, Semanas, Meses o Años).",
+      "Ingresa la Cantidad de Unidades a Operar.",
+      "Consulta la Fecha Resultante Proyectada."
+    ],
+    "howToUse_en": [
+      "Enter Initial Year, Month, and Day.",
+      "Select Operation (Add + or Subtract -).",
+      "Select Time Unit (Days, Weeks, Months, or Years).",
+      "Enter Quantity of Units to Process.",
+      "View Projected Resulting Target Date."
+    ],
+    "methodology": "Días Offset = Cantidad * MultiplicadorUnidad * SignoOperación. FechaObjetivo = FechaBase + DíasOffset.",
+    "methodology_en": "Offset Days = Quantity * UnitMultiplier * OperationSign. TargetDate = BaseDate + OffsetDays."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Proyección de Fechas y Vencimientos",
+    "role_en": "Date Projection & Due Dates Specialist Assistant",
+    "includeData": ["targetYearResult", "targetMonthResult", "targetDayResult"],
+    "instructions": [
+      "Interpreta la fecha proyectada resultante tras sumar o restar la unidad temporal solicitada.",
+      "Identifica si la fecha proyectada cae en fin de semana (sábado o domingo) y sugiere la fecha hábil siguiente.",
+      "Explica la aplicación en vencimientos bancarios y plazos de arrendamiento."
+    ],
+    "instructions_en": [
+      "Interpret resulting projected date obtained after adding/subtracting requested time unit.",
+      "Identify if projected date lands on a weekend (Saturday or Sunday) and suggest next business working day.",
+      "Explain application in banking due dates and lease contract terms."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "das-guide",
+      "icon": "📆",
+      "title": "Legal & Commercial Expiration Standards",
+      "title_es": "Estándares de Vencimientos Legales y Comerciales",
+      "content_html_en": "<p><b>30 Days / 1 Month:</b> Standard lease cancellation notice.</p><p><b>60 Days / 2 Months:</b> Standard corporate contract renewal notice.</p><p><b>1 Year / 12 Months:</b> Standard equipment warranty period.</p>",
+      "content_html": "<p><b>30 Días / 1 Mes:</b> Preaviso estándar de cancelación de alquiler.</p><p><b>60 Días / 2 Meses:</b> Preaviso estándar de renovación de contratos corporativos.</p><p><b>1 Año / 12 Meses:</b> Período de garantía estándar de equipos.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "baseStartYear",
+      "label": "Año Inicial",
+      "label_en": "Base Start Year",
+      "type": "number",
+      "default": 2026,
+      "min": 1900,
+      "max": 2100,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "baseStartMonth",
+      "label": "Mes Inicial (1-12)",
+      "label_en": "Base Start Month (1-12)",
+      "type": "number",
+      "default": 1,
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "baseStartDay",
+      "label": "Día Inicial (1-31)",
+      "label_en": "Base Start Day (1-31)",
+      "type": "number",
+      "default": 15,
+      "min": 1,
+      "max": 31,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "operationSignMultiplier",
+      "label": "Operación a Realizar",
+      "label_en": "Operation to Perform",
+      "type": "select",
+      "default": "1",
+      "options": [
+        { "value": "1", "label": "Sumar (+ Fecha Futura)", "label_en": "Add (+ Future Date)" },
+        { "value": "-1", "label": "Restar (- Fecha Pasada)", "label_en": "Subtract (- Past Date)" }
+      ]
+    },
+    {
+      "id": "timeUnitTypeFactor",
+      "label": "Unidad Temporal",
+      "label_en": "Time Unit",
+      "type": "select",
+      "default": "1",
+      "options": [
+        { "value": "1", "label": "Días", "label_en": "Days" },
+        { "value": "7", "label": "Semanas (7 días)", "label_en": "Weeks (7 days)" },
+        { "value": "30.4375", "label": "Meses (~30.4 días)", "label_en": "Months (~30.4 days)" },
+        { "value": "365.2425", "label": "Años (~365.2 días)", "label_en": "Years (~365.2 days)" }
+      ]
+    },
+    {
+      "id": "unitsOffsetQuantityInput",
+      "label": "Cantidad de Unidades a Operar",
+      "label_en": "Quantity of Units to Process",
+      "type": "number",
+      "default": 30,
+      "min": 1,
+      "max": 5000,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "projectedTotalOffsetDaysVal",
+      "label": "Desplazamiento Total en Días Equivalentes",
+      "label_en": "Total Equivalent Offset Days",
+      "expression": "unitsOffsetQuantityInput * timeUnitTypeFactor * operationSignMultiplier",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "targetYearResult",
+      "label": "Año Resultante Proyectado",
+      "label_en": "Projected Resulting Year",
+      "expression": "baseStartYear + floor((baseStartMonth - 1 + floor((baseStartDay + projectedTotalOffsetDaysVal - 1) / 30.4375)) / 12)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "targetYearResult", "op": ">=", "value": 1900 }, "label": "Proyección Calculada", "label_en": "Projection Computed", "tone": "success", "text": "Año de la fecha objetivo cuantificado.", "text_en": "Target date year quantified." }
+      ]
+    },
+    {
+      "id": "targetMonthResult",
+      "label": "Mes Resultante Proyectado (1-12)",
+      "label_en": "Projected Resulting Month (1-12)",
+      "expression": "1 + (abs(floor(baseStartMonth - 1 + floor((baseStartDay + projectedTotalOffsetDaysVal - 1) / 30.4375))) % 12)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "targetDayResult",
+      "label": "Día Resultante Proyectado (1-31)",
+      "label_en": "Projected Resulting Day (1-31)",
+      "expression": "1 + (abs(floor(baseStartDay + projectedTotalOffsetDaysVal - 1)) % 30)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

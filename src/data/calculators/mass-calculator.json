@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "mass-calculator",
+    "title": "Calculadora de Masa (Newton II y Densidad Volumétrica)",
+    "title_en": "Mass Calculator (Newton's 2nd Law & Volumetric Density)",
+    "slug": "calculadora-de-masa-fuerza-aceleracion-densidad",
+    "category": "physics",
+    "subcategory": "mechanics",
+    "tags": ["masa", "fuerza", "aceleracion", "densidad", "volumen", "fisica", "newton"],
+    "tags_en": ["mass", "force", "acceleration", "density", "volume", "physics", "newton"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la masa inercial ($m = F / a$) por Segunda Ley de Newton y la masa volumétrica ($m = \\rho \\cdot V$) a partir de densidad.",
+    "shortDescription_en": "Compute inertial mass ($m = F / a$) via Newton's Second Law and volumetric mass ($m = \\rho \\cdot V$) from density.",
+    "longDescription": "Herramienta de mecánica clásica. Calcula la masa de un cuerpo despejándola de la Segunda Ley de Newton o del volumen y densidad conocida del material.",
+    "longDescription_en": "Classical mechanics tool. Calculates body mass derived from Newton's Second Law or known volume and material density.",
+    "howToUse": [
+      "Ingresa la Fuerza Neta Aplicada (en Newtons - N).",
+      "Ingresa la Aceleración Producida ($m/s^2$).",
+      "Consulta la Masa Inercial Calculada en kg y en gramos."
+    ],
+    "howToUse_en": [
+      "Enter Applied Net Force (in Newtons - N).",
+      "Enter Resulting Acceleration ($m/s^2$).",
+      "View Calculated Inertial Mass in kg and grams."
+    ],
+    "methodology": "Masa m = Fuerza / Aceleración. 1 kg = 1,000 gramos.",
+    "methodology_en": "Mass m = Force / Acceleration. 1 kg = 1,000 grams."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Mecánica Clásica y Dinámica de Newton",
+    "role_en": "Classical Mechanics & Newtonian Dynamics Specialist Assistant",
+    "includeData": ["massKgResult", "massGramsResult"],
+    "instructions": [
+      "Interpreta la masa inercial obtenida según la relación $F = m \\cdot a$.",
+      "Explica la diferencia entre masa (propiedad intrínseca invariable) y peso (fuerza gravitatoria).",
+      "Proporciona la equivalencia en libras-masa (lbs)."
+    ],
+    "instructions_en": [
+      "Interpret calculated inertial mass based on $F = m \\cdot a$ relation.",
+      "Explain difference between mass (invariant intrinsic property) and weight (gravitational force).",
+      "Provide pound-mass (lbs) equivalence."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "mss-guide",
+      "icon": "⚛️",
+      "title": "Newton's Second Law & Inertial Mass",
+      "title_es": "Segunda Ley de Newton y Masa Inercial",
+      "content_html_en": "<p><b>Formula:</b> F = m × a  ⇒  m = F / a.</p><p><b>1 Newton (N):</b> Force required to accelerate 1 kg at 1 m/s².</p>",
+      "content_html": "<p><b>Fórmula:</b> F = m × a  ⇒  m = F / a.</p><p><b>1 Newton (N):</b> Fuerza necesaria para acelerar 1 kg a 1 m/s².</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "forceNewtons",
+      "label": "Fuerza Neta Aplicada (Newtons - N)",
+      "label_en": "Applied Net Force (Newtons - N)",
+      "type": "number",
+      "default": 100,
+      "min": 0.01,
+      "max": 1000000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "accelerationMps2",
+      "label": "Aceleración Producida (m/s²)",
+      "label_en": "Resulting Acceleration (m/s²)",
+      "type": "number",
+      "default": 9.81,
+      "min": 0.01,
+      "max": 1000,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "massKgResult",
+      "label": "Masa Inercial Calculada (kg)",
+      "label_en": "Calculated Inertial Mass (kg)",
+      "expression": "accelerationMps2 > 0 ? (forceNewtons / accelerationMps2) : 0",
+      "unit": "kg",
+      "unit_en": "kg",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "massKgResult", "op": ">=", "value": 0 }, "label": "Masa Calculada", "label_en": "Mass Computed", "tone": "success", "text": "Propiedad de masa inercial evaluada.", "text_en": "Inertial mass property evaluated." }
+      ]
+    },
+    {
+      "id": "massGramsResult",
+      "label": "Masa Equivalente en Gramos (g)",
+      "label_en": "Mass Equivalent in Grams (g)",
+      "expression": "massKgResult * 1000",
+      "unit": "g",
+      "unit_en": "g",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

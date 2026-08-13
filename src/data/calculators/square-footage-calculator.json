@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "square-footage-calculator",
+    "title": "Calculadora de Pies Cuadrados / Metros Cuadrados y Costo de Superficie",
+    "title_en": "Square Footage / Square Meters & Area Cost Calculator",
+    "slug": "calculadora-de-pies-cuadrados-metros-cuadrados-costo",
+    "category": "construction",
+    "subcategory": "remodeling",
+    "tags": ["pies-cuadrados", "metros-cuadrados", "area", "superficie", "costo-por-pie-cuadrado", "bienes-raices", "habitacion"],
+    "tags_en": ["square-footage", "square-meters", "area", "surface", "cost-per-sqft", "real-estate", "room"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el área en pies cuadrados ($ft^2$) o metros cuadrados ($m^2$) de cualquier habitación o terreno y estima el costo total del proyecto.",
+    "shortDescription_en": "Calculate area in square feet ($ft^2$) or square meters ($m^2$) for any room or lot and estimate total project cost.",
+    "longDescription": "Herramienta de arquitectura, diseño de interiores y bienes raíces. Determina la superficie plana total a partir del largo y ancho de una habitación, calculando el presupuesto de materiales o precio por unidad de área.",
+    "longDescription_en": "Architecture, interior design, and real estate tool. Computes flat surface area from length and width, estimating material budget or price per unit area.",
+    "howToUse": [
+      "Ingresa el Largo de la habitación / espacio (en pies).",
+      "Ingresa el Ancho de la habitación / espacio (en pies).",
+      "Ingresa el Costo Estimado por Pie Cuadrado ($ USD/ft²).",
+      "Consulta el Área Total en $ft^2$, equivalente en $m^2$ y el Costo Total Estimado."
+    ],
+    "howToUse_en": [
+      "Enter Length of room / space (in feet).",
+      "Enter Width of room / space (in feet).",
+      "Enter Estimated Cost per Square Foot ($ USD/ft²).",
+      "View Total Area in $ft^2$, $m^2$ equivalent, and Total Estimated Cost."
+    ],
+    "methodology": "Área (ft²) = Largo(ft) * Ancho(ft). Área (m²) = Área(ft²) * 0.092903. Costo Total = Área(ft²) * Costo/ft².",
+    "methodology_en": "Area (ft²) = Length(ft) * Width(ft). Area (m²) = Area(ft²) * 0.092903. Total Cost = Area(ft²) * Cost/ft²."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Arquitectura y Estimación de Precios de Construcción",
+    "role_en": "Architecture & Construction Cost Estimation Assistant",
+    "includeData": ["sqftTotalArea", "sqmetersTotalArea", "totalProjectCost"],
+    "instructions": [
+      "Interpreta el área total calculada en pies cuadrados y metros cuadrados.",
+      "Explica la estimación presupuestaria según el precio por unidad de superficie.",
+      "Muestra sugerencias de medición para habitaciones irregulares o en L."
+    ],
+    "instructions_en": [
+      "Interpret total calculated area in square feet and square meters.",
+      "Explain budget estimate based on unit area price.",
+      "Show measurement tips for L-shaped or irregular rooms."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "sqf-guide",
+      "icon": "📐",
+      "title": "Square Feet to Square Meters Conversion",
+      "title_es": "Conversión de Pies Cuadrados a Metros Cuadrados",
+      "content_html_en": "<p><b>Conversion Factor:</b> 1 Square Foot = 0.092903 Square Meters (1 m² = 10.7639 sq ft).</p>",
+      "content_html": "<p><b>Factor de Conversión:</b> 1 Pie Cuadrado = 0.092903 Metros Cuadrados (1 m² = 10.7639 pies²).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "roomLengthFt",
+      "label": "Largo de la Habitación (pies)",
+      "label_en": "Room Length (feet)",
+      "type": "number",
+      "default": 15,
+      "min": 1,
+      "max": 1000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "roomWidthFt",
+      "label": "Ancho de la Habitación (pies)",
+      "label_en": "Room Width (feet)",
+      "type": "number",
+      "default": 12,
+      "min": 1,
+      "max": 1000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "costPerSqFt",
+      "label": "Costo Estimado por Pie Cuadrado ($/ft²)",
+      "label_en": "Estimated Cost per Sq Ft ($/ft²)",
+      "type": "currency",
+      "default": 8.5,
+      "min": 0,
+      "max": 1000,
+      "step": 0.5,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "sqftTotalArea",
+      "label": "Área Total en Pies Cuadrados (ft²)",
+      "label_en": "Total Area in Square Feet (ft²)",
+      "expression": "roomLengthFt * roomWidthFt",
+      "unit": "ft²",
+      "unit_en": "ft²",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "sqftTotalArea", "op": ">=", "value": 0 }, "label": "Superficie Calculada", "label_en": "Surface Area Computed", "tone": "success", "text": "Área de superficie evaluada correctamente.", "text_en": "Surface area evaluated successfully." }
+      ]
+    },
+    {
+      "id": "sqmetersTotalArea",
+      "label": "Equivalente en Metros Cuadrados (m²)",
+      "label_en": "Square Meters Equivalent (m²)",
+      "expression": "sqftTotalArea * 0.092903",
+      "unit": "m²",
+      "unit_en": "m²",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalProjectCost",
+      "label": "Costo Total Estimado del Proyecto",
+      "label_en": "Total Estimated Project Cost",
+      "expression": "sqftTotalArea * costPerSqFt",
+      "unit": "USD",
+      "precision": 2,
+      "format": "currency",
+      "type": "primary"
+    }
+  ]
+}

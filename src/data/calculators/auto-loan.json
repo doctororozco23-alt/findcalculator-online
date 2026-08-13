@@ -1,0 +1,230 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "auto-loan-calculator",
+    "title": "Calculadora de Préstamo de Auto",
+    "title_en": "Auto Loan Calculator",
+    "slug": "prestamo-auto",
+    "category": "finance",
+    "subcategory": "loans",
+    "tags": ["automotriz", "prestamos", "deuda"],
+    "tags_en": ["automotive", "loans", "debt"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Car"
+  },
+  "content": {
+    "shortDescription": "Calcula el pago mensual de tu préstamo de auto, intereses totales y costo total de financiamiento.",
+    "shortDescription_en": "Calculate your monthly car loan payment, total interest costs, and total vehicle purchase financing cost.",
+    "longDescription": "Estima el costo mensual de financiar un automóvil nuevo o usado. Incluye el precio del vehículo, enganche inicial, valor de intercambio (trade-in), tasa de interés y plazo del préstamo.",
+    "longDescription_en": "Estimate the monthly cost of financing a new or used vehicle. Includes vehicle price, down payment, trade-in value, interest rate, and loan term.",
+    "howToUse": [
+      "Ingresa el precio del vehículo y la divisa seleccionada.",
+      "Indica el enganche inicial en efectivo o el valor de tu auto a cuenta (trade-in).",
+      "Establece el tipo de interés anual (TIN) y la duración del préstamo en meses.",
+      "Consulta el pago mensual y los intereses totales acumulados."
+    ],
+    "howToUse_en": [
+      "Enter the vehicle purchase price and select your currency.",
+      "Enter your cash down payment or trade-in value.",
+      "Set the annual interest rate (APR) and loan term in months.",
+      "View your monthly payment and total accumulated interest."
+    ],
+    "methodology": "Cálculo de amortización constante: C = P × [ i / (1 - (1 + i)^-n) ], donde P es el valor neto financiado (Precio - Enganche - Trade-In), i es el interés mensual y n los meses del préstamo.",
+    "methodology_en": "Amortization formula: C = P × [ i / (1 - (1 + i)^-n) ], where P is net financed amount (Price - Down Payment - Trade-in), i is monthly interest, and n is total months."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🚙",
+      "title": "Auto Loan Overview",
+      "title_es": "Visión General del Préstamo de Auto",
+      "content_html_en": "<p>An auto loan is a secured loan used to buy a new or used vehicle. The vehicle itself serves as collateral for the debt until fully paid.</p>",
+      "content_html": "<p>Un préstamo de auto es un crédito con garantía prendaria donde el propio vehículo sirve como aval de la deuda hasta liquidar las cuotas.</p>"
+    },
+    {
+      "id": "tradein_downpayment",
+      "icon": "💵",
+      "title": "Down Payment & Trade-In Value",
+      "title_es": "Enganche Inicial y Valor de Intercambio (Trade-In)",
+      "content_html_en": "<p>Putting down at least 20% upfront for a new car (or 10% for used) helps offset initial vehicle depreciation and lowers your monthly payments and interest costs.</p>",
+      "content_html": "<p>Aportar al menos un 20% inicial de enganche compensa la rápida depreciación inicial del vehículo y reduce las cuotas mensuales.</p>"
+    },
+    {
+      "id": "loan_terms",
+      "icon": "⏱️",
+      "title": "Loan Term vs Total Interest",
+      "title_es": "Plazo en Meses vs Intereses Totales",
+      "content_html_en": "<p>Shorter terms (36-48 months) have higher monthly payments but lower total interest. Longer terms (60-72 months) lower monthly payments but increase total interest significantly.</p>",
+      "content_html": "<p>Plazos más cortos (36-48 meses) implican cuotas más altas pero menos intereses. Plazos más largos (60-72 meses) bajan la cuota pero duplican intereses.</p>"
+    },
+    {
+      "id": "formulas",
+      "icon": "🧮",
+      "title": "Financing Equations",
+      "title_es": "Fórmulas de Financiamiento",
+      "content_html_en": "<p><b>Net Loan Amount:</b> Principal = Vehicle Price - Down Payment - Trade-In<br/><b>Monthly Payment:</b> C = Principal × [ i / (1 - (1 + i)⁻ⁿ) ]</p>",
+      "content_html": "<p><b>Monto Neto:</b> Principal = Precio Auto - Enganche - Trade-In<br/><b>Cuota Mensual:</b> C = Principal × [ i / (1 - (1 + i)⁻ⁿ) ]</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "carPrice",
+      "label": "Precio del vehículo",
+      "label_en": "Vehicle Purchase Price",
+      "type": "currency",
+      "default": 30000,
+      "min": 1000,
+      "max": 500000,
+      "step": 500,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1000, 500000], "message": "Introduce un precio entre 1.000 y 500.000", "message_en": "Enter price between 1,000 and 500,000" }]
+    },
+    {
+      "id": "downPayment",
+      "label": "Enganche inicial en efectivo",
+      "label_en": "Cash Down Payment",
+      "type": "currency",
+      "default": 5000,
+      "min": 0,
+      "max": 300000,
+      "step": 500,
+      "unit": { "follows": "carPrice" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "tradeIn",
+      "label": "Valor del auto a cuenta (Trade-In)",
+      "label_en": "Trade-in Value",
+      "type": "currency",
+      "default": 3000,
+      "min": 0,
+      "max": 300000,
+      "step": 500,
+      "unit": { "follows": "carPrice" },
+      "required": false,
+      "validation": []
+    },
+    {
+      "id": "rate",
+      "label": "Tasa de interés anual (APR %)",
+      "label_en": "Annual Interest Rate (APR %)",
+      "type": "number",
+      "default": 5.5,
+      "min": 0.1,
+      "max": 25,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.1, 25], "message": "Introduce una tasa válida entre 0.1% y 25%", "message_en": "Enter valid APR between 0.1% and 25%" }]
+    },
+    {
+      "id": "months",
+      "label": "Plazo del préstamo (meses)",
+      "label_en": "Loan Term (months)",
+      "type": "slider",
+      "default": 60,
+      "min": 12,
+      "max": 84,
+      "step": 12,
+      "unit": "meses",
+      "unit_en": "months",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "loanAmount",
+      "label": "Monto neto financiado",
+      "label_en": "Net Amount Financed",
+      "expression": "max(carPrice - downPayment - tradeIn, 0)",
+      "unit": { "follows": "carPrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "monthlyPayment",
+      "label": "Pago mensual del auto",
+      "label_en": "Monthly Car Payment",
+      "expression": "loanAmount * (rate / 1200) / (1 - (1 + rate / 1200) ^ -months)",
+      "unit": { "follows": "carPrice" },
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "months", "op": ">=", "value": 72 }, "label": "Plazo largo", "label_en": "Long Loan Term", "tone": "warning", "text": "Un plazo superior a 60 meses incrementa significativamente el costo total por intereses acumulados.", "text_en": "A loan term over 60 months significantly increases total interest costs." },
+        { "when": { "field": "rate", "op": "<=", "value": 4 }, "label": "Tasa competitiva", "label_en": "Competitive APR", "tone": "success", "text": "Excelente tasa de financiamiento automotriz.", "text_en": "Great auto financing rate." }
+      ]
+    },
+    {
+      "id": "totalPaid",
+      "label": "Costo total al finalizar",
+      "label_en": "Total Financed Cost",
+      "expression": "monthlyPayment * months",
+      "unit": { "follows": "carPrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "totalInterest",
+      "label": "Intereses totales acumulados",
+      "label_en": "Total Interest Paid",
+      "expression": "totalPaid - loanAmount",
+      "unit": { "follows": "carPrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "mortgage-calculator", "type": "static", "message": "Calcula tu cuota hipotecaria", "message_en": "Calculate your mortgage payment", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Financiamiento Automotriz",
+    "role_en": "Auto Finance Assistant",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y prudente",
+    "includeData": ["monthlyPayment", "loanAmount", "totalInterest", "totalPaid", "rate", "months"],
+    "instructions": [
+      "Resume la cuota mensual del auto y el total de intereses en 2 frases sencillas.",
+      "Recuerda la recomendación de intentar pagar un 20% inicial de enganche."
+    ],
+    "instructions_en": [
+      "Summarize monthly car payment and total interest in 2 concise sentences.",
+      "Remind user of the 20% down payment recommendation to offset vehicle depreciation."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Préstamo de Auto — Cuota Mensual e Intereses | CalculadoraHub",
+    "metaTitle_en": "Auto Loan Calculator — Monthly Payment & Interest | CalculadoraHub",
+    "metaDescription": "Calcula el pago mensual de financiamiento de tu auto nuevo o usado. Gratis y sin registro.",
+    "metaDescription_en": "Calculate your monthly car loan payment and total interest. Free, instant results.",
+    "keywords": ["auto loan calculator", "prestamo auto", "cuota carro", "financiamiento automotriz"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

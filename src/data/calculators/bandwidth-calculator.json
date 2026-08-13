@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "bandwidth-calculator",
+    "title": "Calculadora de Tiempo de Descarga y Ancho de Banda",
+    "title_en": "Bandwidth & Download Time Calculator",
+    "slug": "calculadora-de-tiempo-de-descarga-ancho-de-banda-internet",
+    "category": "technology",
+    "subcategory": "internet",
+    "tags": ["ancho-de-banda", "tiempo-de-descarga", "mbps", "gbps", "gigabytes", "velocidad-de-internet", "descarga"],
+    "tags_en": ["bandwidth", "download-time", "mbps", "gbps", "gigabytes", "internet-speed", "download"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el tiempo exacto en minutos y segundos necesario para descargar o subir un archivo (GB) según tu velocidad de Internet (Mbps).",
+    "shortDescription_en": "Calculate exact time in minutes and seconds to download or upload a file (GB) based on Internet speed (Mbps).",
+    "longDescription": "Herramienta de redes e Internet. Convierte la capacidad del archivo en Megabits ($1 \\text{ GB} = 8,000 \\text{ Mb}$) para determinar la duración real de transferencia.",
+    "longDescription_en": "Networking and Internet tool. Converts file capacity to Megabits ($1 \\text{ GB} = 8,000 \\text{ Mb}$) to compute transfer duration.",
+    "howToUse": [
+      "Ingresa el Tamaño del Archivo (en Gigabytes - GB).",
+      "Ingresa la Velocidad de Internet / Conexión (en Megabits por segundo - Mbps).",
+      "Consulta el Tiempo de Descarga Calculado en Minutos y Segundos."
+    ],
+    "howToUse_en": [
+      "Enter File Size (in Gigabytes - GB).",
+      "Enter Internet Speed (in Megabits per second - Mbps).",
+      "View Calculated Download Time in Minutes and Seconds."
+    ],
+    "methodology": "Tiempo (segundos) = (TamañoGB * 8000) / VelocidadMbps. Tiempo (minutos) = Tiempo (seg) / 60.",
+    "methodology_en": "Time (seconds) = (SizeGB * 8000) / SpeedMbps. Time (minutes) = Time (sec) / 60."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Redes de Telecomunicaciones y Ancho de Banda",
+    "role_en": "Telecommunications & Bandwidth Specialist Assistant",
+    "includeData": ["downloadTimeMinutesResult", "downloadTimeSecondsTotal"],
+    "instructions": [
+      "Interpreta el tiempo de descarga estimado.",
+      "Explica la confusión común entre Megabytes por segundo (MB/s) y Megabits por segundo (Mbps) ($1 \\text{ MB/s} = 8 \\text{ Mbps}$).",
+      "Muestra consejos para optimizar la velocidad en conexiones WiFi o Ethernet."
+    ],
+    "instructions_en": [
+      "Interpret estimated download time.",
+      "Explain common confusion between Megabytes per second (MB/s) and Megabits per second (Mbps) ($1 \\text{ MB/s} = 8 \\text{ Mbps}$).",
+      "Show optimization tips for WiFi vs Ethernet connection speeds."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "bnd-guide",
+      "icon": "🚀",
+      "title": "Mbps vs MB/s Speed Conversion",
+      "title_es": "Conversión de Velocidad Mbps vs MB/s",
+      "content_html_en": "<p><b>8 Bits = 1 Byte:</b> An 800 Mbps internet connection downloads at a theoretical maximum of 100 MB/s.</p><p><b>1 GB File:</b> 8,000 Megabits (takes 10 seconds at 800 Mbps).</p>",
+      "content_html": "<p><b>8 Bits = 1 Byte:</b> Una conexión de 800 Mbps descarga a un máximo teórico de 100 MB/s.</p><p><b>Archivo de 1 GB:</b> 8,000 Megabits (tarda 10 segundos a 800 Mbps).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "fileSizeGb",
+      "label": "Tamaño del Archivo (Gigabytes - GB)",
+      "label_en": "File Size (Gigabytes - GB)",
+      "type": "number",
+      "default": 25,
+      "min": 0.01,
+      "max": 10000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "internetSpeedMbps",
+      "label": "Velocidad de Conexión (Mbps)",
+      "label_en": "Internet Speed (Mbps)",
+      "type": "number",
+      "default": 300,
+      "min": 1,
+      "max": 10000,
+      "step": 10,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "downloadTimeSecondsTotal",
+      "label": "Tiempo Total de Descarga (segundos)",
+      "label_en": "Total Download Time (seconds)",
+      "expression": "internetSpeedMbps > 0 ? ((fileSizeGb * 8000) / internetSpeedMbps) : 0",
+      "unit": "s",
+      "unit_en": "s",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "downloadTimeMinutesResult",
+      "label": "Tiempo Estimado de Descarga (minutos)",
+      "label_en": "Estimated Download Time (minutes)",
+      "expression": "downloadTimeSecondsTotal / 60",
+      "unit": "min",
+      "unit_en": "min",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "downloadTimeMinutesResult", "op": "<=", "value": 5 }, "label": "Descarga Ultra Rápida (≤ 5 min)", "label_en": "Ultra Fast Download (≤ 5 min)", "tone": "success", "text": "Transferencia de alta velocidad.", "text_en": "High speed data transfer." },
+        { "when": { "field": "downloadTimeMinutesResult", "op": "between", "value": [5.1, 30] }, "label": "Descarga Estándar (5 - 30 min)", "label_en": "Standard Download (5 - 30 min)", "tone": "info", "text": "Tiempo de espera moderado.", "text_en": "Moderate wait time." },
+        { "when": { "field": "downloadTimeMinutesResult", "op": ">", "value": 30 }, "label": "Descarga Prolongada (> 30 min)", "label_en": "Long Download (> 30 min)", "tone": "warning", "text": "Se recomienda mantener la conexión estable.", "text_en": "Stable connection recommended during long transfer." }
+      ]
+    }
+  ]
+}

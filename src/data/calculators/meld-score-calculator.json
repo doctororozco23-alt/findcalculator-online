@@ -1,0 +1,189 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "meld-score-calculator",
+    "title": "Calculadora de MELD y MELD-Na (Prioridad de Trasplante Hepático)",
+    "title_en": "MELD & MELD-Na Score Calculator (Liver Transplant Priority)",
+    "slug": "meld-meld-na-score-trasplante-hepatico",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["meld", "meld-na", "trasplante-hepatico", "cirrosis", "mortalidad", "hepatologia"],
+    "tags_en": ["meld", "meld-na", "liver-transplant", "cirrhosis", "mortality", "hepatology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula el MELD y MELD-Na (incorporando Sodio sérico) para predecir la mortalidad a 90 días en cirrosis y priorizar la lista de trasplante hepático UNOS/OPTN.",
+    "shortDescription_en": "Calculate MELD and MELD-Na scores to predict 90-day waitlist mortality in end-stage liver disease and prioritize UNOS liver transplant listing.",
+    "longDescription": "Estándar internacional UNOS 2016 (Kamath et al. Mayo Clinic). Evalúa Bilirrubina, INR, Creatinina y Sodio sérico para asignar puntos MELD-Na de 6 a 40.",
+    "longDescription_en": "UNOS 2016 standard tool. Evaluates Bilirubin, INR, Serum Creatinine, and Sodium to compute MELD-Na score.",
+    "howToUse": [
+      "Ingresa la Bilirrubina Total sérica en mg/dL.",
+      "Ingresa el INR.",
+      "Ingresa la Creatinina sérica en mg/dL.",
+      "Ingresa el Sodio sérico en mEq/L (para MELD-Na).",
+      "Indica si el paciente ha realizado diálisis ≥ 2 veces en la última semana."
+    ],
+    "howToUse_en": [
+      "Enter Total Bilirubin in mg/dL.",
+      "Enter INR.",
+      "Enter Serum Creatinine in mg/dL.",
+      "Enter Serum Sodium in mEq/L (for MELD-Na).",
+      "Indicate if patient has received dialysis ≥ 2 times in the past week."
+    ],
+    "methodology": "MELD = 3.78×ln(Bili) + 11.2×ln(INR) + 9.57×ln(Cr) + 6.43. MELD-Na = MELD + 1.32×(137-Na) - 0.033×MELD×(137-Na). Creatinina fijada en 4.0 si diálisis. Rango 6 a 40 puntos.",
+    "methodology_en": "MELD = 3.78×ln(Bili) + 11.2×ln(INR) + 9.57×ln(Cr) + 6.43. MELD-Na = MELD + 1.32×(137-Na) - 0.033×MELD×(137-Na). Range 6 to 40 points."
+  },
+  "guideSections": [
+    {
+      "id": "meld-guide",
+      "icon": "🧬",
+      "title": "UNOS Transplant Priority Tiers",
+      "title_es": "Niveles de Prioridad de Trasplante UNOS",
+      "content_html_en": "<p><b>MELD-Na &lt; 15:</b> Low 90-day mortality (&lt; 6%). Transplant benefit does not outweigh waitlist mortality.</p><p><b>MELD-Na 15 - 24:</b> Moderate 90-day mortality (6-20%). Standard transplant listing priority.</p><p><b>MELD-Na ≥ 25:</b> High 90-day mortality (&gt; 50%). Urgent allocation priority.</p>",
+      "content_html": "<p><b>MELD-Na &lt; 15:</b> Baja mortalidad a 90 días (&lt; 6%). El beneficio del trasplante no supera la mortalidad en lista.</p><p><b>MELD-Na 15 - 24:</b> Mortalidad moderada a 90 días (6-20%). Criterios de inclusión estándar en lista.</p><p><b>MELD-Na ≥ 25:</b> Alta mortalidad a 90 días (&gt; 50%). Prioridad de asignación urgente.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "biliMgDl",
+      "label": "Bilirrubina Total (mg/dL)",
+      "label_en": "Total Bilirubin (mg/dL)",
+      "type": "number",
+      "default": 1.2,
+      "min": 0.1,
+      "max": 50.0,
+      "step": 0.1,
+      "unit": "mg/dL",
+      "unit_en": "mg/dL",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.1, 50.0], "message": "Bilirrubina entre 0.1 y 50.0 mg/dL", "message_en": "Bilirubin between 0.1 and 50.0 mg/dL" }]
+    },
+    {
+      "id": "inrVal",
+      "label": "INR (Tiempo de Protrombina)",
+      "label_en": "INR",
+      "type": "number",
+      "default": 1.1,
+      "min": 0.8,
+      "max": 10.0,
+      "step": 0.1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.8, 10.0], "message": "INR entre 0.8 y 10.0", "message_en": "INR between 0.8 and 10.0" }]
+    },
+    {
+      "id": "serumCrMgDl",
+      "label": "Creatinina Sérica (mg/dL)",
+      "label_en": "Serum Creatinine (mg/dL)",
+      "type": "number",
+      "default": 1.0,
+      "min": 0.2,
+      "max": 15.0,
+      "step": 0.1,
+      "unit": "mg/dL",
+      "unit_en": "mg/dL",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.2, 15.0], "message": "Creatinina entre 0.2 y 15.0 mg/dL", "message_en": "Creatinine between 0.2 and 15.0 mg/dL" }]
+    },
+    {
+      "id": "serumNaMeq",
+      "label": "Sodio Sérico (mEq/L)",
+      "label_en": "Serum Sodium (mEq/L)",
+      "type": "number",
+      "default": 138,
+      "min": 110,
+      "max": 150,
+      "step": 1,
+      "unit": "mEq/L",
+      "unit_en": "mEq/L",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [110, 150], "message": "Sodio entre 110 y 150 mEq/L", "message_en": "Sodium between 110 and 150 mEq/L" }]
+    },
+    {
+      "id": "onDialysis",
+      "label": "Diálisis ≥ 2 veces en la última semana",
+      "label_en": "Dialysis ≥ 2 times in past week",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No", "label_en": "No" },
+        { "value": 1, "label": "Sí (Fijar Creatinina en 4.0 mg/dL)", "label_en": "Yes (Set Creatinine to 4.0 mg/dL)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "adjBili",
+      "label": "Bilirrubina Ajustada UNOS",
+      "label_en": "UNOS Adjusted Bilirubin",
+      "expression": "max(biliMgDl, 1.0)",
+      "unit": "mg/dL",
+      "unit_en": "mg/dL",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "adjInr",
+      "label": "INR Ajustado UNOS",
+      "label_en": "UNOS Adjusted INR",
+      "expression": "max(inrVal, 1.0)",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "adjCr",
+      "label": "Creatinina Ajustada UNOS",
+      "label_en": "UNOS Adjusted Creatinine",
+      "expression": "onDialysis == 1 ? 4.0 : min(max(serumCrMgDl, 1.0), 4.0)",
+      "unit": "mg/dL",
+      "unit_en": "mg/dL",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "meldScoreClassic",
+      "label": "Score MELD Clásico",
+      "label_en": "Classic MELD Score",
+      "expression": "round(max(3.78 * log(adjBili) + 11.2 * log(adjInr) + 9.57 * log(adjCr) + 6.43, 6.0))",
+      "unit": "puntos",
+      "unit_en": "points",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "adjNa",
+      "label": "Sodio Ajustado UNOS",
+      "label_en": "UNOS Adjusted Sodium",
+      "expression": "min(max(serumNaMeq, 125), 137)",
+      "unit": "mEq/L",
+      "unit_en": "mEq/L",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "meldNaScore",
+      "label": "Score MELD-Na (Estándar UNOS 2016)",
+      "label_en": "MELD-Na Score (UNOS Standard)",
+      "expression": "round(max(meldScoreClassic + 1.32 * (137 - adjNa) - (0.033 * meldScoreClassic * (137 - adjNa)), 6.0))",
+      "unit": "puntos",
+      "unit_en": "points",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "meldNaScore", "op": "<", "value": 10 }, "label": "MELD-Na < 10: Riesgo Bajo (Mortalidad a 90d 1.9%)", "label_en": "MELD-Na < 10: Low Risk (90d Mortality 1.9%)", "tone": "success", "text": "Mortalidad baja en lista de espera.", "text_en": "Low waitlist mortality." },
+        { "when": { "field": "meldNaScore", "op": "between", "value": [10, 19] }, "label": "MELD-Na 10-19: Riesgo Moderado (Mortalidad a 90d 6.0%)", "label_en": "MELD-Na 10-19: Moderate Risk (90d Mortality 6.0%)", "tone": "info", "text": "Criterio de inclusión estándar en lista de trasplante.", "text_en": "Standard liver transplant waitlist listing." },
+        { "when": { "field": "meldNaScore", "op": "between", "value": [20, 29] }, "label": "MELD-Na 20-29: Riesgo Elevado (Mortalidad a 90d 19.6%)", "label_en": "MELD-Na 20-29: High Risk (90d Mortality 19.6%)", "tone": "warning", "text": "Prioridad alta de trasplante.", "text_en": "High transplant priority." },
+        { "when": { "field": "meldNaScore", "op": ">=", "value": 30 }, "label": "MELD-Na ≥ 30: Riesgo Muy Severo (Mortalidad a 90d > 52.6%)", "label_en": "MELD-Na ≥ 30: Severe Risk (90d Mortality > 52.6%)", "tone": "warning", "text": "Prioridad de asignación de órgano urgente.", "text_en": "Urgent organ allocation priority." }
+      ]
+    }
+  ]
+}

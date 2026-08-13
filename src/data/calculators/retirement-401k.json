@@ -1,0 +1,236 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "retirement-401k-calculator",
+    "title": "Calculadora de Jubilación y 401(k)",
+    "title_en": "Retirement & 401(k) Calculator",
+    "slug": "jubilacion-401k",
+    "category": "finance",
+    "subcategory": "retirement",
+    "tags": ["jubilacion", "retiro", "inversion"],
+    "tags_en": ["retirement", "pension", "investing"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "ShieldCheck"
+  },
+  "content": {
+    "shortDescription": "Planifica tu retiro y calcula el saldo futuro acumulado en tu cuenta de jubilación 401(k) o fondo de pensiones.",
+    "shortDescription_en": "Plan your retirement and calculate the future nest egg balance accumulated in your 401(k) account or pension fund.",
+    "longDescription": "Estima cuánto dinero tendrás acumulado al alcanzar la edad de jubilación considerando tu saldo actual, tu salario mensual, tu aportación y el rendimiento anual esperado.",
+    "longDescription_en": "Estimate your accumulated retirement nest egg at retirement age considering your current balance, monthly salary, contribution rate, employer match, and expected annual return.",
+    "howToUse": [
+      "Ingresa tu edad actual y la edad deseada de jubilación.",
+      "Añade tu saldo actual guardado para el retiro.",
+      "Indica tu salario mensual y el porcentaje de aportación mensual (%).",
+      "Consulta tu fondo acumulado proyectado al momento del retiro."
+    ],
+    "howToUse_en": [
+      "Enter your current age and desired target retirement age.",
+      "Enter your current retirement account starting balance.",
+      "Set your monthly salary and contribution percentage rate (%).",
+      "View your projected retirement nest egg total at retirement."
+    ],
+    "methodology": "Cálculo de capitalización acumulada durante los años restantes hasta la jubilación: Años = Edad Retiro - Edad Actual.",
+    "methodology_en": "Accumulated growth compounding calculation during remaining work years: Years = Target Age - Current Age."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🏖️",
+      "title": "Retirement Planning & 401(k) Basics",
+      "title_es": "Fundamentos de Jubilación y 401(k)",
+      "content_html_en": "<p>A 401(k) or personal pension plan allows workers to save and invest a portion of their paycheck before or after taxes. Compounding over decades builds a comfortable retirement nest egg.</p>",
+      "content_html": "<p>Un plan 401(k) o fondo de pensiones permite invertir una parte del salario mensual disfrutando de ventajas fiscales para acumular un fondo de retiro holgado.</p>"
+    },
+    {
+      "id": "employer_match",
+      "icon": "🤝",
+      "title": "Employer Matching Free Money",
+      "title_es": "Aportación de la Empresa (Employer Match)",
+      "content_html_en": "<p>Many employers match employee contributions up to a certain percentage (e.g. 50% match up to 6% salary). Always contribute at least enough to capture the full match—it is literally free money.</p>",
+      "content_html": "<p>Muchas empresas aportan un porcentaje complementario sobre lo que tú inviertes. Es recomendable aportar lo suficiente para aprovechar el 100% de la contribución empresarial.</p>"
+    },
+    {
+      "id": "four_percent_rule",
+      "icon": "📉",
+      "title": "The 4% Safe Withdrawal Rule",
+      "title_es": "La Regla del 4% de Retiro Seguro",
+      "content_html_en": "<p>The 4% rule states that you can withdraw 4% of your total retirement savings in your first year of retirement (adjusted for inflation thereafter) with a high probability of not outliving your money for 30 years.</p>",
+      "content_html": "<p>La regla del 4% sugiere que puedes retirar el 4% de tu fondo acumulado en el primer año de jubilación manteniendo el capital durante 30 años sin agotarlo.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "currentAge",
+      "label": "Edad actual",
+      "label_en": "Current Age",
+      "type": "number",
+      "default": 30,
+      "min": 18,
+      "max": 75,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [18, 75], "message": "Edad entre 18 y 75 años", "message_en": "Age between 18 and 75" }]
+    },
+    {
+      "id": "retirementAge",
+      "label": "Edad deseada de jubilación",
+      "label_en": "Target Retirement Age",
+      "type": "number",
+      "default": 65,
+      "min": 40,
+      "max": 80,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [40, 80], "message": "Edad de retiro entre 40 y 80 años", "message_en": "Retirement age between 40 and 80" }]
+    },
+    {
+      "id": "currentBalance",
+      "label": "Saldo actual guardado para el retiro",
+      "label_en": "Current Retirement Balance",
+      "type": "currency",
+      "default": 20000,
+      "min": 0,
+      "max": 5000000,
+      "step": 1000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "monthlySalary",
+      "label": "Salario mensual bruto",
+      "label_en": "Gross Monthly Salary",
+      "type": "currency",
+      "default": 4500,
+      "min": 500,
+      "max": 100000,
+      "step": 100,
+      "unit": { "follows": "currentBalance" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "contributionPercent",
+      "label": "% de salario ahorrado al mes",
+      "label_en": "% of Salary Saved Monthly",
+      "type": "slider",
+      "default": 10,
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "returnRate",
+      "label": "Rendimiento anual estimado (%)",
+      "label_en": "Estimated Annual Return (%)",
+      "type": "number",
+      "default": 7,
+      "min": 1,
+      "max": 20,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "yearsToRetire",
+      "label": "Años restantes para la jubilación",
+      "label_en": "Years Remaining to Retirement",
+      "expression": "max(retirementAge - currentAge, 1)",
+      "unit": "años",
+      "unit_en": "years",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "monthlyDeposit",
+      "label": "Aportación mensual personal",
+      "label_en": "Personal Monthly Deposit",
+      "expression": "monthlySalary * (contributionPercent / 100)",
+      "unit": { "follows": "currentBalance" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "totalNestEgg",
+      "label": "Fondo Acumulado Proyectado al Retiro",
+      "label_en": "Projected Retirement Nest Egg",
+      "expression": "currentBalance * ((1 + returnRate / 100) ^ yearsToRetire) + (monthlyDeposit * 12) * ((((1 + returnRate / 100) ^ yearsToRetire) - 1) / (returnRate / 100))",
+      "unit": { "follows": "currentBalance" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalNestEgg", "op": ">=", "value": 500000 }, "label": "Fondo Sólido de Retiro", "label_en": "Solid Retirement Fund", "tone": "success", "text": "Proyección sólida para mantener estabilidad financiera en el retiro.", "text_en": "Solid projected nest egg for maintaining financial stability in retirement." }
+      ]
+    },
+    {
+      "id": "safeAnnualIncome",
+      "label": "Ingreso anual seguro (Regla del 4%)",
+      "label_en": "Safe Annual Retirement Income (4% Rule)",
+      "expression": "totalNestEgg * 0.04",
+      "unit": { "follows": "currentBalance" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "compound-interest-calculator", "type": "static", "message": "Calcula el interés compuesto de tus ahorros", "message_en": "Calculate compound interest on savings", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Planificación de Retiro",
+    "role_en": "Retirement Planning Assistant",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y orientador",
+    "includeData": ["totalNestEgg", "safeAnnualIncome", "yearsToRetire", "monthlyDeposit"],
+    "instructions": [
+      "Sintetiza el fondo acumulado al retiro y la pensión estimada en la regla del 4% en 2 frases simples.",
+      "Recuerda la importancia de empezar lo antes posible para aprovechar la capitalización."
+    ],
+    "instructions_en": [
+      "Summarize projected retirement nest egg and safe annual withdrawal income (4% rule) in 2 concise sentences.",
+      "Emphasize starting early to maximize compounding power over working decades."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Jubilación y 401(k) | CalculadoraHub",
+    "metaTitle_en": "Retirement & 401(k) Calculator | CalculadoraHub",
+    "metaDescription": "Calcula tu fondo de retiro acumulado y tu pensión estimada al momento de jubilarte. Gratis e instantáneo.",
+    "metaDescription_en": "Project your retirement nest egg and estimated annual income. Free, instant results.",
+    "keywords": ["401k calculator", "calculadora jubilacion", "retiro", "pensiones"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

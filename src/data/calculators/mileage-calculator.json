@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "mileage-calculator",
+    "title": "Calculadora de Reembolso de Milla / Kilómetro (Deducción Estándar IRS)",
+    "title_en": "Mileage Reimbursement Calculator (IRS Standard Deduction)",
+    "slug": "calculadora-de-reembolso-de-millas-kilometros-irs",
+    "category": "transport",
+    "subcategory": "fuel",
+    "tags": ["reembolso-de-millas", "irs", "kilometraje", "deduccion-fiscal", "gastos-de-viaje", "automotriz"],
+    "tags_en": ["mileage-reimbursement", "irs", "mileage", "tax-deduction", "travel-expenses", "automotive"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el importe de reembolso por millas de negocios o viajes de trabajo según la tarifa Estándar del IRS ($0.67/milla).",
+    "shortDescription_en": "Calculate business mileage reimbursement or tax deduction using IRS Standard Rate ($0.67/mile).",
+    "longDescription": "Herramienta de contabilidad fiscal y gastos de viaje corporativos. Cuantifica la deducción fiscal o el reembolso financiero por desplazamiento laboral según las tarifas vigentes del IRS.",
+    "longDescription_en": "Tax accounting and corporate travel expense tool. Quantifies tax deduction or financial reimbursement for work travel based on official IRS rates.",
+    "howToUse": [
+      "Ingresa el Total de Millas Conducidas por trabajo o negocios.",
+      "Selecciona o ajusta la Tarifa por Milla ($ USD/milla, por defecto tarifa IRS 2024-2026 $0.67/mi).",
+      "Consulta el Importe Total de Reembolso o Deducción Fiscal."
+    ],
+    "howToUse_en": [
+      "Enter Total Business Miles Driven.",
+      "Select or adjust Rate per Mile ($ USD/mile, default IRS rate $0.67/mi).",
+      "View Total Reimbursement Amount or Tax Deduction."
+    ],
+    "methodology": "Reembolso Total = Millas * TarifaPorMilla.",
+    "methodology_en": "Total Reimbursement = Miles * RatePerMile."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Contabilidad Fiscal y Gastos de Viaje",
+    "role_en": "Tax Accounting & Mileage Expense Specialist Assistant",
+    "includeData": ["totalReimbursementAmount"],
+    "instructions": [
+      "Interpreta el monto de reembolso o deducción fiscal total calculado.",
+      "Explica los requisitos del registro diario de millas del IRS (bitácora con fecha, origen, destino y propósito).",
+      "Distingue millas de negocios vs millas personales no deducibles."
+    ],
+    "instructions_en": [
+      "Interpret total calculated mileage reimbursement or tax deduction amount.",
+      "Explain IRS mileage log requirements (date, origin, destination, business purpose).",
+      "Distinguish business miles vs non-deductible personal commute miles."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "mlg-guide",
+      "icon": "🚘",
+      "title": "IRS Mileage Standard Deduction Rates",
+      "title_es": "Tarifas de Deducción Estándar de Millas del IRS",
+      "content_html_en": "<p><b>Business Rate:</b> $0.67 per mile driven for business purposes.</p><p><b>Medical / Moving Rate:</b> $0.21 per mile driven for medical or moving purposes.</p><p><b>Charitable Rate:</b> $0.14 per mile driven in service of charitable organizations.</p>",
+      "content_html": "<p><b>Tarifa de Negocios:</b> $0.67 por milla conducida con fines comerciales/laborales.</p><p><b>Tarifa Médica / Mudanza:</b> $0.21 por milla conducida para atención médica o mudanza militar.</p><p><b>Tarifa Caritativa:</b> $0.14 por milla conducida al servicio de organizaciones benéficas.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "businessMilesCount",
+      "label": "Millas de Negocios Conducidas",
+      "label_en": "Business Miles Driven",
+      "type": "number",
+      "default": 1250,
+      "min": 1,
+      "max": 500000,
+      "step": 10,
+      "required": true
+    },
+    {
+      "id": "ratePerMileIrs",
+      "label": "Tarifa por Milla ($ USD/milla)",
+      "label_en": "Rate per Mile ($ USD/mile)",
+      "type": "currency",
+      "default": 0.67,
+      "min": 0.01,
+      "max": 5,
+      "step": 0.01,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalReimbursementAmount",
+      "label": "Importe Total de Reembolso / Deducción",
+      "label_en": "Total Reimbursement / Deduction Amount",
+      "expression": "businessMilesCount * ratePerMileIrs",
+      "unit": "USD",
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalReimbursementAmount", "op": ">=", "value": 0 }, "label": "Reembolso Calculado", "label_en": "Reimbursement Computed", "tone": "success", "text": "Deducción de millas cuantificada.", "text_en": "Mileage deduction quantified." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "heart-score-cardiac-risk-calculator",
+    "title": "Calculadora del HEART Score para Dolor Torácico en Urgencias",
+    "title_en": "HEART Score Calculator for Emergency Chest Pain",
+    "slug": "heart-score-dolor-toracico-urgencias",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["heart-score", "dolor-toracico", "urgencias", "iam", "sindrome-coronario-agudo", "mace"],
+    "tags_en": ["heart-score", "chest-pain", "emergency", "mi", "acute-coronary-syndrome", "mace"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Heart"
+  },
+  "content": {
+    "shortDescription": "Calcula el HEART Score para predecir el riesgo de Eventos Cardíacos Adversos Mayores (MACE) a 6 semanas en pacientes con dolor torácico en urgencias.",
+    "shortDescription_en": "Calculate the HEART Score to predict 6-week Major Adverse Cardiac Events (MACE) risk in emergency chest pain patients.",
+    "longDescription": "Protocolo de decisión clínica validados (Six et al.). Asigna 0-2 puntos en 5 categorías: Historia clínica, Electrocardiograma (ECG), Edad, Factores de riesgo cardiovascular y Troponina inicial.",
+    "longDescription_en": "Validated emergency decision protocol. Scores 0-2 pts across 5 domains: History, ECG, Age, Risk factors, and Troponin.",
+    "howToUse": [
+      "Selecciona la sospecha según la Historia clínica del dolor torácico.",
+      "Evalúa los hallazgos en el Electrocardiograma (ECG).",
+      "Selecciona el rango de Edad del paciente.",
+      "Indica el número de Factores de Riesgo Cardiovascular (HTA, DLP, DM, Tabaco, Obesidad, AF).",
+      "Selecciona el resultado de Troponina inicial."
+    ],
+    "howToUse_en": [
+      "Select History suspicion for chest pain.",
+      "Evaluate Electrocardiogram (ECG) findings.",
+      "Select patient Age range.",
+      "Select number of Cardiovascular Risk Factors.",
+      "Select initial Troponin level."
+    ],
+    "methodology": "HEART Score (Six et al. Neth Heart J 2008): History (0-2), ECG (0-2), Age (0-2), Risk factors (0-2), Troponin (0-2). Rango total 0-10 puntos.",
+    "methodology_en": "HEART Score: History (0-2), ECG (0-2), Age (0-2), Risk factors (0-2), Troponin (0-2). Total range 0-10 points."
+  },
+  "guideSections": [
+    {
+      "id": "heart-guide",
+      "icon": "🚑",
+      "title": "ED Pathways per HEART Score",
+      "title_es": "Vías de Urgencias según el HEART Score",
+      "content_html_en": "<p><b>0 - 3 points:</b> Low risk (MACE 0.9-1.7%). Safe for early discharge.</p><p><b>4 - 6 points:</b> Moderate risk (MACE 12-16.6%). Observation unit admission & serial troponins.</p><p><b>7 - 10 points:</b> High risk (MACE 50-65%). Immediate invasive cardiology angiography strategy.</p>",
+      "content_html": "<p><b>0 - 3 puntos:</b> Riesgo bajo (MACE 0.9-1.7%). Alta precoz segura desde urgencias.</p><p><b>4 - 6 puntos:</b> Riesgo moderado (MACE 12-16.6%). Ingreso en Unidad de Dolor Torácico / Observación y troponinas seriadas.</p><p><b>7 - 10 puntos:</b> Riesgo alto (MACE 50-65%). Estrategia coronariográfica invasiva urgente.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "history_pts",
+      "label": "Historia clínica del dolor torácico",
+      "label_en": "History of Chest Pain",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "Ligeramente sospechosa (0 pts)", "label_en": "Slightly suspicious (0 pts)" },
+        { "value": 1, "label": "Moderadamente sospechosa (+1 pt)", "label_en": "Moderately suspicious (+1 pt)" },
+        { "value": 2, "label": "Altamente sospechosa (+2 pts)", "label_en": "Highly suspicious (+2 pts)" }
+      ]
+    },
+    {
+      "id": "ecg_pts",
+      "label": "Electrocardiograma (ECG)",
+      "label_en": "Electrocardiogram (ECG)",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "Normal (0 pts)", "label_en": "Normal (0 pts)" },
+        { "value": 1, "label": "Repolarización precoz / Bloqueo de rama / Cambios de ST inespecíficos (+1 pt)", "label_en": "Non-specific repolarization / LBBB / ST changes (+1 pt)" },
+        { "value": 2, "label": "Descenso/Elevación del segmento ST no ST-elevated IAM (+2 pts)", "label_en": "Significant ST depression or elevation (+2 pts)" }
+      ]
+    },
+    {
+      "id": "age_pts",
+      "label": "Edad del paciente",
+      "label_en": "Patient Age",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "Menor de 45 años (0 pts)", "label_en": "Under 45 years (0 pts)" },
+        { "value": 1, "label": "45 a 64 años (+1 pt)", "label_en": "45 to 64 years (+1 pt)" },
+        { "value": 2, "label": "65 años o más (+2 pts)", "label_en": "65 years or older (+2 pts)" }
+      ]
+    },
+    {
+      "id": "risk_pts",
+      "label": "Factores de Riesgo Cardiovascular (HTA, DLP, DM, Tabaco, Obesidad, Antecedentes)",
+      "label_en": "Cardiovascular Risk Factors",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "Sin factores de riesgo conocidos (0 pts)", "label_en": "No risk factors (0 pts)" },
+        { "value": 1, "label": "1 ó 2 factores de riesgo (+1 pt)", "label_en": "1 or 2 risk factors (+1 pt)" },
+        { "value": 2, "label": "3 ó más factores de riesgo O enf. ateroesclerótica previa (+2 pts)", "label_en": "≥ 3 risk factors OR history of CAD (+2 pts)" }
+      ]
+    },
+    {
+      "id": "troponin_pts",
+      "label": "Nivel inicial de Troponina",
+      "label_en": "Initial Troponin Level",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "Normal / Por debajo del límite normal superior (0 pts)", "label_en": "Normal / Below limit (0 pts)" },
+        { "value": 1, "label": "1 a 3 veces el límite normal superior (+1 pt)", "label_en": "1 to 3 times upper limit (+1 pt)" },
+        { "value": 2, "label": "Más de 3 veces el límite normal superior (+2 pts)", "label_en": "> 3 times upper limit (+2 pts)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "heartTotal",
+      "label": "HEART Score Total",
+      "label_en": "Total HEART Score",
+      "expression": "history_pts + ecg_pts + age_pts + risk_pts + troponin_pts",
+      "unit": "puntos",
+      "unit_en": "points",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "heartTotal", "op": "<=", "value": 3 }, "label": "Score 0-3: Riesgo Bajo (0.9% - 1.7% MACE a 6 semanas)", "label_en": "Score 0-3: Low Risk (0.9% - 1.7% 6-wk MACE)", "tone": "success", "text": "Alta precoz segura desde urgencias.", "text_en": "Safe early discharge from ED." },
+        { "when": { "field": "heartTotal", "op": "between", "value": [4, 6] }, "label": "Score 4-6: Riesgo Moderado (12% - 16.6% MACE a 6 semanas)", "label_en": "Score 4-6: Moderate Risk (12% - 16.6% 6-wk MACE)", "tone": "info", "text": "Ingreso en Unidad de Dolor Torácico u Observación.", "text_en": "Admit to Chest Pain Unit / Observation." },
+        { "when": { "field": "heartTotal", "op": ">=", "value": 7 }, "label": "Score 7-10: Alto Riesgo (50% - 65% MACE a 6 semanas)", "label_en": "Score 7-10: High Risk (50% - 65% 6-wk MACE)", "tone": "warning", "text": "Estrategia invasiva precoz (coronariografía urgente).", "text_en": "Early invasive strategy (urgent angiography)." }
+      ]
+    }
+  ]
+}

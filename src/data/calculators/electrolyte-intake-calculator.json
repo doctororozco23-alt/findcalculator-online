@@ -1,0 +1,177 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "electrolyte-intake-calculator",
+    "title": "Calculadora de Electrolitos Diarios (Sodio, Potasio y Magnesio NASEM)",
+    "title_en": "Daily Electrolytes Intake Calculator (Sodium, Potassium, Magnesium)",
+    "slug": "electrolitos-diarios-sodio-potasio-magnesio",
+    "category": "food",
+    "subcategory": "nutrition",
+    "tags": ["electrolitos", "sodio", "potasio", "magnesio", "calambres", "nasem"],
+    "tags_en": ["electrolytes", "sodium", "potassium", "magnesium", "cramps", "nasem"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Droplet"
+  },
+  "content": {
+    "shortDescription": "Calcula tus metas diarias de electrolitos esenciales (sodio, potasio, magnesio y calcio) según tu sexo, nivel de actividad y sudoración.",
+    "shortDescription_en": "Calculate target daily essential electrolytes (sodium, potassium, magnesium, and calcium) based on sex, activity level, and sweat loss.",
+    "longDescription": "Auditoría de equilibrio hidroelectrolítico. Determina las metas óptimas de minerales de las Sociedades Nacionales de Medicina (NASEM y EFSA) para prevenir calambres musculares, hiponatremia y optimizar la transmisión neuromuscular.",
+    "longDescription_en": "Hydro-electrolyte balance audit. Determines optimal mineral targets under NASEM and EFSA guidelines to prevent muscle cramps, hyponatremia, and support neuromuscular function.",
+    "howToUse": [
+      "Selecciona tu sexo biológico.",
+      "Ingresa tus minutos de ejercicio físico diario.",
+      "Selecciona la tasa de sudoración habitual (Baja, Moderada o Alta).",
+      "Consulta las metas recomendadas en miligramos (mg) para Sodio, Potasio, Magnesio y Calcio."
+    ],
+    "howToUse_en": [
+      "Select biological sex.",
+      "Enter daily workout duration in minutes.",
+      "Select sweat rate intensity (Low, Moderate, or High).",
+      "View recommended daily targets in milligrams (mg) for Sodium, Potassium, Magnesium, and Calcium."
+    ],
+    "methodology": "Estándares NASEM / EFSA: Sodio Basal = 2.300 mg/día (+500mg por hora de sudor). Potasio = 3.400 mg (H) / 2.600 mg (M). Magnesio = 420 mg (H) / 320 mg (M). Calcio = 1.000 mg.",
+    "methodology_en": "NASEM / EFSA Standards: Baseline Sodium = 2,300 mg/day (+500mg per workout hour). Potassium = 3,400 mg (M) / 2,600 mg (F). Magnesium = 420 mg (M) / 320 mg (F). Calcium = 1,000 mg."
+  },
+  "guideSections": [
+    {
+      "id": "electrolytes-functions-guide",
+      "icon": "⚡",
+      "title": "Essential Electrolytes Roles in Neuromuscular Function",
+      "title_es": "Funciones de los Electrolitos Esenciales en la Función Neuromuscular",
+      "content_html_en": "<p><b>Sodium (Na+):</b> Primary extracellular cation regulating blood volume, nerve impulse transmission, and fluid retention.</p><p><b>Potassium (K+):</b> Primary intracellular cation essential for cardiac rhythm and muscle contraction.</p><p><b>Magnesium (Mg2+):</b> Co-factor in > 300 enzymatic reactions, ATP energy production, and muscle relaxation.</p>",
+      "content_html": "<p><b>Sodio (Na+):</b> Catión extracelular principal que regula el volumen sanguíneo, impulsos nerviosos y retención hídrica.</p><p><b>Potasio (K+):</b> Catión intracelular principal clave para el ritmo cardíaco y la contracción muscular.</p><p><b>Magnesio (Mg2+):</b> Cofactor en más de 300 reacciones enzimáticas, síntesis de ATP y relajación muscular.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "gender",
+      "label": "Sexo biológico",
+      "label_en": "Biological Sex",
+      "type": "select",
+      "default": "male",
+      "options": [
+        { "value": "male", "label": "Hombre", "label_en": "Male" },
+        { "value": "female", "label": "Mujer", "label_en": "Female" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "workoutMinutes",
+      "label": "Minutos de ejercicio intenso diario",
+      "label_en": "Daily Intense Workout Minutes",
+      "type": "slider",
+      "default": 45,
+      "min": 0,
+      "max": 180,
+      "step": 15,
+      "unit": "minutos",
+      "unit_en": "minutes",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "sweatRate",
+      "label": "Tasa de sudoración habitual",
+      "label_en": "Sweat Rate Intensity",
+      "type": "select",
+      "default": "moderate",
+      "options": [
+        { "value": "low", "label": "Sudoración Baja / Normal", "label_en": "Low / Normal Sweat Rate" },
+        { "value": "moderate", "label": "Sudoración Moderada (+400 mg Sodio/h)", "label_en": "Moderate Sweat Rate (+400 mg Sodium/h)" },
+        { "value": "high", "label": "Sudoración Alta / Sudor Salado (+700 mg Sodio/h)", "label_en": "High / Salty Sweat Rate (+700 mg Sodium/h)" }
+      ],
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "targetSodiumMg",
+      "label": "Meta Diaria Recomendada de Sodio (Na)",
+      "label_en": "Target Daily Sodium (Na)",
+      "expression": "2300 + ((workoutMinutes / 60) * (sweatRate == 'high' ? 700 : (sweatRate == 'moderate' ? 400 : 200)))",
+      "unit": "mg/día",
+      "unit_en": "mg/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "targetSodiumMg", "op": ">", "value": 0 }, "label": "Aporte de Sodio Recomendado", "label_en": "Recommended Sodium Target", "tone": "success", "text": "Miligramos de sodio requeridos para reponer pérdidas por sudor y mantener volemia.", "text_en": "Milligrams of sodium required to replace sweat loss and maintain blood volume." }
+      ]
+    },
+    {
+      "id": "targetPotassiumMg",
+      "label": "Meta Diaria Recomendada de Potasio (K)",
+      "label_en": "Target Daily Potassium (K)",
+      "expression": "gender == 'male' ? 3400 : 2600",
+      "unit": "mg/día",
+      "unit_en": "mg/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "targetMagnesiumMg",
+      "label": "Meta Diaria Recomendada de Magnesio (Mg)",
+      "label_en": "Target Daily Magnesium (Mg)",
+      "expression": "gender == 'male' ? 420 : 320",
+      "unit": "mg/día",
+      "unit_en": "mg/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "targetCalciumMg",
+      "label": "Meta Diaria Recomendada de Calcio (Ca)",
+      "label_en": "Target Daily Calcium (Ca)",
+      "expression": "1000",
+      "unit": "mg/día",
+      "unit_en": "mg/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "water-intake-calculator", "type": "static", "message": "Calcula tus necesidades de agua diarias", "message_en": "Calculate daily water intake targets", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Fisiólogo de la Nutrición Deportiva y Minerales",
+    "role_en": "Sports Nutrition Physiologist & Mineral Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y educativo",
+    "includeData": ["targetSodiumMg", "targetPotassiumMg", "targetMagnesiumMg", "workoutMinutes"],
+    "instructions": [
+      "Sintetiza las metas diarias de Sodio, Potasio y Magnesio en miligramos en 2 frases concisas.",
+      "Destaca que en entrenamientos > 90 minutos con alta sudoración es fundamental reponer sodio mediante bebidas isotónicas."
+    ],
+    "instructions_en": [
+      "Summarize daily targets for Sodium, Potassium, and Magnesium in milligrams in 2 concise sentences.",
+      "Highlight that workouts > 90 minutes with heavy sweating require sodium replacement via isotonic electrolyte drinks."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Electrolitos Diarios (Sodio & Potasio) | CalculadoraHub",
+    "metaTitle_en": "Daily Electrolytes Intake Calculator (Sodium, Potassium) | CalculadoraHub",
+    "metaDescription": "Calcula tus metas diarias de sodio, potasio y magnesio para evitar calambres. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate target daily sodium, potassium, and magnesium intake to prevent cramps. Free, instant results.",
+    "keywords": ["electrolytes intake calculator", "electrolitos diarios", "sodio potasio magnesio", "evitar calambres de sodio"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

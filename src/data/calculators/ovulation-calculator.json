@@ -1,0 +1,177 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "ovulation-calculator",
+    "title": "Calculadora de Ovulación y Días Fértiles (Fase Lútea & Calendario)",
+    "title_en": "Ovulation & Fertile Window Calculator (Luteal Phase & Calendar)",
+    "slug": "ovulacion-dias-fertiles-calendario",
+    "category": "health",
+    "subcategory": "pregnancy",
+    "tags": ["ovulacion", "dias-fertiles", "fertilidad", "embarazo", "regla"],
+    "tags_en": ["ovulation", "fertile-days", "fertility", "pregnancy", "period"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calendar"
+  },
+  "content": {
+    "shortDescription": "Calcula tu día exacto de ovulación, la ventana de días fértiles con mayor probabilidad de concepción y la fecha de tu próxima regla.",
+    "shortDescription_en": "Calculate your exact ovulation day, highest fertility window for conception, and next expected period date on the calendar.",
+    "longDescription": "Auditoría endocrina reproductiva y fertilidad. Basada en las pautas del Colegio Americano de Obstetras y Ginecólogos (ACOG). Determina la ventana fértil de 6 días considerando la viabilidad de los espermatozoides (5 días) y la longevidad del óvulo (24h).",
+    "longDescription_en": "Reproductive endocrinology and fertility audit. Based on ACOG guidelines. Determines the 6-day fertile window considering sperm viability (5 days) and egg longevity (24 hours).",
+    "howToUse": [
+      "Selecciona el primer día de tu última regla en el calendario.",
+      "Ingresa la duración promedio de tu ciclo menstrual (habitualmente 28 días).",
+      "Consulta tu fecha estimada de ovulación, los días fértiles pico y la fecha idónea para realizar un test de embarazo."
+    ],
+    "howToUse_en": [
+      "Select the first day of your last period on the calendar.",
+      "Enter your average menstrual cycle length (default: 28 days).",
+      "View estimated ovulation date, peak fertile window, and optimal pregnancy test date."
+    ],
+    "methodology": "Pautas ACOG / ASRM: Día Ovulación = Fecha Regla + (Duración Ciclo - Fase Lútea). Ventana Fértil = Día Ovulación - 5 días hasta +1 día. Test Embarazo Óptimo = Día Ovulación + 12 días.",
+    "methodology_en": "ACOG / ASRM Guidelines: Ovulation Day = LMP + (Cycle Length - Luteal Phase). Fertile Window = Ovulation Day - 5 days to +1 day. Optimal Test Date = Ovulation Day + 12 days."
+  },
+  "guideSections": [
+    {
+      "id": "fertility-window-guide",
+      "icon": "🌸",
+      "title": "Biological Mechanism of the Fertile Window",
+      "title_es": "Mecanismo Biológico de la Ventana Fértil",
+      "content_html_en": "<p><b>Peak Conception Days:</b> The 2 days preceding ovulation and the ovulation day itself offer the highest biological probability of conception (up to 33%).</p><p><b>Sperm Survival:</b> Healthy sperm can survive up to 5 days inside the female reproductive tract waiting for ovulation.</p>",
+      "content_html": "<p><b>Días de Máxima Concepción:</b> Los 2 días previos a la ovulación y el propio día de ovulación ofrecen la máxima probabilidad biológica de embarazo (hasta un 33%).</p><p><b>Supervivencia del Espermatozoide:</b> Los espermatozoides sanos pueden sobrevivir hasta 5 días en el tracto reproductor femenino.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "lmpDate",
+      "label": "Primer día de tu última regla (LMP)",
+      "label_en": "First day of your last menstrual period (LMP)",
+      "type": "date",
+      "default": "2026-05-15",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "cycleLength",
+      "label": "Duración habitual del ciclo menstrual",
+      "label_en": "Average Menstrual Cycle Length",
+      "type": "number",
+      "default": 28,
+      "min": 21,
+      "max": 40,
+      "step": 1,
+      "unit": "días",
+      "unit_en": "days",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [21, 40], "message": "Ciclo entre 21 y 40 días", "message_en": "Cycle between 21 and 40 days" }]
+    },
+    {
+      "id": "lutealPhaseDays",
+      "label": "Duración de la fase lútea (post-ovulatoria)",
+      "label_en": "Luteal Phase Duration (post-ovulation)",
+      "type": "number",
+      "default": 14,
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "unit": "días",
+      "unit_en": "days",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "estimatedOvulationDate",
+      "label": "Fecha Estimada de Ovulación",
+      "label_en": "Estimated Ovulation Date",
+      "expression": "addDays(lmpDate, cycleLength - lutealPhaseDays)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "estimatedOvulationDate", "op": "!=", "value": "" }, "label": "Día Pico de Ovulación", "label_en": "Peak Ovulation Day", "tone": "success", "text": "Fecha probable de liberación del óvulo maduro.", "text_en": "Estimated calendar date of mature egg release." }
+      ]
+    },
+    {
+      "id": "fertileWindowStart",
+      "label": "Inicio de la Ventana de Días Fértiles",
+      "label_en": "Fertile Window Start Date",
+      "expression": "addDays(estimatedOvulationDate, -5)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "fertileWindowEnd",
+      "label": "Fin de la Ventana de Días Fértiles",
+      "label_en": "Fertile Window End Date",
+      "expression": "addDays(estimatedOvulationDate, 1)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "nextPeriodDate",
+      "label": "Fecha Estimada de la Próxima Regla",
+      "label_en": "Next Expected Period Date",
+      "expression": "addDays(lmpDate, cycleLength)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "pregnancyTestDate",
+      "label": "Fecha Recomendada para Test de Embarazo",
+      "label_en": "Recommended Pregnancy Test Date",
+      "expression": "addDays(estimatedOvulationDate, 12)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "pregnancy-calculator", "type": "static", "message": "Calcula la fecha de parto si logras la concepción", "message_en": "Calculate due date if conception occurs", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Ginecólogo y Especialista en Medicina de la Reproducción",
+    "role_en": "Gynecologist & Reproductive Endocrinology Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "cálido y profesional",
+    "includeData": ["estimatedOvulationDate", "fertileWindowStart", "fertileWindowEnd", "nextPeriodDate", "pregnancyTestDate"],
+    "instructions": [
+      "Sintetiza la fecha de ovulación, el rango de días fértiles de máxima probabilidad y la fecha para el test de embarazo en 2 frases concisas.",
+      "Destaca que mantener relaciones sexuales cada 1-2 días dentro de la ventana fértil maximiza la probabilidad de concepción."
+    ],
+    "instructions_en": [
+      "Summarize ovulation date, fertile window range, and optimal pregnancy test date in 2 concise sentences.",
+      "Highlight that intercourse every 1-2 days throughout the fertile window maximizes conception probability."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Ovulación y Días Fértiles (Calendario) | CalculadoraHub",
+    "metaTitle_en": "Ovulation & Fertile Window Calculator (Calendar) | CalculadoraHub",
+    "metaDescription": "Calcula tu día de ovulación y la ventana de días fértiles para quedar embarazada. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your ovulation day and peak fertile window for conception. Free, instant results.",
+    "keywords": ["ovulation calculator", "calculadora de ovulacion", "dias fertiles calendario", "quedar embarazada"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

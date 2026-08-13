@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "paint-coverage-calculator",
+    "title": "Calculadora de Pintura, Cobertura y Litros por Galón",
+    "title_en": "Paint Coverage & Gallon Volume Calculator",
+    "slug": "calculadora-de-pintura-cobertura-litros-galones-paredes",
+    "category": "construction",
+    "subcategory": "remodeling",
+    "tags": ["pintura", "cobertura-de-pintura", "galones", "litros", "paredes", "techos", "reformas"],
+    "tags_en": ["paint", "paint-coverage", "gallons", "liters", "walls", "ceilings", "remodeling"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el volumen exacto de pintura en galones y litros necesario para pintar paredes y techos según el número de manos/capas.",
+    "shortDescription_en": "Calculate exact paint volume in gallons and liters needed for painting walls and ceilings based on coat count.",
+    "longDescription": "Herramienta de acabado interior y exterior. Determina la cantidad de pintura requerida ajustada al rendimiento estándar del fabricante (m²/L o ft²/galón).",
+    "longDescription_en": "Interior and exterior finishing tool. Computes paint volume required adjusted to manufacturer coverage rating (m²/L or sq ft/gal).",
+    "howToUse": [
+      "Ingresa el Área Total de Paredes / Techos a Pintar (m² o pies²).",
+      "Selecciona el Número de Manos / Capas de Pintura (1, 2 o 3 capas).",
+      "Selecciona el Rendimiento de la Pintura (ej. 10 m²/L o 350 ft²/galón).",
+      "Consulta los Galones y Litros Totales de Pintura a comprar."
+    ],
+    "howToUse_en": [
+      "Enter Total Wall / Ceiling Surface Area (m² or sq ft).",
+      "Select Number of Paint Coats (1, 2, or 3 coats).",
+      "Select Paint Coverage Rating (e.g. 10 m²/L or 350 sq ft/gal).",
+      "View Total Gallons and Liters of Paint to purchase."
+    ],
+    "methodology": "Superficie Total Efectiva = Área * Capas. Litros = SuperficieEfectiva / RendimientoM2L. 1 Galón US = 3.785 L.",
+    "methodology_en": "Total Effective Surface = Area * Coats. Liters = EffectiveSurface / CoverageM2L. 1 US Gallon = 3.785 L."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Pintura Decorativa y Recubrimientos",
+    "role_en": "Decorative Painting & Surface Coatings Specialist Assistant",
+    "includeData": ["paintGallonsResult", "paintLitersResult"],
+    "instructions": [
+      "Interpreta el volumen de pintura calculado para las capas solicitadas.",
+      "Explica el impacto de la porosidad del soporte (paredes de yeso virgen o mortero rugoso consumen hasta 20% más pintura).",
+      "Recomienda aplicar imprimación / sellador previo en superficies nuevas."
+    ],
+    "instructions_en": [
+      "Interpret calculated paint volume for requested coats.",
+      "Explain surface porosity impact (bare drywall or rough masonry consumes up to 20% more paint).",
+      "Recommend applying primer/sealer beforehand on new surfaces."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "pnt-guide",
+      "icon": "🎨",
+      "title": "Standard Paint Coverage Ratings",
+      "title_es": "Rendimientos Estándar de Pintura",
+      "content_html_en": "<p><b>1 US Gallon (3.785 L):</b> Covers ~350 to 400 sq ft (32 to 37 m²) per coat.</p><p><b>Standard Rule:</b> 2 coats are recommended for full color opacity and durability.</p>",
+      "content_html": "<p><b>1 Galón US (3.785 L):</b> Cubre ~32 a 37 m² (350 - 400 ft²) por mano.</p><p><b>Regla Estándar:</b> Se recomiendan 2 manos para máxima opacidad y durabilidad del color.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "paintSurfaceAreaM2",
+      "label": "Área de la Superficie a Pintar (m²)",
+      "label_en": "Surface Area to Paint (m²)",
+      "type": "number",
+      "default": 120,
+      "min": 1,
+      "max": 50000,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "paintCoatsCount",
+      "label": "Número de Manos / Capas de Pintura",
+      "label_en": "Number of Paint Coats",
+      "type": "select",
+      "default": "2",
+      "options": [
+        { "value": "1", "label": "1 Mano (Repintado ligero del mismo color)", "label_en": "1 Coat (Light repaint same color)" },
+        { "value": "2", "label": "2 Manos (Recomendado estándar)", "label_en": "2 Coats (Standard recommended)" },
+        { "value": "3", "label": "3 Manos (Cambio drástico de color / superficie porosa)", "label_en": "3 Coats (Drastic color change / porous surface)" }
+      ]
+    },
+    {
+      "id": "paintCoverageM2PerLiter",
+      "label": "Rendimiento de Pintura (m² por Litro)",
+      "label_en": "Paint Coverage (m² per Liter)",
+      "type": "number",
+      "default": 10.0,
+      "min": 2,
+      "max": 25,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "paintLitersResult",
+      "label": "Litros de Pintura Requeridos",
+      "label_en": "Required Liters of Paint",
+      "expression": "paintCoverageM2PerLiter > 0 ? (ceil(((paintSurfaceAreaM2 * paintCoatsCount) / paintCoverageM2PerLiter) * 1.1 * 10) / 10) : 0",
+      "unit": "L",
+      "unit_en": "L",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "paintLitersResult", "op": ">=", "value": 0 }, "label": "Litros Calculados", "label_en": "Liters Computed", "tone": "success", "text": "Volumen de pintura necesario cuantificado.", "text_en": "Necessary paint volume quantified." }
+      ]
+    },
+    {
+      "id": "paintGallonsResult",
+      "label": "Galones US de Pintura (3.785 L/galón)",
+      "label_en": "US Gallons of Paint (3.785 L/gal)",
+      "expression": "ceil((paintLitersResult / 3.78541) * 10) / 10",
+      "unit": "gal",
+      "unit_en": "gal",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "trucking-freight-cost-per-mile-calculator",
+    "title": "Calculadora de Costo por Milla (CPM) para Transporte de Carga y Camiones",
+    "title_en": "Trucking Freight Cost Per Mile (CPM) Calculator",
+    "slug": "calculadora-de-costo-por-milla-cpm-transporte-de-carga-camiones",
+    "category": "transport",
+    "subcategory": "fuel",
+    "tags": ["costo-por-milla-cpm", "camiones", "transporte-de-carga", "trailers", "fleteras", "combustible-diesel", "transporte"],
+    "tags_en": ["cost-per-mile-cpm", "trucking", "freight", "trailers", "diesel-fuel", "logistics", "transport"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el Costo por Milla (CPM) operativo para camiones de carga de larga distancia y empresas de logística (fijos + variables).",
+    "shortDescription_en": "Calculate operational Cost Per Mile (CPM) for long-haul freight trucks and logistics carriers (fixed + variable costs).",
+    "longDescription": "Herramienta de transporte de mercancías, semirremolques e industria del transporte por carretera. Determina la tarifa mínima por milla requerida para ser rentable.",
+    "longDescription_en": "Freight trucking, semi-trailer, and logistics industry tool. Computes minimum break-even freight rate per mile required for profitability.",
+    "howToUse": [
+      "Ingresa las Millas Totales Recorridas al Mes (ej. 10,000 millas/mes).",
+      "Ingresa el Total de Gastos Fijos Mensuales (cuota camión, seguros, permisos, ej. $4,000/mes).",
+      "Ingresa el Total de Gastos Variables Mensuales (diésel, mantenimiento, peajes, salario chofer, ej. $12,000/mes).",
+      "Consulta el Costo por Milla (CPM) Fijo, CPM Variable y CPM Total de Operación."
+    ],
+    "howToUse_en": [
+      "Enter Total Monthly Miles Driven (e.g. 10,000 miles/month).",
+      "Enter Total Fixed Monthly Expenses (truck payment, insurance, permits, e.g. $4,000/month).",
+      "Enter Total Variable Monthly Expenses (diesel, maintenance, tolls, driver pay, e.g. $12,000/month).",
+      "View Fixed Cost Per Mile, Variable Cost Per Mile, and Total Operating CPM."
+    ],
+    "methodology": "CPM_Fijo = GastosFijos / Millas. CPM_Variable = GastosVariables / Millas. CPM_Total = CPM_Fijo + CPM_Variable.",
+    "methodology_en": "Fixed_CPM = FixedExpenses / Miles. Variable_CPM = VariableExpenses / Miles. Total_CPM = Fixed_CPM + Variable_CPM."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Logística de Carga Pesada y Tarifas de Transporte (CPM)",
+    "role_en": "Freight Trucking Logistics & Cost Per Mile (CPM) Specialist Assistant",
+    "includeData": ["totalOperatingCpmResult", "fixedCostPerMileResult", "variableCostPerMileResult"],
+    "instructions": [
+      "Interpreta el Costo por Milla (CPM) operativo total calculado.",
+      "Explica la tarifa mínima de flete por milla necesaria para obtener un margen de beneficio objetivo (ej. agregar 20% de margen al CPM).",
+      "Muestra la sensibilidad del CPM ante variaciones en el precio del diésel y millas muertas/vacías."
+    ],
+    "instructions_en": [
+      "Interpret total calculated operational Cost Per Mile (CPM).",
+      "Explain minimum required freight rate per mile to target a profit margin (e.g. adding 20% margin above CPM).",
+      "Show CPM sensitivity against diesel fuel price shifts and deadhead / empty miles."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "tfc-guide",
+      "icon": "🚛",
+      "title": "Trucking Cost Per Mile Industry Standards",
+      "title_es": "Estándares Industriales de Costo por Milla en Camiones",
+      "content_html_en": "<p><b>Average Industry CPM:</b> ~$1.65 to $2.10 per mile for Class 8 Semi-Trucks.</p><p><b>Fixed Costs Share:</b> Includes truck lease/loan, liability insurance, permits (~25-30% of total CPM).</p><p><b>Variable Costs Share:</b> Includes diesel fuel, tires, maintenance, driver pay (~70-75% of total CPM).</p>",
+      "content_html": "<p><b>CPM Promedio de la Industria:</b> ~$1.65 a $2.10 por milla para camiones de clase 8.</p><p><b>Proporción Costos Fijos:</b> Cuota leasing, seguro de responsabilidad, licencias (~25-30% del CPM total).</p><p><b>Proporción Costos Variables:</b> Diésel, neumáticos, mantenimiento, sueldo del conductor (~70-75% del CPM total).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "monthlyTotalMilesDriven",
+      "label": "Millas Totales Recorridas al Mes",
+      "label_en": "Total Monthly Miles Driven",
+      "type": "number",
+      "default": 10000,
+      "min": 500,
+      "max": 50000,
+      "step": 500,
+      "required": true
+    },
+    {
+      "id": "monthlyFixedExpensesSum",
+      "label": "Gastos Fijos Mensuales ($/mes)",
+      "label_en": "Total Monthly Fixed Expenses ($/month)",
+      "type": "number",
+      "default": 4200,
+      "min": 100,
+      "max": 50000,
+      "step": 100,
+      "required": true
+    },
+    {
+      "id": "monthlyVariableExpensesSum",
+      "label": "Gastos Variables Mensuales ($/mes)",
+      "label_en": "Total Monthly Variable Expenses ($/month)",
+      "type": "number",
+      "default": 12800,
+      "min": 500,
+      "max": 100000,
+      "step": 200,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "fixedCostPerMileResult",
+      "label": "Costo Fijo por Milla (Fixed CPM)",
+      "label_en": "Fixed Cost Per Mile (Fixed CPM)",
+      "expression": "monthlyTotalMilesDriven > 0 ? (monthlyFixedExpensesSum / monthlyTotalMilesDriven) : 0",
+      "unit": "$/milla",
+      "unit_en": "$/mile",
+      "precision": 3,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "variableCostPerMileResult",
+      "label": "Costo Variable por Milla (Variable CPM)",
+      "label_en": "Variable Cost Per Mile (Variable CPM)",
+      "expression": "monthlyTotalMilesDriven > 0 ? (monthlyVariableExpensesSum / monthlyTotalMilesDriven) : 0",
+      "unit": "$/milla",
+      "unit_en": "$/mile",
+      "precision": 3,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalOperatingCpmResult",
+      "label": "Costo por Milla Total de Operación (Total CPM)",
+      "label_en": "Total Operating Cost Per Mile (Total CPM)",
+      "expression": "fixedCostPerMileResult + variableCostPerMileResult",
+      "unit": "$/milla",
+      "unit_en": "$/mile",
+      "precision": 3,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalOperatingCpmResult", "op": ">=", "value": 0 }, "label": "CPM Calculado", "label_en": "CPM Computed", "tone": "success", "text": "Costo operativo por milla de camión cuantificado.", "text_en": "Total truck operating cost per mile quantified." }
+      ]
+    }
+  ]
+}

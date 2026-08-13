@@ -1,0 +1,307 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "calorie-calculator",
+    "title": "Calculadora de Calorías Diarias (Métodos Clínicos)",
+    "title_en": "Daily Calorie Calculator (Clinical Multi-Formula)",
+    "slug": "calorias-diarias",
+    "category": "food",
+    "subcategory": "nutrition",
+    "tags": ["calorias", "tdee", "mifflin-st-jeor", "katch-mcardle", "harris-benedict"],
+    "tags_en": ["calories", "tdee", "mifflin-st-jeor", "katch-mcardle", "harris-benedict"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Flame"
+  },
+  "content": {
+    "shortDescription": "Calcula tus necesidades calóricas diarias mediante 3 ecuaciones clínicas validadas (Mifflin-St Jeor, Katch-McArdle y Harris-Benedict).",
+    "shortDescription_en": "Calculate daily caloric requirements using 3 clinical formulas (Mifflin-St Jeor, Katch-McArdle, and Harris-Benedict).",
+    "longDescription": "Auditoría nutricional completa para determinar tu Tasa Metabólica Basal (BMR), Gasto Energético Diario Total (TDEE) y la ingesta calórica exacta para alcanzar tus metas de pérdida de grasa, mantenimiento o hipertrofia muscular.",
+    "longDescription_en": "Comprehensive nutritional energy audit calculating Basal Metabolic Rate (BMR), Total Daily Energy Expenditure (TDEE), and target caloric intake for fat loss, maintenance, or muscle hypertrophy.",
+    "howToUse": [
+      "Selecciona la fórmula metabólica clínica deseada (Mifflin-St Jeor, Katch-McArdle o Harris-Benedict).",
+      "Ingresa tu sexo, edad, peso y estatura (y % de grasa corporal si lo conoces).",
+      "Selecciona tu nivel de actividad física diaria.",
+      "Elige tu objetivo físico (déficit para perder peso, mantenimiento o superávit para masa muscular).",
+      "Revisa la tabla comparativa de metas calóricas y la proyección semanal de cambio de peso."
+    ],
+    "howToUse_en": [
+      "Select your preferred clinical BMR formula (Mifflin-St Jeor, Katch-McArdle, or Harris-Benedict).",
+      "Enter sex, age, weight, and height (plus optional Body Fat % for Katch-McArdle).",
+      "Select daily physical activity level (PAL).",
+      "Choose fitness goal (caloric deficit, maintenance, or muscle gain surplus).",
+      "Review the comprehensive goal target table and projected weekly weight change rates."
+    ],
+    "methodology": "Ecuaciones Clínicas: 1. Mifflin-St Jeor (BMR = 10W + 6.25H - 5A + sex). 2. Katch-McArdle (BMR = 370 + 21.6 × MasaMagra_kg). 3. Harris-Benedict Revisada (Roza & Shizgal 1984). Multiplicado por el factor PAL (1.2 a 1.9).",
+    "methodology_en": "Clinical Formulas: 1. Mifflin-St Jeor. 2. Katch-McArdle (uses Lean Body Mass). 3. Revised Harris-Benedict (1984). Adjusted by Physical Activity Level (PAL 1.2 to 1.9)."
+  },
+  "guideSections": [
+    {
+      "id": "formulas-overview",
+      "icon": "🧪",
+      "title": "Comparison of Clinical BMR Formulas",
+      "title_es": "Comparativa de Fórmulas Clínicas de BMR",
+      "content_html_en": "<p><b>Mifflin-St Jeor (1990):</b> Recommended by the Academy of Nutrition and Dietetics as the most accurate formula for the general population (±10% error margin).</p><p><b>Katch-McArdle (1996):</b> Most accurate for athletes because it calculates metabolic rate directly from Lean Body Mass (LBM).</p><p><b>Harris-Benedict (1984):</b> The historical clinical standard, slightly overestimates calories in overweight individuals.</p>",
+      "content_html": "<p><b>Mifflin-St Jeor (1990):</b> Recomendada por la Academia de Nutrición y Dietética por su mayor precisión en la población general (margen ±10%).</p><p><b>Katch-McArdle (1996):</b> La más precisa para atletas al calcular el gasto directamente sobre la Masa Corporal Magra.</p><p><b>Harris-Benedict (1984):</b> Estándar histórico clínico, tiende a sobreestimar levemente en personas con sobrepeso.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "formulaMethod",
+      "label": "Fórmula metabólica clínica",
+      "label_en": "Clinical BMR Formula",
+      "type": "select",
+      "default": "mifflin",
+      "options": [
+        { "value": "mifflin", "label": "Mifflin-St Jeor (Recomendada - Población General)", "label_en": "Mifflin-St Jeor (Recommended - General Population)" },
+        { "value": "katch", "label": "Katch-McArdle (Requiere % Grasa Corporal - Atletas)", "label_en": "Katch-McArdle (Requires Body Fat % - Athletes)" },
+        { "value": "harris", "label": "Harris-Benedict Revisada (Roza & Shizgal 1984)", "label_en": "Revised Harris-Benedict (Roza & Shizgal 1984)" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "gender",
+      "label": "Sexo biológico",
+      "label_en": "Biological Sex",
+      "type": "select",
+      "default": "male",
+      "options": [
+        { "value": "male", "label": "Hombre", "label_en": "Male" },
+        { "value": "female", "label": "Mujer", "label_en": "Female" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "age",
+      "label": "Edad",
+      "label_en": "Age",
+      "type": "number",
+      "default": 30,
+      "min": 15,
+      "max": 100,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [15, 100], "message": "Edad entre 15 y 100", "message_en": "Age between 15 and 100" }]
+    },
+    {
+      "id": "weightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 30,
+      "max": 300,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "heightCm",
+      "label": "Estatura",
+      "label_en": "Height",
+      "type": "number",
+      "default": 178,
+      "min": 100,
+      "max": 230,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "bodyFatPercent",
+      "label": "Porcentaje de grasa corporal (para Katch-McArdle)",
+      "label_en": "Body Fat Percentage (for Katch-McArdle)",
+      "type": "number",
+      "default": 15,
+      "min": 4,
+      "max": 50,
+      "step": 0.5,
+      "unit": "%",
+      "required": false,
+      "validation": []
+    },
+    {
+      "id": "activityLevel",
+      "label": "Nivel de actividad física diaria (PAL)",
+      "label_en": "Physical Activity Level (PAL)",
+      "type": "select",
+      "default": "1.375",
+      "options": [
+        { "value": "1.2", "label": "Sedentario (trabajo de escritorio, sin ejercicio)", "label_en": "Sedentary (desk job, little/no exercise)" },
+        { "value": "1.375", "label": "Ligero (ejercicio 1-3 días/semana)", "label_en": "Light (exercise 1-3 days/week)" },
+        { "value": "1.55", "label": "Moderado (ejercicio 3-5 días/semana)", "label_en": "Moderate (exercise 3-5 days/week)" },
+        { "value": "1.725", "label": "Fuerte (ejercicio 6-7 días/semana)", "label_en": "Heavy (exercise 6-7 days/week)" },
+        { "value": "1.9", "label": "Extremo (entrenamiento profesional doble sesión)", "label_en": "Athlete (intense physical job or 2x daily training)" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "fitnessGoal",
+      "label": "Objetivo nutricional deseado",
+      "label_en": "Target Fitness Goal",
+      "type": "select",
+      "default": "-0.15",
+      "options": [
+        { "value": "-0.25", "label": "Pérdida de Grasa Intensa (-25% déficit)", "label_en": "Aggressive Fat Loss (-25% deficit)" },
+        { "value": "-0.15", "label": "Pérdida de Grasa Moderada (-15% déficit)", "label_en": "Moderate Fat Loss (-15% deficit)" },
+        { "value": "-0.10", "label": "Pérdida Gradual / Recomposición (-10%)", "label_en": "Mild Loss / Recomposition (-10%)" },
+        { "value": "0.0", "label": "Mantenimiento de Peso (0%)", "label_en": "Weight Maintenance (0%)" },
+        { "value": "0.10", "label": "Superávit Magro (+10% masa muscular)", "label_en": "Lean Muscle Gain (+10% surplus)" },
+        { "value": "0.20", "label": "Superávit para Volumen (+20%)", "label_en": "Aggressive Bulk (+20% surplus)" }
+      ],
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "bmrMifflin",
+      "label": "BMR Mifflin-St Jeor",
+      "label_en": "Mifflin-St Jeor BMR",
+      "expression": "10 * weightKg + 6.25 * heightCm - 5 * age + (gender == 'male' ? 5 : -161)",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "bmrKatch",
+      "label": "BMR Katch-McArdle",
+      "label_en": "Katch-McArdle BMR",
+      "expression": "370 + 21.6 * (weightKg * (1 - (bodyFatPercent / 100)))",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "bmrHarris",
+      "label": "BMR Harris-Benedict Revisada",
+      "label_en": "Revised Harris-Benedict BMR",
+      "expression": "gender == 'male' ? (88.362 + 13.397 * weightKg + 4.799 * heightCm - 5.677 * age) : (447.593 + 9.247 * weightKg + 3.098 * heightCm - 4.330 * age)",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "activeBmr",
+      "label": "BMR Seleccionado",
+      "label_en": "Selected BMR Base",
+      "expression": "formulaMethod == 'katch' ? bmrKatch : (formulaMethod == 'harris' ? bmrHarris : bmrMifflin)",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "tdeeMaintenance",
+      "label": "Gasto Energético Diario Total (TDEE Mantenimiento)",
+      "label_en": "Total Daily Energy Expenditure (TDEE Maintenance)",
+      "expression": "activeBmr * activityLevel",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "tdeeMaintenance", "op": ">", "value": 0 }, "label": "Mantenimiento Calórico", "label_en": "Caloric Maintenance Level", "tone": "info", "text": "Calorías diarias exactas para mantener tu peso corporal actual sin variaciones.", "text_en": "Exact daily calories required to maintain current body weight." }
+      ]
+    },
+    {
+      "id": "targetGoalCalories",
+      "label": "Meta Calórica Diaria Recomendada",
+      "label_en": "Target Daily Goal Calorie Intake",
+      "expression": "max(tdeeMaintenance * (1 + fitnessGoal), activeBmr)",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "targetGoalCalories", "op": ">", "value": 0 }, "label": "Meta Calórica del Objetivo", "label_en": "Target Caloric Goal", "tone": "success", "text": "Ingesta calórica diaria óptima para alcanzar el objetivo seleccionado de forma segura.", "text_en": "Optimal daily caloric target to achieve selected fitness goal safely." }
+      ]
+    },
+    {
+      "id": "weeklyCalorieBudget",
+      "label": "Presupuesto Calórico Semanal",
+      "label_en": "Weekly Total Calorie Budget",
+      "expression": "targetGoalCalories * 7",
+      "unit": "kcal/semana",
+      "unit_en": "kcal/week",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "projectedWeightChangeKgPerWeek",
+      "label": "Proyección de Cambio de Peso por Semana",
+      "label_en": "Projected Weekly Weight Change Rate",
+      "expression": "((targetGoalCalories - tdeeMaintenance) * 7) / 7700",
+      "unit": "kg/semana",
+      "unit_en": "kg/week",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "macro-calculator", "type": "static", "message": "Calcula tus macronutrientes para esta meta calórica", "message_en": "Calculate target macros for this caloric goal", "priority": 1 },
+    { "target": "body-fat-calculator", "type": "static", "message": "Calcula tu porcentaje de grasa corporal", "message_en": "Calculate your body fat percentage", "priority": 2 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Nutricionista Clínico y Fisiólogo del Deporte",
+    "role_en": "Clinical Nutritionist & Exercise Physiologist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y analítico",
+    "includeData": ["targetGoalCalories", "tdeeMaintenance", "activeBmr", "projectedWeightChangeKgPerWeek", "formulaMethod"],
+    "instructions": [
+      "Sintetiza la meta calórica diaria, el TDEE de mantenimiento y el ritmo semanal de cambio de peso en 2-3 frases concisas.",
+      "Advierte que la ingesta calórica diaria no debe caer de forma prolongada por debajo del BMR basal para evitar la desaceleración metabólica y pérdida muscular."
+    ],
+    "instructions_en": [
+      "Summarize daily calorie target, maintenance TDEE, and weekly weight change rate in 2-3 concise sentences.",
+      "Warn that daily intake should not drop below basal BMR long-term to prevent metabolic adaptation and muscle loss."
+    ],
+    "maxLengthWords": 100,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Calorías Diarias (Métodos Clínicos) | CalculadoraHub",
+    "metaTitle_en": "Daily Calorie Calculator (Clinical Multi-Formula) | CalculadoraHub",
+    "metaDescription": "Calcula tus calorías diarias con Mifflin-St Jeor, Katch-McArdle y Harris-Benedict. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate daily calories with Mifflin-St Jeor, Katch-McArdle, and Harris-Benedict formulas. Free, instant results.",
+    "keywords": ["calorie calculator", "calorias diarias", "tdee calculator", "mifflin st jeor", "katch mcardle"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "friction-calculator",
+    "title": "Calculadora de Fuerza de Fricción Estática y Cinética (F_f = µ N)",
+    "title_en": "Friction Force Calculator (Static & Kinetic F_f = µ N)",
+    "slug": "calculadora-de-fuerza-de-friccion-estatica-cinetica-rozamiento",
+    "category": "physics",
+    "subcategory": "mechanics",
+    "tags": ["friccion", "rozamiento", "coeficiente-de-friccion", "fuerza-normal", "fisica", "newton", "mecanica"],
+    "tags_en": ["friction", "friction-force", "friction-coefficient", "normal-force", "physics", "newton", "mechanics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la fuerza de fricción / rozamiento ($F_f = \\mu \\cdot N$) a partir del coeficiente de fricción y la fuerza normal.",
+    "shortDescription_en": "Calculate friction force ($F_f = \\mu \\cdot N$) from coefficient of friction and normal force.",
+    "longDescription": "Herramienta de tribología y física clásica. Evalúa la fuerza de oposición al deslizamiento entre dos superficies de contacto según la Fuerza Normal ($N = m \\cdot g$).",
+    "longDescription_en": "Tribology and classical physics tool. Evaluates opposing force to sliding between contact surfaces based on Normal Force ($N = m \\cdot g$).",
+    "howToUse": [
+      "Ingresa la Masa del Objeto ($m$ en kg).",
+      "Selecciona el Coeficiente de Fricción ($\u03bc$, ej. Caucho sobre Asfalto = 0.8, Hielo sobre Hielo = 0.03).",
+      "Consulta la Fuerza Normal ($N$) y la Fuerza de Fricción resultante en Newtons (N)."
+    ],
+    "howToUse_en": [
+      "Enter Object Mass ($m$ in kg).",
+      "Select Coefficient of Friction ($\u03bc$, e.g. Rubber on Asphalt = 0.8, Ice on Ice = 0.03).",
+      "View Normal Force ($N$) and Resulting Friction Force in Newtons (N)."
+    ],
+    "methodology": "Fuerza Normal N = m * g. Fuerza de Rozamiento F_f = μ * N.",
+    "methodology_en": "Normal Force N = m * g. Friction Force F_f = μ * N."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Tribología y Contacto Mecánico",
+    "role_en": "Tribology & Mechanical Contact Specialist Assistant",
+    "includeData": ["normalForceNewtonsResult", "frictionForceNewtonsResult"],
+    "instructions": [
+      "Interpreta la fuerza de fricción calculada en la interfaz de contacto.",
+      "Explica la diferencia entre el Coeficiente Estático (resistencia inicial al arranque) y Cinético (resistencia durante el movimiento deslizante).",
+      "Muestra la relevancia en frenado de vehículos, maquinaria y transporte pesado."
+    ],
+    "instructions_en": [
+      "Interpret calculated friction force across the contact interface.",
+      "Explain difference between Static Coefficient (breakaway resistance) vs Kinetic Coefficient (sliding resistance).",
+      "Show relevance in vehicle braking, machinery, and heavy transport."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "frc-guide",
+      "icon": "🛞",
+      "title": "Friction Coefficients Reference Table",
+      "title_es": "Tabla de Referencia de Coeficientes de Fricción",
+      "content_html_en": "<p><b>Rubber on Dry Asphalt:</b> μ ≈ 0.80</p><p><b>Wood on Wood:</b> μ ≈ 0.40</p><p><b>Steel on Steel (Dry):</b> μ ≈ 0.60</p><p><b>Ice on Ice:</b> μ ≈ 0.03</p>",
+      "content_html": "<p><b>Caucho sobre Asfalto Seco:</b> μ ≈ 0.80</p><p><b>Madera sobre Madera:</b> μ ≈ 0.40</p><p><b>Acero sobre Acero (Seco):</b> μ ≈ 0.60</p><p><b>Hielo sobre Hielo:</b> μ ≈ 0.03</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "massObjectKg",
+      "label": "Masa del Objeto (m en kg)",
+      "label_en": "Object Mass (m in kg)",
+      "type": "number",
+      "default": 100,
+      "min": 0.1,
+      "max": 1000000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "frictionCoefficientMu",
+      "label": "Coeficiente de Fricción (μ)",
+      "label_en": "Coefficient of Friction (μ)",
+      "type": "select",
+      "default": "0.80",
+      "options": [
+        { "value": "0.80", "label": "Caucho sobre Asfalto Seco (μ = 0.80)", "label_en": "Rubber on Dry Asphalt (μ = 0.80)" },
+        { "value": "0.40", "label": "Madera sobre Madera (μ = 0.40)", "label_en": "Wood on Wood (μ = 0.40)" },
+        { "value": "0.60", "label": "Acero sobre Acero Seco (μ = 0.60)", "label_en": "Steel on Steel Dry (μ = 0.60)" },
+        { "value": "0.15", "label": "Metal Lubricado (μ = 0.15)", "label_en": "Lubricated Metal (μ = 0.15)" },
+        { "value": "0.03", "label": "Hielo sobre Hielo (μ = 0.03)", "label_en": "Ice on Ice (μ = 0.03)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "normalForceNewtonsResult",
+      "label": "Fuerza Normal de Soporte (N = m·g)",
+      "label_en": "Support Normal Force (N = m·g)",
+      "expression": "massObjectKg * 9.80665",
+      "unit": "N",
+      "unit_en": "N",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "frictionForceNewtonsResult",
+      "label": "Fuerza de Fricción Resentida (F_f = μ·N)",
+      "label_en": "Resisted Friction Force (F_f = μ·N)",
+      "expression": "frictionCoefficientMu * normalForceNewtonsResult",
+      "unit": "N",
+      "unit_en": "N",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "frictionForceNewtonsResult", "op": ">=", "value": 0 }, "label": "Fuerza de Rozamiento Calculada", "label_en": "Friction Force Computed", "tone": "success", "text": "Fuerza de retención por contacto evaluada.", "text_en": "Contact retention force evaluated." }
+      ]
+    }
+  ]
+}

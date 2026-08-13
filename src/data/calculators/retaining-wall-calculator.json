@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "retaining-wall-calculator",
+    "title": "Calculadora de Muros de Contención de Bloques y Grava",
+    "title_en": "Segmental Retaining Wall Blocks & Gravel Calculator",
+    "slug": "calculadora-de-muros-de-contencion-de-bloques-y-grava",
+    "category": "construction",
+    "subcategory": "materials",
+    "tags": ["muros-de-contencion", "bloques-intertrabados", "grava-de-drenaje", "tierra", "geogrid", "materiales", "construccion"],
+    "tags_en": ["retaining-wall", "segmental-blocks", "drainage-gravel", "backfill", "geogrid", "materials", "construction"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el número de bloques de hormigón intertrabados, volumen de grava para drenaje y geomalla para muros de contención de tierras.",
+    "shortDescription_en": "Calculate segmental retaining wall blocks count, drainage gravel volume, and geogrid for earth retaining walls.",
+    "longDescription": "Herramienta de paisajismo e ingeniería geotécnica civil. Determina los bloques modulares necesarios y la grava de relleno para prevenir empujes hidrostáticos.",
+    "longDescription_en": "Landscaping and civil geotechnical engineering tool. Determines required modular blocks and backfill drainage gravel to prevent hydrostatic pressure.",
+    "howToUse": [
+      "Ingresa la Longitud del Muro de Contención (metros o pies).",
+      "Ingresa la Altura Vista del Muro (metros o pies, ej. 1.2 m).",
+      "Selecciona las Dimensiones de la Cara del Bloque Modular (ej. 15x40 cm o 20x40 cm).",
+      "Consulta los Bloques Totales, Grava de Drenaje (m³ y toneladas) y bolsas de nivelación de base."
+    ],
+    "howToUse_en": [
+      "Enter Retaining Wall Length (meters or feet).",
+      "Enter Exposed Wall Height (meters or feet, e.g. 1.2 m).",
+      "Select Modular Block Face Dimensions (e.g. 15x40 cm or 20x40 cm).",
+      "View Total Blocks, Drainage Gravel (m³ and tons), and Base Leveling bags."
+    ],
+    "methodology": "Área Muro = Longitud * (AlturaVista + 0.15m entierro). Bloques = ceil((ÁreaMuro / ÁreaBloque) * 1.05). Grava Drenaje = Longitud * Altura * 0.3m espesor.",
+    "methodology_en": "Wall Area = Length * (ExposedHeight + 0.15m burial). Blocks = ceil((WallArea / BlockArea) * 1.05). Drainage Gravel = Length * Height * 0.3m thickness."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Muros de Contención y Geotécnica de Paisajismo",
+    "role_en": "Retaining Walls & Landscape Geotechnics Specialist Assistant",
+    "includeData": ["retainingBlocksCountResult", "drainageGravelTonsResult"],
+    "instructions": [
+      "Interpreta la cantidad de bloques modulares y grava de drenaje calculadas.",
+      "Explica la regla de enterrar la primera hilada de bloques (mínimo 15 cm bajo el nivel del suelo del pie del muro).",
+      "Advierte que muros con altura mayor a 1.2 metros requieren refuerzo con geomalla (geogrid) o diseño firmado por ingeniero estructural."
+    ],
+    "instructions_en": [
+      "Interpret calculated modular retaining blocks and drainage gravel tons.",
+      "Explain base course burial rule (embed minimum 15 cm below toe ground level).",
+      "Warn that walls taller than 1.2 meters require geogrid reinforcement or PE structural engineering stamp."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "rwc-guide",
+      "icon": "⛰️",
+      "title": "Retaining Wall Drainage & Base Standards",
+      "title_es": "Estándares de Drenaje y Base en Muros de Contención",
+      "content_html_en": "<p><b>Drainage Core:</b> Minimum 12 inches (30 cm) of clean crushed angular gravel behind wall face.</p><p><b>Maximum Gravity Wall Height:</b> 4 feet (1.2 meters) without geogrid engineering.</p>",
+      "content_html": "<p><b>Núcleo de Drenaje:</b> Mínimo 30 cm (12 pulg) de grava limpia triturada tras la cara del muro.</p><p><b>Altura Máxima Muro Gravedad:</b> 1.2 metros (4 pies) sin cálculo de geomalla.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "retainingWallLengthMeters",
+      "label": "Longitud Total del Muro (metros)",
+      "label_en": "Total Wall Length (meters)",
+      "type": "number",
+      "default": 12,
+      "min": 1,
+      "max": 500,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "retainingWallExposedHeightMeters",
+      "label": "Altura Vista del Muro (metros)",
+      "label_en": "Exposed Wall Height (meters)",
+      "type": "number",
+      "default": 1.0,
+      "min": 0.3,
+      "max": 5.0,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "blockFaceAreaM2Val",
+      "label": "Tamaño de la Cara del Bloque Modular",
+      "label_en": "Modular Block Face Size",
+      "type": "select",
+      "default": "0.06",
+      "options": [
+        { "value": "0.06", "label": "Bloque Mediano (15 x 40 cm = 0.06 m²)", "label_en": "Medium Block (15 x 40 cm = 0.06 m²)" },
+        { "value": "0.08", "label": "Bloque Grande (20 x 40 cm = 0.08 m²)", "label_en": "Large Block (20 x 40 cm = 0.08 m²)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalWallHeightWithBurialMeters",
+      "label": "Altura Total del Muro con Hilada Enterrada (m)",
+      "label_en": "Total Wall Height incl. Buried Course (m)",
+      "expression": "retainingWallExposedHeightMeters + 0.15",
+      "unit": "m",
+      "unit_en": "m",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "retainingBlocksCountResult",
+      "label": "Bloques Modulares Requeridos (con 5% desperdicio)",
+      "label_en": "Required Modular Blocks (with 5% waste)",
+      "expression": "blockFaceAreaM2Val > 0 ? ceil(((retainingWallLengthMeters * totalWallHeightWithBurialMeters) / blockFaceAreaM2Val) * 1.05) : 0",
+      "unit": "bloques",
+      "unit_en": "blocks",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "retainingBlocksCountResult", "op": ">=", "value": 0 }, "label": "Bloques Calculados", "label_en": "Blocks Computed", "tone": "success", "text": "Número total de bloques modulares para el muro cuantificado.", "text_en": "Total modular retaining blocks count quantified." }
+      ]
+    },
+    {
+      "id": "drainageGravelVolumeM3Result",
+      "label": "Volumen de Grava para Drenaje (m³)",
+      "label_en": "Drainage Gravel Volume (m³)",
+      "expression": "retainingWallLengthMeters * totalWallHeightWithBurialMeters * 0.30",
+      "unit": "m³",
+      "unit_en": "m³",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "drainageGravelTonsResult",
+      "label": "Toneladas Métricas de Grava (1.5 t/m³)",
+      "label_en": "Drainage Gravel Metric Tons (1.5 t/m³)",
+      "expression": "drainageGravelVolumeM3Result * 1.5",
+      "unit": "t",
+      "unit_en": "t",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

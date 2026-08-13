@@ -1,0 +1,202 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "fat-intake-calculator",
+    "title": "Calculadora de Ingesta de Grasas Saludables (Lípidos y Omega-3)",
+    "title_en": "Healthy Fat Intake Calculator (Lipids & Omega-3)",
+    "slug": "ingesta-grasas-saludables",
+    "category": "food",
+    "subcategory": "nutrition",
+    "tags": ["grasas", "lipidos", "omega-3", "nutricion", "salud-hormonal"],
+    "tags_en": ["fats", "lipids", "omega-3", "nutrition", "hormonal-health"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Utensils"
+  },
+  "content": {
+    "shortDescription": "Calcula tu meta diaria de grasas saludables en gramos y calorías para optimizar la salud hormonal, cardiovascular y la absorción de vitaminas liposolubles.",
+    "shortDescription_en": "Calculate your recommended daily healthy fat intake in grams and calories to optimize endocrine health, cardiovascular function, and fat-soluble vitamin absorption.",
+    "longDescription": "Auditoría de perfil lipídico nutricional. Determina la ingesta óptima de grasas totales (gramos/día y g/kg de peso), así como el desglose recomendado entre grasas monoinsaturadas (AGMI), poliinsaturadas (AGPI / Omega-3) y el límite máximo de grasas saturadas.",
+    "longDescription_en": "Nutritional lipid profile audit. Determines target total dietary fat (grams/day and g/kg ratio) alongside recommended breakdown of monounsaturated (MUFA), polyunsaturated (PUFA / Omega-3), and saturated fat limits.",
+    "howToUse": [
+      "Ingresa tu peso corporal actual y tu ingesta calórica diaria objetivo.",
+      "Selecciona el porcentaje de grasas deseado en tu dieta (20%, 25%, 30% o 35% de las calorías).",
+      "Consulta los gramos diarios de grasa total, el aporte por kg de peso y el desglose de ácidos grasos saludables."
+    ],
+    "howToUse_en": [
+      "Enter current body weight and target daily calorie budget.",
+      "Select desired dietary fat share percentage (20%, 25%, 30%, or 35% of total calories).",
+      "View target total daily fat grams, g/kg ratio, and breakdown of healthy fatty acids."
+    ],
+    "methodology": "Pautas OMS / AHA / ACSM: Rango Saludable de Grasas = 20% a 35% de las calorías totales (1 gramo de grasa = 9 kcal). Mínimo endocrino = 0.8 g/kg de peso corporal.",
+    "methodology_en": "WHO / AHA / ACSM Guidelines: Healthy Fat Range = 20% to 35% of total calories (1 gram of fat = 9 kcal). Endocrine minimum = 0.8 g/kg body weight."
+  },
+  "guideSections": [
+    {
+      "id": "fat-types-guide",
+      "icon": "🥑",
+      "title": "Healthy Fat Sources & Endocrine Health",
+      "title_es": "Fuentes de Grasas Saludables y Salud Hormonal",
+      "content_html_en": "<p><b>Monounsaturated (MUFA):</b> Extra virgin olive oil, avocados, almonds. Supports HDL cholesterol and vascular elasticity.</p><p><b>Polyunsaturated (PUFA - Omega-3/6):</b> Salmon, walnuts, chia seeds, flaxseed. Vital for brain function and cell membrane fluidity.</p><p><b>Hormonal Synthesis:</b> Dietary fats provide the structural precursor for testosterone, estrogen, and vitamin D synthesis.</p>",
+      "content_html": "<p><b>Monoinsaturadas (AGMI):</b> Aceite de oliva virgen extra, aguacates, almendras. Favorece el colesterol HDL y la salud vascular.</p><p><b>Poliinsaturadas (AGPI - Omega-3/6):</b> Salmón, nueces, semillas de chía y lino. Esenciales para la función cerebral e inflamatoria.</p><p><b>Síntesis Hormonal:</b> Los lípidos proporcionan el precursor básico para la síntesis de testosterona, estrógenos y vitamina D.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "weightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 30,
+      "max": 250,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [30, 250], "message": "Peso entre 30 y 250 kg", "message_en": "Weight between 30 and 250 kg" }]
+    },
+    {
+      "id": "dailyCalories",
+      "label": "Ingesta calórica diaria total",
+      "label_en": "Target Total Daily Calorie Budget",
+      "type": "number",
+      "default": 2400,
+      "min": 1000,
+      "max": 6000,
+      "step": 50,
+      "unit": "kcal",
+      "unit_en": "kcal",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1000, 6000], "message": "Calorías entre 1000 y 6000", "message_en": "Calories between 1000 and 6000" }]
+    },
+    {
+      "id": "fatPercentChoice",
+      "label": "Porcentaje de grasas en la dieta",
+      "label_en": "Dietary Fat Calorie Share Percentage",
+      "type": "select",
+      "default": "0.25",
+      "options": [
+        { "value": "0.20", "label": "20% de las calorías (Bajo en Grasa Estándar)", "label_en": "20% of calories (Standard Low Fat)" },
+        { "value": "0.25", "label": "25% de las calorías (Equilibrado Saludable - Recomendado)", "label_en": "25% of calories (Balanced Healthy - Recommended)" },
+        { "value": "0.30", "label": "30% de las calorías (Dieta Mediterránea / Deportistas)", "label_en": "30% of calories (Mediterranean / Athletic)" },
+        { "value": "0.35", "label": "35% de las calorías (Moderado-Alto en Grasa)", "label_en": "35% of calories (Moderate-High Fat)" }
+      ],
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "fatCaloriesDaily",
+      "label": "Calorías Diarias Procedentes de Grasas",
+      "label_en": "Daily Calories from Fat",
+      "expression": "dailyCalories * fatPercentChoice",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "fatGramsDaily",
+      "label": "Gramos Diarios Recomendados de Grasa Total",
+      "label_en": "Target Total Daily Fat Grams",
+      "expression": "fatCaloriesDaily / 9",
+      "unit": "g/día",
+      "unit_en": "g/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "fatGramsDaily", "op": ">", "value": 0 }, "label": "Aporte Lipídico Óptimo", "label_en": "Target Lipid Intake", "tone": "success", "text": "Gramos diarios de grasas necesarios para la salud hormonal y metabólica.", "text_en": "Target daily dietary fat grams required for endocrine health and lipid balance." }
+      ]
+    },
+    {
+      "id": "fatPerKgRatio",
+      "label": "Aporte en g/kg de Peso Corporal",
+      "label_en": "Fat g/kg Body Weight Ratio",
+      "expression": "fatGramsDaily / weightKg",
+      "unit": "g/kg",
+      "unit_en": "g/kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "mufaGramsDaily",
+      "label": "Meta Recomendada de Grasas Monoinsaturadas (AGMI)",
+      "label_en": "Target Monounsaturated Fats (MUFA)",
+      "expression": "round(fatGramsDaily * 0.50)",
+      "unit": "g/día",
+      "unit_en": "g/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "pufaGramsDaily",
+      "label": "Meta Recomendada de Grasas Poliinsaturadas (AGPI / Omega-3)",
+      "label_en": "Target Polyunsaturated Fats (PUFA / Omega-3)",
+      "expression": "round(fatGramsDaily * 0.30)",
+      "unit": "g/día",
+      "unit_en": "g/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "sfaMaxGramsDaily",
+      "label": "Límite Máximo Recomendado de Grasas Saturadas",
+      "label_en": "Recommended Maximum Saturated Fat Limit",
+      "expression": "round((dailyCalories * 0.08) / 9)",
+      "unit": "g/día",
+      "unit_en": "g/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "macro-calculator", "type": "static", "message": "Calcula el reparto completo de calorías entre macros", "message_en": "Calculate full macronutrient breakdown", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Nutricionista Clínico y Especialista en Endocrinología Nutricional",
+    "role_en": "Clinical Dietitian & Endocrinology Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y educativo",
+    "includeData": ["fatGramsDaily", "fatCaloriesDaily", "fatPerKgRatio", "mufaGramsDaily", "pufaGramsDaily"],
+    "instructions": [
+      "Sintetiza la meta diaria de grasa total en gramos, el aporte en g/kg y la distribución de monoinsaturadas y Omega-3 en 2 frases concisas.",
+      "Destaca que las grasas saludables son indispensables para la producción de hormonas y no deben suprimirse excesivamente."
+    ],
+    "instructions_en": [
+      "Summarize daily total fat target in grams, g/kg ratio, and breakdown of MUFA and Omega-3 in 2 concise sentences.",
+      "Highlight that healthy dietary fats are essential for hormone synthesis and should never be overly restricted."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Ingesta de Grasas Saludables (Lípidos) | CalculadoraHub",
+    "metaTitle_en": "Healthy Fat Intake Calculator (Lipids & Omega-3) | CalculadoraHub",
+    "metaDescription": "Calcula tus gramos diarios de grasas saludables recomendados según tus calorías y peso. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate target daily healthy fat intake in grams and calories based on your body weight. Free, instant results.",
+    "keywords": ["fat intake calculator", "ingesta de grasas", "grasas saludables diarios", "lipidos g-kg"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

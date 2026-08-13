@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "pipe-flow-hydraulic-calculator",
+    "title": "Calculadora de Caudal y Velocidad de Flujo en Tuberías (Q = A v)",
+    "title_en": "Pipe Flow Rate & Fluid Velocity Calculator (Q = A v)",
+    "slug": "calculadora-de-caudal-y-velocidad-de-flujo-en-tuberias-hidraulica",
+    "category": "engineering",
+    "subcategory": "mechanics",
+    "tags": ["caudal", "tuberias", "velocidad-de-flujo", "hidraulica", "diametro-tubería", "litros-por-segundo", "ingenieria"],
+    "tags_en": ["flow-rate", "pipes", "fluid-velocity", "hydraulics", "pipe-diameter", "liters-per-second", "engineering"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el caudal volumétrico ($Q = A \\cdot v = (\\pi \\cdot d^2 / 4) \\cdot v$) y la velocidad del fluido en tuberías circulares a presión.",
+    "shortDescription_en": "Calculate volumetric flow rate ($Q = A \\cdot v = (\\pi \\cdot d^2 / 4) \\cdot v$) and fluid velocity in pressurized circular pipes.",
+    "longDescription": "Herramienta de ingeniería hidráulica y mecánica de fluidos. Determina el volumen de líquido transportado por unidad de tiempo a partir del diámetro interno de la tubería.",
+    "longDescription_en": "Hydraulic engineering and fluid mechanics tool. Computes liquid volume transported per unit time based on internal pipe diameter.",
+    "howToUse": [
+      "Ingresa el Diámetro Interno de la Tubería ($d$ en milímetros - mm o pulgadas).",
+      "Ingresa la Velocidad del Fluido ($v$ en m/s, recomendada 1.0 a 2.5 m/s para agua).",
+      "Consulta el Caudal Volumétrico Calculado en Litros por segundo (L/s), m³/h y GPM."
+    ],
+    "howToUse_en": [
+      "Enter Internal Pipe Diameter ($d$ in millimeters - mm).",
+      "Enter Fluid Velocity ($v$ in m/s, recommended 1.0 to 2.5 m/s for water).",
+      "View Calculated Volumetric Flow Rate in Liters per second (L/s), m³/h, and GPM."
+    ],
+    "methodology": "Área A = (π * d²) / 4. Caudal Q = A * v (en m³/s). 1 m³/s = 1000 L/s.",
+    "methodology_en": "Area A = (π * d²) / 4. Flow Rate Q = A * v (in m³/s). 1 m³/s = 1000 L/s."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Ingeniería Hidráulica y Mecánica de Fluidos",
+    "role_en": "Hydraulic Engineering & Fluid Mechanics Specialist Assistant",
+    "includeData": ["flowRateLpsResult", "flowRateM3hResult"],
+    "instructions": [
+      "Interpreta el caudal hidráulico y la velocidad del fluido calculados.",
+      "Advierte sobre la velocidad máxima recomendada (v > 3 m/s causa erosión interna y golpe de ariete).",
+      "Muestra la conversión a Galones por Minuto (GPM US)."
+    ],
+    "instructions_en": [
+      "Interpret calculated hydraulic flow rate and fluid velocity.",
+      "Warn against excessive velocity (v > 3 m/s induces pipe erosion and water hammer).",
+      "Show conversion to US Gallons per Minute (GPM)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "pfl-guide",
+      "icon": "💧",
+      "title": "Pipe Continuity & Flow Formula",
+      "title_es": "Fórmula de Continuidad y Caudal en Tuberías",
+      "content_html_en": "<p><b>Continuity Equation:</b> Q = Area × Velocity = (π × d² / 4) × v</p><p><b>Recommended Velocity for Water Pipes:</b> 1.0 to 2.0 m/s for suction/delivery networks.</p>",
+      "content_html": "<p><b>Ecuación de Continuidad:</b> Q = Área × Velocidad = (π × d² / 4) × v</p><p><b>Velocidad Recomendada en Agua:</b> 1.0 a 2.0 m/s para redes de distribución.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "pipeDiameterMm",
+      "label": "Diámetro Interno de Tubería (d en mm)",
+      "label_en": "Internal Pipe Diameter (d in mm)",
+      "type": "number",
+      "default": 100,
+      "min": 1,
+      "max": 5000,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "fluidVelocityMps",
+      "label": "Velocidad del Fluido (v en m/s)",
+      "label_en": "Fluid Velocity (v in m/s)",
+      "type": "number",
+      "default": 1.5,
+      "min": 0.01,
+      "max": 30,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "pipeCrossAreaM2",
+      "label": "Área Transversal Interna (A en m²)",
+      "label_en": "Internal Cross-Section Area (A in m²)",
+      "expression": "(pi * ((pipeDiameterMm / 1000) ^ 2)) / 4",
+      "unit": "m²",
+      "unit_en": "m²",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "flowRateLpsResult",
+      "label": "Caudal Volumétrico (Q en Litros / segundo - L/s)",
+      "label_en": "Volumetric Flow Rate (Q in Liters / second - L/s)",
+      "expression": "(pipeCrossAreaM2 * fluidVelocityMps) * 1000",
+      "unit": "L/s",
+      "unit_en": "L/s",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "flowRateLpsResult", "op": ">=", "value": 0 }, "label": "Caudal Calculado", "label_en": "Flow Rate Computed", "tone": "success", "text": "Caudal volumétrico de transporte cuantificado.", "text_en": "Transport volumetric flow rate quantified." }
+      ]
+    },
+    {
+      "id": "flowRateM3hResult",
+      "label": "Caudal en Metros Cúbicos por Hora (m³/h)",
+      "label_en": "Flow Rate in Cubic Meters per Hour (m³/h)",
+      "expression": "(pipeCrossAreaM2 * fluidVelocityMps) * 3600",
+      "unit": "m³/h",
+      "unit_en": "m³/h",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

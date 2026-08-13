@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "length-distance-converter",
+    "title": "Conversor Universal de Longitud y Distancia",
+    "title_en": "Universal Length & Distance Converter",
+    "slug": "conversor-universal-de-longitud-distancia-metros-pies-pulgadas",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["conversor-de-longitud", "metros", "pies", "pulgadas", "kilometros", "millas", "yardas", "conversores"],
+    "tags_en": ["length-converter", "meters", "feet", "inches", "kilometers", "miles", "yards", "converters"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte instantáneamente entre metros, kilómetros, centímetros, milímetros, pies, pulgadas, yardas y millas.",
+    "shortDescription_en": "Instantly convert between meters, kilometers, centimeters, millimeters, feet, inches, yards, and miles.",
+    "longDescription": "Herramienta de conversión del sistema métrico decimal e imperial. Permite convertir cualquier unidad de longitud con alta precisión.",
+    "longDescription_en": "Metric and imperial length conversion tool. Enables high-precision conversion for any distance measurement.",
+    "howToUse": [
+      "Ingresa la Cantidad a Convertir.",
+      "Selecciona la Unidad de Origen (ej. Metros, Pies, Pulgadas).",
+      "Consulta los Valores Equivalentes en todas las unidades métricas e imperiales."
+    ],
+    "howToUse_en": [
+      "Enter Quantity to Convert.",
+      "Select Source Unit (e.g. Meters, Feet, Inches).",
+      "View Equivalent Values across all metric and imperial units."
+    ],
+    "methodology": "Factor base en Metros: 1 m = 1.0, 1 km = 1000m, 1 cm = 0.01m, 1 mm = 0.001m, 1 ft = 0.3048m, 1 in = 0.0254m, 1 yd = 0.9144m, 1 mile = 1609.344m.",
+    "methodology_en": "Base factor in Meters: 1 m = 1.0, 1 km = 1000m, 1 cm = 0.01m, 1 mm = 0.001m, 1 ft = 0.3048m, 1 in = 0.0254m, 1 yd = 0.9144m, 1 mile = 1609.344m."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Conversión de Unidades Métricas e Imperiales",
+    "role_en": "Metric & Imperial Unit Conversion Specialist Assistant",
+    "includeData": ["lengthInMetersResult", "lengthInFeetResult"],
+    "instructions": [
+      "Interpreta la conversión de longitud realizada.",
+      "Muestra equivalencias útiles de referencia (1 pie = 12 pulgadas, 1 milla = 1.609 km).",
+      "Explica el origen histórico del pie métrico vs la milla terrestre internacional."
+    ],
+    "instructions_en": [
+      "Interpret performed length unit conversion.",
+      "Show helpful reference equivalences (1 foot = 12 inches, 1 mile = 1.609 km).",
+      "Explain historical origin of metric foot vs international land mile."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ldc-guide",
+      "icon": "📏",
+      "title": "Length & Distance Conversion Benchmarks",
+      "title_es": "Equivalencias de Longitud y Distancia",
+      "content_html_en": "<p><b>1 Meter:</b> 3.28084 Feet = 39.3701 Inches</p><p><b>1 Kilometer:</b> 0.621371 Miles</p><p><b>1 Inch:</b> 2.54 Centimeters (exact definition)</p>",
+      "content_html": "<p><b>1 Metro:</b> 3.28084 Pies = 39.3701 Pulgadas</p><p><b>1 Kilómetro:</b> 0.621371 Millas</p><p><b>1 Pulgada:</b> 2.54 Centímetros (definición exacta)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputValueLength",
+      "label": "Valor a Convertir",
+      "label_en": "Value to Convert",
+      "type": "number",
+      "default": 100,
+      "min": 0,
+      "max": 1000000000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "inputLengthUnitFactor",
+      "label": "Unidad de Origen",
+      "label_en": "Source Unit",
+      "type": "select",
+      "default": "1.0",
+      "options": [
+        { "value": "1.0", "label": "Metros (m)", "label_en": "Meters (m)" },
+        { "value": "1000.0", "label": "Kilómetros (km)", "label_en": "Kilometers (km)" },
+        { "value": "0.01", "label": "Centímetros (cm)", "label_en": "Centimeters (cm)" },
+        { "value": "0.001", "label": "Milímetros (mm)", "label_en": "Millimeters (mm)" },
+        { "value": "0.3048", "label": "Pies (ft)", "label_en": "Feet (ft)" },
+        { "value": "0.0254", "label": "Pulgadas (in)", "label_en": "Inches (in)" },
+        { "value": "0.9144", "label": "Yardas (yd)", "label_en": "Yards (yd)" },
+        { "value": "1609.344", "label": "Millas (mi)", "label_en": "Miles (mi)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "lengthInMetersResult",
+      "label": "Equivalente en Metros (m)",
+      "label_en": "Equivalent in Meters (m)",
+      "expression": "inputValueLength * inputLengthUnitFactor",
+      "unit": "m",
+      "unit_en": "m",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "lengthInMetersResult", "op": ">=", "value": 0 }, "label": "Conversión Calculada", "label_en": "Conversion Computed", "tone": "success", "text": "Distancia equivalente en el Sistema Internacional cuantificada.", "text_en": "Equivalent SI distance quantified." }
+      ]
+    },
+    {
+      "id": "lengthInFeetResult",
+      "label": "Equivalente en Pies (ft)",
+      "label_en": "Equivalent in Feet (ft)",
+      "expression": "lengthInMetersResult / 0.3048",
+      "unit": "ft",
+      "unit_en": "ft",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "lengthInInchesResult",
+      "label": "Equivalente en Pulgadas (in)",
+      "label_en": "Equivalent in Inches (in)",
+      "expression": "lengthInMetersResult / 0.0254",
+      "unit": "in",
+      "unit_en": "in",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "lengthInKmResult",
+      "label": "Equivalente en Kilómetros (km)",
+      "label_en": "Equivalent in Kilometers (km)",
+      "expression": "lengthInMetersResult / 1000",
+      "unit": "km",
+      "unit_en": "km",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

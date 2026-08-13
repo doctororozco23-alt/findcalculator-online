@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "air-duct-sizing-calculator",
+    "title": "Calculadora de Dimensionamiento de Conductos de Aire HVAC (CFM / m³/h)",
+    "title_en": "HVAC Air Duct Sizing & Velocity Calculator (CFM / m³/h)",
+    "slug": "calculadora-de-dimensionamiento-de-conductos-de-aire-hvac-cfm",
+    "category": "engineering",
+    "subcategory": "civil",
+    "tags": ["conductos-de-aire", "hvac", "cfm", "caudal-de-aire", "dimensionamiento-de-tubos", "climatizacion", "ingenieria"],
+    "tags_en": ["air-ducts", "hvac", "cfm", "air-flow", "duct-sizing", "air-conditioning", "engineering"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el diámetro de conducto circular ($D$) o la sección rectangular requerida a partir del caudal de aire en CFM o m³/h y la velocidad recomendada.",
+    "shortDescription_en": "Calculate circular duct diameter ($D$) or rectangular section required from airflow in CFM or m³/h and recommended velocity.",
+    "longDescription": "Herramienta de ingeniería de climatización HVAC y ventilación industrial. Determina las dimensiones de conductos según estándares ASHRAE para limitar ruido aerodinámico.",
+    "longDescription_en": "HVAC air conditioning and industrial ventilation engineering tool. Computes duct sizing adhering to ASHRAE standards to limit aerodynamic noise.",
+    "howToUse": [
+      "Ingresa el Caudal de Aire Requerido ($Q$ en CFM - Pies Cúbicos por Minuto o m³/h).",
+      "Selecciona la Velocidad de Aire Recomendada ($v$ en FPM - Pies por Minuto, ej. 800 FPM para residencial).",
+      "Consulta el Diámetro Circular Requerido (pulgadas y mm) y el Área de la Sección del Conducto."
+    ],
+    "howToUse_en": [
+      "Enter Required Airflow Rate ($Q$ in CFM - Cubic Feet per Minute).",
+      "Select Recommended Air Velocity ($v$ in FPM - Feet per Minute, e.g. 800 FPM residential).",
+      "View Required Circular Diameter (inches and mm) and Duct Section Area."
+    ],
+    "methodology": "Área Conducto (ft²) = Caudal (CFM) / Velocidad (FPM). Diámetro Circular D (in) = sqrt((4 * Área_ft² * 144) / π).",
+    "methodology_en": "Duct Area (ft²) = Flow (CFM) / Velocity (FPM). Circular Diameter D (in) = sqrt((4 * Area_ft² * 144) / π)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Climatización HVAC y Ventilación ASHRAE",
+    "role_en": "HVAC Air Conditioning & ASHRAE Ventilation Specialist Assistant",
+    "includeData": ["circularDuctDiameterInchesResult", "ductAreaSquareFeetResult"],
+    "instructions": [
+      "Interpreta el diámetro de conducto circular recomendado y las dimensiones equivalentes de sección rectangular.",
+      "Explica la limitación de velocidad por ruido acústico (800 FPM residencial vs 1,500 FPM en conductos principales comerciales).",
+      "Muestra la conversión de Caudal entre CFM y metros cúbicos por hora ($m^3/h$)."
+    ],
+    "instructions_en": [
+      "Interpret recommended circular duct diameter and equivalent rectangular section dimensions.",
+      "Explain velocity limits to curb acoustic noise (800 FPM residential vs 1,500 FPM commercial main ducts).",
+      "Show Airflow conversion between CFM and cubic meters per hour ($m^3/h$)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ads-guide",
+      "icon": "🌀",
+      "title": "ASHRAE Air Duct Velocity Limits",
+      "title_es": "Límites de Velocidad en Conductos ASHRAE",
+      "content_html_en": "<p><b>Residential Main Ducts:</b> 700 - 900 FPM (low noise)</p><p><b>Commercial Main Ducts:</b> 1,000 - 1,500 FPM</p><p><b>Industrial Ducts:</b> 1,500 - 2,200 FPM</p>",
+      "content_html": "<p><b>Conductos Principales Residenciales:</b> 700 - 900 FPM (bajo nivel sonoro)</p><p><b>Conductos Principales Comerciales:</b> 1,000 - 1,500 FPM</p><p><b>Conductos Industriales:</b> 1,500 - 2,200 FPM</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "airflowCfmVal",
+      "label": "Caudal de Aire Requerido (Q en CFM)",
+      "label_en": "Required Airflow Rate (Q in CFM)",
+      "type": "number",
+      "default": 1200,
+      "min": 50,
+      "max": 50000,
+      "step": 50,
+      "required": true
+    },
+    {
+      "id": "recommendedVelocityFpm",
+      "label": "Velocidad Recomendada (v en FPM)",
+      "label_en": "Recommended Velocity (v in FPM)",
+      "type": "select",
+      "default": "900",
+      "options": [
+        { "value": "700", "label": "700 FPM (Residencial Silencioso)", "label_en": "700 FPM (Quiet Residential)" },
+        { "value": "900", "label": "900 FPM (Residencial Estándar)", "label_en": "900 FPM (Standard Residential)" },
+        { "value": "1200", "label": "1200 FPM (Oficinas / Comercial)", "label_en": "1200 FPM (Offices / Commercial)" },
+        { "value": "1600", "label": "1600 FPM (Industrial / Principal)", "label_en": "1600 FPM (Industrial / Main)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "ductAreaSquareFeetResult",
+      "label": "Área de Sección del Conducto (ft²)",
+      "label_en": "Duct Section Area (ft²)",
+      "expression": "recommendedVelocityFpm > 0 ? (airflowCfmVal / recommendedVelocityFpm) : 0",
+      "unit": "ft²",
+      "unit_en": "ft²",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "circularDuctDiameterInchesResult",
+      "label": "Diámetro de Conducto Circular Requerido (pulgadas)",
+      "label_en": "Required Circular Duct Diameter (inches)",
+      "expression": "sqrt((4 * ductAreaSquareFeetResult * 144) / pi)",
+      "unit": "in",
+      "unit_en": "in",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "circularDuctDiameterInchesResult", "op": ">=", "value": 0 }, "label": "Diámetro Calculado", "label_en": "Diameter Computed", "tone": "success", "text": "Diámetro hidráulico circular para caudal de aire determinado.", "text_en": "Circular hydraulic diameter for required airflow determined." }
+      ]
+    },
+    {
+      "id": "circularDuctDiameterMmResult",
+      "label": "Diámetro Equivalente en Milímetros (mm)",
+      "label_en": "Equivalent Diameter in Millimeters (mm)",
+      "expression": "circularDuctDiameterInchesResult * 25.4",
+      "unit": "mm",
+      "unit_en": "mm",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "blood-pressure-calculator",
+    "title": "Calculadora de Presión Arterial y PAM (Estándar AHA / ACC)",
+    "title_en": "Blood Pressure & MAP Calculator (AHA / ACC Standards)",
+    "slug": "presion-arterial-pam-aha",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["presion-arterial", "pam", "hipertencion", "aha", "corazon"],
+    "tags_en": ["blood-pressure", "map", "hypertension", "aha", "heart"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Heart"
+  },
+  "content": {
+    "shortDescription": "Calcula tu Presión Arterial Media (PAM), Presión del Pulso y evalúa tu categoría de tensión según las pautas clínicas de la AHA y la ACC.",
+    "shortDescription_en": "Calculate Mean Arterial Pressure (MAP), Pulse Pressure, and evaluate your blood pressure tier under AHA/ACC clinical guidelines.",
+    "longDescription": "Auditoría de hemodinámica y salud cardiovascular. Determina la Presión Arterial Media (PAM / MAP) necesaria para la perfusión de los órganos vitales y clasifica la tensión sistólica y diastólica en los umbrales de la American Heart Association.",
+    "longDescription_en": "Hemodynamic and cardiovascular health audit. Determines Mean Arterial Pressure (MAP) required for organ perfusion and classifies systolic and diastolic pressure under AHA guidelines.",
+    "howToUse": [
+      "Ingresa tu Presión Arterial Sistólica (número superior en mmHg).",
+      "Ingresa tu Presión Arterial Diastólica (número inferior en mmHg).",
+      "Consulta tu Presión Arterial Media (PAM), Presión de Pulso y la clasificación clínica oficial de la AHA."
+    ],
+    "howToUse_en": [
+      "Enter Systolic Blood Pressure (top number in mmHg).",
+      "Enter Diastolic Blood Pressure (bottom number in mmHg).",
+      "View calculated Mean Arterial Pressure (MAP), Pulse Pressure, and official AHA clinical classification."
+    ],
+    "methodology": "Pautas AHA / ACC: Presión Arterial Media (PAM) = Diastólica + 1/3(Sistólica - Diastólica). Perfusión Órgano Óptima = PAM 70-100 mmHg. Categorías: Normal (<120/<80), Elevada (120-129/<80), Hipertensión 1 (130-139/80-89), Hipertensión 2 (≥140/≥90).",
+    "methodology_en": "AHA / ACC Guidelines: Mean Arterial Pressure (MAP) = Diastolic + 1/3(Systolic - Diastolic). Optimal Organ Perfusion = MAP 70-100 mmHg. Categories: Normal (<120/<80), Elevated (120-129/<80), Stage 1 (130-139/80-89), Stage 2 (≥140/≥90)."
+  },
+  "guideSections": [
+    {
+      "id": "aha-bp-table",
+      "icon": "🩺",
+      "title": "AHA / ACC 2017 Blood Pressure Categories",
+      "title_es": "Categorías de Presión Arterial AHA / ACC 2017",
+      "content_html_en": "<p><b>Normal:</b> Systolic < 120 AND Diastolic < 80 mmHg.</p><p><b>Elevated:</b> Systolic 120-129 AND Diastolic < 80 mmHg.</p><p><b>Hypertension Stage 1:</b> Systolic 130-139 OR Diastolic 80-89 mmHg.</p><p><b>Hypertension Stage 2:</b> Systolic ≥ 140 OR Diastolic ≥ 90 mmHg.</p><p><b>Hypertensive Crisis:</b> Systolic > 180 AND/OR Diastolic > 120 mmHg (Immediate medical care needed).</p>",
+      "content_html": "<p><b>Normal:</b> Sistólica < 120 Y Diastólica < 80 mmHg.</p><p><b>Elevada:</b> Sistólica 120-129 Y Diastólica < 80 mmHg.</p><p><b>Hipertensión Etapa 1:</b> Sistólica 130-139 O Diastólica 80-89 mmHg.</p><p><b>Hipertensión Etapa 2:</b> Sistólica ≥ 140 O Diastólica ≥ 90 mmHg.</p><p><b>Crisis Hipertensiva:</b> Sistólica > 180 Y/O Diastólica > 120 mmHg (Atención médica inmediata).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "systolicMmhg",
+      "label": "Presión Arterial Sistólica (número alto / SBP)",
+      "label_en": "Systolic Blood Pressure (top number / SBP)",
+      "type": "number",
+      "default": 120,
+      "min": 70,
+      "max": 240,
+      "step": 1,
+      "unit": "mmHg",
+      "unit_en": "mmHg",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [70, 240], "message": "Sistólica entre 70 y 240 mmHg", "message_en": "Systolic between 70 and 240 mmHg" }]
+    },
+    {
+      "id": "diastolicMmhg",
+      "label": "Presión Arterial Diastólica (número bajo / DBP)",
+      "label_en": "Diastolic Blood Pressure (bottom number / DBP)",
+      "type": "number",
+      "default": 80,
+      "min": 40,
+      "max": 140,
+      "step": 1,
+      "unit": "mmHg",
+      "unit_en": "mmHg",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [40, 140], "message": "Diastólica entre 40 y 140 mmHg", "message_en": "Diastolic between 40 and 140 mmHg" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "mapVal",
+      "label": "Presión Arterial Media (PAM / MAP)",
+      "label_en": "Mean Arterial Pressure (MAP)",
+      "expression": "diastolicMmhg + ((systolicMmhg - diastolicMmhg) / 3)",
+      "unit": "mmHg",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "mapVal", "op": "between", "value": [70, 100] }, "label": "Perfusión Órgano Óptima (70 - 100 mmHg)", "label_en": "Optimal Organ Perfusion (70 - 100 mmHg)", "tone": "success", "text": "Presión media suficiente para la perfusión tisular de los riñones y encéfalo.", "text_en": "Sufficient mean pressure for tissue perfusion of kidneys and brain." },
+        { "when": { "field": "mapVal", "op": ">", "value": 100.1 }, "label": "PAM Elevada (> 100 mmHg)", "label_en": "Elevated MAP (> 100 mmHg)", "tone": "warning", "text": "Carga de presión hemodinámica elevada en la vasculatura arterial.", "text_en": "Elevated hemodynamic pressure workload on arterial vasculature." }
+      ]
+    },
+    {
+      "id": "pulsePressureVal",
+      "label": "Presión del Pulso (Diferencial)",
+      "label_en": "Pulse Pressure (Differential)",
+      "expression": "systolicMmhg - diastolicMmhg",
+      "unit": "mmHg",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "target-heart-rate-calculator", "type": "static", "message": "Calcula tus zonas de pulso para ejercicio cardio", "message_en": "Calculate pulse zones for cardio exercise", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Cardiólogo Clínico y Especialista en Hipertensión",
+    "role_en": "Clinical Cardiologist & Hypertension Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y prudente",
+    "includeData": ["mapVal", "pulsePressureVal", "systolicMmhg", "diastolicMmhg"],
+    "instructions": [
+      "Sintetiza la Presión Arterial Media PAM en mmHg, la Presión del Pulso y la categoría clínica AHA en 2 frases concisas.",
+      "Destaca que la presión debe medirse en reposo de 5 minutos y que una crisis (>180/120) requiere atención inmediata."
+    ],
+    "instructions_en": [
+      "Summarize Mean Arterial Pressure (MAP), Pulse Pressure, and AHA clinical classification in 2 concise sentences.",
+      "Highlight that blood pressure should be measured after 5 minutes of rest and hypertensive crisis calls for urgent care."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Presión Arterial y PAM (AHA) | CalculadoraHub",
+    "metaTitle_en": "Blood Pressure & MAP Calculator (AHA Standards) | CalculadoraHub",
+    "metaDescription": "Calcula tu Presión Arterial Media (PAM) y evalúa tu categoría de tensión según la AHA. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate Mean Arterial Pressure (MAP) and evaluate blood pressure classification under AHA guidelines. Free.",
+    "keywords": ["blood pressure calculator", "presion arterial pam", "hipertencion aha", "calcular pam"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

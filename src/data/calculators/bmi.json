@@ -1,0 +1,222 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "bmi-calculator",
+    "title": "Calculadora de IMC",
+    "title_en": "BMI Calculator",
+    "slug": "imc",
+    "category": "fitness",
+    "subcategory": "body-composition",
+    "tags": ["peso-corporal", "salud"],
+    "tags_en": ["body-weight", "health"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Conoce tu Índice de Masa Corporal (IMC) según los estándares oficiales de la Organización Mundial de la Salud (OMS).",
+    "shortDescription_en": "Check your Body Mass Index (BMI) according to official World Health Organization (WHO) standards.",
+    "longDescription": "El IMC vincula el peso corporal con la estatura. Esta calculadora ofrece tu clasificación OMS (Bajo peso, Normal, Sobrepeso u Obesidad) y tu rango de peso saludable recomendado.",
+    "longDescription_en": "BMI connects body weight with height. This calculator provides your WHO classification (Underweight, Normal, Overweight, Obese) and your healthy weight range.",
+    "howToUse": [
+      "Selecciona tu sistema de unidades preferido (Métrico kg/cm o Imperial lb/in).",
+      "Introduce tu peso y tu estatura.",
+      "Revisa tu valor de IMC, la categoría de salud correspondiente y la escala visual."
+    ],
+    "howToUse_en": [
+      "Select your preferred unit system (Metric kg/cm or Imperial lb/in).",
+      "Enter your weight and height.",
+      "Review your BMI value, corresponding health category, and visual scale."
+    ],
+    "methodology": "Fórmula OMS: IMC = Peso (kg) / [Estatura (m)]². Clasificación: <18.5 (Bajo peso), 18.5–24.9 (Normal), 25.0–29.9 (Sobrepeso), ≥30.0 (Obesidad).",
+    "methodology_en": "WHO Formula: BMI = Weight (kg) / [Height (m)]². Classification: <18.5 (Underweight), 18.5–24.9 (Normal), 25.0–29.9 (Overweight), ≥30.0 (Obese)."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "📘",
+      "title": "BMI Introduction & Overview",
+      "title_es": "Introducción y Visión General del IMC",
+      "content_html_en": "<p>The Body Mass Index (BMI) Calculator can be used to calculate BMI value and corresponding weight status while taking height and weight into consideration. Use the <b>Metric Units</b> tab for the International System of Units (SI) or the <b>Imperial Units</b> tab to convert units into US customary units.</p><p>BMI is a measurement of a person's leanness or corpulence based on their height and weight, and is intended to quantify tissue mass. It is widely used as a general indicator of whether a person has a healthy body weight for their height. Specifically, the value obtained from the calculation of BMI is used to categorize whether a person is underweight, normal weight, overweight, or obese depending on what range the value falls between.</p><p>These ranges of BMI vary based on factors such as region and age, and are sometimes further divided into subcategories such as severely underweight or very severely obese. Being overweight or underweight can have significant health effects, so while BMI is an imperfect measure of healthy body weight, it is a useful indicator of whether any additional testing or action is required.</p>",
+      "content_html": "<p>El Índice de Masa Corporal (IMC) es una medida del estado ponderal basada en la relación entre peso y estatura. Cuantifica la masa de tejido en el organismo y sirve como indicador general para clasificar el peso corporal en categorías: bajo peso, peso normal, sobrepeso u obesidad.</p>"
+    },
+    {
+      "id": "tables",
+      "icon": "📊",
+      "title": "Adult WHO & Children CDC Reference Tables",
+      "title_es": "Tablas de Referencia Adultos OMS y Niños CDC",
+      "content_html_en": "<h4>BMI Table for Adults (WHO Standards, Age 20+)</h4><p>This is the World Health Organization's (WHO) recommended body weight classification based on BMI values for adults (men and women age 20 or older):</p><table style='width:100%; border-collapse:collapse; margin:12px 0; border:1px solid var(--border);'><thead><tr style='background-color:var(--surface-alt); border-bottom:2px solid var(--border);'><th style='padding:8px 12px; text-align:left;'>Classification</th><th style='padding:8px 12px; text-align:left;'>BMI Range (kg/m²)</th></tr></thead><tbody><tr style='border-bottom:1px solid var(--border);'><td style='padding:8px 12px;'>Severe Thinness</td><td style='padding:8px 12px;'>&lt; 16.0</td></tr><tr style='border-bottom:1px solid var(--border);'><td style='padding:8px 12px;'>Moderate Thinness</td><td style='padding:8px 12px;'>16.0 - 17.0</td></tr><tr style='border-bottom:1px solid var(--border);'><td style='padding:8px 12px;'>Mild Thinness</td><td style='padding:8px 12px;'>17.0 - 18.5</td></tr><tr style='border-bottom:1px solid var(--border);; background-color:var(--success-soft)'><td style='padding:8px 12px; font-weight:bold;'>Normal Weight</td><td style='padding:8px 12px; font-weight:bold;'>18.5 - 25.0</td></tr><tr style='border-bottom:1px solid var(--border);'><td style='padding:8px 12px;'>Overweight</td><td style='padding:8px 12px;'>25.0 - 30.0</td></tr><tr style='border-bottom:1px solid var(--border);'><td style='padding:8px 12px;'>Obese Class I</td><td style='padding:8px 12px;'>30.0 - 35.0</td></tr><tr style='border-bottom:1px solid var(--border);'><td style='padding:8px 12px;'>Obese Class II</td><td style='padding:8px 12px;'>35.0 - 40.0</td></tr><tr><td style='padding:8px 12px;'>Obese Class III (Severe)</td><td style='padding:8px 12px;'>&gt; 40.0</td></tr></tbody></table><h4>BMI Categorization for Children and Teens (Age 2-20, CDC)</h4><p>The Centers for Disease Control and Prevention (CDC) recommends BMI categorization for children and teens using percentile growth curves:</p><table style='width:100%; border-collapse:collapse; margin:12px 0; border:1px solid var(--border);'><thead><tr style='background-color:var(--surface-alt); border-bottom:2px solid var(--border);'><th style='padding:8px 12px; text-align:left;'>Category</th><th style='padding:8px 12px; text-align:left;'>Percentile Range</th></tr></thead><tbody><tr style='border-bottom:1px solid var(--border);'><td style='padding:8px 12px;'>Underweight</td><td style='padding:8px 12px;'>&lt; 5th percentile</td></tr><tr style='border-bottom:1px solid var(--border);; background-color:var(--success-soft)'><td style='padding:8px 12px; font-weight:bold;'>Healthy Weight</td><td style='padding:8px 12px; font-weight:bold;'>5th to 85th percentile</td></tr><tr style='border-bottom:1px solid var(--border);'><td style='padding:8px 12px;'>At risk of overweight</td><td style='padding:8px 12px;'>85th to 95th percentile</td></tr><tr><td style='padding:8px 12px;'>Overweight / Obese</td><td style='padding:8px 12px;'>&gt; 95th percentile</td></tr></tbody></table>",
+      "content_html": "<h4>Tabla de Clasificación OMS para Adultos (Mayores de 20 años)</h4><table style='width:100%; border-collapse:collapse; margin:12px 0; border:1px solid var(--border);'><thead><tr style='background-color:var(--surface-alt); border-bottom:2px solid var(--border);'><th style='padding:8px 12px; text-align:left;'>Clasificación</th><th style='padding:8px 12px; text-align:left;'>Rango IMC (kg/m²)</th></tr></thead><tbody><tr style='border-bottom:1px solid var(--border);'><td style='padding:8px 12px;'>Delgadez Severa</td><td style='padding:8px 12px;'>&lt; 16.0</td></tr><tr style='border-bottom:1px solid var(--border);'><td style='padding:8px 12px;'>Delgadez Moderada</td><td style='padding:8px 12px;'>16.0 - 17.0</td></tr><tr style='border-bottom:1px solid var(--border);'><td style='padding:8px 12px;'>Delgadez Leve</td><td style='padding:8px 12px;'>17.0 - 18.5</td></tr><tr style='border-bottom:1px solid var(--border); background-color:var(--success-soft)'><td style='padding:8px 12px; font-weight:bold;'>Peso Normal</td><td style='padding:8px 12px; font-weight:bold;'>18.5 - 25.0</td></tr><tr style='border-bottom:1px solid var(--border);'><td style='padding:8px 12px;'>Sobrepeso</td><td style='padding:8px 12px;'>25.0 - 30.0</td></tr><tr style='border-bottom:1px solid var(--border);'><td style='padding:8px 12px;'>Obesidad Clase I</td><td style='padding:8px 12px;'>30.0 - 35.0</td></tr><tr style='border-bottom:1px solid var(--border);'><td style='padding:8px 12px;'>Obesidad Clase II</td><td style='padding:8px 12px;'>35.0 - 40.0</td></tr><tr><td style='padding:8px 12px;'>Obesidad Clase III</td><td style='padding:8px 12px;'>&gt; 40.0</td></tr></tbody></table>"
+    },
+    {
+      "id": "risks",
+      "icon": "⚠️",
+      "title": "Health Risks (Overweight vs Underweight)",
+      "title_es": "Riesgos de Salud (Sobrepeso vs Bajo Peso)",
+      "content_html_en": "<h4>Risks Associated with Being Overweight:</h4><p>Being overweight increases the risk of a number of serious diseases and health conditions, according to the Centers for Disease Control and Prevention (CDC):</p><ul><li>High blood pressure (hypertension)</li><li>Higher levels of LDL cholesterol ('bad cholesterol') and high triglycerides</li><li>Type II Diabetes & Insulin resistance</li><li>Coronary heart disease and Stroke</li><li>Gallbladder disease & Liver complications</li><li>Osteoarthritis (breakdown of joint cartilage)</li><li>Sleep apnea and respiratory issues</li><li>Certain cancers (endometrial, breast, colon, kidney, liver)</li><li>Increased overall mortality risk compared to those with a healthy BMI</li></ul><h4>Risks Associated with Being Underweight:</h4><p>Being underweight has its own associated clinical risks:</p><ul><li>Malnutrition, vitamin deficiencies, and severe anemia</li><li>Osteoporosis (bone fragility and increased fracture risk)</li><li>Decreased immune function and delayed wound healing</li><li>Growth and development issues in children and adolescents</li><li>Possible reproductive issues in women due to hormonal disruption</li><li>Higher mortality risk in surgical procedures</li></ul>",
+      "content_html": "<h4>Riesgos Asociados al Sobrepeso:</h4><ul><li>Presión arterial alta y colesterol LDL elevado</li><li>Diabetes Tipo II y resistencia a la insulina</li><li>Enfermedades coronarias y accidentes cerebrovasculares</li><li>Apnea del sueño y afecciones articulares (artrosis)</li></ul><h4>Riesgos Asociados al Bajo Peso:</h4><ul><li>Desnutrición, anemia y deficiencias vitamínicas</li><li>Osteoporosis y menor densidad ósea</li><li>Baja respuesta inmunológica</li></ul>"
+    },
+    {
+      "id": "limitations",
+      "icon": "🔍",
+      "title": "Limitations & Body Composition",
+      "title_es": "Limitaciones del IMC y Composición Corporal",
+      "content_html_en": "<p>Although BMI is a widely used indicator, it has notable physiological limitations:</p><ul><li><b>Athletes & Muscular Individuals:</b> Muscle mass is denser than fat tissue. Highly trained athletes or bodybuilders can be classified as 'overweight' or 'obese' despite having low body fat levels.</li><li><b>Older Adults:</b> Aging leads to muscle loss (sarcopenia). An elderly individual may fall within a 'normal' BMI range while carrying excessive visceral body fat.</li><li><b>Women vs Men:</b> Women naturally possess higher essential body fat percentages than men for equivalent BMI values.</li></ul>",
+      "content_html": "<p>El IMC no distingue entre grasa corporal y masa muscular. Atletas o culturistas con gran desarrollo muscular pueden figurar con un IMC en rango de sobrepeso aun manteniendo un porcentaje de grasa mínimo.</p>"
+    },
+    {
+      "id": "formulas",
+      "icon": "🧮",
+      "title": "Formulas, BMI Prime & Ponderal Index",
+      "title_es": "Fórmulas, IMC Prime e Índice Ponderal",
+      "content_html_en": "<h4>System Equations:</h4><p><b>SI Metric Units:</b> BMI = Mass (kg) / Height² (m)<br/><b>USC Imperial Units:</b> BMI = 703 × [ Mass (lbs) / Height² (in) ]</p><h4>BMI Prime:</h4><p>BMI Prime is the ratio of measured BMI to the normal upper limit of 25 kg/m²:<br/><b>BMI Prime = BMI / 25</b><br/>A BMI Prime &lt; 0.74 indicates underweight; 0.74 to 1.0 indicates normal weight; &gt; 1.0 indicates overweight; and &gt; 1.2 indicates obese.</p><h4>Ponderal Index (PI):</h4><p>The Ponderal Index uses height cubed rather than squared:<br/><b>PI = Mass (kg) / Height³ (m)</b><br/>PI provides greater accuracy for individuals at extreme ends of the height spectrum (very tall or short).</p>",
+      "content_html": "<h4>Ecuaciones:</h4><p><b>Métrico SI:</b> IMC = Peso (kg) / Estatura² (m)<br/><b>Imperial USC:</b> IMC = 703 × [ Peso (lbs) / Estatura² (in) ]</p><h4>IMC Prime:</h4><p>Relación adimensional respecto al límite saludable superior de 25 kg/m²: <b>IMC Prime = IMC / 25</b>.</p><h4>Índice Ponderal (PI):</h4><p>Utiliza la estatura al cubo: <b>PI = Peso (kg) / Estatura³ (m)</b>. Es más preciso en personas muy altas o muy bajas.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "unitSystem",
+      "label": "Sistema de unidades",
+      "label_en": "Unit System",
+      "type": "unit_selector",
+      "default": "metric",
+      "options": [
+        { "value": "metric", "label": "Métrico (kg / cm)", "label_en": "Metric (kg / cm)" },
+        { "value": "imperial", "label": "Imperial (lbs / in)", "label_en": "Imperial (lbs / in)" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "weight",
+      "label": "Peso",
+      "label_en": "Weight",
+      "type": "number",
+      "default": 70,
+      "min": 20,
+      "max": 300,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lb", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [20, 300], "message": "Introduce un peso válido entre 20 y 300", "message_en": "Enter a valid weight between 20 and 300" }]
+    },
+    {
+      "id": "height",
+      "label": "Estatura",
+      "label_en": "Height",
+      "type": "number",
+      "default": 175,
+      "min": 80,
+      "max": 250,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "in", "label": "in", "toBase": 2.54 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [80, 250], "message": "Introduce una estatura entre 80 cm y 250 cm", "message_en": "Enter height between 80 cm and 250 cm" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "bmi",
+      "label": "Tu Índice de Masa Corporal (IMC)",
+      "label_en": "Your Body Mass Index (BMI)",
+      "expression": "weight / ((height / 100) ^ 2)",
+      "unit": "kg/m²",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "bmi", "op": "<", "value": 18.5 }, "label": "Bajo peso", "label_en": "Underweight", "tone": "info", "text": "Tu peso se encuentra por debajo del rango recomendado.", "text_en": "Your weight is below the recommended range." },
+        { "when": { "and": [{ "field": "bmi", "op": ">=", "value": 18.5 }, { "field": "bmi", "op": "<=", "value": 24.9 }] }, "label": "Peso normal", "label_en": "Normal Weight", "tone": "success", "text": "¡Excelente! Tu peso está dentro del rango saludable OMS.", "text_en": "Great! Your weight is within the WHO healthy range." },
+        { "when": { "and": [{ "field": "bmi", "op": ">=", "value": 25 }, { "field": "bmi", "op": "<=", "value": 29.9 }] }, "label": "Sobrepeso", "label_en": "Overweight", "tone": "warning", "text": "Tu IMC indica sobrepeso leve. Considera revisar nutrición y actividad física.", "text_en": "Your BMI indicates slight overweight. Consider reviewing nutrition and activity." },
+        { "when": { "field": "bmi", "op": ">=", "value": 30 }, "label": "Obesidad", "label_en": "Obesity", "tone": "error", "text": "Tu IMC se clasifica dentro del rango de obesidad. Se sugiere consultar con un profesional de la salud.", "text_en": "Your BMI falls into the obesity range. Consulting a healthcare professional is recommended." }
+      ]
+    },
+    {
+      "id": "idealWeightMin",
+      "label": "Peso mínimo saludable",
+      "label_en": "Minimum Healthy Weight",
+      "expression": "18.5 * ((height / 100) ^ 2)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "idealWeightMax",
+      "label": "Peso máximo saludable",
+      "label_en": "Maximum Healthy Weight",
+      "expression": "24.9 * ((height / 100) ^ 2)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [
+    {
+      "id": "bmiGauge",
+      "type": "gauge",
+      "title": "Escala OMS de Masa Corporal",
+      "title_en": "WHO Body Mass Scale",
+      "data": { "source": "calc:bmi" },
+      "zones": [
+        { "from": 10, "to": 18.5, "role": "info", "label": "Bajo peso", "label_en": "Underweight" },
+        { "from": 18.5, "to": 25, "role": "success", "label": "Normal", "label_en": "Normal" },
+        { "from": 25, "to": 30, "role": "warning", "label": "Sobrepeso", "label_en": "Overweight" },
+        { "from": 30, "to": 45, "role": "error", "label": "Obesidad", "label_en": "Obesity" }
+      ],
+      "interactive": true,
+      "animate": true,
+      "responsive": { "mobileHeight": 180 },
+      "visibleWhen": { "field": "bmi", "op": ">", "value": 0 }
+    }
+  ],
+  "suggestions": [
+    { "target": "percentage-calculator", "type": "static", "message": "Calcula variaciones de peso en porcentaje", "message_en": "Calculate weight variations in percentage", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Bienestar y Salud",
+    "role_en": "Health & Wellness Assistant",
+    "analysisType": "interpretation",
+    "detailLevel": "brief",
+    "tone": "cercano y prudente",
+    "includeData": ["bmi", "weight", "height", "idealWeightMin", "idealWeightMax"],
+    "instructions": [
+      "Resume la categoría de peso OMS en 1-2 oraciones amables.",
+      "Menciona el rango de peso ideal para la estatura ingresada.",
+      "Recuerda prudencialmente que no sustituye asesoramiento médico."
+    ],
+    "instructions_en": [
+      "Summarize the WHO weight category in 1-2 friendly sentences.",
+      "Mention the ideal weight range for the entered height.",
+      "Remind users that this does not replace professional medical advice."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de IMC (Índice de Masa Corporal) | CalculadoraHub",
+    "metaTitle_en": "BMI Calculator (Body Mass Index) | CalculadoraHub",
+    "metaDescription": "Calcula tu IMC gratis con la fórmula OMS. Obtén tu categoría de salud, rango de peso ideal y gráficos explicativos al instante.",
+    "metaDescription_en": "Calculate your BMI free with WHO formula. Get health category and ideal weight range.",
+    "keywords": ["imc", "calculadora imc", "indice de masa corporal", "peso ideal"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "working-capital-calculator",
+    "title": "Calculadora de Capital de Trabajo y Ratios de Liquidez",
+    "title_en": "Working Capital & Current Ratio Calculator",
+    "slug": "capital-trabajo-ratios-liquidez",
+    "category": "finance",
+    "subcategory": "business",
+    "tags": ["capital-trabajo", "liquidez", "current-ratio"],
+    "tags_en": ["working-capital", "liquidity", "current-ratio"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Scale"
+  },
+  "content": {
+    "shortDescription": "Calcula el Capital de Trabajo Neto (Working Capital) y el Ratio de Liquidez Corriente (Current Ratio) de la empresa.",
+    "shortDescription_en": "Calculate Net Working Capital amount and Current Liquidity Ratio to assess short-term business health.",
+    "longDescription": "Evalúa la solvencia operativa a corto plazo de tu empresa restando los Pasivos Corrientes de los Activos Corrientes y calculando la razón corriente de liquidez.",
+    "longDescription_en": "Evaluate short-term operational solvency by subtracting Current Liabilities from Current Assets and computing the Current Ratio.",
+    "howToUse": [
+      "Ingresa el valor total de los Activos Corrientes (efectivo, inventario, cuentas por cobrar).",
+      "Ingresa el valor total de los Pasivos Corrientes (deudas a corto plazo, cuentas por pagar).",
+      "Consulta el Capital de Trabajo Neto y el Ratio de Liquidez Corriente."
+    ],
+    "howToUse_en": [
+      "Enter total Current Assets (cash, inventory, accounts receivable) and active currency.",
+      "Enter total Current Liabilities (short-term debt, accounts payable).",
+      "View Net Working Capital and Current Liquidity Ratio."
+    ],
+    "methodology": "Fórmula Capital Trabajo: Capital Trabajo Neto = Activos Corrientes - Pasivos Corrientes. Current Ratio = Activos Corrientes / Pasivos Corrientes.",
+    "methodology_en": "Working Capital Formula: Net Working Capital = Current Assets - Current Liabilities. Current Ratio = Current Assets / Current Liabilities."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "⚖️",
+      "title": "Healthy Current Ratio Benchmark",
+      "title_es": "Referencia de Solvencia del Ratio Corriente",
+      "content_html_en": "<p>A Current Ratio between 1.5 and 2.0 indicates healthy liquidity, proving the business has sufficient current assets to cover short-term debts comfortably.</p>",
+      "content_html": "<p>Un Ratio Corriente entre 1.5 y 2.0 indica liquidez saludable, demostrando que la empresa cubre holgadamente sus deudas a corto plazo.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "currentAssets",
+      "label": "Total Activos Corrientes (efectivo, cobros, inventario)",
+      "label_en": "Total Current Assets (Cash, Receivables, Inventory)",
+      "type": "currency",
+      "default": 250000,
+      "min": 1000,
+      "max": 50000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "currentLiabilities",
+      "label": "Total Pasivos Corrientes (deudas corto plazo, proveedores)",
+      "label_en": "Total Current Liabilities (Payables, Short-Term Debt)",
+      "type": "currency",
+      "default": 140000,
+      "min": 1000,
+      "max": 50000000,
+      "step": 5000,
+      "unit": { "follows": "currentAssets" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "netWorkingCapital",
+      "label": "Capital de Trabajo Neto Operativo",
+      "label_en": "Net Operational Working Capital",
+      "expression": "currentAssets - currentLiabilities",
+      "unit": { "follows": "currentAssets" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "currentRatio",
+      "label": "Ratio de Liquidez Corriente (Current Ratio)",
+      "label_en": "Current Liquidity Ratio (Current Ratio)",
+      "expression": "currentAssets / currentLiabilities",
+      "unit": "ratio",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "currentRatio", "op": ">=", "value": 1.5 }, "label": "Liquidez Saludable", "label_en": "Healthy Liquidity Level", "tone": "success", "text": "Excelente capacidad de pago a corto plazo.", "text_en": "Excellent short-term debt coverage capability." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "burn-rate-calculator", "type": "static", "message": "Calcula el consumo de caja (Burn Rate)", "message_en": "Calculate cash burn rate trajectory", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Liquidez y Capital de Trabajo",
+    "role_en": "Working Capital & Liquidity Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["currentRatio", "netWorkingCapital", "currentAssets", "currentLiabilities"],
+    "instructions": [
+      "Sintetiza el Capital de Trabajo Neto y el ratio de liquidez corriente en 2 frases concisas.",
+      "Evalúa si el ratio corriente de liquidez garantiza la solvencia operativa a corto plazo."
+    ],
+    "instructions_en": [
+      "Summarize Net Working Capital and Current Liquidity Ratio in 2 concise sentences.",
+      "Assess whether current ratio guarantees healthy short-term debt coverage."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Capital de Trabajo y Ratios de Liquidez | CalculadoraHub",
+    "metaTitle_en": "Working Capital & Current Ratio Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el Capital de Trabajo Neto y el Ratio Corriente de liquidez de tu empresa. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate Net Working Capital and Current Liquidity Ratio. Free, instant results.",
+    "keywords": ["working capital calculator", "capital de trabajo", "current ratio", "liquidez"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

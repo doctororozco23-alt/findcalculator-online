@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "transformer-turns-ratio-calculator",
+    "title": "Calculadora de Relación de Transformación de Transformadores Eléctricos",
+    "title_en": "Electrical Transformer Turns Ratio & Voltage Calculator",
+    "slug": "calculadora-de-relacion-de-transformacion-de-transformadores-voltaje",
+    "category": "engineering",
+    "subcategory": "electrical",
+    "tags": ["transformador", "relacion-de-transformacion", "voltaje-primario", "voltaje-secundario", "espiras", "electricidad", "ingenieria-electrica"],
+    "tags_en": ["transformer", "turns-ratio", "primary-voltage", "secondary-voltage", "coils", "electricity", "electrical-engineering"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el voltaje secundario ($V_2$), corriente secundaria ($I_2$) o relación de espiras ($a = N_1 / N_2 = V_1 / V_2$) de transformadores ideales.",
+    "shortDescription_en": "Calculate secondary voltage ($V_2$), secondary current ($I_2$), or turns ratio ($a = N_1 / N_2 = V_1 / V_2$) of ideal transformers.",
+    "longDescription": "Herramienta de ingeniería eléctrica y máquinas eléctricas. Modela la inducción electromagnética en transformadores monofásicos según la ley de Faraday y la conservación de la potencia ($P_1 = P_2$).",
+    "longDescription_en": "Electrical engineering and AC machines tool. Models electromagnetic induction in single-phase transformers based on Faraday's Law and power conservation ($P_1 = P_2$).",
+    "howToUse": [
+      "Ingresa el Voltaje Primario de Entrada ($V_1$ en Volts - V).",
+      "Ingresa el Número de Espiras/Vueltas del Devanado Primario ($N_1$).",
+      "Ingresa el Número de Espiras/Vueltas del Devanado Secundario ($N_2$).",
+      "Ingresa opcionalmente la Corriente del Primario ($I_1$ en Amperios - A).",
+      "Consulta el Voltaje Secundario de Salida ($V_2$), la Relación de Espiras ($a$) y la Corriente del Secundario ($I_2$)."
+    ],
+    "howToUse_en": [
+      "Enter Primary Input Voltage ($V_1$ in Volts - V).",
+      "Enter Primary Winding Turns Count ($N_1$).",
+      "Enter Secondary Winding Turns Count ($N_2$).",
+      "Optionally enter Primary Current ($I_1$ in Amps - A).",
+      "View Secondary Output Voltage ($V_2$), Turns Ratio ($a$), and Secondary Current ($I_2$)."
+    ],
+    "methodology": "Relación de Espiras a = N1 / N2. Voltaje V2 = V1 / a = V1 * (N2 / N1). Corriente I2 = I1 * a.",
+    "methodology_en": "Turns Ratio a = N1 / N2. Voltage V2 = V1 / a = V1 * (N2 / N1). Current I2 = I1 * a."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Máquinas Eléctricas y Redes de Distribución",
+    "role_en": "Electrical Machines & Power Grid Specialist Assistant",
+    "includeData": ["secondaryVoltageResult", "transformerTurnsRatioResult"],
+    "instructions": [
+      "Interpreta el tipo de transformador obtenido (Transformador Reductor $V_2 < V_1$ vs Elevador $V_2 > V_1$).",
+      "Explica la proporcionalidad inversa de corriente: al elevar el voltaje la corriente disminuye proporcionalmente para mantener la potencia constante.",
+      "Muestra la eficiencia típica en transformadores de potencia reales (95% a 99%)."
+    ],
+    "instructions_en": [
+      "Interpret calculated transformer type (Step-Down $V_2 < V_1$ vs Step-Up $V_2 > V_1$).",
+      "Explain inverse current proportionality: stepping up voltage decreases current to conserve total apparent power.",
+      "Show typical efficiency ratings in real power transformers (95% to 99%)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ttr-guide",
+      "icon": "⚡",
+      "title": "Ideal Transformer Formulas",
+      "title_es": "Fórmulas del Transformador Ideal",
+      "content_html_en": "<p><b>Turns Ratio (a):</b> a = N₁ / N₂ = V₁ / V₂ = I₂ / I₁</p><p><b>Step-Down Transformer:</b> N₂ &lt; N₁ ➔ Output voltage is lower than input.</p><p><b>Step-Up Transformer:</b> N₂ &gt; N₁ ➔ Output voltage is higher than input.</p>",
+      "content_html": "<p><b>Relación de Espiras (a):</b> a = N₁ / N₂ = V₁ / V₂ = I₂ / I₁</p><p><b>Transformador Reductor:</b> N₂ &lt; N₁ ➔ El voltaje de salida es menor al de entrada.</p><p><b>Transformador Elevador:</b> N₂ &gt; N₁ ➔ El voltaje de salida es mayor al de entrada.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "primaryVoltageV1",
+      "label": "Voltaje del Devanado Primario (V₁ en Volts - V)",
+      "label_en": "Primary Winding Voltage (V₁ in Volts - V)",
+      "type": "number",
+      "default": 230,
+      "min": 1,
+      "max": 500000,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "primaryTurnsN1",
+      "label": "Número de Espiras del Primario (N₁)",
+      "label_en": "Primary Winding Turns (N₁)",
+      "type": "number",
+      "default": 1000,
+      "min": 1,
+      "max": 100000,
+      "step": 10,
+      "required": true
+    },
+    {
+      "id": "secondaryTurnsN2",
+      "label": "Número de Espiras del Secundario (N₂)",
+      "label_en": "Secondary Winding Turns (N₂)",
+      "type": "number",
+      "default": 100,
+      "min": 1,
+      "max": 100000,
+      "step": 10,
+      "required": true
+    },
+    {
+      "id": "primaryCurrentI1Amps",
+      "label": "Corriente del Primario (I₁ en Amperios - A)",
+      "label_en": "Primary Current (I₁ in Amps - A)",
+      "type": "number",
+      "default": 5.0,
+      "min": 0.01,
+      "max": 10000,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "transformerTurnsRatioResult",
+      "label": "Relación de Espiras / Transformación (a = N₁/N₂)",
+      "label_en": "Turns Ratio (a = N₁/N₂)",
+      "expression": "secondaryTurnsN2 > 0 ? (primaryTurnsN1 / secondaryTurnsN2) : 0",
+      "unit": ":1",
+      "unit_en": ":1",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "secondaryVoltageResult",
+      "label": "Voltaje del Devanado Secundario (V₂ en Volts)",
+      "label_en": "Secondary Winding Voltage (V₂ in Volts)",
+      "expression": "primaryTurnsN1 > 0 ? ((primaryVoltageV1 * secondaryTurnsN2) / primaryTurnsN1) : 0",
+      "unit": "V",
+      "unit_en": "V",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "secondaryVoltageResult", "op": "<", "value": 230 }, "label": "Transformador Reductor (V₂ < V₁)", "label_en": "Step-Down Transformer (V₂ < V₁)", "tone": "success", "text": "Voltaje secundario reducido.", "text_en": "Secondary voltage stepped down." },
+        { "when": { "field": "secondaryVoltageResult", "op": ">=", "value": 230 }, "label": "Transformador Elevador (V₂ ≥ V₁)", "label_en": "Step-Up Transformer (V₂ ≥ V₁)", "tone": "info", "text": "Voltaje secundario elevado.", "text_en": "Secondary voltage stepped up." }
+      ]
+    },
+    {
+      "id": "secondaryCurrentAmpsResult",
+      "label": "Corriente del Secundario (I₂ en Amperios - A)",
+      "label_en": "Secondary Current (I₂ in Amps - A)",
+      "expression": "secondaryTurnsN2 > 0 ? ((primaryCurrentI1Amps * primaryTurnsN1) / secondaryTurnsN2) : 0",
+      "unit": "A",
+      "unit_en": "A",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

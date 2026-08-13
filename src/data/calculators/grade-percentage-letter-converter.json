@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "grade-percentage-letter-converter",
+    "title": "Conversor de Calificaciones (Porcentaje % a Letras A, B, C, D, F y GPA)",
+    "title_en": "Grade Percentage to Letter & GPA Converter (A, B, C, D, F)",
+    "slug": "conversor-de-calificaciones-porcentaje-a-letras-a-b-c-d-f-gpa",
+    "category": "education",
+    "subcategory": "grades",
+    "tags": ["conversor-de-notas", "porcentaje-a-letra", "escala-a-b-c-d-f", "puntos-gpa", "calificaciones", "educacion"],
+    "tags_en": ["grade-converter", "percentage-to-letter", "letter-grades", "gpa-points", "grades", "education"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte calificaciones porcentuales (0-100%) a letras académicas (A+, A, B, C, D, F) y puntos de escala GPA 4.0.",
+    "shortDescription_en": "Convert percentage grades (0-100%) to letter grades (A+, A, B, C, D, F) and 4.0 GPA scale points.",
+    "longDescription": "Herramienta de equivalencia académica escolar e internacional. Facilita la homologación de notas de exámenes y actas de calificación.",
+    "longDescription_en": "School and international academic equivalence tool. Translates exam percentage scores into official letter grades.",
+    "howToUse": [
+      "Ingresa el Porcentaje de Calificación (0 a 100%).",
+      "Consulta los Puntos de la Escala GPA 4.0 Equivalentes y la Letra de Calificación Correspondiente."
+    ],
+    "howToUse_en": [
+      "Enter Percentage Grade Score (0 to 100%).",
+      "View Equivalent 4.0 GPA Scale Points and Corresponding Letter Grade."
+    ],
+    "methodology": ">=93% = A (4.0), 90-92% = A- (3.7), 87-89% = B+ (3.3), 83-86% = B (3.0), 80-82% = B- (2.7), 77-79% = C+ (2.3), 73-76% = C (2.0), 70-72% = C- (1.7), 60-69% = D (1.0), <60% = F (0.0).",
+    "methodology_en": ">=93% = A (4.0), 90-92% = A- (3.7), 87-89% = B+ (3.3), 83-86% = B (3.0), 80-82% = B- (2.7), 77-79% = C+ (2.3), 73-76% = C (2.0), 70-72% = C- (1.7), 60-69% = D (1.0), <60% = F (0.0)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Equivalencia Académica y Calificaciones Internacionales",
+    "role_en": "Academic Equivalence & International Grading Specialist Assistant",
+    "includeData": ["equivalentGpaPointsResult"],
+    "instructions": [
+      "Interpreta los puntos GPA y la letra de calificación equivalente obtenidos.",
+      "Muestra la clasificación cualitativa del rendimiento (Excelente, Muy Bueno, Suficiente, Insuficiente).",
+      "Explica la escala de letras en universidades anglosajonas."
+    ],
+    "instructions_en": [
+      "Interpret computed GPA points and equivalent letter grade.",
+      "Show qualitative academic evaluation (Excellent, Very Good, Passing, Failing).",
+      "Explain letter grading systems in US and UK universities."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "gpl-guide",
+      "icon": "📊",
+      "title": "Standard US Letter Grading Scale Table",
+      "title_es": "Tabla de Escala de Calificación por Letras EE.UU.",
+      "content_html_en": "<p><b>A / A+:</b> 93 - 100% (4.0 GPA Points)</p><p><b>B:</b> 83 - 86% (3.0 GPA Points)</p><p><b>C:</b> 73 - 76% (2.0 GPA Points)</p><p><b>F:</b> Below 60% (0.0 GPA Points - Fail)</p>",
+      "content_html": "<p><b>A / A+:</b> 93 - 100% (4.0 Puntos GPA)</p><p><b>B:</b> 83 - 86% (3.0 Puntos GPA)</p><p><b>C:</b> 73 - 76% (2.0 Puntos GPA)</p><p><b>F:</b> Menos de 60% (0.0 Puntos GPA - Reprobado)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "percentageGradeScoreVal",
+      "label": "Porcentaje de Calificación (0 a 100%)",
+      "label_en": "Percentage Grade Score (0 to 100%)",
+      "type": "number",
+      "default": 85,
+      "min": 0,
+      "max": 100,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "equivalentGpaPointsResult",
+      "label": "Puntos Equivalentes en Escala GPA 4.0",
+      "label_en": "Equivalent 4.0 GPA Scale Points",
+      "expression": "percentageGradeScoreVal >= 93 ? 4.0 : (percentageGradeScoreVal >= 90 ? 3.7 : (percentageGradeScoreVal >= 87 ? 3.3 : (percentageGradeScoreVal >= 83 ? 3.0 : (percentageGradeScoreVal >= 80 ? 2.7 : (percentageGradeScoreVal >= 77 ? 2.3 : (percentageGradeScoreVal >= 73 ? 2.0 : (percentageGradeScoreVal >= 70 ? 1.7 : (percentageGradeScoreVal >= 60 ? 1.0 : 0.0))))))))",
+      "unit": "GPA",
+      "unit_en": "GPA",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "equivalentGpaPointsResult", "op": ">=", "value": 2.0 }, "label": "Calificación Aprobatoria", "label_en": "Passing Grade", "tone": "success", "text": "Calificación por encima del umbral mínimo de aprobación.", "text_en": "Grade above minimum passing threshold." }
+      ]
+    }
+  ]
+}

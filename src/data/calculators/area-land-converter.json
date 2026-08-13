@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "area-land-converter",
+    "title": "Conversor de Área y Terrenos (m², Hectáreas, Acres, ft²)",
+    "title_en": "Area & Land Measurement Converter (m², Hectares, Acres, sq ft)",
+    "slug": "conversor-de-area-terrenos-metros-cuadrados-hectareas-acres",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["conversor-de-area", "metros-cuadrados", "hectareas", "acres", "pies-cuadrados", "terrenos", "conversores"],
+    "tags_en": ["area-converter", "square-meters", "hectares", "acres", "square-feet", "land", "converters"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte instantáneamente entre metros cuadrados ($m^2$), hectáreas, acres, pies cuadrados ($ft^2$) y kilómetros cuadrados.",
+    "shortDescription_en": "Instantly convert between square meters ($m^2$), hectares, acres, square feet ($sq ft$), and square kilometers.",
+    "longDescription": "Herramienta de bienes raíces, topografía y agricultura. Facilita la valoración de parcelas de tierra y terrenos rústicos o urbanos.",
+    "longDescription_en": "Real estate, land surveying, and agriculture tool. Facilitates valuation of rural land parcels and urban properties.",
+    "howToUse": [
+      "Ingresa el Valor de Área a Convertir.",
+      "Selecciona la Unidad de Origen (ej. Metros Cuadrados, Hectáreas, Acres).",
+      "Consulta los Resultados Equivalentes en m², Hectáreas (ha), Acres y Pies Cuadrados (ft²)."
+    ],
+    "howToUse_en": [
+      "Enter Area Value to Convert.",
+      "Select Source Unit (e.g. Square Meters, Hectares, Acres).",
+      "View Equivalent Results in m², Hectares (ha), Acres, and Square Feet (sq ft)."
+    ],
+    "methodology": "Factor base en m²: 1 m² = 1.0, 1 ha = 10,000 m², 1 acre = 4046.85642m², 1 ft² = 0.09290304m², 1 km² = 1,000,000 m².",
+    "methodology_en": "Base factor in m²: 1 m² = 1.0, 1 ha = 10,000 m², 1 acre = 4046.85642m², 1 ft² = 0.09290304m², 1 km² = 1,000,000 m²."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Catastro, Topografía y Medición de Terrenos",
+    "role_en": "Cadastre, Land Surveying & Area Units Specialist Assistant",
+    "includeData": ["areaInSquareMetersResult", "areaInHectaresResult", "areaInAcresResult"],
+    "instructions": [
+      "Interpreta la conversión de área de terreno realizada.",
+      "Muestra equivalencias útiles (1 Hectárea = 10,000 m² = 2.471 Acres).",
+      "Explica la aplicación en transacciones inmobiliarias de terrenos rústicos vs urbanos."
+    ],
+    "instructions_en": [
+      "Interpret performed land area unit conversion.",
+      "Show useful equivalences (1 Hectare = 10,000 m² = 2.471 Acres).",
+      "Explain real estate usage for rural plots vs urban parcels."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "alc-guide",
+      "icon": "📐",
+      "title": "Land Area Conversion Benchmarks",
+      "title_es": "Equivalencias de Medición de Terrenos",
+      "content_html_en": "<p><b>1 Hectare (ha):</b> 10,000 m² = 2.47105 Acres = 107,639 sq ft</p><p><b>1 Acre:</b> 4,046.86 m² = 43,560 sq ft</p><p><b>1 Square Kilometer (km²):</b> 100 Hectares = 247.105 Acres</p>",
+      "content_html": "<p><b>1 Hectárea (ha):</b> 10,000 m² = 2.47105 Acres = 107,639 ft²</p><p><b>1 Acre:</b> 4,046.86 m² = 43,560 ft²</p><p><b>1 Kilómetro Cuadrado (km²):</b> 100 Hectáreas = 247.105 Acres</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputValueArea",
+      "label": "Valor a Convertir",
+      "label_en": "Value to Convert",
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 1000000000,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "inputAreaUnitFactor",
+      "label": "Unidad de Origen",
+      "label_en": "Source Unit",
+      "type": "select",
+      "default": "10000.0",
+      "options": [
+        { "value": "10000.0", "label": "Hectáreas (ha)", "label_en": "Hectares (ha)" },
+        { "value": "4046.85642", "label": "Acres (ac)", "label_en": "Acres (ac)" },
+        { "value": "1.0", "label": "Metros Cuadrados (m²)", "label_en": "Square Meters (m²)" },
+        { "value": "0.09290304", "label": "Pies Cuadrados (ft²)", "label_en": "Square Feet (sq ft)" },
+        { "value": "1000000.0", "label": "Kilómetros Cuadrados (km²)", "label_en": "Square Kilometers (km²)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "areaInSquareMetersResult",
+      "label": "Equivalente en Metros Cuadrados (m²)",
+      "label_en": "Equivalent in Square Meters (m²)",
+      "expression": "inputValueArea * inputAreaUnitFactor",
+      "unit": "m²",
+      "unit_en": "m²",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "areaInSquareMetersResult", "op": ">=", "value": 0 }, "label": "Superficie Calculada", "label_en": "Area Computed", "tone": "success", "text": "Superficie equivalente en metros cuadrados cuantificada.", "text_en": "Equivalent surface in square meters quantified." }
+      ]
+    },
+    {
+      "id": "areaInHectaresResult",
+      "label": "Equivalente en Hectáreas (ha)",
+      "label_en": "Equivalent in Hectares (ha)",
+      "expression": "areaInSquareMetersResult / 10000",
+      "unit": "ha",
+      "unit_en": "ha",
+      "precision": 4,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "areaInAcresResult",
+      "label": "Equivalente en Acres (ac)",
+      "label_en": "Equivalent in Acres (ac)",
+      "expression": "areaInSquareMetersResult / 4046.85642",
+      "unit": "ac",
+      "unit_en": "ac",
+      "precision": 3,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "areaInSqFtResult",
+      "label": "Equivalente en Pies Cuadrados (ft²)",
+      "label_en": "Equivalent in Square Feet (sq ft)",
+      "expression": "areaInSquareMetersResult / 0.09290304",
+      "unit": "ft²",
+      "unit_en": "sq ft",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "fuel-economy-converter",
+    "title": "Conversor de Eficiencia de Combustible (L/100km, MPG US, MPG UK, km/L)",
+    "title_en": "Fuel Economy Unit Converter (L/100km, MPG US, MPG UK, km/L)",
+    "slug": "conversor-de-eficiencia-de-combustible-litros-100km-mpg-kml",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["eficiencia-de-combustible", "litros-100km", "mpg", "kml", "consumo-de-gasolina", "vehiculos", "conversores"],
+    "tags_en": ["fuel-economy", "liters-100km", "mpg", "kml", "gas-mileage", "vehicles", "converters"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte instantáneamente entre consumo en Litros por 100 km (L/100km), MPG US, MPG Imperial UK y km/L.",
+    "shortDescription_en": "Instantly convert fuel usage between Liters per 100 km (L/100km), US MPG, UK Imperial MPG, and km/L.",
+    "longDescription": "Herramienta de automoción y transporte. Traduce las métricas de consumo de gasolina o diésel entre estándares americanos e internacionales.",
+    "longDescription_en": "Automotive and transport tool. Translates gasoline/diesel consumption metrics between American and international standards.",
+    "howToUse": [
+      "Ingresa el Valor de Rendimiento de Combustible.",
+      "Selecciona la Unidad de Origen (ej. L/100km, MPG US, km/L).",
+      "Consulta la Conversión Simultánea en L/100km, MPG US, MPG UK y km/L."
+    ],
+    "howToUse_en": [
+      "Enter Fuel Mileage Rating Value.",
+      "Select Source Unit (e.g. L/100km, US MPG, km/L).",
+      "View Simultaneous Conversion in L/100km, US MPG, UK MPG, and km/L."
+    ],
+    "methodology": "L/100km = 235.215 / MPG_US. MPG_US = 235.215 / L100km. km/L = 100 / L100km. MPG_UK = 282.481 / L100km.",
+    "methodology_en": "L/100km = 235.215 / MPG_US. MPG_US = 235.215 / L100km. km/L = 100 / L100km. MPG_UK = 282.481 / L100km."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Eficiencia Energética de Automoción y Combustible",
+    "role_en": "Automotive Fuel Economy & Energy Efficiency Specialist Assistant",
+    "includeData": ["fuelInL100kmResult", "fuelInMpgUsResult"],
+    "instructions": [
+      "Interpreta la conversión de consumo de combustible realizada.",
+      "Muestra la diferencia entre la escala inversa de consumo (L/100km: menor es mejor) vs distancia por volumen (MPG o km/L: mayor es mejor).",
+      "Proporciona ejemplos de rendimiento estándar (5 L/100km ≈ 47 MPG US es muy eficiente; 10 L/100km ≈ 23.5 MPG US consumo medio)."
+    ],
+    "instructions_en": [
+      "Interpret performed fuel economy conversion.",
+      "Show difference between inverse consumption scale (L/100km: lower is better) vs distance per volume (MPG or km/L: higher is better).",
+      "Provide mileage benchmark examples (5 L/100km ≈ 47 US MPG highly efficient; 10 L/100km ≈ 23.5 US MPG average)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "fec-guide",
+      "icon": "⛽",
+      "title": "Fuel Mileage Conversion Formulas",
+      "title_es": "Fórmulas de Rendimiento de Combustible",
+      "content_html_en": "<p><b>US MPG to L/100km:</b> L/100km = 235.215 / US MPG</p><p><b>km/L to L/100km:</b> L/100km = 100 / km/L</p><p><b>UK MPG to US MPG:</b> US MPG = UK MPG / 1.20095</p>",
+      "content_html": "<p><b>MPG US a L/100km:</b> L/100km = 235.215 / MPG US</p><p><b>km/L a L/100km:</b> L/100km = 100 / (km/L)</p><p><b>MPG UK a MPG US:</b> MPG US = MPG UK / 1.20095</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputValueFuelEconomy",
+      "label": "Valor de Consumo / Rendimiento",
+      "label_en": "Mileage / Economy Value",
+      "type": "number",
+      "default": 6.5,
+      "min": 0.1,
+      "max": 500,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "inputFuelUnitType",
+      "label": "Unidad de Origen",
+      "label_en": "Source Unit",
+      "type": "select",
+      "default": "l100km",
+      "options": [
+        { "value": "l100km", "label": "Litros por 100 km (L/100km)", "label_en": "Liters per 100 km (L/100km)" },
+        { "value": "mpg_us", "label": "Millas por Galón US (MPG US)", "label_en": "Miles per US Gallon (US MPG)" },
+        { "value": "mpg_uk", "label": "Millas por Galón UK (MPG Imperial)", "label_en": "Miles per UK Gallon (UK MPG)" },
+        { "value": "kml", "label": "Kilómetros por Litro (km/L)", "label_en": "Kilometers per Liter (km/L)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "fuelInL100kmResult",
+      "label": "Consumo en Litros por 100 km (L/100km)",
+      "label_en": "Consumption in Liters per 100 km (L/100km)",
+      "expression": "inputFuelUnitType == 'l100km' ? inputValueFuelEconomy : (inputFuelUnitType == 'mpg_us' ? (235.215 / inputValueFuelEconomy) : (inputFuelUnitType == 'mpg_uk' ? (282.481 / inputValueFuelEconomy) : (100 / inputValueFuelEconomy)))",
+      "unit": "L/100km",
+      "unit_en": "L/100km",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "fuelInL100kmResult", "op": ">=", "value": 0 }, "label": "Consumo Calculado", "label_en": "Consumption Computed", "tone": "success", "text": "Métrica de consumo en Litros por 100 km cuantificada.", "text_en": "Consumption metric in Liters per 100 km quantified." }
+      ]
+    },
+    {
+      "id": "fuelInMpgUsResult",
+      "label": "Rendimiento en Millas por Galón US (MPG US)",
+      "label_en": "Mileage in Miles per US Gallon (US MPG)",
+      "expression": "fuelInL100kmResult > 0 ? (235.215 / fuelInL100kmResult) : 0",
+      "unit": "MPG",
+      "unit_en": "MPG",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "fuelInKmlResult",
+      "label": "Rendimiento en Kilómetros por Litro (km/L)",
+      "label_en": "Mileage in Kilometers per Liter (km/L)",
+      "expression": "fuelInL100kmResult > 0 ? (100 / fuelInL100kmResult) : 0",
+      "unit": "km/L",
+      "unit_en": "km/L",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "date-calculator",
+    "title": "Calculadora de Fechas (Suma, Resta y Diferencia de Días)",
+    "title_en": "Date Calculator (Add, Subtract & Date Difference)",
+    "slug": "calculadora-de-fechas-suma-resta-dias",
+    "category": "datetime",
+    "subcategory": "dates",
+    "tags": ["fechas", "calculadora-de-fechas", "diferencia-de-dias", "sumar-dias", "restar-dias", "calendario"],
+    "tags_en": ["dates", "date-calculator", "days-difference", "add-days", "subtract-days", "calendar"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calendar"
+  },
+  "content": {
+    "shortDescription": "Suma o resta días, semanas o meses a una fecha de inicio, o calcula la diferencia exacta en días entre dos fechas de calendario.",
+    "shortDescription_en": "Add or subtract days, weeks, or months to a start date, or compute exact day difference between two calendar dates.",
+    "longDescription": "Herramienta de gestión del tiempo y calendario. Permite calcular fechas futuras o pasadas sumando/restando días, y determinar la cantidad de semanas y días entre dos fechas.",
+    "longDescription_en": "Time management and calendar tool. Computes future or past dates by adding/subtracting days and determines weeks between dates.",
+    "howToUse": [
+      "Selecciona la Fecha de Inicio.",
+      "Ingresa el número de Días a Sumar o Restar.",
+      "Selecciona la Fecha de Fin para la diferencia.",
+      "Consulta la nueva fecha resultante y el total de días y semanas."
+    ],
+    "howToUse_en": [
+      "Select Start Date.",
+      "Enter number of Days to Add or Subtract.",
+      "Select End Date for difference calculation.",
+      "View resulting date, total days, and weeks."
+    ],
+    "methodology": "Fecha Resultante = addDays(startDate, daysAmount). Diferencia = daysBetween(startDate, endDate).",
+    "methodology_en": "Resulting Date = addDays(startDate, daysAmount). Difference = daysBetween(startDate, endDate)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Planificación y Gestión del Tiempo",
+    "role_en": "Time Management & Planning Assistant",
+    "includeData": ["daysDiffResult", "weeksDiffResult"],
+    "instructions": [
+      "Explica la diferencia exacta de días entre las dos fechas seleccionadas.",
+      "Indica la fecha futura o pasada resultante tras sumar/restar el número de días.",
+      "Muestra la conversión de días a semanas completas y meses aproximados."
+    ],
+    "instructions_en": [
+      "Explain exact day difference between two selected dates.",
+      "Indicate resulting future or past date after adding/subtracting days.",
+      "Show conversion from days to full weeks and approximate months."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "date-guide",
+      "icon": "📅",
+      "title": "Calendar Calculations & Leap Years",
+      "title_es": "Cálculos de Calendario y Años Bisiestos",
+      "content_html_en": "<p><b>Leap Years:</b> Add 1 day (Feb 29) every 4 years to align calendar with solar orbit.</p><p><b>Business Days vs Calendar Days:</b> Calendar days include all weekends and holidays.</p>",
+      "content_html": "<p><b>Años Bisiestos:</b> Añaden 1 día (29 de Feb) cada 4 años para alinear el calendario con la órbita solar.</p><p><b>Días Naturales vs Laborables:</b> Los días naturales incluyen todos los fines de semana y festivos.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "startDate",
+      "label": "Fecha de Inicio",
+      "label_en": "Start Date",
+      "type": "date",
+      "default": "2026-01-01",
+      "required": true
+    },
+    {
+      "id": "daysAmount",
+      "label": "Días a Sumar (usar negativo para Restar)",
+      "label_en": "Days to Add (use negative to Subtract)",
+      "type": "number",
+      "default": 90,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "endDate",
+      "label": "Fecha de Fin (para Diferencia)",
+      "label_en": "End Date (for Difference)",
+      "type": "date",
+      "default": "2026-12-31",
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "futureDateResult",
+      "label": "Fecha Resultante (Inicio + Días)",
+      "label_en": "Resulting Date (Start + Days)",
+      "expression": "addDays(startDate, daysAmount)",
+      "unit": "",
+      "precision": 0,
+      "format": "date",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "daysAmount", "op": ">=", "value": 0 }, "label": "Fecha Calculada", "label_en": "Date Computed", "tone": "success", "text": "Fecha proyectada correctamente.", "text_en": "Projected date computed successfully." }
+      ]
+    },
+    {
+      "id": "daysDiffResult",
+      "label": "Diferencia Total en Días (Fin − Inicio)",
+      "label_en": "Total Days Difference (End − Start)",
+      "expression": "daysBetween(startDate, endDate)",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "weeksDiffResult",
+      "label": "Diferencia en Semanas Completas",
+      "label_en": "Difference in Full Weeks",
+      "expression": "floor(daysDiffResult / 7)",
+      "unit": "semanas",
+      "unit_en": "weeks",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

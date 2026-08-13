@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "bra-size-calculator",
+    "title": "Calculadora de Talla de Sostén / Sujetador (Medida de Banda y Copa)",
+    "title_en": "Bra Size Calculator (Band & Cup Measurement)",
+    "slug": "calculadora-de-talla-de-sosten-sujetador-copa",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["sosten", "sujetador", "talla-de-sosten", "copa", "banda", "lenceria", "moda"],
+    "tags_en": ["bra", "bra-size", "bra-calculator", "cup-size", "band-size", "lingerie", "fashion"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "User"
+  },
+  "content": {
+    "shortDescription": "Encuentra tu talla ideal de sujetador (Banda y Copa A, B, C, D, DD) a partir de las medidas de torso y busto en pulgadas o cm.",
+    "shortDescription_en": "Find your ideal bra size (Band & Cup A, B, C, D, DD) based on underbust and bust measurements in inches or cm.",
+    "longDescription": "Herramienta de patronaje y ergonomía textil. Determina la talla de banda ajustada y la copa de sujetador precisa según los estándares internacionales de lencería.",
+    "longDescription_en": "Garment pattern and textile ergonomics tool. Determines snug band size and accurate cup size following international lingerie sizing standards.",
+    "howToUse": [
+      "Mide el Contorno Bajo Busto / Torso ajustado en pulgadas o cm.",
+      "Mide el Contorno de Busto por la parte más prominente.",
+      "Consulta tu Talla de Banda y la Copa de sujetador recomendada."
+    ],
+    "howToUse_en": [
+      "Measure Underbust / Snug Ribcage in inches or cm.",
+      "Measure Bust across the fullest part.",
+      "View calculated Band Size and recommended Cup Size."
+    ],
+    "methodology": "Banda = Underbust + (si par +4, si impar +5 en pulgadas). Copa = Bust - Band (1\"=A, 2\"=B, 3\"=C, 4\"=D, 5\"=DD).",
+    "methodology_en": "Band = Underbust + (even +4, odd +5 in inches). Cup = Bust - Band (1\"=A, 2\"=B, 3\"=C, 4\"=D, 5\"=DD)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Ergonomía Femenina y Lencería",
+    "role_en": "Lingerie & Women's Ergonomics Specialist Assistant",
+    "includeData": ["bandSizeResultInches", "cupDiffInches"],
+    "instructions": [
+      "Interpreta la talla de banda y copa obtenida.",
+      "Explica cómo debe ajustar adecuadamente la banda (80% del soporte proviene de la banda).",
+      "Muestra tallas hermanas (sister sizes) equivalentes para mayor confort."
+    ],
+    "instructions_en": [
+      "Interpret calculated band and cup size.",
+      "Explain proper band fit (80% of support comes from the band).",
+      "Show equivalent sister sizes for enhanced comfort."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "bra-guide",
+      "icon": "👙",
+      "title": "Bra Sizing & Cup Differences",
+      "title_es": "Tallas de Sujetador y Diferencias de Copa",
+      "content_html_en": "<p><b>Difference (Bust - Band):</b></p><ul><li>1 inch difference = <b>A Cup</b></li><li>2 inches difference = <b>B Cup</b></li><li>3 inches difference = <b>C Cup</b></li><li>4 inches difference = <b>D Cup</b></li><li>5 inches difference = <b>DD / E Cup</b></li></ul>",
+      "content_html": "<p><b>Diferencia (Busto - Banda):</b></p><ul><li>1 pulgada de diferencia = <b>Copa A</b></li><li>2 pulgadas de diferencia = <b>Copa B</b></li><li>3 pulgadas de diferencia = <b>Copa C</b></li><li>4 pulgadas de diferencia = <b>Copa D</b></li><li>5 pulgadas de diferencia = <b>Copa DD / E</b></li></ul>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "underbustInches",
+      "label": "Contorno Bajo Busto / Torso (pulgadas)",
+      "label_en": "Underbust / Ribcage (inches)",
+      "type": "number",
+      "default": 30,
+      "min": 20,
+      "max": 60,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "bustInches",
+      "label": "Contorno de Busto (pulgadas)",
+      "label_en": "Bust Across Fullest Part (inches)",
+      "type": "number",
+      "default": 34,
+      "min": 22,
+      "max": 70,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "bandSizeResultInches",
+      "label": "Talla de Banda (pulgadas)",
+      "label_en": "Band Size (inches)",
+      "expression": "(floor(underbustInches) mod 2 == 0) ? (floor(underbustInches) + 4) : (floor(underbustInches) + 5)",
+      "unit": "in",
+      "unit_en": "in",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "cupDiffInches",
+      "label": "Diferencia de Busto a Banda",
+      "label_en": "Bust minus Band Difference",
+      "expression": "max(0, bustInches - bandSizeResultInches)",
+      "unit": "in",
+      "unit_en": "in",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "cupIndexVal",
+      "label": "Índice de Copa",
+      "label_en": "Cup Index",
+      "expression": "cupDiffInches <= 1 ? 1 : (cupDiffInches <= 2 ? 2 : (cupDiffInches <= 3 ? 3 : (cupDiffInches <= 4 ? 4 : 5)))",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "cupIndexVal", "op": "==", "value": 1 }, "label": "COPA A", "label_en": "CUP A", "tone": "success", "text": "Talla de copa A recomendada.", "text_en": "Recommended cup size A." },
+        { "when": { "field": "cupIndexVal", "op": "==", "value": 2 }, "label": "COPA B", "label_en": "CUP B", "tone": "success", "text": "Talla de copa B recomendada.", "text_en": "Recommended cup size B." },
+        { "when": { "field": "cupIndexVal", "op": "==", "value": 3 }, "label": "COPA C", "label_en": "CUP C", "tone": "success", "text": "Talla de copa C recomendada.", "text_en": "Recommended cup size C." },
+        { "when": { "field": "cupIndexVal", "op": "==", "value": 4 }, "label": "COPA D", "label_en": "CUP D", "tone": "success", "text": "Talla de copa D recomendada.", "text_en": "Recommended cup size D." },
+        { "when": { "field": "cupIndexVal", "op": "==", "value": 5 }, "label": "COPA DD / E", "label_en": "CUP DD / E", "tone": "success", "text": "Talla de copa DD/E recomendada.", "text_en": "Recommended cup size DD/E." }
+      ]
+    }
+  ]
+}

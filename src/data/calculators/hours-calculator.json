@@ -1,0 +1,158 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "hours-calculator",
+    "title": "Calculadora de Horas Trabajadas (Entrada, Salida y Almuerzo)",
+    "title_en": "Hours Worked Calculator (Clock In, Clock Out & Break)",
+    "slug": "calculadora-de-horas-trabajadas-entradas-salidas",
+    "category": "datetime",
+    "subcategory": "time",
+    "tags": ["horas-trabajadas", "calculadora-de-horas", "reloj-checador", "jornada-laboral", "almuerzo", "nominas"],
+    "tags_en": ["hours-worked", "hours-calculator", "time-clock", "work-shift", "lunch-break", "payroll"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Clock"
+  },
+  "content": {
+    "shortDescription": "Calcula el total de horas netas trabajadas entre la hora de entrada y salida, restando el tiempo de descanso o almuerzo.",
+    "shortDescription_en": "Compute total net hours worked between clock-in and clock-out time, deducting break or lunch time.",
+    "longDescription": "Herramienta laboral y de nómina. Determina la cantidad de horas laboradas en una jornada, descontando la pausa no remunerada de almuerzo o descanso.",
+    "longDescription_en": "Payroll and work shift tool. Calculates net hours worked during a shift, deducting unpaid lunch breaks.",
+    "howToUse": [
+      "Ingresa la Hora de Entrada (ej. 09:00).",
+      "Ingresa la Hora de Salida (ej. 17:30).",
+      "Ingresa los minutos de Almuerzo / Descanso no remunerado (ej. 30 o 60 mins).",
+      "Consulta las Horas Netas Trabajadas y la paga bruta estimada si ingresas una tarifa por hora."
+    ],
+    "howToUse_en": [
+      "Enter Clock-In Time (e.g. 09:00).",
+      "Enter Clock-Out Time (e.g. 17:30).",
+      "Enter unpaid Lunch / Break minutes (e.g. 30 or 60 mins).",
+      "View Net Hours Worked and estimated gross pay if hourly rate is entered."
+    ],
+    "methodology": "Horas Brutas = hoursBetweenTimes(startTime, endTime). Horas Netas = Horas Brutas - (breakMinutes / 60).",
+    "methodology_en": "Gross Hours = hoursBetweenTimes(startTime, endTime). Net Hours = Gross Hours - (breakMinutes / 60)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Control de Horarios y Nóminas",
+    "role_en": "Work Hours & Payroll Specialist Assistant",
+    "includeData": ["netHoursWorked", "grossPayEstimated", "grossHoursWorked"],
+    "instructions": [
+      "Interpreta las horas netas trabajadas descontando el descanso.",
+      "Verifica si la jornada excede la jornada estándar laboral de 8 horas (posibles horas extras).",
+      "Muestra la estimación del pago bruto según la tarifa por hora introducida."
+    ],
+    "instructions_en": [
+      "Interpret net hours worked deducting break time.",
+      "Check if shift exceeds standard 8-hour workday (potential overtime).",
+      "Show gross pay estimate based on entered hourly rate."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "hrs-guide",
+      "icon": "📋",
+      "title": "Work Shift & Overtime Rules",
+      "title_es": "Reglas de Jornada Laboral y Horas Extra",
+      "content_html_en": "<p><b>Standard Workday:</b> Typically 8 hours per day / 40 hours per week.</p><p><b>Unpaid Breaks:</b> Meal breaks (30-60 mins) are usually deducted from total presence hours.</p>",
+      "content_html": "<p><b>Jornada Estándar:</b> Típicamente 8 horas al día / 40 horas a la semana.</p><p><b>Descansos no Remunerados:</b> Las pausas para comer (30-60 mins) habitualmente se descuentan del tiempo total de presencia.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "startTime",
+      "label": "Hora de Entrada (HH:MM)",
+      "label_en": "Clock-In Time (HH:MM)",
+      "type": "select",
+      "default": "09:00",
+      "options": [
+        { "value": "07:00", "label": "07:00 AM", "label_en": "07:00 AM" },
+        { "value": "08:00", "label": "08:00 AM", "label_en": "08:00 AM" },
+        { "value": "09:00", "label": "09:00 AM", "label_en": "09:00 AM" },
+        { "value": "10:00", "label": "10:00 AM", "label_en": "10:00 AM" },
+        { "value": "22:00", "label": "10:00 PM (Turno Noche)", "label_en": "10:00 PM (Night Shift)" }
+      ]
+    },
+    {
+      "id": "endTime",
+      "label": "Hora de Salida (HH:MM)",
+      "label_en": "Clock-Out Time (HH:MM)",
+      "type": "select",
+      "default": "17:30",
+      "options": [
+        { "value": "16:00", "label": "04:00 PM", "label_en": "04:00 PM" },
+        { "value": "17:00", "label": "05:00 PM", "label_en": "05:00 PM" },
+        { "value": "17:30", "label": "05:30 PM", "label_en": "05:30 PM" },
+        { "value": "18:00", "label": "06:00 PM", "label_en": "06:00 PM" },
+        { "value": "06:00", "label": "06:00 AM (Día Siguiente)", "label_en": "06:00 AM (Next Day)" }
+      ]
+    },
+    {
+      "id": "breakMins",
+      "label": "Minutos de Almuerzo / Descanso",
+      "label_en": "Lunch / Break Minutes",
+      "type": "number",
+      "default": 30,
+      "min": 0,
+      "max": 240,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "hourlyRate",
+      "label": "Tarifa por Hora ($ USD)",
+      "label_en": "Hourly Rate ($ USD)",
+      "type": "currency",
+      "default": 18,
+      "min": 0,
+      "max": 500,
+      "step": 0.5,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "grossHoursWorked",
+      "label": "Horas Totales de Presencia (Brutas)",
+      "label_en": "Total Presence Hours (Gross)",
+      "expression": "hoursBetweenTimes(startTime, endTime)",
+      "unit": "hrs",
+      "unit_en": "hrs",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "netHoursWorked",
+      "label": "Horas Netas Trabajadas",
+      "label_en": "Net Hours Worked",
+      "expression": "max(0, grossHoursWorked - (breakMins / 60))",
+      "unit": "hrs",
+      "unit_en": "hrs",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "netHoursWorked", "op": ">=", "value": 8 }, "label": "Jornada Completa (≥ 8h)", "label_en": "Full Shift (≥ 8h)", "tone": "success", "text": "Jornada laboral completa cumplida.", "text_en": "Full work shift completed." },
+        { "when": { "field": "netHoursWorked", "op": "<", "value": 8 }, "label": "Jornada Parcial (< 8h)", "label_en": "Partial Shift (< 8h)", "tone": "info", "text": "Jornada parcial o reducida.", "text_en": "Partial or reduced shift." }
+      ]
+    },
+    {
+      "id": "grossPayEstimated",
+      "label": "Pago Bruto Estimado",
+      "label_en": "Estimated Gross Pay",
+      "expression": "netHoursWorked * hourlyRate",
+      "unit": "USD",
+      "precision": 2,
+      "format": "currency",
+      "type": "primary"
+    }
+  ]
+}

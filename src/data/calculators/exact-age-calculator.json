@@ -1,0 +1,190 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "exact-age-calculator",
+    "title": "Calculadora de Edad Exacta y Cronología Personal (Años, Meses, Días, Segundos)",
+    "title_en": "Exact Age & Personal Chronology Calculator (Years, Months, Days, Seconds)",
+    "slug": "calculadora-de-edad-exacta-anos-meses-dias-cumpleanos-cronologia",
+    "category": "datetime",
+    "subcategory": "dates",
+    "tags": ["edad-exacta", "calculo-de-edad", "anos-meses-dias", "cumpleanos", "dias-vividos", "minutos-vividos", "fecha-y-tiempo"],
+    "tags_en": ["exact-age", "age-calculator", "years-months-days", "birthday", "total-days-lived", "total-minutes-lived", "date-time"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.1.0",
+    "icon": "Calendar"
+  },
+  "content": {
+    "shortDescription": "Calcula tu edad exacta en años, meses, días, horas, minutos y latidos cardíacos en cualquier fecha de comparación.",
+    "shortDescription_en": "Calculate your exact age in years, months, days, hours, minutes, and heartbeats on any target comparison date.",
+    "longDescription": "Herramienta avanzada de cronología personal y análisis temporal. Permite comparar tu edad con cualquier hito histórico o fecha futura.",
+    "longDescription_en": "Advanced personal chronology and time analysis tool. Compare your exact age against historical milestones or future target dates.",
+    "howToUse": [
+      "Ingresa tu Fecha de Nacimiento (Año, Mes y Día).",
+      "Ingresa la Fecha de Comparación (por defecto, la fecha actual).",
+      "Consulta los Años Cumplidos, Meses, Días Totales, Semanas y Latidos Corazón Estimados."
+    ],
+    "howToUse_en": [
+      "Enter your Birth Date (Year, Month, and Day).",
+      "Enter Target Comparison Date (defaults to current date).",
+      "View Completed Years, Months, Total Days, Weeks, and Estimated Heartbeats."
+    ],
+    "methodology": "Días Totales = (AñoComp - AñoNac)*365.25 + (MesComp - MesNac)*30.44 + (DíaComp - DíaNac). Horas = Días * 24. Latidos ≈ Días * 24 * 60 * 70.",
+    "methodology_en": "Total Days = (CompYear - BirthYear)*365.25 + (CompMonth - BirthMonth)*30.44 + (CompDay - BirthDay). Hours = Days * 24. Heartbeats ≈ Days * 24 * 60 * 70."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Cronología Personal y Cálculo de Fechas",
+    "role_en": "Personal Chronology & Date Math Specialist Assistant",
+    "includeData": ["completedYearsAgeResult", "totalDaysLivedResult", "totalHeartbeatsResult"],
+    "instructions": [
+      "Interpreta la edad exacta calculada y la cantidad masiva de horas, minutos y latidos vividos.",
+      "Compara la edad actual con hitos de longevidad y promedio de esperanza de vida.",
+      "Calcula la cuenta regresiva en días para el próximo cumpleaños."
+    ],
+    "instructions_en": [
+      "Interpret calculated exact age and massive count of hours, minutes, and heartbeats lived.",
+      "Compare current age against longevity milestones and life expectancy benchmarks.",
+      "Calculate countdown in days to the next birthday celebration."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "eac-guide",
+      "icon": "🎂",
+      "title": "Human Time Milestones Reference",
+      "title_es": "Hitos Temporales de la Vida Humana",
+      "content_html_en": "<p><b>10,000 Days Lived:</b> Reached around age 27.37 years.</p><p><b>20,000 Days Lived:</b> Reached around age 54.75 years.</p><p><b>1 Billion Seconds Lived:</b> Reached around age 31.69 years.</p><p><b>Average Lifetime Heartbeats:</b> ~2.5 Billion heartbeats in 75 years.</p>",
+      "content_html": "<p><b>10,000 Días Vividos:</b> Se alcanza a los ~27.37 años de edad.</p><p><b>20,000 Días Vividos:</b> Se alcanza a los ~54.75 años de edad.</p><p><b>1 Mil Millones de Segundos Vividos:</b> Se alcanza a los ~31.69 años de edad.</p><p><b>Latidos Cardíacos de una Vida:</b> ~2.5 Mil Millones de latidos en 75 años.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "birthYearNum",
+      "label": "Año de Nacimiento",
+      "label_en": "Birth Year",
+      "type": "number",
+      "default": 1995,
+      "min": 1900,
+      "max": 2026,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "birthMonthNum",
+      "label": "Mes de Nacimiento (1-12)",
+      "label_en": "Birth Month (1-12)",
+      "type": "number",
+      "default": 6,
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "birthDayNum",
+      "label": "Día de Nacimiento (1-31)",
+      "label_en": "Birth Day (1-31)",
+      "type": "number",
+      "default": 15,
+      "min": 1,
+      "max": 31,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "targetCompYearNum",
+      "label": "Año de Comparación (Fecha Objetivo)",
+      "label_en": "Comparison Year (Target Date)",
+      "type": "number",
+      "default": 2026,
+      "min": 1900,
+      "max": 2100,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "targetCompMonthNum",
+      "label": "Mes de Comparación (1-12)",
+      "label_en": "Comparison Month (1-12)",
+      "type": "number",
+      "default": 8,
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "targetCompDayNum",
+      "label": "Día de Comparación (1-31)",
+      "label_en": "Comparison Day (1-31)",
+      "type": "number",
+      "default": 12,
+      "min": 1,
+      "max": 31,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalDaysLivedResult",
+      "label": "Total de Días Vividos Cumplidos",
+      "label_en": "Total Days Lived",
+      "expression": "max(0, round(((targetCompYearNum - birthYearNum) * 365.2425) + ((targetCompMonthNum - birthMonthNum) * 30.4375) + (targetCompDayNum - birthDayNum)))",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalDaysLivedResult", "op": ">=", "value": 0 }, "label": "Edad Calculada", "label_en": "Age Computed", "tone": "success", "text": "Total de días transcurridos cuantificados.", "text_en": "Total elapsed days quantified." }
+      ]
+    },
+    {
+      "id": "completedYearsAgeResult",
+      "label": "Años Cumplidos",
+      "label_en": "Completed Age in Years",
+      "expression": "floor(totalDaysLivedResult / 365.2425)",
+      "unit": "años",
+      "unit_en": "years",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "totalWeeksLivedResult",
+      "label": "Total de Semanas Vividas",
+      "label_en": "Total Weeks Lived",
+      "expression": "totalDaysLivedResult / 7",
+      "unit": "semanas",
+      "unit_en": "weeks",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalHoursLivedResult",
+      "label": "Total de Horas Vividas",
+      "label_en": "Total Hours Lived",
+      "expression": "totalDaysLivedResult * 24",
+      "unit": "horas",
+      "unit_en": "hours",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalHeartbeatsResult",
+      "label": "Latidos Cardíacos Estimados (~70 ppm)",
+      "label_en": "Estimated Heartbeats (~70 bpm)",
+      "expression": "totalDaysLivedResult * 24 * 60 * 70",
+      "unit": "latidos",
+      "unit_en": "heartbeats",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

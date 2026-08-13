@@ -1,0 +1,207 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "amortization-calculator",
+    "title": "Calculadora de Amortización de Préstamos",
+    "title_en": "Amortization Schedule Calculator",
+    "slug": "amortizacion-prestamos",
+    "category": "finance",
+    "subcategory": "mortgages",
+    "tags": ["amortizacion", "prestamos", "cuotas"],
+    "tags_en": ["amortization", "schedule", "payments"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Calendar"
+  },
+  "content": {
+    "shortDescription": "Genera la tabla completa de amortización mensual y anual con el desglose exacto de capital e intereses acumulados.",
+    "shortDescription_en": "Generate a complete loan amortization schedule with month-by-month and year-by-year principal vs interest breakdown.",
+    "longDescription": "Visualiza la evolución completa de un préstamo o hipoteca bajo el sistema de cuotas constantes. Observa exactamente cuánto de cada pago se destina a reducir capital y cuánto a pagar intereses.",
+    "longDescription_en": "Visualize full loan or mortgage payback under fixed installment system. See exact breakdown of principal paid down vs interest paid to the lender.",
+    "howToUse": [
+      "Ingresa el importe total del préstamo y la divisa activa.",
+      "Establece la tasa de interés anual (%) y el plazo en años.",
+      "Consulta la cuota mensual fija, el interés total y la tabla de amortización anual completa."
+    ],
+    "howToUse_en": [
+      "Enter the loan principal amount and choose active currency.",
+      "Set the annual interest rate (%) and loan term in years.",
+      "View monthly fixed payment, total interest cost, and full annual schedule table."
+    ],
+    "methodology": "Amortización de Cuota Fija (Sistema Francés): Cuota = P × [ i / (1 - (1 + i)^-n) ]. Interés mensual = Saldo × i.",
+    "methodology_en": "Fixed Installment Amortization: Payment = P × [ i / (1 - (1 + i)^-n) ]. Monthly Interest = Balance × i."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "📅",
+      "title": "Amortization Schedule Explained",
+      "title_es": "Explicación de la Tabla de Amortización",
+      "content_html_en": "<p>An amortization schedule is a complete table of periodic loan payments, showing the amount of principal and interest that compromise each payment until the loan is paid off at the end of its term.</p>",
+      "content_html": "<p>Una tabla de amortización es un desglose detallado de cada cuota periódica indicando qué parte liquida capital y qué parte paga intereses.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "loanPrincipal",
+      "label": "Monto total del préstamo",
+      "label_en": "Loan Principal Amount",
+      "type": "currency",
+      "default": 150000,
+      "min": 1000,
+      "max": 5000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1000, 5000000], "message": "Importe entre 1.000 y 5.000.000", "message_en": "Amount between 1,000 and 5,000,000" }]
+    },
+    {
+      "id": "interestRate",
+      "label": "Tasa de interés anual (%)",
+      "label_en": "Annual Interest Rate (%)",
+      "type": "number",
+      "default": 4.5,
+      "min": 0.1,
+      "max": 25,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "loanYears",
+      "label": "Plazo del préstamo (años)",
+      "label_en": "Loan Term (years)",
+      "type": "slider",
+      "default": 15,
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalMonths",
+      "label": "Total de cuotas mensuales",
+      "label_en": "Total Monthly Payments",
+      "expression": "loanYears * 12",
+      "unit": "meses",
+      "unit_en": "months",
+      "precision": 0,
+      "format": "number",
+      "type": "hidden"
+    },
+    {
+      "id": "monthlyPayment",
+      "label": "Cuota Mensual Fija",
+      "label_en": "Fixed Monthly Payment",
+      "expression": "loanPrincipal * (interestRate / 1200) / (1 - (1 + interestRate / 1200) ^ -totalMonths)",
+      "unit": { "follows": "loanPrincipal" },
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "monthlyPayment", "op": ">", "value": 0 }, "label": "Cuota Calculada", "label_en": "Calculated Payment", "tone": "info", "text": "Cuota constante bajo amortización francesa.", "text_en": "Fixed installment under French amortization." }
+      ]
+    },
+    {
+      "id": "totalRepayment",
+      "label": "Desembolso Total acumulado",
+      "label_en": "Total Amount Repaid",
+      "expression": "monthlyPayment * totalMonths",
+      "unit": { "follows": "loanPrincipal" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "totalInterest",
+      "label": "Intereses Totales Acumulados",
+      "label_en": "Total Interest Payable",
+      "expression": "totalRepayment - loanPrincipal",
+      "unit": { "follows": "loanPrincipal" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [
+    {
+      "id": "amortizationSchedule",
+      "title": "Muestra de Amortización Anual del Préstamo",
+      "title_en": "Annual Loan Amortization Schedule",
+      "iterator": { "id": "year", "from": 1, "to": "loanYears", "step": 1 },
+      "initial": { "balance": "loanPrincipal" },
+      "columns": [
+        { "id": "yearNum", "label": "Año", "label_en": "Year", "expression": "year", "format": "number" },
+        { "id": "paidThisYear", "label": "Pagado en el año", "label_en": "Paid This Year", "expression": "monthlyPayment * 12", "format": "currency" },
+        { "id": "interestYear", "label": "Interés del año", "label_en": "Interest Paid", "expression": "prev.balance * (interestRate / 100)", "format": "currency" },
+        { "id": "principalYear", "label": "Capital amortizado", "label_en": "Principal Paid", "expression": "(monthlyPayment * 12) - (prev.balance * (interestRate / 100))", "format": "currency" },
+        { "id": "balance", "label": "Saldo restante", "label_en": "Remaining Balance", "expression": "max(prev.balance - ((monthlyPayment * 12) - (prev.balance * (interestRate / 100))), 0)", "format": "currency" }
+      ],
+      "maxRows": 30
+    }
+  ],
+  "charts": [
+    {
+      "id": "balanceChart",
+      "type": "area",
+      "title": "Evolución de Saldo Pendiente",
+      "title_en": "Remaining Loan Balance Chart",
+      "data": { "source": "table:amortizationSchedule" },
+      "xAxis": { "from": "yearNum", "label": "Año", "label_en": "Year" },
+      "yAxis": { "label": "Saldo", "label_en": "Balance", "format": "currency" },
+      "series": [
+        { "column": "balance", "label": "Saldo Pendiente", "label_en": "Remaining Balance", "role": "primary" }
+      ]
+    }
+  ],
+  "suggestions": [
+    { "target": "mortgage-payoff-calculator", "type": "static", "message": "Calcula el ahorro de amortización anticipada", "message_en": "Calculate early mortgage payoff savings", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Amortización de Préstamos",
+    "role_en": "Loan Amortization Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y técnico",
+    "includeData": ["monthlyPayment", "totalInterest", "totalRepayment", "loanPrincipal", "loanYears"],
+    "instructions": [
+      "Sintetiza la cuota mensual fija y el total de intereses a pagar en 2 frases sencillas.",
+      "Destaca cómo la reducción de plazo ahorra intereses a largo plazo."
+    ],
+    "instructions_en": [
+      "Summarize monthly payment and total interest cost in 2 concise sentences.",
+      "Highlight how shortening term duration saves significant long-term interest."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Amortización de Préstamos | CalculadoraHub",
+    "metaTitle_en": "Amortization Schedule Calculator | CalculadoraHub",
+    "metaDescription": "Genera la tabla de amortización de tu préstamo con desglose de capital e intereses. Gratis e instantáneo.",
+    "metaDescription_en": "Generate full loan amortization schedule with monthly principal vs interest breakdown.",
+    "keywords": ["amortization calculator", "tabla amortizacion", "prestamo", "cuotas"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

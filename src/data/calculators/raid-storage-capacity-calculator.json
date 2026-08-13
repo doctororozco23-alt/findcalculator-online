@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "raid-storage-capacity-calculator",
+    "title": "Calculadora de Capacidad de Almacenamiento Útil RAID (0, 1, 5, 6, 10)",
+    "title_en": "RAID Storage Capacity & Fault Tolerance Calculator (0, 1, 5, 6, 10)",
+    "slug": "calculadora-de-capacidad-de-almacenamiento-util-raid-0-1-5-6-10",
+    "category": "technology",
+    "subcategory": "internet",
+    "tags": ["raid", "almacenamiento-raid", "capacidad-util-raid", "nas", "servidores", "discos-duros", "redes", "tecnologia"],
+    "tags_en": ["raid", "raid-storage", "usable-capacity-raid", "nas", "servers", "hard-drives", "networks", "technology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la capacidad de almacenamiento útil (TB), espacio dedicado a paridad/espejo y tolerancia a fallos de discos para RAID 0, 1, 5, 6 y 10.",
+    "shortDescription_en": "Calculate usable storage capacity (TB), parity/mirror overhead space, and disk fault tolerance for RAID 0, 1, 5, 6, and 10.",
+    "longDescription": "Herramienta de infraestructura IT, servidores NAS y almacenamiento de datos. Modela la eficiencia y redundancia de matrices de discos duros HDD o SSD.",
+    "longDescription_en": "IT infrastructure, NAS servers, and data storage tool. Models efficiency and redundancy of HDD or SSD disk arrays.",
+    "howToUse": [
+      "Selecciona el Nivel de RAID (RAID 0 Striping, RAID 1 Mirror, RAID 5 Paridad, RAID 6 Paridad Doble, RAID 10).",
+      "Ingresa el Número de Discos Rígidos / SSD en el Array (ej. 4 discos).",
+      "Ingresa la Capacidad Individual de Cada Disco (TB, ej. 8 TB).",
+      "Consulta la Capacidad Útil Disponible (TB), la Eficiencia (%) y el Número Máximo de Discos que Pueden Fallar."
+    ],
+    "howToUse_en": [
+      "Select RAID Level (RAID 0 Striping, RAID 1 Mirror, RAID 5 Parity, RAID 6 Dual Parity, RAID 10).",
+      "Enter Number of HDDs / SSDs in Array (e.g. 4 disks).",
+      "Enter Individual Disk Capacity (TB, e.g. 8 TB).",
+      "View Usable Capacity (TB), Efficiency (%), and Maximum Tolerated Disk Failures Count."
+    ],
+    "methodology": "RAID 0 = N * C. RAID 1 = C. RAID 5 = (N - 1) * C. RAID 6 = (N - 2) * C. RAID 10 = (N / 2) * C. Eficiencia = (CapacidadÚtil / (N * C)) * 100.",
+    "methodology_en": "RAID 0 = N * C. RAID 1 = C. RAID 5 = (N - 1) * C. RAID 6 = (N - 2) * C. RAID 10 = (N / 2) * C. Efficiency = (UsableCap / (N * C)) * 100."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Arquitectura de Almacenamiento IT y Servidores NAS",
+    "role_en": "IT Storage Architecture & NAS Servers Specialist Assistant",
+    "includeData": ["usableCapacityTbResult", "arrayEfficiencyPercentResult"],
+    "instructions": [
+      "Interpreta la capacidad de almacenamiento útil en Terabytes y la eficiencia porcentual de la matriz RAID.",
+      "Explica la tolerancia a fallos de discos del nivel configurado (ej. RAID 5 tolera 1 fallo, RAID 6 tolera 2 fallos simultáneos).",
+      "Muestra advertencias sobre el riesgo de pérdida total de datos en RAID 0 sin redundancia."
+    ],
+    "instructions_en": [
+      "Interpret calculated usable storage capacity in Terabytes and array efficiency percentage.",
+      "Explain disk fault tolerance of configured level (e.g. RAID 5 tolerated 1 failure, RAID 6 tolerates 2 simultaneous failures).",
+      "Show warnings on total data loss risk in non-redundant RAID 0."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "rsc-guide",
+      "icon": "💾",
+      "title": "RAID Levels Comparison Benchmarks",
+      "title_es": "Comparativa de Niveles de RAID",
+      "content_html_en": "<p><b>RAID 0:</b> 100% Usable | 0 Disk Failures Allowed (Fastest, High Risk).</p><p><b>RAID 1:</b> 50% Usable | N-1 Disks Allowed (Mirroring).</p><p><b>RAID 5:</b> (N-1)/N Usable | 1 Disk Failure Allowed (Single Parity, Min 3 disks).</p><p><b>RAID 6:</b> (N-2)/N Usable | 2 Disks Failure Allowed (Dual Parity, Min 4 disks).</p><p><b>RAID 10:</b> 50% Usable | 1 Disk Per Mirror Pair (Fast & Redundant, Min 4 disks).</p>",
+      "content_html": "<p><b>RAID 0:</b> 100% Útil | 0 Fallos Tolerados (Máxima Velocidad, Alto Riesgo).</p><p><b>RAID 1:</b> 50% Útil | N-1 Fallos (Espejo).</p><p><b>RAID 5:</b> (N-1)/N Útil | 1 Fallo Tolerado (Paridad Simple, Mínimo 3 discos).</p><p><b>RAID 6:</b> (N-2)/N Útil | 2 Fallos Tolerados (Paridad Doble, Mínimo 4 discos).</p><p><b>RAID 10:</b> 50% Útil | 1 Fallo por Par de Espejo (Rápido y Redundante, Mínimo 4 discos).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "raidLevelTypeConfig",
+      "label": "Configuración Nivel de RAID",
+      "label_en": "RAID Level Configuration",
+      "type": "select",
+      "default": "raid5",
+      "options": [
+        { "value": "raid0", "label": "RAID 0 (Striping sin redundancia - Mín 2 discos)", "label_en": "RAID 0 (Striping no redundancy - Min 2 disks)" },
+        { "value": "raid1", "label": "RAID 1 (Mirroring / Espejo - 2 discos)", "label_en": "RAID 1 (Mirroring - 2 disks)" },
+        { "value": "raid5", "label": "RAID 5 (Paridad distribuida - Mín 3 discos)", "label_en": "RAID 5 (Distributed parity - Min 3 disks)" },
+        { "value": "raid6", "label": "RAID 6 (Doble paridad - Mín 4 discos)", "label_en": "RAID 6 (Dual parity - Min 4 disks)" },
+        { "value": "raid10", "label": "RAID 10 (Striping + Mirroring - Mín 4 discos pares)", "label_en": "RAID 10 (Striping + Mirroring - Min 4 even disks)" }
+      ]
+    },
+    {
+      "id": "disksCountInArray",
+      "label": "Número de Discos en el Array",
+      "label_en": "Number of Disks in Array",
+      "type": "number",
+      "default": 4,
+      "min": 2,
+      "max": 64,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "singleDiskCapacityTb",
+      "label": "Capacidad de Cada Disco (Terabytes - TB)",
+      "label_en": "Individual Disk Capacity (Terabytes - TB)",
+      "type": "number",
+      "default": 8,
+      "min": 0.1,
+      "max": 100,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "rawTotalCapacityTbResult",
+      "label": "Capacidad Bruta Total del Array (TB)",
+      "label_en": "Total Raw Array Capacity (TB)",
+      "expression": "disksCountInArray * singleDiskCapacityTb",
+      "unit": "TB",
+      "unit_en": "TB",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "usableCapacityTbResult",
+      "label": "Capacidad Útil de Almacenamiento (TB)",
+      "label_en": "Usable Storage Capacity (TB)",
+      "expression": "raidLevelTypeConfig == 'raid0' ? rawTotalCapacityTbResult : (raidLevelTypeConfig == 'raid1' ? singleDiskCapacityTb : (raidLevelTypeConfig == 'raid5' ? max(0, disksCountInArray - 1) * singleDiskCapacityTb : (raidLevelTypeConfig == 'raid6' ? max(0, disksCountInArray - 2) * singleDiskCapacityTb : (disksCountInArray / 2) * singleDiskCapacityTb)))",
+      "unit": "TB",
+      "unit_en": "TB",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "usableCapacityTbResult", "op": ">=", "value": 0 }, "label": "Capacidad Útil Calculada", "label_en": "Usable Capacity Computed", "tone": "success", "text": "Espacio útil de almacenamiento de datos cuantificado.", "text_en": "Usable data storage space quantified." }
+      ]
+    },
+    {
+      "id": "arrayEfficiencyPercentResult",
+      "label": "Eficiencia de Almacenamiento del Array (%)",
+      "label_en": "Array Storage Efficiency (%)",
+      "expression": "rawTotalCapacityTbResult > 0 ? ((usableCapacityTbResult / rawTotalCapacityTbResult) * 100) : 0",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

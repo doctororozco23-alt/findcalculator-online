@@ -1,0 +1,197 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "ira-calculator",
+    "title": "Calculadora de Cuenta IRA Tradicional (Diferida)",
+    "title_en": "Traditional IRA Calculator",
+    "slug": "cuenta-ira-tradicional",
+    "category": "finance",
+    "subcategory": "retirement",
+    "tags": ["ira-tradicional", "impuestos-diferidos", "jubilacion"],
+    "tags_en": ["traditional-ira", "tax-deferred", "retirement"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "FileText"
+  },
+  "content": {
+    "shortDescription": "Calcula los ahorros fiscales inmediatos en la declaración de impuestos y el crecimiento acumulado con una IRA Tradicional.",
+    "shortDescription_en": "Calculate immediate upfront tax deductions and tax-deferred growth with a Traditional IRA account.",
+    "longDescription": "Proyecta las ventajas de deducir tus aportaciones en la declaración de impuestos actual utilizando una cuenta IRA Tradicional, diferiendo el pago de impuestos hasta el retiro.",
+    "longDescription_en": "Project upfront tax deduction benefits of contributing to a Traditional IRA, allowing pre-tax investments to grow tax-deferred until retirement.",
+    "howToUse": [
+      "Ingresa tu edad actual y la edad de retiro deseada.",
+      "Ingresa la aportación anual a tu cuenta IRA Tradicional.",
+      "Establece tu tramo del impuesto sobre la renta (%).",
+      "Consulta el ahorro fiscal inmediato anual y el saldo diferido acumulado."
+    ],
+    "howToUse_en": [
+      "Enter your current age and target retirement age.",
+      "Enter annual Traditional IRA contribution amount.",
+      "Set your current marginal income tax rate (%).",
+      "View immediate annual tax savings and tax-deferred accumulated balance."
+    ],
+    "methodology": "Fórmula IRA Tradicional: Ahorro Fiscal Anual = Aportación × TramoImpuestos. Crecimiento compuesto diferido.",
+    "methodology_en": "Traditional IRA Formula: Annual Tax Savings = Contribution × TaxBracket. Tax-deferred compounding."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "📜",
+      "title": "Tax Deductions with Traditional IRA",
+      "title_es": "Deducción Fiscal con IRA Tradicional",
+      "content_html_en": "<p>Contributions to a Traditional IRA may be tax-deductible in the year they are made, lowering your current taxable income while funds grow tax-deferred.</p>",
+      "content_html": "<p>Las aportaciones a una IRA Tradicional son deducibles en la declaración de impuestos del año actual, reduciendo tus impuestos presentes.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "currentAge",
+      "label": "Tu edad actual",
+      "label_en": "Your Current Age",
+      "type": "number",
+      "default": 35,
+      "min": 18,
+      "max": 70,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "retirementAge",
+      "label": "Edad de jubilación",
+      "label_en": "Target Retirement Age",
+      "type": "number",
+      "default": 65,
+      "min": 50,
+      "max": 80,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "annualContribution",
+      "label": "Aportación anual a la IRA Tradicional",
+      "label_en": "Annual Traditional IRA Contribution",
+      "type": "currency",
+      "default": 7000,
+      "min": 500,
+      "max": 8000,
+      "step": 250,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "taxBracket",
+      "label": "Tramo actual del impuesto sobre la renta (%)",
+      "label_en": "Current Marginal Income Tax Rate (%)",
+      "type": "slider",
+      "default": 24,
+      "min": 10,
+      "max": 40,
+      "step": 1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "annualReturnRate",
+      "label": "Tasa de rendimiento anual estimada (%)",
+      "label_en": "Estimated Annual Return Rate (%)",
+      "type": "number",
+      "default": 7.0,
+      "min": 0.1,
+      "max": 20,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "yearsToRetirement",
+      "label": "Años hasta la jubilación",
+      "label_en": "Years Until Retirement",
+      "expression": "max(retirementAge - currentAge, 1)",
+      "unit": "años",
+      "unit_en": "years",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "annualTaxSavings",
+      "label": "Ahorro fiscal en impuestos este año",
+      "label_en": "Immediate Annual Tax Savings",
+      "expression": "annualContribution * (taxBracket / 100)",
+      "unit": { "follows": "annualContribution" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "accumulatedIraBalance",
+      "label": "Saldo Total Acumulado en el Retiro",
+      "label_en": "Total Tax-Deferred Balance at Retirement",
+      "expression": "annualContribution * ((((1 + annualReturnRate / 100) ^ yearsToRetirement) - 1) / (annualReturnRate / 100))",
+      "unit": { "follows": "annualContribution" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "accumulatedIraBalance", "op": ">", "value": 0 }, "label": "Saldo Acumulado Diferido", "label_en": "Tax-Deferred Balance", "tone": "success", "text": "Balance acumulado libre de impuestos anuales hasta el momento de retiro.", "text_en": "Accumulated nest egg growing tax-deferred until retirement." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "roth-ira-calculator", "type": "static", "message": "Compara con una cuenta Roth IRA", "message_en": "Compare with Roth IRA option", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Cuentas IRA Tradicional",
+    "role_en": "Traditional IRA Retirement Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["accumulatedIraBalance", "annualTaxSavings", "yearsToRetirement", "annualContribution"],
+    "instructions": [
+      "Sintetiza el saldo acumulado en el retiro y el ahorro fiscal anual en 2 frases concisas.",
+      "Menciona que los retiros en la jubilación tributarán como ingresos ordinarios."
+    ],
+    "instructions_en": [
+      "Summarize accumulated retirement balance and immediate annual tax savings in 2 concise sentences.",
+      "Note that withdrawals in retirement will be taxed as ordinary income."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Cuenta IRA Tradicional | CalculadoraHub",
+    "metaTitle_en": "Traditional IRA Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el ahorro fiscal y saldo acumulado diferido con una IRA Tradicional. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate upfront tax savings and tax-deferred growth with a Traditional IRA. Free, instant results.",
+    "keywords": ["ira calculator", "ira tradicional", "deduccion impuestos", "jubilacion"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

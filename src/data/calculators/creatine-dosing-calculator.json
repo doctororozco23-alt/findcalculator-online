@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "creatine-dosing-calculator",
+    "title": "Calculadora de Dosis de Creatina (Fase de Carga y Mantenimiento ISSN)",
+    "title_en": "Creatine Dosing Calculator (Loading & Maintenance ISSN)",
+    "slug": "dosis-creatina-carga-mantenimiento",
+    "category": "fitness",
+    "subcategory": "training",
+    "tags": ["creatina", "creatine", "suplementacion", "issn", "fuerza"],
+    "tags_en": ["creatine", "dosing", "supplementation", "issn", "strength"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula tu dosis diaria exacta de monohidrato de creatina en fase de carga y mantenimiento basándote en las pautas de la ISSN.",
+    "shortDescription_en": "Calculate your exact daily creatine monohydrate dosing for loading and maintenance phases based on ISSN guidelines.",
+    "longDescription": "Auditoría de suplementación deportiva y saturación muscular de fosfocreatina. Determina los gramos diarios exactos de creatina según tu peso corporal para saturar los depósitos de fosfocreatina muscular (PCr) con o sin fase de carga.",
+    "longDescription_en": "Sports supplementation and muscle phosphocreatine saturation audit. Determines exact daily creatine grams by body weight to saturate phosphocreatine stores (PCr) with or without loading phase.",
+    "howToUse": [
+      "Ingresa tu peso corporal actual.",
+      "Selecciona la estrategia de suplementación deseada (Con Fase de Carga Rápida o Mantenimiento Continuo).",
+      "Consulta los gramos diarios recomendados de creatina para mantenimiento y para la fase de carga de 5-7 días."
+    ],
+    "howToUse_en": [
+      "Enter current body weight.",
+      "Select desired supplementation strategy (Fast Loading Phase vs Continuous Maintenance).",
+      "View recommended daily creatine grams for maintenance and 5-7 day loading phase."
+    ],
+    "methodology": "Pautas ISSN (Buford et al. 2007): Fase de Carga = 0.3 g/kg/día por 5-7 días (repartido en 4 tomas). Fase Mantenimiento = 0.03 a 0.05 g/kg/día (típicamente 3g a 5g diarios).",
+    "methodology_en": "ISSN Guidelines (Buford et al. 2007): Loading Phase = 0.3 g/kg/day for 5-7 days (split into 4 doses). Maintenance Phase = 0.03 to 0.05 g/kg/day (typically 3g to 5g daily)."
+  },
+  "guideSections": [
+    {
+      "id": "creatine-protocol-guide",
+      "icon": "💊",
+      "title": "Loading Phase vs Continuous Dosing Comparison",
+      "title_es": "Comparación: Fase de Carga vs Dosis Continua",
+      "content_html_en": "<p><b>Fast Loading (5-7 days):</b> 20g/day (0.3 g/kg) divided into 4 doses of 5g. Saturates muscle phosphocreatine stores within 7 days.</p><p><b>Continuous Dosing (3-4 weeks):</b> 3-5g/day (0.05 g/kg). Achieves full muscle saturation gradually in 21-28 days without gastrointestinal distress.</p>",
+      "content_html": "<p><b>Carga Rápida (5-7 días):</b> ~20g/día (0.3 g/kg) repartido en 4 tomas de 5g. Satura los depósitos musculares de fosfocreatina en 7 días.</p><p><b>Dosis Continua (3-4 semanas):</b> 3-5g/día (0.05 g/kg). Logra la saturación completa gradualmente en 21-28 días sin molestias gastrointestinales.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "weightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 40,
+      "max": 220,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [40, 220], "message": "Peso entre 40 y 220 kg", "message_en": "Weight between 40 and 220 kg" }]
+    },
+    {
+      "id": "protocolChoice",
+      "label": "Estrategia de suplementación",
+      "label_en": "Supplementation Protocol Strategy",
+      "type": "select",
+      "default": "maintenance",
+      "options": [
+        { "value": "maintenance", "label": "Mantenimiento Continuo Sin Carga (3-5g diarios - Recomendado)", "label_en": "Continuous Maintenance Without Loading (3-5g daily - Recommended)" },
+        { "value": "loading", "label": "Fase de Carga Rápida (5-7 días a 0.3 g/kg)", "label_en": "Fast Loading Phase (5-7 days at 0.3 g/kg)" }
+      ],
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "creatineMaintenanceDoseGrams",
+      "label": "Dosis Diaria de Mantenimiento",
+      "label_en": "Target Daily Maintenance Dose",
+      "expression": "max(round(weightKg * 0.05, 1), 3.0)",
+      "unit": "g/día",
+      "unit_en": "g/day",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "creatineMaintenanceDoseGrams", "op": ">", "value": 0 }, "label": "Dosis Diaria Mantenimiento", "label_en": "Daily Maintenance Target", "tone": "success", "text": "Gramos diarios de monohidrato de creatina para mantener los depósitos musculares saturados.", "text_en": "Daily creatine monohydrate grams to maintain saturated phosphocreatine stores." }
+      ]
+    },
+    {
+      "id": "creatineLoadingDoseTotal",
+      "label": "Dosis Diaria Total en Fase de Carga (5-7 días)",
+      "label_en": "Total Daily Loading Dose (5-7 days)",
+      "expression": "round(weightKg * 0.3, 1)",
+      "unit": "g/día",
+      "unit_en": "g/day",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "creatineLoadingSingleDose",
+      "label": "Dosis Individual por Toma en Fase de Carga (4 tomas/día)",
+      "label_en": "Single Dose Per Serving During Loading (4 servings/day)",
+      "expression": "round(creatineLoadingDoseTotal / 4, 1)",
+      "unit": "g/toma",
+      "unit_en": "g/serving",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "protein-calculator", "type": "static", "message": "Calcula tu ingesta diaria recomendada de proteína", "message_en": "Calculate daily protein intake targets", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Especialista en Ergogenia y Suplementación Deportiva",
+    "role_en": "Ergogenic Aids & Sports Supplementation Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y orientador",
+    "includeData": ["creatineMaintenanceDoseGrams", "creatineLoadingDoseTotal", "creatineLoadingSingleDose", "weightKg"],
+    "instructions": [
+      "Sintetiza la dosis diaria de mantenimiento en gramos y la pauta en fase de carga en 2 frases concisas.",
+      "Destaca que la creatina debe consumirse de forma diaria continua para mantener la saturación muscular."
+    ],
+    "instructions_en": [
+      "Summarize daily maintenance dose in grams and loading phase schedule in 2 concise sentences.",
+      "Highlight that creatine should be consumed consistently every day to sustain muscle saturation."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Dosis de Creatina (Carga & Mantenimiento) | CalculadoraHub",
+    "metaTitle_en": "Creatine Dosing Calculator (Loading & Maintenance) | CalculadoraHub",
+    "metaDescription": "Calcula tus gramos diarios de monohidrato de creatina para fase de carga y mantenimiento. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate exact daily creatine monohydrate dosing for loading and maintenance phases. Free, instant results.",
+    "keywords": ["creatine dosing calculator", "dosis creatina diaria", "cuanta creatina tomar", "fase de carga creatina"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

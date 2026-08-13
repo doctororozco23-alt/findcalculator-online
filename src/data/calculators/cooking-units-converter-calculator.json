@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "cooking-units-converter-calculator",
+    "title": "Calculadora de Conversión de Medidas de Cocina (Gramos, Tazas & Oz)",
+    "title_en": "Culinary & Cooking Units Converter (Grams, Cups & Oz)",
+    "slug": "conversion-medidas-cocina-tazas-gramos",
+    "category": "food",
+    "subcategory": "cooking",
+    "tags": ["cocina", "tazas-a-gramos", "cucharadas", "recetas", "medidas"],
+    "tags_en": ["cooking", "cups-to-grams", "tbsp", "recipes", "converter"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Utensils"
+  },
+  "content": {
+    "shortDescription": "Convierte tazas, cucharadas y onzas a gramos según la densidad exacta del ingrediente (harina, azúcar, agua, avena, mantequilla).",
+    "shortDescription_en": "Convert cups, tablespoons, and ounces to grams based on exact ingredient density (flour, sugar, liquids, oats, butter).",
+    "longDescription": "Auditoría de ciencias culinarias y densidad de ingredientes. Convierte con precisión las unidades volumétricas (tazas, cucharadas, oz) a peso exacto en gramos ajustado según el ingrediente específico para recetas de repostería y cocina.",
+    "longDescription_en": "Culinary science and ingredient density audit. Accurately converts volumetric recipe units (cups, tbsp, oz) into exact weight in grams adjusted for specific ingredients.",
+    "howToUse": [
+      "Selecciona el ingrediente de la receta (Harina, Azúcar, Agua/Líquidos, Avena o Mantequilla).",
+      "Selecciona la unidad de origen (Tazas, Cucharadas tbsp, Cucharaditas tsp o Onzas oz).",
+      "Ingresa la cantidad a convertir.",
+      "Consulta los gramos exactos, onzas y cucharadas equivalentes."
+    ],
+    "howToUse_en": [
+      "Select recipe ingredient (Flour, Sugar, Water/Liquids, Oats, or Butter).",
+      "Select source unit (Cups, Tablespoons tbsp, Teaspoons tsp, or Ounces oz).",
+      "Enter quantity to convert.",
+      "View exact weight in grams, ounces, and equivalent tablespoons."
+    ],
+    "methodology": "Densidad Culinaria Estándar: 1 Taza de Harina = 120g. 1 Taza de Azúcar = 200g. 1 Taza de Agua/Líquidos = 240g. 1 Taza de Avena = 90g. 1 Taza de Mantequilla = 227g.",
+    "methodology_en": "Culinary Density Standards: 1 Cup Flour = 120g. 1 Cup Sugar = 200g. 1 Cup Water/Liquids = 240g. 1 Cup Oats = 90g. 1 Cup Butter = 227g."
+  },
+  "guideSections": [
+    {
+      "id": "culinary-densities-guide",
+      "icon": "🍳",
+      "title": "Why Weight (Grams) is Superior to Volume (Cups) in Baking",
+      "title_es": "Por Qué el Peso (Gramos) Supera al Volumen (Tazas) en Repostería",
+      "content_html_en": "<p><b>Density Variance:</b> 1 cup of packed flour weighs ~140g, whereas 1 cup of sifted flour weighs ~110g. Measuring in grams eliminates baking inconsistency.</p><p><b>Standard Conversions:</b> 1 tbsp = 15 ml / 3 tsp. 1 US cup = 240 ml / 16 tbsp.</p>",
+      "content_html": "<p><b>Variación de Densidad:</b> 1 taza de harina apelmazada pesa ~140g, mientras que 1 taza tamizada pesa ~110g. Medir en gramos garantiza el éxito en repostería.</p><p><b>Conversiones Estándar:</b> 1 cucharada tbsp = 15 ml / 3 tsp. 1 taza US = 240 ml / 16 tbsp.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "ingredient",
+      "label": "Ingrediente de la receta",
+      "label_en": "Recipe Ingredient",
+      "type": "select",
+      "default": "flour",
+      "options": [
+        { "value": "flour", "label": "Harina de Trigo (120g / taza)", "label_en": "All-Purpose Flour (120g / cup)" },
+        { "value": "sugar", "label": "Azúcar Granulada (200g / taza)", "label_en": "Granulated Sugar (200g / cup)" },
+        { "value": "water", "label": "Agua / Leche / Líquidos (240g / taza)", "label_en": "Water / Milk / Liquids (240g / cup)" },
+        { "value": "oats", "label": "Avena en Hojuelas (90g / taza)", "label_en": "Rolled Oats (90g / cup)" },
+        { "value": "butter", "label": "Mantequilla / Aceite (227g / taza)", "label_en": "Butter / Oil (227g / cup)" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "sourceUnit",
+      "label": "Unidad de origen en la receta",
+      "label_en": "Source Unit in Recipe",
+      "type": "select",
+      "default": "cups",
+      "options": [
+        { "value": "cups", "label": "Tazas (Cups)", "label_en": "Cups" },
+        { "value": "tbsp", "label": "Cucharadas (tbsp - 15ml)", "label_en": "Tablespoons (tbsp - 15ml)" },
+        { "value": "tsp", "label": "Cucharaditas (tsp - 5ml)", "label_en": "Teaspoons (tsp - 5ml)" },
+        { "value": "oz", "label": "Onzas de peso (oz)", "label_en": "Ounces (oz)" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "quantity",
+      "label": "Cantidad a convertir",
+      "label_en": "Quantity to Convert",
+      "type": "number",
+      "default": 1.5,
+      "min": 0.1,
+      "max": 100,
+      "step": 0.1,
+      "unit": "unidades",
+      "unit_en": "units",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.1, 100], "message": "Cantidad entre 0.1 y 100", "message_en": "Quantity between 0.1 and 100" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "cupDensityGrams",
+      "label": "Densidad por Taza del Ingrediente (g/taza)",
+      "label_en": "Ingredient Cup Density (g/cup)",
+      "expression": "ingredient == 'sugar' ? 200 : (ingredient == 'water' ? 240 : (ingredient == 'oats' ? 90 : (ingredient == 'butter' ? 227 : 120)))",
+      "unit": "g/taza",
+      "unit_en": "g/cup",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "convertedGrams",
+      "label": "Peso Convertido en Gramos (g)",
+      "label_en": "Converted Weight in Grams (g)",
+      "expression": "sourceUnit == 'cups' ? (quantity * cupDensityGrams) : (sourceUnit == 'tbsp' ? (quantity * (cupDensityGrams / 16)) : (sourceUnit == 'tsp' ? (quantity * (cupDensityGrams / 48)) : (quantity * 28.3495)))",
+      "unit": "g",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "convertedGrams", "op": ">", "value": 0 }, "label": "Peso exacto para báscula de cocina", "label_en": "Exact kitchen scale weight", "tone": "success", "text": "Gramos exactos para medir en báscula digital.", "text_en": "Exact grams to weigh on digital kitchen scale." }
+      ]
+    },
+    {
+      "id": "convertedOunces",
+      "label": "Peso Convertido en Onzas (oz)",
+      "label_en": "Converted Weight in Ounces (oz)",
+      "expression": "convertedGrams / 28.3495",
+      "unit": "oz",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "convertedTbspEquivalent",
+      "label": "Equivalente en Cucharadas (tbsp)",
+      "label_en": "Equivalent in Tablespoons (tbsp)",
+      "expression": "convertedGrams / (cupDensityGrams / 16)",
+      "unit": "tbsp",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "macro-calculator", "type": "static", "message": "Calcula los macronutrientes de tu receta", "message_en": "Calculate recipe macronutrients", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Chef de Repostería y Especialista en Ciencia Culinaria",
+    "role_en": "Pastry Chef & Culinary Science Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "cálido y práctico",
+    "includeData": ["convertedGrams", "convertedOunces", "convertedTbspEquivalent", "ingredient", "quantity"],
+    "instructions": [
+      "Sintetiza la conversión exacta a gramos, onzas y cucharadas equivalentes en 2 frases concisas.",
+      "Destaca que pesamos los ingredientes secos en gramos para lograr la máxima consistencia en repostería."
+    ],
+    "instructions_en": [
+      "Summarize exact conversion to grams, ounces, and equivalent tablespoons in 2 concise sentences.",
+      "Highlight weighing dry ingredients in grams for optimal baking accuracy."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Medidas de Cocina (Tazas a Gramos) | CalculadoraHub",
+    "metaTitle_en": "Culinary Units Converter (Cups to Grams) | CalculadoraHub",
+    "metaDescription": "Convierte tazas, cucharadas y oz a gramos según el ingrediente (harina, azúcar, agua, mantequilla). Gratis.",
+    "metaDescription_en": "Convert cups, tbsp, and oz to grams based on ingredient density. Free, instant results.",
+    "keywords": ["cups to grams calculator", "tazas a gramos cocina", "cucharadas a gramos", "medidas reposteria"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

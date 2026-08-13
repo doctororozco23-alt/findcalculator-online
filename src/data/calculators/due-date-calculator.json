@@ -1,0 +1,185 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "due-date-calculator",
+    "title": "Calculadora de Fecha Probable de Parto (Due Date por Regla, Ecografía o Concepción)",
+    "title_en": "Pregnancy Due Date Calculator (By LMP, Ultrasound, or Conception)",
+    "slug": "fecha-probable-parto-due-date",
+    "category": "health",
+    "subcategory": "pregnancy",
+    "tags": ["due-date", "parto", "fpp", "ultrasonido", "embarazo"],
+    "tags_en": ["due-date", "delivery", "edd", "ultrasound", "pregnancy"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.1.0",
+    "icon": "Calendar"
+  },
+  "content": {
+    "shortDescription": "Calcula tu fecha estimada de parto (FPP) e ingesta de semanas mediante ecografía (USG), última regla (LMP) o concepción.",
+    "shortDescription_en": "Calculate your estimated delivery due date (EDD) using ultrasound (USG), last period (LMP), or conception date.",
+    "longDescription": "Calculadora clínica de fecha de nacimiento que determina la fecha estimada de parto (FPP) mediante la Regla de Naegele, fechado ecográfico por ultrasonido de 1º/2º trimestre o por cálculo desde el día de la fertilización.",
+    "longDescription_en": "Clinical due date calculator determining estimated delivery date (EDD) via Naegele's rule, 1st/2nd trimester ultrasound sonogram, or conception date.",
+    "howToUse": [
+      "Selecciona el método de cálculo (Por Última Regla LMP, Por Ecografía / Ultrasonido USG o Por Fecha de Concepción).",
+      "Ingresa la fecha de referencia en el calendario.",
+      "Si elegiste ecografía, ingresa las semanas y días que figuraban en la ecografía.",
+      "Consulta la fecha estimada de parto (FPP) y la cuenta atrás en días."
+    ],
+    "howToUse_en": [
+      "Select calculation method (Last Period LMP, Ultrasound USG scan, or Conception Date).",
+      "Select reference date on calendar.",
+      "If ultrasound selected, enter weeks and days stated on sonogram report.",
+      "View estimated delivery due date (EDD) and countdown days."
+    ],
+    "methodology": "Criterios ACOG: 1. LMP = Fecha LMP + 280 días. 2. USG = Fecha Ecografía + (280 - SemanasUSG × 7). 3. Concepción = Fecha Concepción + 266 días.",
+    "methodology_en": "ACOG Criteria: 1. LMP = LMP Date + 280 days. 2. USG = Scan Date + (280 - ScanWeeks × 7). 3. Conception = Conception Date + 266 days."
+  },
+  "guideSections": [
+    {
+      "id": "accuracy-guide",
+      "icon": "📅",
+      "title": "ACOG Due Date Determination Rules",
+      "title_es": "Reglas de la ACOG para Determinar la Fecha de Parto",
+      "content_html_en": "<p><b>1st Trimester USG:</b> Replaces LMP date if discrepancy is > 5 days (up to 8+6 weeks) or > 7 days (9 to 13+6 weeks).</p><p><b>2nd Trimester USG:</b> Replaces LMP date if discrepancy is > 7 to 10 days (14 to 21+6 weeks).</p>",
+      "content_html": "<p><b>Ecografía 1º Trimestre:</b> Reemplaza a la regla si difiere en > 5 días (hasta sem 8+6) o > 7 días (sem 9 a 13+6).</p><p><b>Ecografía 2º Trimestre:</b> Reemplaza a la regla si difiere en > 7 a 10 días (sem 14 a 21+6).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "calcMethod",
+      "label": "Método de cálculo de fecha de parto",
+      "label_en": "Due Date Calculation Method",
+      "type": "select",
+      "default": "lmp",
+      "options": [
+        { "value": "lmp", "label": "Por primer día de la última regla (LMP)", "label_en": "By first day of Last Menstrual Period (LMP)" },
+        { "value": "usg", "label": "Por Ecografía / Ultrasonido (USG 1º/2º Trimestre)", "label_en": "By Ultrasound Scan (USG 1st/2nd Trimester)" },
+        { "value": "conception", "label": "Por fecha de concepción conocida / Fecundación in vitro", "label_en": "By known conception date / IVF transfer" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "startDate",
+      "label": "Fecha de referencia en el calendario",
+      "label_en": "Calendar Reference Date",
+      "type": "date",
+      "default": "2026-05-15",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "usgWeeksAtScan",
+      "label": "Semanas gestacionales en ecografía (solo si elegiste ecografía)",
+      "label_en": "Gestational Weeks at Ultrasound (only for USG method)",
+      "type": "slider",
+      "default": 12,
+      "min": 4,
+      "max": 38,
+      "step": 1,
+      "unit": "semanas",
+      "unit_en": "weeks",
+      "required": false,
+      "validation": []
+    },
+    {
+      "id": "cycleLength",
+      "label": "Duración promedio del ciclo menstrual (para LMP)",
+      "label_en": "Average Menstrual Cycle Length (for LMP method)",
+      "type": "number",
+      "default": 28,
+      "min": 21,
+      "max": 40,
+      "step": 1,
+      "unit": "días",
+      "unit_en": "days",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "estimatedDueDate",
+      "label": "Fecha Estimada de Parto (FPP / Due Date)",
+      "label_en": "Estimated Delivery Due Date (EDD)",
+      "expression": "calcMethod == 'usg' ? addDays(startDate, 280 - (usgWeeksAtScan * 7)) : (calcMethod == 'conception' ? addDays(startDate, 266) : addDays(startDate, 280 + (cycleLength - 28)))",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "daysRemainingToDelivery",
+      "label": "Días Faltantes para el Nacimiento",
+      "label_en": "Remaining Days Until Estimated Delivery",
+      "expression": "max(daysBetween(todayDate(), estimatedDueDate), 0)",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "daysRemainingToDelivery", "op": ">", "value": 0 }, "label": "Cuenta Atrás Nacimiento", "label_en": "Delivery Countdown", "tone": "success", "text": "Días restantes estimados para completar la gestación a término.", "text_en": "Estimated days remaining to complete full-term pregnancy." }
+      ]
+    },
+    {
+      "id": "weeksRemainingToDelivery",
+      "label": "Semanas Faltantes Estimadas",
+      "label_en": "Estimated Remaining Weeks",
+      "expression": "round(daysRemainingToDelivery / 7, 1)",
+      "unit": "semanas",
+      "unit_en": "weeks",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "estimatedConceptionDate",
+      "label": "Fecha Estimada de Concepción",
+      "label_en": "Estimated Conception Date",
+      "expression": "addDays(estimatedDueDate, -266)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "pregnancy-ultrasound-calculator", "type": "static", "message": "Calculadora detallada por Ecografía y CRL", "message_en": "Detailed Ultrasound & CRL Calculator", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Obstetra y Asistente Gestacional",
+    "role_en": "Obstetrician & Due Date Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "cálido y profesional",
+    "includeData": ["estimatedDueDate", "daysRemainingToDelivery", "weeksRemainingToDelivery", "calcMethod"],
+    "instructions": [
+      "Sintetiza la fecha estimada de parto (FPP), los días faltantes y el método utilizado en 2 frases concisas.",
+      "Recuerda que si la ecografía difiere de la regla por más de 5-7 días, prevalece la fecha ecográfica."
+    ],
+    "instructions_en": [
+      "Summarize estimated delivery due date (EDD), countdown days, and calculation method in 2 concise sentences.",
+      "Remind user that if ultrasound dates differ from last period by > 5-7 days, ultrasound dating takes precedence."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Fecha Probable de Parto (Due Date) | CalculadoraHub",
+    "metaTitle_en": "Pregnancy Due Date Calculator (LMP, Ultrasound, Conception) | CalculadoraHub",
+    "metaDescription": "Calcula tu fecha estimada de parto por regla, ecografía o concepción. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate estimated due date (EDD) using last period, ultrasound, or conception date. Free, instant results.",
+    "keywords": ["due date calculator", "fecha probable de parto", "fpp ecografia", "regla de naegele"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

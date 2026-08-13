@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "corrected-calcium-albumin-calculator",
+    "title": "Calculadora de Calcio Corregido por Albúmina (Fórmula de Payne)",
+    "title_en": "Corrected Calcium for Albumin Calculator (Payne Formula)",
+    "slug": "calcio-corregido-albumina-payne",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["calcio-corregido", "albumina", "hipocalcemia", "hipercalcemia", "payne", "endocrinologia"],
+    "tags_en": ["corrected-calcium", "albumin", "hypocalcemia", "hypercalcemia", "payne", "endocrinology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula el valor real de Calcio Sérico Corregido por Hipoalbuminemia utilizando la ecuación estándar de Payne.",
+    "shortDescription_en": "Calculate actual Serum Calcium level corrected for hypoalbuminemia using the standard Payne equation.",
+    "longDescription": "Auditoría de endocrinología y bioquímica clínica. Aproximadamente el 40-45% del calcio sérico total está ligado a proteínas plasmáticas (principalmente albúmina). En hipoalbuminemia, el calcio total desciende falsamente requiriendo corrección.",
+    "longDescription_en": "Endocrinology and clinical biochemistry audit. Approximately 40-45% of total serum calcium is bound to plasma proteins (primarily albumin). Hypoalbuminemia artificially lowers total calcium requiring adjustment.",
+    "howToUse": [
+      "Ingresa el Calcio Sérico Total de laboratorio (en mg/dL o mmol/L).",
+      "Ingresa la Albúmina Sérica de laboratorio (en g/dL).",
+      "Consulta el Calcio Corregido por Albúmina y la evaluación de calcemia."
+    ],
+    "howToUse_en": [
+      "Enter Total Serum Calcium from lab report (mg/dL or mmol/L).",
+      "Enter Serum Albumin from lab report (g/dL).",
+      "View Albumin-Corrected Calcium and clinical calcemia status."
+    ],
+    "methodology": "Ecuación de Payne (1973): Calcio Corregido (mg/dL) = Calcio Total Medido + 0.8 × (4.0 - Albúmina_g/dL). Rangos Normales: 8.5 a 10.5 mg/dL (2.12 - 2.62 mmol/L).",
+    "methodology_en": "Payne Formula (1973): Corrected Calcium (mg/dL) = Measured Total Calcium + 0.8 × (4.0 - Albumin_g/dL). Normal Range: 8.5 to 10.5 mg/dL (2.12 - 2.62 mmol/L)."
+  },
+  "guideSections": [
+    {
+      "id": "payne-calcium-guide",
+      "icon": "🦴",
+      "title": "Protein-Bound vs Free Ionized Calcium Physiology",
+      "title_es": "Fisiología del Calcio Ligado a Proteínas vs Calcio Iónico Libre",
+      "content_html_en": "<p><b>Biological Significance:</b> Only free ionized calcium (Ca2+) is physiologically active. Hypoalbuminemia causes pseudo-hypocalcemia.</p><p><b>Correction Rule:</b> For every 1.0 g/dL drop in serum albumin below 4.0 g/dL, total serum calcium drops by 0.8 mg/dL.</p>",
+      "content_html": "<p><b>Significado Biológico:</b> Solo el calcio iónico libre (Ca2+) es fisiológicamente activo. La hipoalbuminemia causa seudohipocalcemia.</p><p><b>Regla de Corrección:</b> Por cada caída de 1.0 g/dL de albúmina por debajo de 4.0 g/dL, el calcio sérico total baja 0.8 mg/dL.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "totalCalciumMgDl",
+      "label": "Calcio sérico total medido",
+      "label_en": "Measured Total Serum Calcium",
+      "type": "number",
+      "default": 7.8,
+      "min": 4.0,
+      "max": 18.0,
+      "step": 0.1,
+      "unit": "mg/dL",
+      "units": [
+        { "id": "mgdl", "label": "mg/dL", "toBase": 1 },
+        { "id": "mmoll", "label": "mmol/L", "toBase": 4.008 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [4.0, 18.0], "message": "Calcio entre 4.0 y 18.0 mg/dL", "message_en": "Calcium between 4.0 and 18.0 mg/dL" }]
+    },
+    {
+      "id": "serumAlbuminGDl",
+      "label": "Albúmina sérica",
+      "label_en": "Serum Albumin",
+      "type": "number",
+      "default": 2.5,
+      "min": 1.0,
+      "max": 6.0,
+      "step": 0.1,
+      "unit": "g/dL",
+      "unit_en": "g/dL",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1.0, 6.0], "message": "Albúmina entre 1.0 y 6.0 g/dL", "message_en": "Albumin between 1.0 and 6.0 g/dL" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "correctedCalciumMgDl",
+      "label": "Calcio Sérico Corregido (Fórmula de Payne)",
+      "label_en": "Albumin-Corrected Calcium (Payne Formula)",
+      "expression": "totalCalciumMgDl + (0.8 * (4.0 - serumAlbuminGDl))",
+      "unit": "mg/dL",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "correctedCalciumMgDl", "op": "between", "value": [8.5, 10.5] }, "label": "Calemia Normal Corregida (8.5 - 10.5 mg/dL)", "label_en": "Normal Corrected Calcium (8.5 - 10.5 mg/dL)", "tone": "success", "text": "Nivel de calcio sérico corregido dentro del rango fisiológico normal.", "text_en": "Albumin-corrected calcium level within normal physiological range." },
+        { "when": { "field": "correctedCalciumMgDl", "op": "<", "value": 8.5 }, "label": "Hipocalcemia Verdadera (< 8.5 mg/dL)", "label_en": "True Hypocalcemia (< 8.5 mg/dL)", "tone": "warning", "text": "Hipocalcemia real confirmada tras corregir por albúmina. Evaluar PTH y Magnesio.", "text_en": "True hypocalcemia confirmed after albumin correction. Assess PTH and Magnesium." },
+        { "when": { "field": "correctedCalciumMgDl", "op": ">", "value": 10.5 }, "label": "Hipercalcemia (> 10.5 mg/dL)", "label_en": "Hypercalcemia (> 10.5 mg/dL)", "tone": "warning", "text": "Hipercalcemia confirmada. Evaluar hiperparatiroidismo o causa tumoral.", "text_en": "Confirmed hypercalcemia. Assess hyperparathyroidism or malignancy." }
+      ]
+    },
+    {
+      "id": "correctedCalciumMmolL",
+      "label": "Calcio Sérico Corregido en mmol/L",
+      "label_en": "Albumin-Corrected Calcium in mmol/L",
+      "expression": "correctedCalciumMgDl / 4.008",
+      "unit": "mmol/L",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "anion-gap-corrected-calculator", "type": "static", "message": "Calcula el anion gap corregido por albúmina", "message_en": "Calculate albumin-corrected anion gap", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Endocrinólogo y Bioquímico Clínico",
+    "role_en": "Endocrinologist & Clinical Biochemist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y clínico",
+    "includeData": ["correctedCalciumMgDl", "totalCalciumMgDl", "serumAlbuminGDl"],
+    "instructions": [
+      "Sintetiza el calcio corregido en mg/dL, el valor de albúmina y la interpretación (Normocalcemia vs Hipocalcemia/Hipercalcemia) en 2 frases concisas.",
+      "Explica que la hipoalbuminemia causa una disminución engañosa en el calcio medido total."
+    ],
+    "instructions_en": [
+      "Summarize corrected calcium in mg/dL, albumin level, and calcemia status in 2 concise sentences.",
+      "Explain that hypoalbuminemia causes a misleading drop in measured total calcium."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Calcio Corregido por Albúmina (Payne) | CalculadoraHub",
+    "metaTitle_en": "Corrected Calcium Calculator (Payne Formula) | CalculadoraHub",
+    "metaDescription": "Calcula el Calcio Sérico Corregido por Hipoalbuminemia con la fórmula de Payne. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate Albumin-Corrected Serum Calcium using Payne's formula. Free, instant results.",
+    "keywords": ["corrected calcium calculator", "calcio corregido albumina", "formula payne calcio", "hipocalcemia seudohipocalcemia"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

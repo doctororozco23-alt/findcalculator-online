@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "rent-calculator",
+    "title": "Calculadora de Alquiler y Presupuesto de Vivienda",
+    "title_en": "Rent Calculator & Budget Guide",
+    "slug": "calculadora-alquiler",
+    "category": "finance",
+    "subcategory": "mortgages",
+    "tags": ["alquiler", "vivienda", "presupuesto"],
+    "tags_en": ["rent", "housing", "budget"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Key"
+  },
+  "content": {
+    "shortDescription": "Calcula el alquiler mensual máximo recomendado que puedes permitirte según tus ingresos y gastos.",
+    "shortDescription_en": "Calculate the maximum recommended monthly rent you can afford based on your household income and expenses.",
+    "longDescription": "Determina cuánto deberías pagar de renta mensual aplicando la regla prudencial del 30% sobre tus ingresos brutos o netos mensuales del hogar.",
+    "longDescription_en": "Determine how much monthly rent you should pay applying the 30% prudential rule on gross or net household income.",
+    "howToUse": [
+      "Ingresa tus ingresos brutos mensuales del hogar.",
+      "Añade otros ingresos secundarios si aplica.",
+      "Selecciona la divisa activa deseada.",
+      "Consulta el alquiler mensual máximo sugerido (regla del 30%)."
+    ],
+    "howToUse_en": [
+      "Enter your gross monthly household income.",
+      "Add any secondary income streams.",
+      "Choose active currency.",
+      "View your maximum suggested monthly rent (30% rule)."
+    ],
+    "methodology": "Regla del 30% de Alquiler: Alquiler Máximo = Ingreso Mensual Bruto × 0.30.",
+    "methodology_en": "30% Rent Rule: Max Rent = Gross Monthly Income × 0.30."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🏠",
+      "title": "The 30% Rule for Rent",
+      "title_es": "La Regla del 30% para el Alquiler",
+      "content_html_en": "<p>A widely accepted rule of thumb is that your monthly rent should not exceed 30% of your gross monthly income before taxes.</p>",
+      "content_html": "<p>La regla recomendada por expertos financieros establece que el alquiler no debe superar el 30% del ingreso mensual bruto.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "monthlyIncome",
+      "label": "Ingresos mensuales brutos del hogar",
+      "label_en": "Gross Monthly Household Income",
+      "type": "currency",
+      "default": 4000,
+      "min": 500,
+      "max": 100000,
+      "step": 100,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [500, 100000], "message": "Ingreso entre 500 y 100.000", "message_en": "Income between 500 and 100,000" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "maxRentRecommended",
+      "label": "Alquiler Mensual Máximo Recomendado (30%)",
+      "label_en": "Max Recommended Monthly Rent (30%)",
+      "expression": "monthlyIncome * 0.30",
+      "unit": { "follows": "monthlyIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "maxRentRecommended", "op": ">", "value": 0 }, "label": "Presupuesto Prudencial", "label_en": "Prudential Rent Limit", "tone": "success", "text": "Límite recomendado para no comprometer otros gastos esenciales.", "text_en": "Recommended limit to maintain overall financial flexibility." }
+      ]
+    },
+    {
+      "id": "annualRentTotal",
+      "label": "Gasto anual total en alquiler",
+      "label_en": "Total Annual Rent Expenditure",
+      "expression": "maxRentRecommended * 12",
+      "unit": { "follows": "monthlyIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "house-affordability-calculator", "type": "static", "message": "Compara si te conviene comprar vivienda", "message_en": "Check how much home you can afford to buy", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Presupuesto de Alquiler",
+    "role_en": "Rent Budget Assistant",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y accesible",
+    "includeData": ["maxRentRecommended", "annualRentTotal", "monthlyIncome"],
+    "instructions": [
+      "Sintetiza el alquiler mensual máximo recomendado en 2 frases sencillas.",
+      "Recuerda incluir los costes de suministros (luz, agua, internet) dentro del presupuesto global de vivienda."
+    ],
+    "instructions_en": [
+      "Summarize maximum recommended monthly rent in 2 concise sentences.",
+      "Remind user to factor in utilities (electricity, water, internet) into total housing budget."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Alquiler y Presupuesto de Vivienda | CalculadoraHub",
+    "metaTitle_en": "Rent Calculator & Budget Guide | CalculadoraHub",
+    "metaDescription": "Calcula el alquiler mensual máximo recomendado según tus ingresos. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate max recommended monthly rent based on household income. Free, instant results.",
+    "keywords": ["rent calculator", "calculadora alquiler", "cuanto pagar de renta", "presupuesto alquiler"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

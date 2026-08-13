@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "kinetic-energy-calculator",
+    "title": "Calculadora de Energía Cinética (E_k = 1/2 m v²)",
+    "title_en": "Kinetic Energy Calculator (E_k = 1/2 m v²)",
+    "slug": "calculadora-de-energia-cinetica-masa-velocidad-julios",
+    "category": "physics",
+    "subcategory": "mechanics",
+    "tags": ["energia-cinetica", "julios", "masa", "velocidad", "movimiento", "fisica-clasica", "joules"],
+    "tags_en": ["kinetic-energy", "joules", "mass", "velocity", "motion", "classical-physics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la energía cinética en Joules / Julios ($E_k = \\frac{1}{2}m v^2$) acumulada por un objeto en movimiento.",
+    "shortDescription_en": "Calculate kinetic energy in Joules ($E_k = \\frac{1}{2}m v^2$) accumulated by a moving object.",
+    "longDescription": "Herramienta de mecánica clásica y conservación de energía. Demuestra el crecimiento cuadrático de la energía respecto al aumento de la velocidad.",
+    "longDescription_en": "Classical mechanics and energy conservation tool. Demonstrates quadratic growth of energy relative to velocity increases.",
+    "howToUse": [
+      "Ingresa la Masa del Objeto ($m$ en kg).",
+      "Ingresa la Velocidad de Traslación ($v$ en m/s o km/h).",
+      "Consulta la Energía Cinética Calculada en Joules (J) y Kilojoules (kJ)."
+    ],
+    "howToUse_en": [
+      "Enter Object Mass ($m$ in kg).",
+      "Enter Translational Velocity ($v$ in m/s).",
+      "View Calculated Kinetic Energy in Joules (J) and Kilojoules (kJ)."
+    ],
+    "methodology": "Energía Cinética E_k = 0.5 * m * v². 1 Joule = 1 kg·m²/s².",
+    "methodology_en": "Kinetic Energy E_k = 0.5 * m * v². 1 Joule = 1 kg·m²/s²."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Mecánica Clásica y Principios de Energía",
+    "role_en": "Classical Mechanics & Energy Principles Specialist Assistant",
+    "includeData": ["kineticEnergyJoulesResult", "kineticEnergyKilojoulesResult"],
+    "instructions": [
+      "Interpreta la energía cinética obtenida para la masa y velocidad dadas.",
+      "Explica la regla cuadrática: duplicar la velocidad cuadruplica la energía cinética ($2^2 = 4$).",
+      "Muestra la equivalencia en calorías o Kilowatt-hora (kWh)."
+    ],
+    "instructions_en": [
+      "Interpret calculated kinetic energy for given mass and speed.",
+      "Explain the quadratic rule: doubling velocity quadruples kinetic energy ($2^2 = 4$).",
+      "Show equivalence in calories or Kilowatt-hours (kWh)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ke-guide",
+      "icon": "⚡",
+      "title": "Kinetic Energy Formula & Quadratic Effect",
+      "title_es": "Fórmula de Energía Cinética y Efecto Cuadrático",
+      "content_html_en": "<p><b>Formula:</b> E_k = ½ × m × v²</p><p><b>1 Joule (J):</b> Energy required to accelerate 1 kg at 1 m/s² through 1 meter.</p>",
+      "content_html": "<p><b>Fórmula:</b> E_k = ½ × m × v²</p><p><b>1 Joule (J):</b> Energía requerida para acelerar 1 kg a 1 m/s² a lo largo de 1 metro.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "objectMassKg",
+      "label": "Masa del Objeto (m en kg)",
+      "label_en": "Object Mass (m in kg)",
+      "type": "number",
+      "default": 1200,
+      "min": 0.001,
+      "max": 1000000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "objectVelocityMps",
+      "label": "Velocidad del Objeto (v en m/s)",
+      "label_en": "Object Velocity (v in m/s)",
+      "type": "number",
+      "default": 25,
+      "min": 0.01,
+      "max": 300000,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "kineticEnergyJoulesResult",
+      "label": "Energía Cinética Calculada (Joules - J)",
+      "label_en": "Calculated Kinetic Energy (Joules - J)",
+      "expression": "0.5 * objectMassKg * (objectVelocityMps ^ 2)",
+      "unit": "J",
+      "unit_en": "J",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "kineticEnergyJoulesResult", "op": ">=", "value": 0 }, "label": "Energía Calculada", "label_en": "Energy Computed", "tone": "success", "text": "Energía cinética en movimiento evaluada.", "text_en": "Kinetic energy in motion evaluated." }
+      ]
+    },
+    {
+      "id": "kineticEnergyKilojoulesResult",
+      "label": "Energía Cinética en Kilojoules (kJ)",
+      "label_en": "Kinetic Energy in Kilojoules (kJ)",
+      "expression": "kineticEnergyJoulesResult / 1000",
+      "unit": "kJ",
+      "unit_en": "kJ",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

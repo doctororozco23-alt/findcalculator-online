@@ -1,0 +1,181 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "tire-size-calculator",
+    "title": "Calculadora Comparativa de Medidas de Neumáticos y Velocímetro",
+    "title_en": "Tire Size Comparison & Speedometer Calculator",
+    "slug": "calculadora-de-medidas-de-neumaticos-llantas-velocimetro",
+    "category": "transport",
+    "subcategory": "fuel",
+    "tags": ["neumaticos", "llantas", "medida-de-neumatico", "velocimetro", "diametro", "comparador", "automotriz"],
+    "tags_en": ["tire-size", "tires", "tire-comparison", "speedometer", "diameter", "wheel", "automotive"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Compara dos medidas de neumáticos (ej. 225/45R17 vs 245/40R18), calcula la diferencia de diámetro total y el error del velocímetro.",
+    "shortDescription_en": "Compare two tire sizes (e.g. 225/45R17 vs 245/40R18), calculate total diameter difference, and speedometer error percentage.",
+    "longDescription": "Herramienta de ingeniería automotriz y rodadura. Determina la compatibilidad de llantas y neumáticos asegurando mantener el diámetro total dentro del margen seguro de ±3%.",
+    "longDescription_en": "Automotive wheel and tire engineering tool. Determines tire fitment safety keeping overall diameter within ±3% safety margin.",
+    "howToUse": [
+      "Ingresa el Ancho (mm), Perfil (%) y Diámetro de Llanta (pulgadas) del Neumático 1 (Original).",
+      "Ingresa el Ancho (mm), Perfil (%) y Diámetro de Llanta (pulgadas) del Neumático 2 (Nuevo).",
+      "Consulta la Diferencia de Diámetro en %, la diferencia en pulgadas y la lectura real del velocímetro a 60 mph."
+    ],
+    "howToUse_en": [
+      "Enter Width (mm), Aspect Ratio (%), and Rim Diameter (inches) for Tire 1 (Stock).",
+      "Enter Width (mm), Aspect Ratio (%), and Rim Diameter (inches) for Tire 2 (New).",
+      "View Diameter Difference in %, inch difference, and actual speedometer reading at 60 mph."
+    ],
+    "methodology": "Diámetro = 2 * (Ancho * Perfil / 100 / 25.4) + Llanta. Diferencia % = ((D2 - D1) / D1) * 100.",
+    "methodology_en": "Diameter = 2 * (Width * AspectRatio / 100 / 25.4) + Rim. Difference % = ((D2 - D1) / D1) * 100."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Geometría de Neumáticos y Compatibilidad",
+    "role_en": "Tire Geometry & Compatibility Specialist Assistant",
+    "includeData": ["diameterDiffPercent", "tire1DiameterInches", "tire2DiameterInches"],
+    "instructions": [
+      "Interpreta la compatibilidad del nuevo neumático dentro del límite seguro recomendado de ±3%.",
+      "Explica el efecto en el velocímetro (si indica más o menos velocidad real).",
+      "Advierte sobre posibles roces en guardabarros o modificaciones de suspensión si el diámetro cambia sustancialmente."
+    ],
+    "instructions_en": [
+      "Interpret new tire compatibility within recommended safe limit of ±3%.",
+      "Explain speedometer effect (whether reading faster or slower than actual speed).",
+      "Warn about potential fender clearance or suspension rubbing if diameter changes significantly."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "tsz-guide",
+      "icon": "🛞",
+      "title": "Tire Size Codes & ±3% Safety Rule",
+      "title_es": "Códigos de Neumáticos y Regla de Seguridad del ±3%",
+      "content_html_en": "<p><b>Code Example (225/45R17):</b> 225 mm width, 45% sidewall ratio, 17 inch rim.</p><p><b>The ±3% Rule:</b> Overall tire diameter should stay within 3% of original specs to protect transmission and ABS calibration.</p>",
+      "content_html": "<p><b>Ejemplo de Código (225/45R17):</b> 225 mm de ancho, 45% de perfil de flanco, llanta de 17 pulgadas.</p><p><b>La Regla del ±3%:</b> El diámetro total del neumático debe mantenerse dentro del 3% del original para proteger la transmisión y el ABS.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "t1Width",
+      "label": "Neumático 1: Ancho (mm)",
+      "label_en": "Tire 1: Width (mm)",
+      "type": "number",
+      "default": 225,
+      "min": 125,
+      "max": 385,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "t1Ratio",
+      "label": "Neumático 1: Perfil (%)",
+      "label_en": "Tire 1: Aspect Ratio (%)",
+      "type": "number",
+      "default": 45,
+      "min": 20,
+      "max": 90,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "t1Rim",
+      "label": "Neumático 1: Llanta (pulgadas)",
+      "label_en": "Tire 1: Rim Diameter (inches)",
+      "type": "number",
+      "default": 17,
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "t2Width",
+      "label": "Neumático 2: Ancho (mm)",
+      "label_en": "Tire 2: Width (mm)",
+      "type": "number",
+      "default": 245,
+      "min": 125,
+      "max": 385,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "t2Ratio",
+      "label": "Neumático 2: Perfil (%)",
+      "label_en": "Tire 2: Aspect Ratio (%)",
+      "type": "number",
+      "default": 40,
+      "min": 20,
+      "max": 90,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "t2Rim",
+      "label": "Neumático 2: Llanta (pulgadas)",
+      "label_en": "Tire 2: Rim Diameter (inches)",
+      "type": "number",
+      "default": 18,
+      "min": 10,
+      "max": 30,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "tire1DiameterInches",
+      "label": "Diámetro Neumático 1 (pulgadas)",
+      "label_en": "Tire 1 Total Diameter (inches)",
+      "expression": "2 * ((t1Width * (t1Ratio / 100)) / 25.4) + t1Rim",
+      "unit": "in",
+      "unit_en": "in",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "tire2DiameterInches",
+      "label": "Diámetro Neumático 2 (pulgadas)",
+      "label_en": "Tire 2 Total Diameter (inches)",
+      "expression": "2 * ((t2Width * (t2Ratio / 100)) / 25.4) + t2Rim",
+      "unit": "in",
+      "unit_en": "in",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "diameterDiffPercent",
+      "label": "Diferencia de Diámetro Total (%)",
+      "label_en": "Total Diameter Difference (%)",
+      "expression": "tire1DiameterInches > 0 ? (((tire2DiameterInches - tire1DiameterInches) / tire1DiameterInches) * 100) : 0",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "diameterDiffPercent", "op": "between", "value": [-3, 3] }, "label": "Compatible / Seguro (±3%)", "label_en": "Compatible / Safe (±3%)", "tone": "success", "text": "Diámetro dentro del rango de tolerancia recomendado.", "text_en": "Diameter within recommended tolerance range." },
+        { "when": { "field": "diameterDiffPercent", "op": "<", "value": -3 }, "label": "Demasiado Pequeño (< -3%)", "label_en": "Too Small (< -3%)", "tone": "warning", "text": "El neumático es más pequeño del rango recomendado.", "text_en": "Tire is smaller than recommended range." },
+        { "when": { "field": "diameterDiffPercent", "op": ">", "value": 3 }, "label": "Demasiado Grande (> +3%)", "label_en": "Too Large (> +3%)", "tone": "warning", "text": "El neumático es más grande del rango recomendado.", "text_en": "Tire is larger than recommended range." }
+      ]
+    },
+    {
+      "id": "speedometerReading60",
+      "label": "Velocidad Real a 60 mph Indicadas",
+      "label_en": "Actual Speed at 60 mph Indicated",
+      "expression": "60 * (1 + (diameterDiffPercent / 100))",
+      "unit": "mph",
+      "unit_en": "mph",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

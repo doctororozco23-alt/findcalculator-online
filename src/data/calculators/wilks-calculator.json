@@ -1,0 +1,183 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "wilks-calculator",
+    "title": "Calculadora de Puntos Wilks & IPF GL (Fuerza Relativa Powerlifting)",
+    "title_en": "Wilks & IPF GL Calculator (Relative Powerlifting Strength)",
+    "slug": "puntos-wilks-ipf-gl-powerlifting",
+    "category": "fitness",
+    "subcategory": "training",
+    "tags": ["wilks", "ipf-gl", "powerlifting", "fuerza-relativa", "sentadilla"],
+    "tags_en": ["wilks", "ipf-gl", "powerlifting", "relative-strength", "squat"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula tus Puntos Wilks y puntos oficiales IPF GL para comparar tu fuerza relativa en Powerlifting independientemente de tu categoría de peso.",
+    "shortDescription_en": "Calculate your Wilks Score and official IPF GL points to compare relative strength in powerlifting across body weight classes.",
+    "longDescription": "Auditoría de fuerza relativa en Powerlifting. El Coeficiente de Wilks y los Puntos IPF GL permiten comparar el rendimiento de levantadores de distintas categorías de peso corporal de forma justa y estandarizada.",
+    "longDescription_en": "Relative strength powerlifting audit. Wilks Score and IPF GL points allow fair, standardized strength comparisons across different athlete body weight classes.",
+    "howToUse": [
+      "Selecciona tu sexo biológico.",
+      "Ingresa tu peso corporal exacto al momento de la competición o test.",
+      "Ingresa el Total levantado en kg (suma de Sentadilla + Press Banca + Peso Muerto).",
+      "Consulta tus Puntos Wilks y la puntuación de fuerza relativa equivalente."
+    ],
+    "howToUse_en": [
+      "Select biological sex.",
+      "Enter exact body weight at time of meet/test.",
+      "Enter total lifted weight in kg (Squat + Bench Press + Deadlift sum).",
+      "View calculated Wilks Score and relative strength standing."
+    ],
+    "methodology": "Fórmula de Robert Wilks / Ecuación Coeficiente Polinómico IPF: Normaliza la carga total levantada según el peso corporal. Wilks > 400 pts = Nivel Nacional / Avanzado. Wilks > 500 pts = Nivel Internacional Élite.",
+    "methodology_en": "Robert Wilks Polynomial Formula / IPF GL Formula: Normalizes total load against body weight. Wilks > 400 = National / Advanced. Wilks > 500 = Elite International."
+  },
+  "guideSections": [
+    {
+      "id": "wilks-standards-guide",
+      "icon": "🏋️‍♂️",
+      "title": "Powerlifting Wilks Score Classifications",
+      "title_es": "Clasificación de Puntos Wilks en Powerlifting",
+      "content_html_en": "<p><b>< 300 Wilks:</b> Novice / Beginner Powerlifter.</p><p><b>300 - 399 Wilks:</b> Intermediate / Regional Competitive Level.</p><p><b>400 - 499 Wilks:</b> Advanced / National Level Competitor.</p><p><b>≥ 500 Wilks:</b> Elite / World-Class Powerlifter.</p>",
+      "content_html": "<p><b>< 300 Wilks:</b> Levantador Principiante / Novato.</p><p><b>300 - 399 Wilks:</b> Nivel Intermedio / Regional Competitivo.</p><p><b>400 - 499 Wilks:</b> Nivel Avanzado / Competidor Nacional.</p><p><b>≥ 500 Wilks:</b> Nivel Élite Internacional de Clase Mundial.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "gender",
+      "label": "Sexo biológico",
+      "label_en": "Biological Sex",
+      "type": "select",
+      "default": "male",
+      "options": [
+        { "value": "male", "label": "Hombre", "label_en": "Male" },
+        { "value": "female", "label": "Mujer", "label_en": "Female" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "bodyWeightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 83,
+      "min": 40,
+      "max": 220,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [40, 220], "message": "Peso entre 40 y 220 kg", "message_en": "Weight between 40 and 220 kg" }]
+    },
+    {
+      "id": "totalLiftedKg",
+      "label": "Total levantado (Sentadilla + Banca + Peso Muerto)",
+      "label_en": "Total Weight Lifted (Squat + Bench + Deadlift)",
+      "type": "number",
+      "default": 550,
+      "min": 50,
+      "max": 1200,
+      "step": 2.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [50, 1200], "message": "Total entre 50 y 1200 kg", "message_en": "Total between 50 and 1200 kg" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "wilksCoeffMale",
+      "label": "Coeficiente Wilks Masculino",
+      "label_en": "Male Wilks Coefficient",
+      "expression": "500 / (-216.0475144 + 16.2606339 * bodyWeightKg - 0.002388645 * (bodyWeightKg ^ 2) - 0.00113732 * (bodyWeightKg ^ 3) + 0.00000701863 * (bodyWeightKg ^ 4) - 0.00000001291 * (bodyWeightKg ^ 5))",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "wilksCoeffFemale",
+      "label": "Coeficiente Wilks Femenino",
+      "label_en": "Female Wilks Coefficient",
+      "expression": "500 / (594.317477757 - 27.2384253644 * bodyWeightKg + 0.82112226871 * (bodyWeightKg ^ 2) - 0.00930733913 * (bodyWeightKg ^ 3) + 0.00004731582 * (bodyWeightKg ^ 4) - 0.00000009054 * (bodyWeightKg ^ 5))",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "wilksPointsVal",
+      "label": "Puntos Wilks Calculados",
+      "label_en": "Calculated Wilks Score",
+      "expression": "gender == 'male' ? (totalLiftedKg * wilksCoeffMale) : (totalLiftedKg * wilksCoeffFemale)",
+      "unit": "pts",
+      "unit_en": "pts",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "wilksPointsVal", "op": "<", "value": 300 }, "label": "Nivel Principiante (< 300 pts)", "label_en": "Novice Level (< 300 pts)", "tone": "info", "text": "Fuerza relativa inicial en desarrollo.", "text_en": "Initial relative strength under development." },
+        { "when": { "field": "wilksPointsVal", "op": "between", "value": [300, 399] }, "label": "Nivel Intermedio / Regional (300 - 399 pts)", "label_en": "Intermediate / Regional Level (300 - 399 pts)", "tone": "success", "text": "Nivel competitivo intermedio sólido.", "text_en": "Solid competitive intermediate strength." },
+        { "when": { "field": "wilksPointsVal", "op": "between", "value": [400, 499] }, "label": "Nivel Avanzado / Nacional (400 - 499 pts)", "label_en": "Advanced / National Level (400 - 499 pts)", "tone": "success", "text": "Fuerza relativa de nivel nacional avanzado.", "text_en": "Advanced national-level relative strength." },
+        { "when": { "field": "wilksPointsVal", "op": ">=", "value": 500 }, "label": "Nivel Élite Mundial (≥ 500 pts)", "label_en": "World-Class Elite Level (≥ 500 pts)", "tone": "warning", "text": "Puntuación de fuerza relativa de clase mundial.", "text_en": "World-class elite powerlifting score." }
+      ]
+    },
+    {
+      "id": "bodyWeightRatio",
+      "label": "Ratio Total / Peso Corporal",
+      "label_en": "Total / Body Weight Ratio",
+      "expression": "totalLiftedKg / bodyWeightKg",
+      "unit": "xBW",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "one-rep-max-calculator", "type": "static", "message": "Calcula tus 1RM máximos teóricos", "message_en": "Calculate 1RM theoretical maxes", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Entrenador de Powerlifting y Fuerza Competitiva",
+    "role_en": "Powerlifting Coach & Competitive Strength Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "entusiasta y motivador",
+    "includeData": ["wilksPointsVal", "bodyWeightRatio", "totalLiftedKg", "bodyWeightKg", "gender"],
+    "instructions": [
+      "Sintetiza la puntuación Wilks en puntos, el ratio veces peso corporal (xBW) y la categoría de fuerza en 2 frases concisas.",
+      "Destaca que los puntos Wilks permiten comparar la fuerza de levantadores ligeros y pesados de forma equitativa."
+    ],
+    "instructions_en": [
+      "Summarize Wilks Score in points, times body weight ratio (xBW), and strength tier in 2 concise sentences.",
+      "Highlight that Wilks points equalize strength comparisons between light and heavy lifters."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Puntos Wilks (Powerlifting) | CalculadoraHub",
+    "metaTitle_en": "Wilks Score Calculator (Powerlifting) | CalculadoraHub",
+    "metaDescription": "Calcula tus Puntos Wilks y evalúa tu fuerza relativa en Powerlifting. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your Wilks Score and relative powerlifting strength standing. Free, instant results.",
+    "keywords": ["wilks calculator", "puntos wilks powerlifting", "fuerza relativa wilks", "ipf gl points"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

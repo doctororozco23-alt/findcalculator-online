@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "insulation-batt-calculator",
+    "title": "Calculadora de Aislamiento Térmico en Rollos y Valor R (R-Value)",
+    "title_en": "Thermal Insulation Batt & R-Value Calculator",
+    "slug": "calculadora-de-aislamiento-termico- rollos-paneles-valor-r",
+    "category": "construction",
+    "subcategory": "remodeling",
+    "tags": ["aislamiento-termico", "rollos-de-aislante", "valor-r", "lana-de-vidrio", "eficiencia-energetica", "techos", "reformas"],
+    "tags_en": ["insulation", "insulation-batts", "r-value", "fiberglass", "energy-efficiency", "attic", "remodeling"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el número de rollos o paquetes de lana de vidrio / aislamiento térmico ($m^2$ por rollo) y el Valor R alcanzado.",
+    "shortDescription_en": "Calculate rolls or packages of fiberglass insulation batts ($m^2$ per roll) and achieved R-Value.",
+    "longDescription": "Herramienta de eficiencia energética en edificación. Determina el material necesario para aislar buhardillas, techos y tabiques para cumplir la normativa térmica.",
+    "longDescription_en": "Building energy efficiency tool. Determines required insulation material for attics, ceilings, and walls to meet thermal codes.",
+    "howToUse": [
+      "Ingresa el Área del Techo / Pared a Aislar (m² o pies²).",
+      "Selecciona el Nivel de Valor R deseado (ej. R-13 tabiques, R-30 techos/buhardillas).",
+      "Ingresa la Cobertura por Rollo o Paquete (m² por paquete, ej. 7.5 m²).",
+      "Consulta los Rollos / Paquetes Requeridos (con 5% de desperdicio)."
+    ],
+    "howToUse_en": [
+      "Enter Ceiling / Wall Area to Insulate (m² or sq ft).",
+      "Select Desired R-Value Level (e.g. R-13 walls, R-30 attic/roof).",
+      "Enter Coverage per Roll or Package (m² per roll, e.g. 7.5 m²).",
+      "View Required Rolls / Packages Count (with 5% waste)."
+    ],
+    "methodology": "Rollos Requeridos = ceil((ÁreaTotal / CoberturaRollo) * 1.05). Valor R = Resistencia Térmica en (h·ft²·°F)/BTU.",
+    "methodology_en": "Required Rolls = ceil((TotalArea / RollCoverage) * 1.05). R-Value = Thermal Resistance in (h·ft²·°F)/BTU."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Aislamiento Térmico y Eficiencia Energética",
+    "role_en": "Thermal Insulation & Energy Efficiency Specialist Assistant",
+    "includeData": ["insulationRollsCountResult", "totalInsulationAreaPurchasedM2"],
+    "instructions": [
+      "Interpreta la cantidad de paquetes de aislante térmico calculados.",
+      "Explica la recomendación de Valor R según la zona climática (R-30 a R-60 recomendado en desvanes fríos).",
+      "Advierte sobre la importancia de la barrera de vapor (papel craft orientativo hacia la cara calefactada)."
+    ],
+    "instructions_en": [
+      "Interpret calculated insulation roll packages count.",
+      "Explain recommended R-Value rating based on climate zone (R-30 to R-60 recommended for cold attics).",
+      "Warn on vapor barrier orientation (kraft facing facing the heated interior side)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ibc-guide",
+      "icon": "🏠",
+      "title": "Recommended R-Values by Application",
+      "title_es": "Valores R Recomendados por Aplicación",
+      "content_html_en": "<p><b>R-13 to R-15:</b> 2x4 Exterior Wall Framing.</p><p><b>R-19 to R-21:</b> 2x6 Exterior Wall Framing.</p><p><b>R-30 to R-38:</b> Attic & Ceiling Insulation (Moderate Climates).</p>",
+      "content_html": "<p><b>R-13 a R-15:</b> Estructura de Muro Exterior 2x4.</p><p><b>R-19 a R-21:</b> Estructura de Muro Exterior 2x6.</p><p><b>R-30 a R-38:</b> Aislamiento de Techo y Buhardilla (Climas Moderados).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "insulationAreaM2",
+      "label": "Área a Aislar (m²)",
+      "label_en": "Area to Insulate (m²)",
+      "type": "number",
+      "default": 75,
+      "min": 1,
+      "max": 10000,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "rollCoverageM2Val",
+      "label": "Cobertura por Rollo / Paquete (m²)",
+      "label_en": "Coverage per Roll / Package (m²)",
+      "type": "number",
+      "default": 7.5,
+      "min": 1,
+      "max": 50,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "insulationRollsCountResult",
+      "label": "Rollos / Paquetes Requeridos (con 5% desperdicio)",
+      "label_en": "Required Rolls / Packages Count (with 5% waste)",
+      "expression": "rollCoverageM2Val > 0 ? ceil((insulationAreaM2 / rollCoverageM2Val) * 1.05) : 0",
+      "unit": "rollos",
+      "unit_en": "rolls",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "insulationRollsCountResult", "op": ">=", "value": 0 }, "label": "Rollos Calculados", "label_en": "Rolls Computed", "tone": "success", "text": "Cantidad total de paquetes de aislamiento cuantificada.", "text_en": "Total insulation packages count quantified." }
+      ]
+    },
+    {
+      "id": "totalInsulationAreaPurchasedM2",
+      "label": "Superficie Total de Aislamiento Comprado (m²)",
+      "label_en": "Total Purchased Insulation Surface (m²)",
+      "expression": "insulationRollsCountResult * rollCoverageM2Val",
+      "unit": "m²",
+      "unit_en": "m²",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "volume-calculator",
+    "title": "Calculadora de Volumen de Cuerpos 3D (Esfera, Cilindro, Cono y Cubo)",
+    "title_en": "3D Volume Calculator (Sphere, Cylinder, Cone & Cube)",
+    "slug": "calculadora-de-volumen-cuerpos-3d-esfera-cilindro",
+    "category": "math",
+    "subcategory": "geometry",
+    "tags": ["volumen", "cuerpos-3d", "esfera", "cilindro", "cono", "cubo", "geometria-espacial"],
+    "tags_en": ["volume", "3d-shapes", "sphere", "cylinder", "cone", "cube", "spatial-geometry"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el Volumen tridimensional ($V$) de sólidos geométricos principales: Esfera ($V = \\frac{4}{3}\\pi r^3$), Cilindro ($V = \\pi r^2 h$), Cono ($V = \\frac{1}{3}\\pi r^2 h$) y Cubo ($V = a^3$).",
+    "shortDescription_en": "Compute 3D volume ($V$) for primary geometric solids: Sphere ($V = \\frac{4}{3}\\pi r^3$), Cylinder ($V = \\pi r^2 h$), Cone ($V = \\frac{1}{3}\\pi r^2 h$), and Cube ($V = a^3$).",
+    "longDescription": "Herramienta de geometría espacial y física. Calcula la capacidad volumétrica en unidades cúbicas ($u^3$) o litros a partir de las dimensiones del sólido 3D.",
+    "longDescription_en": "Spatial geometry tool. Computes volumetric capacity in cubic units ($u^3$) or liters for 3D solids.",
+    "howToUse": [
+      "Selecciona la Forma 3D (Esfera, Cilindro, Cono o Cubo).",
+      "Ingresa las dimensiones necesarias (Radio $r$, Altura $h$, Arista $a$).",
+      "Consulta el Volumen tridimensional calculado y su equivalente en Litros (si 1 u = 1 dm)."
+    ],
+    "howToUse_en": [
+      "Select 3D Shape (Sphere, Cylinder, Cone, or Cube).",
+      "Enter required dimensions (Radius $r$, Height $h$, Edge $a$).",
+      "View calculated 3D Volume."
+    ],
+    "methodology": "Esfera: V = (4/3)*π*r³. Cilindro: V = π*r²*h. Cono: V = (1/3)*π*r²*h. Cubo: V = a³.",
+    "methodology_en": "Sphere: V = (4/3)*π*r³. Cylinder: V = π*r²*h. Cone: V = (1/3)*π*r²*h. Cube: V = a³."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Geometría Espacial y Volúmenes",
+    "role_en": "Spatial Geometry & Volumes Specialist Assistant",
+    "includeData": ["calculatedVolumeVal"],
+    "instructions": [
+      "Explica la deducción de la fórmula tridimensional para la forma seleccionada.",
+      "Demuestra la conversión de unidades cúbicas a capacidad en litros.",
+      "Compara el volumen con otros sólidos de igual superficie exterior."
+    ],
+    "instructions_en": [
+      "Explain 3D formula deduction for the selected shape.",
+      "Demonstrate unit conversion from cubic units to liter capacity.",
+      "Compare volume against other solids with equal surface area."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "vol-guide",
+      "icon": "📦",
+      "title": "3D Volume Formulas",
+      "title_es": "Fórmulas de Volumen 3D",
+      "content_html_en": "<p><b>Sphere:</b> Volume = (4/3) × π × r³.</p><p><b>Cylinder:</b> Volume = π × r² × h.</p><p><b>Cone:</b> Volume = (1/3) × π × r² × h.</p><p><b>Cube:</b> Volume = a³ (edge length cubed).</p>",
+      "content_html": "<p><b>Esfera:</b> Volumen = (4/3) × π × r³.</p><p><b>Cilindro:</b> Volumen = π × r² × h.</p><p><b>Cono:</b> Volumen = (1/3) × π × r² × h.</p><p><b>Cubo:</b> Volumen = a³ (arista al cubo).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "solidType",
+      "label": "Cuerpo Geométrico 3D",
+      "label_en": "3D Geometric Solid",
+      "type": "select",
+      "default": "sphere",
+      "options": [
+        { "value": "sphere", "label": "Esfera ((4/3) × π × r³)", "label_en": "Sphere ((4/3) × π × r³)" },
+        { "value": "cylinder", "label": "Cilindro (π × r² × h)", "label_en": "Cylinder (π × r² × h)" },
+        { "value": "cone", "label": "Cono ((1/3) × π × r² × h)", "label_en": "Cone ((1/3) × π × r² × h)" },
+        { "value": "cube", "label": "Cubo (a³)", "label_en": "Cube (a³)" }
+      ]
+    },
+    {
+      "id": "radiusR",
+      "label": "Radio (r) / Arista (a)",
+      "label_en": "Radius (r) / Edge (a)",
+      "type": "number",
+      "default": 5,
+      "min": 0.1,
+      "max": 10000,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "heightH",
+      "label": "Altura (h) (para Cilindro y Cono)",
+      "label_en": "Height (h) (Cylinder & Cone)",
+      "type": "number",
+      "default": 10,
+      "min": 0.1,
+      "max": 10000,
+      "step": 0.1,
+      "required": false
+    }
+  ],
+  "calculations": [
+    {
+      "id": "calculatedVolumeVal",
+      "label": "Volumen Tridimensional Calculado (V)",
+      "label_en": "Calculated 3D Volume (V)",
+      "expression": "solidType == 'sphere' ? ((4/3) * pi * radiusR^3) : (solidType == 'cylinder' ? (pi * radiusR^2 * heightH) : (solidType == 'cone' ? ((1/3) * pi * radiusR^2 * heightH) : (radiusR^3)))",
+      "unit": "unidades³",
+      "unit_en": "units³",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "calculatedVolumeVal", "op": ">", "value": 0 }, "label": "Volumen 3D Calculado", "label_en": "3D Volume Evaluated", "tone": "success", "text": "Capacidad volumétrica tridimensional obtenida.", "text_en": "3D volumetric capacity computed." }
+      ]
+    }
+  ]
+}

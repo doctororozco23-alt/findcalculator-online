@@ -1,0 +1,203 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "date-difference-days-calculator",
+    "title": "Calculadora de Diferencia Entre Dos Fechas (Días Hábiles, Semanas y Fines de Semana)",
+    "title_en": "Advanced Date Difference Calculator (Business Days, Weeks & Weekends)",
+    "slug": "calculadora-de-diferencia-entre-dos-fechas-dias-habiles-semanas-fines-semana",
+    "category": "datetime",
+    "subcategory": "dates",
+    "tags": ["diferencia-de-fechas", "contador-de-dias", "dias-habiles", "fines-de-semana", "semanas", "meses", "fecha-y-tiempo"],
+    "tags_en": ["date-difference", "day-counter", "business-days", "weekends", "weeks", "months", "date-time"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.1.0",
+    "icon": "Calendar"
+  },
+  "content": {
+    "shortDescription": "Calcula la diferencia exacta de días, semanas, meses, días laborables (hábiles) y fines de semana entre dos fechas.",
+    "shortDescription_en": "Calculate exact difference in days, weeks, months, business working days, and weekends between any two dates.",
+    "longDescription": "Herramienta avanzada de gestión de contratos, entregas logísticas y plazos. Desglosa los días naturales en laborables y festivos.",
+    "longDescription_en": "Advanced contract management, logistics delivery, and deadline tool. Breaks down calendar days into working days and weekend days.",
+    "howToUse": [
+      "Ingresa la Fecha de Inicio (Año, Mes y Día).",
+      "Ingresa la Fecha de Fin (Año, Mes y Día).",
+      "Selecciona si deseás Incluir el Día de Fin en la Cuenta (Inclusivo +1 día).",
+      "Consulta los Días Totales de Diferencia, Días Hábiles Estimados, Semanas y Porcentaje del Año."
+    ],
+    "howToUse_en": [
+      "Enter Start Date (Year, Month, and Day).",
+      "Enter End Date (Year, Month, and Day).",
+      "Select whether to Include End Date in count (Inclusive +1 day).",
+      "View Total Days Difference, Estimated Business Days, Weeks, and Year Percentage."
+    ],
+    "methodology": "Días Totales = |(AñoFin - AñoIni)*365.2425 + (MesFin - MesIni)*30.4375 + (DíaFin - DíaIni)| + Inclusivo. DíasHábiles ≈ DíasTotales * 5/7.",
+    "methodology_en": "Total Days = |(EndYear - StartYear)*365.2425 + (EndMonth - StartMonth)*30.4375 + (EndDay - StartDay)| + Inclusive. BusinessDays ≈ TotalDays * 5/7."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Aritmética de Fechas y Planificación de Plazos",
+    "role_en": "Date Arithmetic & Deadline Planning Specialist Assistant",
+    "includeData": ["totalDaysDifferenceResult", "estimatedBusinessDaysResult", "totalWeeksDifferenceResult"],
+    "instructions": [
+      "Interpreta la diferencia total en días calendarios y días hábiles laborables calculados entre ambas fechas.",
+      "Muestra el desglose de días de fin de semana (sábados y domingos).",
+      "Proporciona la proporción que representa esta duración sobre un año calendario completo."
+    ],
+    "instructions_en": [
+      "Interpret calculated total calendar days and estimated business working days between both dates.",
+      "Show breakdown of weekend days (Saturdays and Sundays).",
+      "Provide proportion of this duration relative to a full calendar year."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ddd-guide",
+      "icon": "📅",
+      "title": "Date Interval & Counting Standards",
+      "title_es": "Estándares de Conteo de Intervalos",
+      "content_html_en": "<p><b>Exclusive Counting:</b> Standard method. Days between May 1 and May 10 = 9 days.</p><p><b>Inclusive Counting:</b> Includes both start and end dates. Days from May 1 to May 10 = 10 days.</p><p><b>Business Days Ratio:</b> Approximately 71.4% of calendar days (5/7).</p>",
+      "content_html": "<p><b>Conteo Exclusivo:</b> Método estándar. Días entre 1 y 10 de Mayo = 9 días.</p><p><b>Conteo Inclusivo:</b> Incluye ambas fechas. Días del 1 al 10 de Mayo = 10 días.</p><p><b>Ratio de Días Hábiles:</b> Aproximadamente 71.4% de los días calendario (5/7).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "startYearVal",
+      "label": "Año de Inicio",
+      "label_en": "Start Year",
+      "type": "number",
+      "default": 2026,
+      "min": 1900,
+      "max": 2100,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "startMonthVal",
+      "label": "Mes de Inicio (1-12)",
+      "label_en": "Start Month (1-12)",
+      "type": "number",
+      "default": 1,
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "startDayVal",
+      "label": "Día de Inicio (1-31)",
+      "label_en": "Start Day (1-31)",
+      "type": "number",
+      "default": 1,
+      "min": 1,
+      "max": 31,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "endYearVal",
+      "label": "Año de Fin",
+      "label_en": "End Year",
+      "type": "number",
+      "default": 2026,
+      "min": 1900,
+      "max": 2100,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "endMonthVal",
+      "label": "Mes de Fin (1-12)",
+      "label_en": "End Month (1-12)",
+      "type": "number",
+      "default": 12,
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "endDayVal",
+      "label": "Día de Fin (1-31)",
+      "label_en": "End Day (1-31)",
+      "type": "number",
+      "default": 31,
+      "min": 1,
+      "max": 31,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "includeEndDateAddOneOption",
+      "label": "Modalidad de Conteo de Fechas",
+      "label_en": "Date Counting Mode",
+      "type": "select",
+      "default": "0",
+      "options": [
+        { "value": "0", "label": "Conteo Exclusivo (Diferencia Estándar)", "label_en": "Exclusive Count (Standard Difference)" },
+        { "value": "1", "label": "Conteo Inclusivo (Incluye Día de Fin +1)", "label_en": "Inclusive Count (Include End Date +1)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalDaysDifferenceResult",
+      "label": "Diferencia Total en Días Calendario",
+      "label_en": "Total Difference in Calendar Days",
+      "expression": "abs(round(((endYearVal - startYearVal) * 365.2425) + ((endMonthVal - startMonthVal) * 30.4375) + (endDayVal - startDayVal))) + includeEndDateAddOneOption",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalDaysDifferenceResult", "op": ">=", "value": 0 }, "label": "Diferencia Calculada", "label_en": "Difference Computed", "tone": "success", "text": "Días calendario totales entre ambas fechas cuantificados.", "text_en": "Total calendar days between dates quantified." }
+      ]
+    },
+    {
+      "id": "estimatedBusinessDaysResult",
+      "label": "Días Hábiles Laborables Estimados (Lunes-Viernes)",
+      "label_en": "Estimated Business Working Days (Mon-Fri)",
+      "expression": "round(totalDaysDifferenceResult * (5 / 7))",
+      "unit": "días hábiles",
+      "unit_en": "business days",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "estimatedWeekendDaysResult",
+      "label": "Días de Fin de Semana (Sábados y Domingos)",
+      "label_en": "Weekend Days (Saturdays & Sundays)",
+      "expression": "totalDaysDifferenceResult - estimatedBusinessDaysResult",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalWeeksDifferenceResult",
+      "label": "Diferencia en Semanas",
+      "label_en": "Difference in Weeks",
+      "expression": "totalDaysDifferenceResult / 7",
+      "unit": "semanas",
+      "unit_en": "weeks",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "yearPercentageShareResult",
+      "label": "Porcentaje de un Año Completo (%)",
+      "label_en": "Percentage of a Full Year (%)",
+      "expression": "(totalDaysDifferenceResult / 365.2425) * 100",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

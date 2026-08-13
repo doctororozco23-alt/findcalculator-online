@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "treadmill-incline-calculator",
+    "title": "Calculadora de Inclinación de Cinta de Correr (Esfuerzo Equivalente Exterior)",
+    "title_en": "Treadmill Incline Pace Calculator (Equivalent Outdoor Pace)",
+    "slug": "inclinacion-cinta-correr-esfuerzo-exterior",
+    "category": "fitness",
+    "subcategory": "running",
+    "tags": ["cinta-de-correr", "treadmill", "inclinacion", "running", "ritmo-equivalente"],
+    "tags_en": ["treadmill", "incline", "running", "equivalent-pace"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula tu ritmo equivalente de carrera en exterior (min/km) ajustando la inclinación y velocidad en la cinta de correr según el estudio Jones & Doust.",
+    "shortDescription_en": "Calculate equivalent outdoor running pace (min/km) by adjusting treadmill speed and incline gradient based on the Jones & Doust study.",
+    "longDescription": "Auditoría de biomecánica y fisiología en cinta de correr. El estudio clásico de Jones & Doust (1996) demostró que ajustar la cinta a 1.0% de inclinación iguala exactamente el gasto energético de correr en exterior al compensar la resistencia del viento.",
+    "longDescription_en": "Treadmill biomechanics and physiology audit. The classic Jones & Doust (1996) study demonstrated that a 1.0% treadmill grade accurately reflects outdoor running energy expenditure by compensating for wind resistance.",
+    "howToUse": [
+      "Ingresa la velocidad configurada en la cinta de correr (km/h o mph).",
+      "Ingresa la inclinación porcentual de la cinta (0% a 15%).",
+      "Consulta tu ritmo equivalente en exterior (min/km y min/milla) y el factor de esfuerzo metabólico."
+    ],
+    "howToUse_en": [
+      "Enter treadmill belt speed (km/h or mph).",
+      "Enter treadmill incline grade percentage (0% to 15%).",
+      "View equivalent outdoor running pace (min/km and min/mile) and metabolic effort multiplier."
+    ],
+    "methodology": "Estudio Jones & Doust (1996): Inclinación del 1.0% compensa la ausencia de resistencia aerodinámica del aire. Inclinaciones mayores (> 1%) incrementan el costo energético metabólico en ~4% por cada 1% adicional.",
+    "methodology_en": "Jones & Doust Study (1996): 1.0% treadmill grade compensates for lack of wind resistance. Higher gradients (> 1%) increase energy cost by ~4% per 1% grade."
+  },
+  "guideSections": [
+    {
+      "id": "treadmill-biomechanics-guide",
+      "icon": "🏃‍♀️",
+      "title": "Jones & Doust 1.0% Incline Clinical Benchmark",
+      "title_es": "Estándar Clínico del 1.0% de Inclinación de Jones & Doust",
+      "content_html_en": "<p><b>Wind Resistance Compensation:</b> At speeds > 10.5 km/h (6.5 mph), running outdoors requires additional energy to overcome air drag. Setting a 1.0% incline simulates this exact workload indoors.</p><p><b>Uphill Training Simulation:</b> Each 1% incline increase above 1% adds ~12-15 seconds of equivalent effort per km.</p>",
+      "content_html": "<p><b>Compensación del Viento:</b> A velocidades > 10.5 km/h (6.5 mph), correr en exterior requiere energía adicional para superar la fricción del aire. Fijar 1.0% de inclinación simula exactamente este trabajo en cinta.</p><p><b>Simulación de Cuesta:</b> Cada incremento del 1% de inclinación por encima del 1% añade ~12-15 segundos de esfuerzo equivalente por km.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "treadmillSpeedKmH",
+      "label": "Velocidad fijada en la cinta de correr",
+      "label_en": "Treadmill Speed Setting",
+      "type": "number",
+      "default": 11.0,
+      "min": 4.0,
+      "max": 25.0,
+      "step": 0.1,
+      "unit": "km/h",
+      "units": [
+        { "id": "kmh", "label": "km/h", "toBase": 1 },
+        { "id": "mph", "label": "mph", "toBase": 1.60934 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [4.0, 25.0], "message": "Velocidad entre 4 y 25 km/h", "message_en": "Speed between 4 and 25 km/h" }]
+    },
+    {
+      "id": "inclinePercent",
+      "label": "Inclinación de la cinta (%)",
+      "label_en": "Treadmill Incline Grade (%)",
+      "type": "slider",
+      "default": 1.0,
+      "min": 0.0,
+      "max": 15.0,
+      "step": 0.5,
+      "unit": "%",
+      "unit_en": "%",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "rawPaceMinKm",
+      "label": "Ritmo Directo en Cinta (sin viento)",
+      "label_en": "Raw Treadmill Belt Pace (no wind)",
+      "expression": "60 / treadmillSpeedKmH",
+      "unit": "min/km",
+      "unit_en": "min/km",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "effortMultiplier",
+      "label": "Factor de Multiplicador Metabólico",
+      "label_en": "Metabolic Effort Multiplier Factor",
+      "expression": "1 + (inclinePercent * 0.04)",
+      "unit": "x",
+      "unit_en": "x",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "equivalentOutdoorPaceMinKm",
+      "label": "Ritmo Equivalente de Carrera en Exterior",
+      "label_en": "Equivalent Outdoor Running Pace",
+      "expression": "rawPaceMinKm / effortMultiplier",
+      "unit": "min/km",
+      "unit_en": "min/km",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "equivalentOutdoorPaceMinKm", "op": ">", "value": 0 }, "label": "Ritmo Equivalente Exterior", "label_en": "Equivalent Outdoor Pace", "tone": "success", "text": "Ritmo en exterior que requeriría el mismo gasto metabólico que tu ajuste en cinta.", "text_en": "Outdoor running pace requiring identical metabolic energy cost as current treadmill settings." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "pace-calculator", "type": "static", "message": "Calcula los parciales de tiempo por km y milla", "message_en": "Calculate min/km and min/mile split times", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Biomecánico del Running y Entrenador de Fisiología",
+    "role_en": "Running Biomechanist & Physiology Coach",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y motivador",
+    "includeData": ["equivalentOutdoorPaceMinKm", "rawPaceMinKm", "treadmillSpeedKmH", "inclinePercent"],
+    "instructions": [
+      "Sintetiza el ritmo equivalente en exterior en min/km, la velocidad en cinta e inclinación en 2 frases concisas.",
+      "Destaca la recomendación clínica de fijar la cinta a 1.0% de inclinación para igualar la resistencia del aire exterior."
+    ],
+    "instructions_en": [
+      "Summarize equivalent outdoor pace in min/km, treadmill speed, and incline grade in 2 concise sentences.",
+      "Highlight the clinical recommendation of setting a 1.0% treadmill incline to match outdoor wind resistance."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Inclinación de Cinta de Correr | CalculadoraHub",
+    "metaTitle_en": "Treadmill Incline Pace Calculator (Equivalent Outdoor) | CalculadoraHub",
+    "metaDescription": "Calcula tu ritmo equivalente de carrera en exterior ajustando la inclinación y velocidad de la cinta de correr. Gratis.",
+    "metaDescription_en": "Calculate equivalent outdoor running pace based on treadmill speed and incline grade. Free, instant results.",
+    "keywords": ["treadmill incline calculator", "inclinacion cinta correr", "ritmo equivalente exterior", "jones doust treadmill"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

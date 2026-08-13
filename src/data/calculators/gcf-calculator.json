@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "gcf-calculator",
+    "title": "Calculadora de Máximo Común Divisor (MCD / GCF)",
+    "title_en": "Greatest Common Factor Calculator (GCF / GCD)",
+    "slug": "calculadora-de-maximo-comun-divisor-mcd",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["mcd", "gcf", "gcd", "maximo-comun-divisor", "divisores", "aritmetica"],
+    "tags_en": ["gcf", "gcd", "mcd", "greatest-common-factor", "divisors", "arithmetic"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el Máximo Común Divisor (MCD / GCF) de dos enteros positivos mediante el algoritmo de Euclides.",
+    "shortDescription_en": "Calculate the Greatest Common Factor (GCF / GCD) of two integers using the Euclidean Algorithm.",
+    "longDescription": "Herramienta matemática para determinar el mayor divisor entero que divide exactamente a dos números. Utiliza el Algoritmo de Euclides, la técnica computacional más eficiente en teoría de números.",
+    "longDescription_en": "Mathematical tool to compute the largest integer that divides two numbers without remainder using the Euclidean Algorithm.",
+    "howToUse": [
+      "Ingresa el primer número entero (a).",
+      "Ingresa el segundo número entero (b).",
+      "Consulta el MCD calculado y la verificación de divisibilidad."
+    ],
+    "howToUse_en": [
+      "Enter the first integer (a).",
+      "Enter the second integer (b).",
+      "View calculated GCF/GCD and divisibility verification."
+    ],
+    "methodology": "Algoritmo de Euclides: MCD(a, b) = MCD(b, a mod b) hasta que el residuo sea cero.",
+    "methodology_en": "Euclidean Algorithm: GCD(a, b) = GCD(b, a mod b) until remainder is zero."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Algoritmo de Euclides",
+    "role_en": "Euclidean Algorithm Specialist Assistant",
+    "includeData": ["gcfResult", "lcmVal"],
+    "instructions": [
+      "Explica la aplicación del Algoritmo de Euclides.",
+      "Identifica si los números son coprimos (MCD = 1).",
+      "Demuestra la simplificación de la fracción a/b."
+    ],
+    "instructions_en": [
+      "Explain the application of the Euclidean Algorithm.",
+      "Identify if numbers are coprime (GCD = 1).",
+      "Demonstrate simplifying fraction a/b."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "gcf-guide",
+      "icon": "➗",
+      "title": "Euclidean Algorithm & Simplification",
+      "title_es": "Algoritmo de Euclides y Simplificación",
+      "content_html_en": "<p><b>Greatest Common Factor (GCF):</b> The largest positive integer that divides two or more integers without a remainder.</p><p><b>Coprime Numbers:</b> If GCF(a, b) = 1, the numbers are coprime or relatively prime.</p>",
+      "content_html": "<p><b>Máximo Común Divisor (MCD):</b> El mayor número entero positivo que divide a dos o más enteros sin dejar residuo.</p><p><b>Números Primos Entre Sí:</b> Si MCD(a, b) = 1, los números son coprimos o primos relativos.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "numA",
+      "label": "Primer Número (a)",
+      "label_en": "First Number (a)",
+      "type": "number",
+      "default": 48,
+      "min": 1,
+      "max": 1000000,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1, 1000000], "message": "Ingresa un número entre 1 y 1,000,000", "message_en": "Enter a number between 1 and 1,000,000" }]
+    },
+    {
+      "id": "numB",
+      "label": "Segundo Número (b)",
+      "label_en": "Second Number (b)",
+      "type": "number",
+      "default": 180,
+      "min": 1,
+      "max": 1000000,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1, 1000000], "message": "Ingresa un número entre 1 y 1,000,000", "message_en": "Enter a number between 1 and 1,000,000" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "gcfResult",
+      "label": "Máximo Común Divisor (MCD / GCF)",
+      "label_en": "Greatest Common Factor (GCF / GCD)",
+      "expression": "gcd(numA, numB)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "gcfResult", "op": "==", "value": 1 }, "label": "MCD = 1: Números Coprimos", "label_en": "GCF = 1: Coprime Numbers", "tone": "info", "text": "Los números no comparten ningún divisor común aparte del 1.", "text_en": "The numbers share no common factors other than 1." },
+        { "when": { "field": "gcfResult", "op": ">", "value": 1 }, "label": "MCD Calculado Correctamente", "label_en": "GCF Computed Successfully", "tone": "success", "text": "Mayor divisor común encontrado.", "text_en": "Greatest common divisor found." }
+      ]
+    },
+    {
+      "id": "lcmVal",
+      "label": "Mínimo Común Múltiplo (MCM)",
+      "label_en": "Least Common Multiple (LCM)",
+      "expression": "lcm(numA, numB)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

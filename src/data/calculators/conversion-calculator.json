@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "conversion-calculator",
+    "title": "Calculadora Universal de Conversión de Unidades",
+    "title_en": "Universal Unit Conversion Calculator",
+    "slug": "calculadora-universal-de-conversion-de-unidades-medida",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["conversores", "unidades-de-medida", "longitud", "peso", "temperatura", "volumen", "conversion"],
+    "tags_en": ["converters", "units-of-measurement", "length", "weight", "temperature", "volume", "conversion"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte unidades de medida internacionales de longitud, masa, volumen y temperatura en tiempo real.",
+    "shortDescription_en": "Convert international units of measurement for length, mass, volume, and temperature in real time.",
+    "longDescription": "Herramienta de metrología y física. Convierte magnitudes entre el sistema métrico decimal (SI) y el sistema imperial anglosajón.",
+    "longDescription_en": "Metrology and physics tool. Converts physical quantities between Metric System (SI) and Imperial System.",
+    "howToUse": [
+      "Selecciona el Tipo de Magnitud a convertir (ej. Longitud Pies a Metros, Peso Libras a Kg).",
+      "Ingresa el Valor Numérico de entrada.",
+      "Consulta el Resultado Convertido exacto en la unidad objetivo."
+    ],
+    "howToUse_en": [
+      "Select Quantity Type to convert (e.g. Length Feet to Meters, Mass Pounds to Kg).",
+      "Enter Input Numeric Value.",
+      "View Exact Converted Result in target unit."
+    ],
+    "methodology": "Conversiones Estándar ISO: 1 pie = 0.3048 m, 1 lb = 0.453592 kg, 1 galón US = 3.78541 L, °C = (°F - 32) * 5/9.",
+    "methodology_en": "Standard ISO Conversions: 1 ft = 0.3048 m, 1 lb = 0.453592 kg, 1 US gal = 3.78541 L, °C = (°F - 32) * 5/9."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Metrología y Sistemas de Unidades",
+    "role_en": "Metrology & Unit Systems Specialist Assistant",
+    "includeData": ["convertedUnitResult"],
+    "instructions": [
+      "Interpreta el resultado de la conversión entre el sistema métrico e imperial.",
+      "Explica la equivalencia histórica de las unidades seleccionadas.",
+      "Proporciona ejemplos cotidianos para visualizar la magnitud convertida."
+    ],
+    "instructions_en": [
+      "Interpret conversion result between metric and imperial systems.",
+      "Explain historical equivalence of selected units.",
+      "Provide everyday examples to visualize converted magnitude."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "cnv-guide",
+      "icon": "🔄",
+      "title": "Metric vs Imperial Conversion Factors",
+      "title_es": "Factores de Conversión Métrico vs Imperial",
+      "content_html_en": "<p><b>Length:</b> 1 Foot = 0.3048 Meters | 1 Inch = 2.54 cm.</p><p><b>Mass:</b> 1 Pound (lb) = 0.453592 kg | 1 Ounce (oz) = 28.3495 g.</p><p><b>Volume:</b> 1 US Gallon = 3.78541 Liters.</p>",
+      "content_html": "<p><b>Longitud:</b> 1 Pie = 0.3048 Metros | 1 Pulgada = 2.54 cm.</p><p><b>Masa:</b> 1 Libra (lb) = 0.453592 kg | 1 Onza (oz) = 28.3495 g.</p><p><b>Volumen:</b> 1 Galón US = 3.78541 Litros.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputUnitValue",
+      "label": "Valor a Convertir",
+      "label_en": "Value to Convert",
+      "type": "number",
+      "default": 10,
+      "min": -500,
+      "max": 1000000,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "conversionFactorMult",
+      "label": "Tipo de Conversión",
+      "label_en": "Conversion Type",
+      "type": "select",
+      "default": "0.3048",
+      "options": [
+        { "value": "0.3048", "label": "Pies ➔ Metros (1 ft = 0.3048 m)", "label_en": "Feet ➔ Meters (1 ft = 0.3048 m)" },
+        { "value": "3.28084", "label": "Metros ➔ Pies (1 m = 3.28084 ft)", "label_en": "Meters ➔ Feet (1 m = 3.28084 ft)" },
+        { "value": "0.453592", "label": "Libras ➔ Kilogramos (1 lb = 0.4536 kg)", "label_en": "Pounds ➔ Kilograms (1 lb = 0.4536 kg)" },
+        { "value": "2.20462", "label": "Kilogramos ➔ Libras (1 kg = 2.2046 lb)", "label_en": "Kilograms ➔ Pounds (1 kg = 2.2046 lb)" },
+        { "value": "3.78541", "label": "Galones US ➔ Litros (1 gal = 3.7854 L)", "label_en": "US Gallons ➔ Liters (1 gal = 3.7854 L)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "convertedUnitResult",
+      "label": "Resultado Convertido",
+      "label_en": "Converted Result",
+      "expression": "inputUnitValue * conversionFactorMult",
+      "unit": "",
+      "precision": 3,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "convertedUnitResult", "op": ">=", "value": 0 }, "label": "Conversión Calculada", "label_en": "Conversion Computed", "tone": "success", "text": "Magnitud convertida correctamente.", "text_en": "Physical quantity converted successfully." }
+      ]
+    }
+  ]
+}

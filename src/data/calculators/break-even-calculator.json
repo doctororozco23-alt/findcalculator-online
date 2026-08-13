@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "break-even-calculator",
+    "title": "Calculadora de Punto de Equilibrio de Negocio",
+    "title_en": "Break-Even Analysis Calculator",
+    "slug": "punto-equilibrio-negocio",
+    "category": "finance",
+    "subcategory": "business",
+    "tags": ["punto-equilibrio", "break-even", "negocios"],
+    "tags_en": ["break-even", "business", "profitability"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Target"
+  },
+  "content": {
+    "shortDescription": "Calcula el volumen de ventas en unidades y dinero necesario para cubrir todos los costos fijos y variables del negocio.",
+    "shortDescription_en": "Calculate sales volume in units and currency needed to cover fixed and variable costs.",
+    "longDescription": "Estima el punto exacto de ventas en el que tu empresa no genera ni pérdidas ni ganancias (Beneficio = 0), permitiendo fijar objetivos comerciales viables.",
+    "longDescription_en": "Determine exact sales threshold where total revenue equals total costs (Net Profit = 0), enabling accurate sales goal setting.",
+    "howToUse": [
+      "Ingresa los costos fijos totales mensuales de tu empresa.",
+      "Establece el precio de venta unitario de tu producto o servicio.",
+      "Indica el costo variable unitario de producción por unidad.",
+      "Consulta las unidades a vender y los ingresos de equilibrio."
+    ],
+    "howToUse_en": [
+      "Enter total monthly fixed overhead costs and active currency.",
+      "Set unit selling price per product/service.",
+      "Enter unit variable production cost.",
+      "View break-even sales units and break-even revenue."
+    ],
+    "methodology": "Fórmula Punto Equilibrio: Unidades = CostosFijos / (PrecioUnitario - CostoVariableUnitario). Ingresos = Unidades × PrecioUnitario.",
+    "methodology_en": "Break-Even Formula: Units = Fixed Costs / (Unit Price - Unit Variable Cost). Revenue = Units × Unit Price."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🎯",
+      "title": "Understanding Contribution Margin",
+      "title_es": "Comprendiendo el Margen de Contribución",
+      "content_html_en": "<p>Contribution Margin (Price - Variable Cost) is the dollar amount per unit that goes directly toward paying off fixed costs until zero profit is reached.</p>",
+      "content_html": "<p>El Margen de Contribución (Precio - Costo Variable) es el importe por unidad que cubre los costos fijos hasta alcanzar el equilibrio.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "fixedCosts",
+      "label": "Costos fijos totales mensuales (alquiler, salarios, etc.)",
+      "label_en": "Total Monthly Fixed Costs (Rent, Salaries, etc.)",
+      "type": "currency",
+      "default": 12000,
+      "min": 100,
+      "max": 5000000,
+      "step": 500,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [100, 5000000], "message": "Costos entre 100 y 5.000.000", "message_en": "Costs between 100 and 5,000,000" }]
+    },
+    {
+      "id": "unitPrice",
+      "label": "Precio de venta unitario",
+      "label_en": "Unit Selling Price",
+      "type": "currency",
+      "default": 50,
+      "min": 1,
+      "max": 100000,
+      "step": 1,
+      "unit": { "follows": "fixedCosts" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "unitVariableCost",
+      "label": "Costo variable unitario de producción",
+      "label_en": "Unit Variable Production Cost",
+      "type": "currency",
+      "default": 20,
+      "min": 0,
+      "max": 100000,
+      "step": 1,
+      "unit": { "follows": "fixedCosts" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "unitContributionMargin",
+      "label": "Margen de Contribución Unitario",
+      "label_en": "Unit Contribution Margin",
+      "expression": "max(unitPrice - unitVariableCost, 0.01)",
+      "unit": { "follows": "fixedCosts" },
+      "precision": 2,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "breakEvenUnits",
+      "label": "Unidades a Vender para el Punto de Equilibrio",
+      "label_en": "Break-Even Sales Units Required",
+      "expression": "fixedCosts / unitContributionMargin",
+      "unit": "unidades",
+      "unit_en": "units",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "breakEvenUnits", "op": ">", "value": 0 }, "label": "Volumen de Equilibrio", "label_en": "Break-Even Volume", "tone": "info", "text": "Cantidad mínima de ventas mensuales para cubrir todos los gastos.", "text_en": "Minimum monthly sales units needed to cover all business costs." }
+      ]
+    },
+    {
+      "id": "breakEvenRevenue",
+      "label": "Ingresos Totales en el Punto de Equilibrio",
+      "label_en": "Total Break-Even Sales Revenue",
+      "expression": "breakEvenUnits * unitPrice",
+      "unit": { "follows": "fixedCosts" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "margin-calculator", "type": "static", "message": "Calcula el margen de ganancia comercial", "message_en": "Calculate commercial profit margin", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Rentabilidad de Negocios",
+    "role_en": "Business Profitability Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["breakEvenUnits", "breakEvenRevenue", "unitContributionMargin", "fixedCosts"],
+    "instructions": [
+      "Sintetiza las unidades a vender y los ingresos de equilibrio en 2 frases concisas.",
+      "Destaca que incrementar el margen de contribución reduce el volumen necesario de ventas."
+    ],
+    "instructions_en": [
+      "Summarize required break-even sales units and total break-even revenue in 2 concise sentences.",
+      "Highlight that increasing contribution margin lowers the required sales volume."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Punto de Equilibrio de Negocio | CalculadoraHub",
+    "metaTitle_en": "Break-Even Analysis Calculator | CalculadoraHub",
+    "metaDescription": "Calcula las ventas en unidades e ingresos necesarios para el punto de equilibrio de tu empresa. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate sales volume in units and revenue needed to reach business break-even. Free, instant results.",
+    "keywords": ["break even calculator", "punto de equilibrio", "margen contribucion", "costos fijos"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

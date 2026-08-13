@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "dew-point-calculator",
+    "title": "Calculadora de Punto de Rocío (Dew Point y Condensación)",
+    "title_en": "Dew Point Calculator (Air Temp & Relative Humidity)",
+    "slug": "calculadora-de-punto-de-rocio-condensacion-humedad",
+    "category": "physics",
+    "subcategory": "atmosphere",
+    "tags": ["punto-de-rocio", "dew-point", "condensacion", "humedad-relativa", "meteorologia", "hvac", "moho"],
+    "tags_en": ["dew-point", "condensation", "relative-humidity", "meteorology", "hvac", "mold-risk"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la temperatura de punto de rocío a la que el agua del aire se condensa sobre superficies frías.",
+    "shortDescription_en": "Calculate dew point temperature at which airborne water vapor condenses onto cool surfaces.",
+    "longDescription": "Herramienta de física atmosférica, climatización e inspección de viviendas. Determina la temperatura límite de saturación del aire ($100\\%$ humedad relativa).",
+    "longDescription_en": "Atmospheric physics, HVAC, and building inspection tool. Determines air saturation threshold temperature ($100\\%$ relative humidity).",
+    "howToUse": [
+      "Ingresa la Temperatura del Aire (°C o °F).",
+      "Ingresa la Humedad Relativa (%) del recinto o exterior.",
+      "Consulta el Punto de Rocío Calculado y la confortabilidad de la masa de aire."
+    ],
+    "howToUse_en": [
+      "Enter Air Temperature (°C or °F).",
+      "Enter Relative Humidity (%) of indoor or outdoor air.",
+      "View Calculated Dew Point and air mass comfort level."
+    ],
+    "methodology": "Aproximación de Magnus-Tetens: Td ≈ T - ((100 - RH) / 5). Ecuación exacta: γ(T, RH) = (17.27*T)/(237.7+T) + ln(RH/100).",
+    "methodology_en": "Magnus-Tetens Approximation: Td ≈ T - ((100 - RH) / 5). Exact Equation: γ(T, RH) = (17.27*T)/(237.7+T) + ln(RH/100)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Psicrometría y Prevención de Condensación",
+    "role_en": "Psychrometrics & Condensation Prevention Specialist Assistant",
+    "includeData": ["dewPointCelsiusResult", "dewPointFahrenheitResult"],
+    "instructions": [
+      "Interpreta el punto de rocío y el nivel de bochorno/confort (Td < 10°C fresco/seco, 13-16°C confortable, > 21°C muy bochornoso/sofocante).",
+      "Explica el riesgo de condensación en cristales de ventanas y paredes frías que favorece el moho.",
+      "Recomienda el uso de deshumidificadores si el punto de rocío interior supera los 16°C (60°F)."
+    ],
+    "instructions_en": [
+      "Interpret dew point and perceived comfort level (Td < 50°F dry, 55-60°F comfortable, > 70°F oppressive).",
+      "Explain risk of condensation on cool window glass and walls promoting mold growth.",
+      "Recommend dehumidifiers if indoor dew point exceeds 60°F (16°C)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "dwp-guide",
+      "icon": "💧",
+      "title": "Dew Point & Human Comfort Scale",
+      "title_es": "Punto de Rocío y Escala de Confort Humano",
+      "content_html_en": "<p><b>Below 50°F (&lt; 10°C):</b> Dry and comfortable.</p><p><b>55°F to 60°F (13-16°C):</b> Pleasant and comfortable.</p><p><b>65°F to 70°F (18-21°C):</b> Muggy and humid.</p><p><b>Above 70°F (&gt; 21°C):</b> Oppressive and uncomfortable.</p>",
+      "content_html": "<p><b>Por debajo de 10°C (&lt; 50°F):</b> Seco y muy confortable.</p><p><b>13°C a 16°C (55-60°F):</b> Agradable y cómodo.</p><p><b>18°C a 21°C (65-70°F):</b> Húmedo y cargado.</p><p><b>Por encima de 21°C (&gt; 70°F):</b> Bochornoso y sofocante.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "airTempCelsius",
+      "label": "Temperatura del Aire (°C)",
+      "label_en": "Air Temperature (°C)",
+      "type": "number",
+      "default": 25,
+      "min": -30,
+      "max": 60,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "humidityPercent",
+      "label": "Humedad Relativa (%)",
+      "label_en": "Relative Humidity (%)",
+      "type": "number",
+      "default": 65,
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "dewPointCelsiusResult",
+      "label": "Punto de Rocío Calculado (°C)",
+      "label_en": "Calculated Dew Point (°C)",
+      "expression": "airTempCelsius - ((100 - humidityPercent) / 5)",
+      "unit": "°C",
+      "unit_en": "°C",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "dewPointCelsiusResult", "op": "<=", "value": 15 }, "label": "Confortable (≤ 15°C)", "label_en": "Comfortable (≤ 15°C)", "tone": "success", "text": "Humedad ambiente confortable.", "text_en": "Comfortable ambient humidity." },
+        { "when": { "field": "dewPointCelsiusResult", "op": "between", "value": [15.1, 20] }, "label": "Bochornoso (15°C - 20°C)", "label_en": "Muggy (15°C - 20°C)", "tone": "info", "text": "Sensación de bochorno moderado.", "text_en": "Moderate mugginess sensation." },
+        { "when": { "field": "dewPointCelsiusResult", "op": ">", "value": 20 }, "label": "Sofocante (> 20°C)", "label_en": "Oppressive (> 20°C)", "tone": "warning", "text": "Masa de aire sofocante y pegajosa.", "text_en": "Oppressive and sticky air mass." }
+      ]
+    },
+    {
+      "id": "dewPointFahrenheitResult",
+      "label": "Punto de Rocío en Grados Fahrenheit (°F)",
+      "label_en": "Dew Point Equivalent in Fahrenheit (°F)",
+      "expression": "(dewPointCelsiusResult * (9 / 5)) + 32",
+      "unit": "°F",
+      "unit_en": "°F",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

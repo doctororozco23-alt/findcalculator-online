@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "pythagorean-theorem-calculator",
+    "title": "Calculadora del Teorema de Pitágoras (a² + b² = c²)",
+    "title_en": "Pythagorean Theorem Calculator (a² + b² = c²)",
+    "slug": "calculadora-del-teorema-de-pitagoras",
+    "category": "math",
+    "subcategory": "geometry",
+    "tags": ["pitagoras", "teorema-de-pitagoras", "hipotenusa", "catetos", "triangulo-rectangulo", "geometria"],
+    "tags_en": ["pythagoras", "pythagorean-theorem", "hypotenuse", "legs", "right-triangle", "geometry"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Despeja cualquier lado en la ecuación del Teorema de Pitágoras ($a^2 + b^2 = c^2$): halla la hipotenusa $c$ o un cateto faltante $a$ o $b$.",
+    "shortDescription_en": "Solve for any missing side in Pythagorean equation ($a^2 + b^2 = c^2$): find hypotenuse $c$ or leg $a$ or $b$.",
+    "longDescription": "Calculadora del célebre Teorema de Pitágoras. Permite seleccionar qué lado se desea encontrar (Hipotenusa $c = \\sqrt{a^2 + b^2}$ o Cateto $a = \\sqrt{c^2 - b^2}$) con validación geométrica.",
+    "longDescription_en": "Calculator for the Pythagorean Theorem. Allows choosing which side to find (Hypotenuse $c = \\sqrt{a^2 + b^2}$ or Leg $a = \\sqrt{c^2 - b^2}$).",
+    "howToUse": [
+      "Selecciona la Variable Desconocida a calcular (Hipotenusa c vs Cateto a/b).",
+      "Ingresa el valor del primer Lado conocido.",
+      "Ingresa el valor del segundo Lado conocido.",
+      "Consulta la longitud del lado faltante calculado y el área resultante."
+    ],
+    "howToUse_en": [
+      "Select Unknown Variable to calculate (Hypotenuse c vs Leg a/b).",
+      "Enter length for first known Side.",
+      "Enter length for second known Side.",
+      "View calculated missing side length and resulting area."
+    ],
+    "methodology": "Hipotenusa c = √(a² + b²). Cateto a = √(c² - b²). Cateto b = √(c² - a²).",
+    "methodology_en": "Hypotenuse c = √(a² + b²). Leg a = √(c² - b²). Leg b = √(c² - a²)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Geometría Pitagórica",
+    "role_en": "Pythagorean Geometry Specialist Assistant",
+    "includeData": ["calculatedSideResult"],
+    "instructions": [
+      "Demuestra la verificación a² + b² = c².",
+      "Identifica si las dimensiones corresponden a una terna pitagórica entera (3-4-5, 5-12-13...).",
+      "Explica la aplicación geométrica en distancias euclidianas."
+    ],
+    "instructions_en": [
+      "Demonstrate verification a² + b² = c².",
+      "Identify if dimensions form an integer Pythagorean triple (3-4-5, 5-12-13...).",
+      "Explain geometric application in Euclidean distances."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "pyth-guide",
+      "icon": "📐",
+      "title": "Pythagorean Theorem & Triples",
+      "title_es": "Teorema de Pitágoras y Ternas Pitagóricas",
+      "content_html_en": "<p><b>Equation:</b> a² + b² = c² (where c is the hypotenuse opposite to the right angle).</p><p><b>Famous Pythagorean Triples:</b> (3, 4, 5), (5, 12, 13), (8, 15, 17), (7, 24, 25).</p>",
+      "content_html": "<p><b>Ecuación:</b> a² + b² = c² (donde c es la hipotenusa opuesta al ángulo recto).</p><p><b>Ternas Pitagóricas Famosas:</b> (3, 4, 5), (5, 12, 13), (8, 15, 17), (7, 24, 25).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "findTarget",
+      "label": "Lado Desconocido a Calcular",
+      "label_en": "Unknown Side to Calculate",
+      "type": "select",
+      "default": "hypotenuse",
+      "options": [
+        { "value": "hypotenuse", "label": "Calcular Hipotenusa c (conociendo catetos a y b)", "label_en": "Calculate Hypotenuse c (given legs a and b)" },
+        { "value": "legA", "label": "Calcular Cateto a (conociendo hipotenusa c y cateto b)", "label_en": "Calculate Leg a (given hypotenuse c and leg b)" }
+      ]
+    },
+    {
+      "id": "inputVal1",
+      "label": "Primer Lado Conocido",
+      "label_en": "First Known Side",
+      "type": "number",
+      "default": 3,
+      "min": 0.1,
+      "max": 10000,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "inputVal2",
+      "label": "Segundo Lado Conocido",
+      "label_en": "Second Known Side",
+      "type": "number",
+      "default": 4,
+      "min": 0.1,
+      "max": 10000,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "calculatedSideResult",
+      "label": "Longitud del Lado Desconocido Calculado",
+      "label_en": "Calculated Unknown Side Length",
+      "expression": "findTarget == 'hypotenuse' ? sqrt(inputVal1^2 + inputVal2^2) : (inputVal1 > inputVal2 ? sqrt(inputVal1^2 - inputVal2^2) : 0)",
+      "unit": "unidades",
+      "unit_en": "units",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "calculatedSideResult", "op": ">", "value": 0 }, "label": "Teorema de Pitágoras Aplicado Exitosamente", "label_en": "Pythagorean Theorem Applied Successfully", "tone": "success", "text": "Lado geométrico resuelto correctamente.", "text_en": "Side length solved correctly." },
+        { "when": { "field": "calculatedSideResult", "op": "==", "value": 0 }, "label": "Dimensiones Geométricas Inválidas", "label_en": "Invalid Geometric Dimensions", "tone": "warning", "text": "La hipotenusa debe ser estrictamente mayor que el cateto.", "text_en": "Hypotenuse must be strictly greater than leg." }
+      ]
+    }
+  ]
+}

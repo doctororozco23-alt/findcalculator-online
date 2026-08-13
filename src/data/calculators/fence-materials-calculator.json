@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "fence-materials-calculator",
+    "title": "Calculadora de Materiales para Cercas de Madera (Postes y Tablas)",
+    "title_en": "Wooden Fence Materials, Posts & Pickets Calculator",
+    "slug": "calculadora-de-materiales-para-cercas-de-madera-postes-tablas",
+    "category": "construction",
+    "subcategory": "remodeling",
+    "tags": ["cercas-de-madera", "postes", "tablas-de-cerca", "vallas", "travesaños", "exteriores", "reformas"],
+    "tags_en": ["wooden-fence", "fence-posts", "pickets", "rails", "fence", "outdoor", "remodeling"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el número de postes de madera (4x4), travesaños horizontales (2x4) y tablas/estacas verticales para cercas perimetrales.",
+    "shortDescription_en": "Calculate wooden posts (4x4), horizontal rails (2x4), and vertical pickets for perimeter fencing.",
+    "longDescription": "Herramienta de exterior y cerramientos de fincas. Determina la cantidad de postes según la separación (6 u 8 pies / 1.8 a 2.4 m) y sacos de hormigón para cimentación.",
+    "longDescription_en": "Outdoor and perimeter fence builder tool. Computes posts count based on post spacing (6 or 8 ft / 1.8 to 2.4 m) plus concrete footing bags.",
+    "howToUse": [
+      "Ingresa la Longitud Total de la Cerca (metros lineales o pies).",
+      "Selecciona la Separación entre Postes (1.8 m / 6 ft o 2.4 m / 8 ft).",
+      "Ingresa el Ancho de la Tabla Vertical (ej. 9 cm / 3.5 pulg o 14 cm / 5.5 pulg).",
+      "Consulta los Postes Totales, Travesaños, Tablas y Bolsas de Hormigón Rápido."
+    ],
+    "howToUse_en": [
+      "Enter Total Fence Length (linear meters or feet).",
+      "Select Post Spacing (1.8 m / 6 ft or 2.4 m / 8 ft).",
+      "Enter Vertical Picket Width (e.g. 9 cm / 3.5 in or 14 cm / 5.5 in).",
+      "View Total Posts, Rails, Pickets, and Fast-setting Concrete Bags."
+    ],
+    "methodology": "Postes = ceil(LongitudTotal / SeparacionPostes) + 1. Travesaños = (Postes - 1) * 2 o 3. Tablas = ceil(LongitudTotal / AnchoTabla).",
+    "methodology_en": "Posts = ceil(TotalLength / PostSpacing) + 1. Rails = (Posts - 1) * 2 or 3. Pickets = ceil(TotalLength / PicketWidth)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Carpintería Exterior y Cerramientos de Parcelas",
+    "role_en": "Outdoor Carpentry & Perimeter Fencing Specialist Assistant",
+    "includeData": ["fencePostsCountResult", "fencePicketsCountResult"],
+    "instructions": [
+      "Interpreta la cantidad de postes, tablas y bolsas de hormigón calculadas.",
+      "Explica la recomendación de enterrar 1/3 de la longitud del poste bajo tierra.",
+      "Aconseja usar madera tratada en autoclave (Pressure-Treated Class 4) para evitar la pudrición en contacto con el suelo."
+    ],
+    "instructions_en": [
+      "Interpret calculated posts, pickets, and concrete bags.",
+      "Explain post embedment recommendation (bury 1/3 of total post height underground).",
+      "Advise using pressure-treated wood (Ground Contact UC4 rating) to resist rot."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "fmc-guide",
+      "icon": "🪵",
+      "title": "Fence Post Spacing & Footing Rules",
+      "title_es": "Reglas de Separación de Postes y Cimentación",
+      "content_html_en": "<p><b>8 ft Spacing (2.44 m):</b> Standard economical post spacing.</p><p><b>Concrete Footing:</b> 1 to 2 bags of fast-setting concrete (20 kg) per 4x4 post.</p>",
+      "content_html": "<p><b>Separación a 8 pies (2.44 m):</b> Separación estándar económica entre postes.</p><p><b>Cimentación:</b> 1 a 2 bolsas de hormigón rápido (20 kg) por poste 4x4.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "fenceLengthMeters",
+      "label": "Longitud Total de la Cerca (metros)",
+      "label_en": "Total Fence Length (meters)",
+      "type": "number",
+      "default": 30,
+      "min": 1,
+      "max": 5000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "postSpacingMetersVal",
+      "label": "Separación Entre Postes",
+      "label_en": "Post Spacing",
+      "type": "select",
+      "default": "2.40",
+      "options": [
+        { "value": "2.40", "label": "2.40 metros / 8 pies (Estándar recomendado)", "label_en": "2.40 meters / 8 feet (Standard recommended)" },
+        { "value": "1.80", "label": "1.80 metros / 6 pies (Reforzado para zonas de viento)", "label_en": "1.80 meters / 6 feet (Reinforced high wind zones)" }
+      ]
+    },
+    {
+      "id": "picketWidthMetersVal",
+      "label": "Ancho de Tabla Vertical (Picket)",
+      "label_en": "Vertical Picket Width",
+      "type": "select",
+      "default": "0.14",
+      "options": [
+        { "value": "0.14", "label": "14 cm / 5.5 pulgadas (Tabla 1x6 estándar)", "label_en": "14 cm / 5.5 inches (Standard 1x6 picket)" },
+        { "value": "0.09", "label": "9 cm / 3.5 pulgadas (Tabla 1x4 estrecha)", "label_en": "9 cm / 3.5 inches (Narrow 1x4 picket)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "fencePostsCountResult",
+      "label": "Postes de Madera (4x4) Requeridos",
+      "label_en": "Required Wooden Posts (4x4)",
+      "expression": "postSpacingMetersVal > 0 ? ceil(fenceLengthMeters / postSpacingMetersVal) + 1 : 0",
+      "unit": "postes",
+      "unit_en": "posts",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "fencePostsCountResult", "op": ">=", "value": 0 }, "label": "Postes Calculados", "label_en": "Posts Computed", "tone": "success", "text": "Número total de postes de cerramiento cuantificado.", "text_en": "Total fence posts count quantified." }
+      ]
+    },
+    {
+      "id": "fenceRailsCountResult",
+      "label": "Travesaños Horizontales (2x4 de 2.4m) Requeridos",
+      "label_en": "Required Horizontal Rails (2x4 2.4m)",
+      "expression": "(fencePostsCountResult - 1) * 3",
+      "unit": "travesaños",
+      "unit_en": "rails",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "fencePicketsCountResult",
+      "label": "Tablas Verticales (Pickets) Requeridas (con 5% desperdicio)",
+      "label_en": "Required Vertical Pickets (with 5% waste)",
+      "expression": "picketWidthMetersVal > 0 ? ceil((fenceLengthMeters / picketWidthMetersVal) * 1.05) : 0",
+      "unit": "tablas",
+      "unit_en": "pickets",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "concreteBagsPerPostResult",
+      "label": "Bolsas de Hormigón Rápido (20 kg cada una)",
+      "label_en": "Fast-setting Concrete Bags (20 kg each)",
+      "expression": "fencePostsCountResult * 1.5",
+      "unit": "bolsas",
+      "unit_en": "bags",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

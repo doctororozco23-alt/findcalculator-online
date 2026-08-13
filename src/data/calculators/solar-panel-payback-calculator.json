@@ -1,0 +1,161 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "solar-panel-payback-calculator",
+    "title": "Calculadora de Paneles Solares y Retorno de Inversión (ROI)",
+    "title_en": "Solar Panel Payback Period & ROI Calculator",
+    "slug": "calculadora-de-paneles-solares-retorno-de-inversion-ahorro",
+    "category": "home",
+    "subcategory": "energy",
+    "tags": ["paneles-solares", "energia-solar", "autoconsumo", "retorno-de-inversion", "ahorro-electrico", "hogar"],
+    "tags_en": ["solar-panels", "solar-energy", "self-consumption", "roi", "electricity-savings", "home"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el número de paneles solares fotovoltaicos necesarios, ahorro en la factura de la luz y años para recuperar la inversión.",
+    "shortDescription_en": "Calculate required solar PV panel count, electricity bill savings, and payback period in years.",
+    "longDescription": "Herramienta de energía renovable y eficiencia para el hogar. Estima la producción solar anual en kWh a partir del consumo eléctrico mensual y las horas de sol pico de la zona.",
+    "longDescription_en": "Renewable energy and home efficiency tool. Estimates annual solar production in kWh based on monthly electricity consumption and peak sun hours.",
+    "howToUse": [
+      "Ingresa tu Consumo Eléctrico Mensual Medio (kWh, ej. 350 kWh).",
+      "Ingresa el Precio de la Electricidad (€/kWh o $/kWh, ej. 0.20 $/kWh).",
+      "Ingresa las Horas de Sol Pico Diarias de tu Zona (HSP, ej. 4.5 horas).",
+      "Ingresa el Costo Estimado de la Instalación Solar ($).",
+      "Consulta los Paneles Necesarios, Ahorro Anual y Período de Amortización."
+    ],
+    "howToUse_en": [
+      "Enter Average Monthly Electricity Usage (kWh, e.g. 350 kWh).",
+      "Enter Electricity Rate (€/kWh or $/kWh, e.g. 0.20 $/kWh).",
+      "Enter Daily Peak Sun Hours in Your Area (PSH, e.g. 4.5 hours).",
+      "Enter Estimated Solar System Turnkey Cost ($).",
+      "View Required Panels Count, Annual Savings, and Payback Period in Years."
+    ],
+    "methodology": "Generación Diaria Necesaria = ConsumoMensual / 30. Potencia Sistema kW = GeneraciónDiaria / HorasSolPico. Paneles = ceil((PotenciakW * 1000) / 400). AhorroAnual = ConsumoAnual * PreciokWh * 0.80.",
+    "methodology_en": "Daily Gen Required = MonthlyUsage / 30. System Size kW = DailyGen / PeakSunHours. Panels = ceil((SizekW * 1000) / 400). Annual Savings = AnnualUsage * Rate * 0.80."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Energía Solar Fotovoltaica y Autoconsumo Residencial",
+    "role_en": "Solar Photovoltaic & Residential Self-Consumption Specialist Assistant",
+    "includeData": ["solarPanelsCountResult", "paybackYearsResult"],
+    "instructions": [
+      "Interpreta el número de paneles de 400W recomendados y el plazo de amortización en años.",
+      "Explica la importancia de la degradación anual del panel (~0.5% anual) y la garantía de producción a 25 años.",
+      "Compara la diferencia entre autoconsumo con baterías vs inyección a red con compensación de excedentes."
+    ],
+    "instructions_en": [
+      "Interpret recommended 400W solar panel count and payback period in years.",
+      "Explain annual panel degradation (~0.5% yearly) and 25-year performance warranty.",
+      "Compare battery storage self-consumption vs grid net metering with surplus compensation."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "spp-guide",
+      "icon": "☀️",
+      "title": "Solar Photovoltaic Sizing Benchmarks",
+      "title_es": "Pautas de Dimensionamiento Solar Fotovoltaico",
+      "content_html_en": "<p><b>Standard Residential Panel Output:</b> 400 Watts per panel.</p><p><b>Average Payback Period:</b> 4 to 8 years depending on electricity rate and subsidies.</p>",
+      "content_html": "<p><b>Potencia Estándar de Panel Residencial:</b> 400 Vatios por panel.</p><p><b>Plazo de Amortización Medio:</b> 4 a 8 años según la tarifa eléctrica y subvenciones.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "monthlyUsageKwh",
+      "label": "Consumo Eléctrico Mensual (kWh)",
+      "label_en": "Monthly Electricity Usage (kWh)",
+      "type": "number",
+      "default": 350,
+      "min": 50,
+      "max": 10000,
+      "step": 10,
+      "required": true
+    },
+    {
+      "id": "electricityRateCost",
+      "label": "Precio de la Electricidad ($/kWh)",
+      "label_en": "Electricity Rate ($/kWh)",
+      "type": "number",
+      "default": 0.20,
+      "min": 0.01,
+      "max": 2.0,
+      "step": 0.01,
+      "required": true
+    },
+    {
+      "id": "dailyPeakSunHours",
+      "label": "Horas de Sol Pico Diarias (HSP)",
+      "label_en": "Daily Peak Sun Hours (PSH)",
+      "type": "number",
+      "default": 4.5,
+      "min": 1.5,
+      "max": 8.0,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "solarSystemCostVal",
+      "label": "Costo de la Instalación Solar ($)",
+      "label_en": "Solar System Installation Cost ($)",
+      "type": "number",
+      "default": 6500,
+      "min": 500,
+      "max": 100000,
+      "step": 500,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "recommendedSystemSizeKwResult",
+      "label": "Potencia del Sistema Requerida (kWp)",
+      "label_en": "Required System Capacity (kWp)",
+      "expression": "dailyPeakSunHours > 0 ? (((monthlyUsageKwh / 30) / dailyPeakSunHours) * 1.15) : 0",
+      "unit": "kWp",
+      "unit_en": "kWp",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "solarPanelsCountResult",
+      "label": "Paneles Solares Fotovoltaicos Requeridos (400W cada uno)",
+      "label_en": "Required Solar PV Panels Count (400W each)",
+      "expression": "ceil((recommendedSystemSizeKwResult * 1000) / 400)",
+      "unit": "paneles",
+      "unit_en": "panels",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "solarPanelsCountResult", "op": ">=", "value": 0 }, "label": "Paneles Calculados", "label_en": "Panels Computed", "tone": "success", "text": "Número de paneles solares fotovoltaicos cuantificado.", "text_en": "Photovoltaic solar panels count quantified." }
+      ]
+    },
+    {
+      "id": "annualSavingsDollarsResult",
+      "label": "Ahorro Estimado en Factura Anual ($)",
+      "label_en": "Estimated Annual Bill Savings ($)",
+      "expression": "(monthlyUsageKwh * 12 * electricityRateCost) * 0.85",
+      "unit": "$",
+      "unit_en": "$",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "paybackYearsResult",
+      "label": "Período de Amortización / Retorno de Inversión (Años)",
+      "label_en": "Payback Period / ROI (Years)",
+      "expression": "annualSavingsDollarsResult > 0 ? (solarSystemCostVal / annualSavingsDollarsResult) : 0",
+      "unit": "años",
+      "unit_en": "years",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

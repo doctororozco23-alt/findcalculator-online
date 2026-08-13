@@ -1,0 +1,163 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "car-ev-charging-cost-runtime-calculator",
+    "title": "Calculadora de Costo y Tiempo de Carga de Vehículo Eléctrico (EV)",
+    "title_en": "Electric Vehicle (EV) Charging Cost & Charge Time Calculator",
+    "slug": "calculadora-de-costo-y-tiempo-de-carga-de-vehiculo-electrico-ev",
+    "category": "transport",
+    "subcategory": "fuel",
+    "tags": ["vehiculo-electrico", "ev", "bateria-ev", "tiempo-de-carga", "costo-de-carga", "tesla", "kw", "kwh", "transporte"],
+    "tags_en": ["electric-vehicle", "ev", "ev-battery", "charging-time", "charging-cost", "tesla", "kw", "kwh", "transport"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el costo en dólares y el tiempo en horas necesario para recargar la batería de un coche eléctrico (EV / Tesla) según la potencia del cargador y tarifa eléctrica.",
+    "shortDescription_en": "Calculate dollar cost and charging time in hours to recharge an electric vehicle (EV) battery based on charger kW speed and electricity tariff.",
+    "longDescription": "Herramienta de movilidad eléctrica y transición energética. Modela recargas domésticas Nivel 1/2 y supercargadores rápidos DC.",
+    "longDescription_en": "Electric mobility and energy transition tool. Models Level 1/2 home charging and DC fast superchargers.",
+    "howToUse": [
+      "Ingresa la Capacidad Utilizable de la Batería del EV (kWh, ej. 75 kWh para Tesla Model 3/Y).",
+      "Ingresa el Porcentaje Actual de Batería (% SoC inicial, ej. 20%).",
+      "Ingresa el Porcentaje Objetivo de Carga (% SoC objetivo, ej. 80%).",
+      "Ingresa la Potencia del Cargador (kW, ej. 7.4 kW en casa Nivel 2 o 150 kW en Supercargador DC).",
+      "Ingresa el Costo de la Electricidad ($/kWh, ej. 0.16 $/kWh doméstico).",
+      "Consulta la Energía a Recargar (kWh), Tiempo Estimado de Carga y Costo Total."
+    ],
+    "howToUse_en": [
+      "Enter Usable EV Battery Capacity (kWh, e.g. 75 kWh for Tesla Model 3/Y).",
+      "Enter Current Battery Percentage (SoC %, e.g. 20%).",
+      "Enter Target Battery Percentage (SoC %, e.g. 80%).",
+      "Enter Charger Power (kW, e.g. 7.4 kW Level 2 home charger or 150 kW DC Fast Charger).",
+      "Enter Electricity Rate ($/kWh, e.g. $0.16/kWh home tariff).",
+      "View Energy Needed (kWh), Estimated Charge Time, and Total Cost."
+    ],
+    "methodology": "EnergíaNecesaria = CapacidadBatería * ((SoCObjetivo - SoCInicial) / 100). TiempoHoras = EnergíaNecesaria / (PotenciakW * Eficiencia 0.9). CostoTotal = EnergíaNecesaria * TarifaKwh.",
+    "methodology_en": "EnergyNeeded = Capacity * ((TargetSoC - InitialSoC) / 100). ChargeHours = EnergyNeeded / (PowerkW * 0.9 Efficiency). TotalCost = EnergyNeeded * ElectricityRate."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Movilidad Eléctrica y Redes de Carga EV",
+    "role_en": "Electric Mobility & EV Charging Infrastructure Specialist Assistant",
+    "includeData": ["energyToChargeKwhResult", "estimatedChargingHoursResult", "totalEvChargingCostResult"],
+    "instructions": [
+      "Interpreta el tiempo de carga y el costo total de recarga del vehículo eléctrico.",
+      "Explica la recomendación de salud de la batería de limitar la carga diaria al 80% SoC para evitar degradación de la química de ion de litio.",
+      "Compara el costo por milla de conducir en modo eléctrico vs coche de gasolina tradicional."
+    ],
+    "instructions_en": [
+      "Interpret estimated charging duration and total EV recharge cost.",
+      "Explain battery health recommendations (capping daily charge at 80% SoC to prevent lithium-ion chemistry degradation).",
+      "Compare per-mile driving cost of electric vehicle vs traditional gas car."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "evc-guide",
+      "icon": "⚡",
+      "title": "EV Charger Levels & Speeds Reference",
+      "title_es": "Niveles y Velocidades de Cargadores EV",
+      "content_html_en": "<p><b>Level 1 (120V Wall Outlet):</b> 1.4 to 1.9 kW (~3-5 miles range added per hour).</p><p><b>Level 2 (240V Home Wallbox):</b> 7.4 to 11.5 kW (~25-45 miles range added per hour).</p><p><b>Level 3 (DC Fast Supercharger):</b> 50 to 250 kW (10% to 80% in 20-30 minutes).</p>",
+      "content_html": "<p><b>Nivel 1 (Enchufe Doméstico 120V):</b> 1.4 a 1.9 kW (~3-5 millas de autonomía añadidas por hora).</p><p><b>Nivel 2 (Wallbox 240V Casa):</b> 7.4 a 11.5 kW (~25-45 millas de autonomía añadidas por hora).</p><p><b>Nivel 3 (Supercargador Rápido DC):</b> 50 a 250 kW (10% al 80% en 20-30 minutos).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "evBatteryCapacityKwh",
+      "label": "Capacidad Útil de la Batería (kWh)",
+      "label_en": "Usable Battery Capacity (kWh)",
+      "type": "number",
+      "default": 75,
+      "min": 10,
+      "max": 250,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "initialSocPercent",
+      "label": "Estado de Carga Inicial (% SoC)",
+      "label_en": "Initial State of Charge (% SoC)",
+      "type": "number",
+      "default": 20,
+      "min": 0,
+      "max": 99,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "targetSocPercent",
+      "label": "Estado de Carga Objetivo (% SoC)",
+      "label_en": "Target State of Charge (% SoC)",
+      "type": "number",
+      "default": 80,
+      "min": 1,
+      "max": 100,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "chargerPowerKw",
+      "label": "Potencia del Cargador (kW)",
+      "label_en": "Charger Power Rating (kW)",
+      "type": "number",
+      "default": 7.4,
+      "min": 1,
+      "max": 350,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "electricityCostPerKwh",
+      "label": "Costo de la Electricidad ($/kWh)",
+      "label_en": "Electricity Rate ($/kWh)",
+      "type": "number",
+      "default": 0.16,
+      "min": 0.01,
+      "max": 2.0,
+      "step": 0.01,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "energyToChargeKwhResult",
+      "label": "Energía Requerida para Recargar (kWh)",
+      "label_en": "Energy Required for Recharge (kWh)",
+      "expression": "max(0, evBatteryCapacityKwh * ((targetSocPercent - initialSocPercent) / 100))",
+      "unit": "kWh",
+      "unit_en": "kWh",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "estimatedChargingHoursResult",
+      "label": "Tiempo Estimado de Carga (Horas al 90% Eficiencia)",
+      "label_en": "Estimated Charge Time (Hours at 90% Efficiency)",
+      "expression": "chargerPowerKw > 0 ? (energyToChargeKwhResult / (chargerPowerKw * 0.9)) : 0",
+      "unit": "horas",
+      "unit_en": "hours",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "estimatedChargingHoursResult", "op": ">=", "value": 0 }, "label": "Tiempo de Carga Calculado", "label_en": "Charge Time Computed", "tone": "success", "text": "Duración de recarga de batería EV cuantificada.", "text_en": "EV battery recharge duration quantified." }
+      ]
+    },
+    {
+      "id": "totalEvChargingCostResult",
+      "label": "Costo Total de Recarga ($)",
+      "label_en": "Total Recharge Cost ($)",
+      "expression": "energyToChargeKwhResult * electricityCostPerKwh",
+      "unit": "$",
+      "unit_en": "$",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

@@ -1,0 +1,163 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "fena-fractional-excretion-sodium-calculator",
+    "title": "Calculadora de Excreción Fraccionada de Sodio y Urea (FeNa & FeUrea)",
+    "title_en": "Fractional Excretion of Sodium & Urea Calculator (FeNa & FeUrea)",
+    "slug": "fena-excrecion-fraccionada-sodio-feurea",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["fena", "feurea", "fracaso-renal-agudo", "ira", "nefrologia", "urgencias"],
+    "tags_en": ["fena", "feurea", "acute-kidney-injury", "aki", "nephrology", "emergency"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Diferencia entre Fracaso Renal Agudo Prerrenal (Azotemia) y Necrosis Tubular Aguda (NTA) calculando la FeNa (%) y FeUrea (%).",
+    "shortDescription_en": "Differentiate between Prerenal Acute Kidney Injury (Azotemia) and Acute Tubular Necrosis (ATN) calculating FeNa (%) and FeUrea (%).",
+    "longDescription": "Auditoría de nefrología y medicina intensiva. La Excreción Fraccionada de Sodio (FeNa) y de Urea (FeUrea) es la prueba diagnóstica estándar para distinguir la hipotensión/deshidratación (Prerrenal) del daño parenquimatoso renal directo (NTA).",
+    "longDescription_en": "Nephrology and intensive care audit. Fractional Excretion of Sodium (FeNa) and Urea (FeUrea) is the diagnostic standard to differentiate hypovolemia/dehydration (Prerenal) from intrinsic acute tubular necrosis (ATN).",
+    "howToUse": [
+      "Ingresa el Sodio sérico (Na en mEq/L).",
+      "Ingresa el Sodio urinario (Na en mEq/L).",
+      "Ingresa la Creatinina sérica (Cr en mg/dL).",
+      "Ingresa la Creatinina urinaria (Cr en mg/dL).",
+      "Consulta el porcentaje de FeNa (%) y el diagnóstico etiológico del Fracaso Renal Agudo."
+    ],
+    "howToUse_en": [
+      "Enter Serum Sodium (Na in mEq/L).",
+      "Enter Urine Sodium (Na in mEq/L).",
+      "Enter Serum Creatinine (Cr in mg/dL).",
+      "Enter Urine Creatinine (Cr in mg/dL).",
+      "View calculated FeNa (%) percentage and etiology of Acute Kidney Injury."
+    ],
+    "methodology": "Ecuación FeNa: FeNa (%) = (Sodio Urinario × Creatinina Sérica) / (Sodio Sérico × Creatinina Urinaria) × 100. Criterios: FeNa < 1% Prerrenal, FeNa > 2% Necrosis Tubular Aguda (NTA). Si el paciente toma diuréticos de asa, utilizar FeUrea (< 35% Prerrenal).",
+    "methodology_en": "FeNa Formula: FeNa (%) = (Urine Na × Serum Cr) / (Serum Na × Urine Cr) × 100. Tiers: FeNa < 1% Prerenal, FeNa > 2% Acute Tubular Necrosis (ATN). If patient is on loop diuretics, use FeUrea (< 35% Prerenal)."
+  },
+  "guideSections": [
+    {
+      "id": "fena-etiology-guide",
+      "icon": "🩸",
+      "title": "AKI Diagnostic Thresholds (FeNa vs FeUrea)",
+      "title_es": "Umbrales Diagnósticos en Fracaso Renal Agudo (FeNa vs FeUrea)",
+      "content_html_en": "<p><b>FeNa < 1.0%:</b> Prerenal Azotemia (Dehydration, hypovolemia, heart failure). Reabsorption intact.</p><p><b>FeNa > 2.0%:</b> Intrinsic Acute Tubular Necrosis (ATN). Tubular reabsorption impaired.</p><p><b>Diuretic Confounding:</b> Loop diuretics force sodium excretion. If patient received diuretics, calculate FeUrea (FeUrea < 35% confirms Prerenal etiology).</p>",
+      "content_html": "<p><b>FeNa < 1.0%:</b> Azotemia Prerrenal (Deshidratación, hipovolemia, insuficiencia cardíaca). Reabsorción tubular intacta.</p><p><b>FeNa > 2.0%:</b> Necrosis Tubular Aguda (NTA intrínseca). Daño tubular con pérdida de capacidad de reabsorción.</p><p><b>Confusión por Diuréticos:</b> Los diuréticos de asa forzan la excreción de sodio. En pacientes con diuréticos, la FeUrea < 35% confirma la etiología Prerrenal.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "serumNaMeqL",
+      "label": "Sodio sérico (Na+ en sangre)",
+      "label_en": "Serum Sodium (Na+ in blood)",
+      "type": "number",
+      "default": 140,
+      "min": 100,
+      "max": 180,
+      "step": 1,
+      "unit": "mEq/L",
+      "unit_en": "mEq/L",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [100, 180], "message": "Sodio sérico entre 100 y 180 mEq/L", "message_en": "Serum Na between 100 and 180 mEq/L" }]
+    },
+    {
+      "id": "urineNaMeqL",
+      "label": "Sodio urinario (Na+ en orina)",
+      "label_en": "Urine Sodium (Na+ in urine)",
+      "type": "number",
+      "default": 15,
+      "min": 1,
+      "max": 200,
+      "step": 1,
+      "unit": "mEq/L",
+      "unit_en": "mEq/L",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1, 200], "message": "Sodio urinario entre 1 y 200 mEq/L", "message_en": "Urine Na between 1 and 200 mEq/L" }]
+    },
+    {
+      "id": "serumCrMgDl",
+      "label": "Creatinina sérica (Cr en sangre)",
+      "label_en": "Serum Creatinine (Cr in blood)",
+      "type": "number",
+      "default": 2.5,
+      "min": 0.3,
+      "max": 18.0,
+      "step": 0.1,
+      "unit": "mg/dL",
+      "unit_en": "mg/dL",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.3, 18.0], "message": "Creatinina sérica entre 0.3 y 18.0 mg/dL", "message_en": "Serum Cr between 0.3 and 18.0 mg/dL" }]
+    },
+    {
+      "id": "urineCrMgDl",
+      "label": "Creatinina urinaria (Cr en orina)",
+      "label_en": "Urine Creatinine (Cr in urine)",
+      "type": "number",
+      "default": 90,
+      "min": 5,
+      "max": 400,
+      "step": 1,
+      "unit": "mg/dL",
+      "unit_en": "mg/dL",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [5, 400], "message": "Creatinina urinaria entre 5 y 400 mg/dL", "message_en": "Urine Cr between 5 and 400 mg/dL" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "fenaPercentVal",
+      "label": "Excreción Fraccionada de Sodio (FeNa %)",
+      "label_en": "Fractional Excretion of Sodium (FeNa %)",
+      "expression": "((urineNaMeqL * serumCrMgDl) / (serumNaMeqL * urineCrMgDl)) * 100",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "fenaPercentVal", "op": "<", "value": 1.0 }, "label": "Etiología Prerrenal (FeNa < 1.0%)", "label_en": "Prerenal Etiology (FeNa < 1.0%)", "tone": "success", "text": "Sugerente de Fracaso Renal Agudo Prerrenal (Deshidratación/Hipovolemia). Reabsorción de sodio conservada.", "text_en": "Suggestive of Prerenal AKI (Dehydration/Hypovolemia). Intact tubular sodium reabsorption." },
+        { "when": { "field": "fenaPercentVal", "op": "between", "value": [1.0, 2.0] }, "label": "Zona Indeterminada / Intermedia (1.0% - 2.0%)", "label_en": "Indeterminate Zone (1.0% - 2.0%)", "tone": "warning", "text": "Resultado indeterminado. Evaluar estado de volumen, uso de diuréticos y sedimento urinario.", "text_en": "Indeterminate result. Evaluate volume status, diuretic use, and urine sediment." },
+        { "when": { "field": "fenaPercentVal", "op": ">=", "value": 2.01 }, "label": "Necrosis Tubular Aguda NTA (FeNa > 2.0%)", "label_en": "Acute Tubular Necrosis ATN (FeNa > 2.0%)", "tone": "warning", "text": "Sugerente de daño renal intrínseco (Necrosis Tubular Aguda). Pérdida de capacidad de reabsorción.", "text_en": "Suggestive of intrinsic renal damage (Acute Tubular Necrosis). Impaired tubular reabsorption." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "egfr-ckd-epi-calculator", "type": "static", "message": "Calcula la función renal basal eGFR", "message_en": "Calculate baseline eGFR renal function", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Nefrólogo Intensivista y Especialista en Urgencias Renal",
+    "role_en": "Intensive Care Nephrologist & Acute Kidney Injury Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y clínico",
+    "includeData": ["fenaPercentVal", "serumNaMeqL", "urineNaMeqL", "serumCrMgDl", "urineCrMgDl"],
+    "instructions": [
+      "Sintetiza la Excreción Fraccionada de Sodio FeNa % y el diagnóstico etiológico (Prerrenal vs NTA) en 2 frases concisas.",
+      "Advierte que si el paciente ha recibido diuréticos de asa (furosemida), la FeNa puede dar un falso positivo elevado y debe calcularse la FeUrea."
+    ],
+    "instructions_en": [
+      "Summarize Fractional Excretion of Sodium (FeNa %) and etiology (Prerenal vs ATN) in 2 concise sentences.",
+      "Warn that if loop diuretics (furosemide) were administered, FeNa may be falsely elevated and FeUrea should be calculated."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Excreción Fraccionada de Sodio (FeNa & FeUrea) | CalculadoraHub",
+    "metaTitle_en": "FeNa & FeUrea Calculator (Fractional Excretion of Sodium) | CalculadoraHub",
+    "metaDescription": "Calcula la FeNa % y FeUrea % para diferenciar Fracaso Renal Agudo Prerrenal de NTA. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate FeNa % and FeUrea % to differentiate Prerenal AKI from Acute Tubular Necrosis (ATN). Free.",
+    "keywords": ["fena calculator", "excrecion fraccionada de sodio", "fena feurea ira", "prerrenal vs nta"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

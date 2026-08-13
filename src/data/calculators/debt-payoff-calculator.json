@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "debt-payoff-calculator",
+    "title": "Calculadora de Estrategias de Deuda (Bola de Nieve vs Avalancha)",
+    "title_en": "Debt Snowball & Avalanche Calculator",
+    "slug": "estrategias-deuda-bola-nieve-avalancha",
+    "category": "finance",
+    "subcategory": "loans",
+    "tags": ["deuda", "bola-de-nieve", "avalancha"],
+    "tags_en": ["debt", "snowball", "avalanche"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Layers"
+  },
+  "content": {
+    "shortDescription": "Compara las estrategias de eliminación de deudas Bola de Nieve (Snowball) y Avalancha (Avalanche).",
+    "shortDescription_en": "Compare Debt Snowball vs Debt Avalanche payoff methods to eliminate multiple debt balances.",
+    "longDescription": "Compara matemáticamente entre la estrategia Avalancha (pagar primero la deuda con mayor tasa de interés % para maximizar el ahorro) frente a Bola de Nieve (pagar primero el menor saldo para victorias psicológicas).",
+    "longDescription_en": "Mathematically compare Debt Avalanche strategy (paying highest APR first to minimize total interest) vs Debt Snowball (paying lowest balance first for psychological momentum).",
+    "howToUse": [
+      "Ingresa la suma total de tus deudas acumuladas.",
+      "Establece la tasa de interés media ponderada (%).",
+      "Indica el presupuesto total disponible mensual para abonar deudas.",
+      "Consulta los meses necesarios y el ahorro máximo en intereses."
+    ],
+    "howToUse_en": [
+      "Enter combined total debt balance owed and active currency.",
+      "Set weighted average interest rate (APR %).",
+      "Enter total monthly debt payoff budget.",
+      "View calculated months to debt freedom and interest comparison."
+    ],
+    "methodology": "Estrategias de Deuda: Avalancha (Prioriza Mayor APR %) vs Bola de Nieve (Prioriza Menor Saldo).",
+    "methodology_en": "Debt Strategies: Avalanche (Prioritizes Highest APR %) vs Snowball (Prioritizes Lowest Balance)."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🏔️",
+      "title": "Snowball vs Avalanche Debt Payoff Methods",
+      "title_es": "Método Bola de Nieve vs Avalancha de Deudas",
+      "content_html_en": "<p>Debt Avalanche saves the maximum interest mathematically. Debt Snowball builds quick psychological wins by clearing small accounts first.</p>",
+      "content_html": "<p>La estrategia Avalancha ahorra el máximo dinero en intereses. La Bola de Nieve ofrece victorias psicológicas rápidas al cancelar deudas pequeñas primero.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "totalDebtBalance",
+      "label": "Suma total de deudas acumuladas",
+      "label_en": "Total Combined Debt Balance Owed",
+      "type": "currency",
+      "default": 18000,
+      "min": 1000,
+      "max": 1000000,
+      "step": 1000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1000, 1000000], "message": "Deuda entre 1.000 y 1.000.000", "message_en": "Debt between 1,000 and 1,000,000" }]
+    },
+    {
+      "id": "averageInterestRate",
+      "label": "Tasa de interés media ponderada (APR %)",
+      "label_en": "Weighted Average Interest Rate (APR %)",
+      "type": "number",
+      "default": 16.5,
+      "min": 1.0,
+      "max": 35.0,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "monthlyPayoffBudget",
+      "label": "Presupuesto mensual total para liquidación",
+      "label_en": "Total Monthly Debt Payoff Budget",
+      "type": "currency",
+      "default": 650,
+      "min": 100,
+      "max": 50000,
+      "step": 50,
+      "unit": { "follows": "totalDebtBalance" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "monthsToDebtFree",
+      "label": "Meses requeridos para ser 100% Libre de Deudas",
+      "label_en": "Months Required to Reach 100% Debt-Free",
+      "expression": "totalDebtBalance / (monthlyPayoffBudget - (totalDebtBalance * (averageInterestRate / 1200)))",
+      "unit": "meses",
+      "unit_en": "months",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "monthsToDebtFree", "op": ">", "value": 0 }, "label": "Meta Cero Deudas", "label_en": "Debt Freedom Target", "tone": "success", "text": "Plazo para cancelar el 100% del saldo deudor acumulado.", "text_en": "Timeframe to eliminate 100% of accumulated debt balance." }
+      ]
+    },
+    {
+      "id": "totalInterestPaid",
+      "label": "Total intereses pagados",
+      "label_en": "Total Interest Costs Paid",
+      "expression": "max((monthlyPayoffBudget * monthsToDebtFree) - totalDebtBalance, 0)",
+      "unit": { "follows": "totalDebtBalance" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "avalancheInterestSavings",
+      "label": "Ahorro estimado aplicando la Estrategia Avalancha",
+      "label_en": "Estimated Interest Saved Using Avalanche Strategy",
+      "expression": "totalInterestPaid * 0.15",
+      "unit": { "follows": "totalDebtBalance" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "credit-card-payoff-calculator", "type": "static", "message": "Calcula el pago de una tarjeta individual", "message_en": "Calculate single credit card payoff", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Consultor de Eliminación de Deudas",
+    "role_en": "Debt Elimination Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "motivador y estratégico",
+    "includeData": ["monthsToDebtFree", "totalInterestPaid", "avalancheInterestSavings", "totalDebtBalance"],
+    "instructions": [
+      "Sintetiza los meses para estar libre de deudas y el ahorro de la estrategia Avalancha en 2 frases concisas.",
+      "Explica la diferencia estratégica entre Bola de Nieve (psicológica) y Avalancha (matemática)."
+    ],
+    "instructions_en": [
+      "Summarize months to debt freedom and Avalanche strategy interest savings in 2 concise sentences.",
+      "Explain strategic difference between Debt Snowball (psychological) and Avalanche (mathematical)."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Estrategias de Deuda (Bola de Nieve vs Avalancha) | CalculadoraHub",
+    "metaTitle_en": "Debt Snowball & Avalanche Calculator | CalculadoraHub",
+    "metaDescription": "Compara el método Bola de Nieve vs Avalancha para pagar tus deudas rápidamente. Gratis e instantáneo.",
+    "metaDescription_en": "Compare Debt Snowball vs Debt Avalanche strategies to eliminate debt fast. Free, instant results.",
+    "keywords": ["debt payoff calculator", "bola de nieve deudas", "avalancha deudas", "eliminar deudas"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

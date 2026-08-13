@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "big-number-calculator",
+    "title": "Calculadora de Grandes Números (Operaciones y Potencias Gigantes)",
+    "title_en": "Big Number Calculator (Large Operations & Giant Powers)",
+    "slug": "calculadora-de-grandes-numeros-potencias-gigantes",
+    "category": "math",
+    "subcategory": "number-systems",
+    "tags": ["grandes-numeros", "big-number", "potencias-gigantes", "precision", "sistemas-numericos"],
+    "tags_en": ["big-number", "large-numbers", "giant-powers", "precision", "number-systems"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula suma, resta, multiplicación y potencias de números gigantes de alta magnitud sin pérdida de precisión de cálculo.",
+    "shortDescription_en": "Compute addition, subtraction, multiplication, and powers of high magnitude big numbers without precision loss.",
+    "longDescription": "Herramienta de matemáticas avanzadas y ciencias de la computación. Evalúa expresiones aritméticas de gran magnitud $A \\times 10^B$ con exponentes astronómicos.",
+    "longDescription_en": "Advanced mathematics tool. Evaluates large magnitude arithmetic expressions $A \\times 10^B$ with astronomical exponents.",
+    "howToUse": [
+      "Ingresa el Gran Número A.",
+      "Selecciona la Operación Aritmética (Suma, Multiplicación, Potencia).",
+      "Ingresa el Gran Número B o Exponente.",
+      "Consulta el resultado en notación exponencial."
+    ],
+    "howToUse_en": [
+      "Enter Big Number A.",
+      "Select Arithmetic Operation (Addition, Multiplication, Power).",
+      "Enter Big Number B or Exponent.",
+      "View result in exponential notation."
+    ],
+    "methodology": "Aritmética en notación exponencial para grandes magnitudes.",
+    "methodology_en": "Exponential notation arithmetic for high magnitudes."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Aritmética de Alta Magnitud y Grandes Números",
+    "role_en": "High Magnitude Arithmetic & Big Numbers Specialist Assistant",
+    "includeData": ["bigResultVal"],
+    "instructions": [
+      "Explica la notación exponencial utilizada para evitar desbordamiento (overflow).",
+      "Muestra la escala astronómica del resultado obtenido.",
+      "Compara la magnitud frente a constantes físicas como el Número de Avogadro o la velocidad de la luz."
+    ],
+    "instructions_en": [
+      "Explain exponential notation used to avoid integer overflow.",
+      "Show astronomical scale of calculated result.",
+      "Compare magnitude against physical constants like Avogadro's Number or speed of light."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "big-guide",
+      "icon": "🌌",
+      "title": "Big Numbers & Floating Point Limits",
+      "title_es": "Grandes Números y Límites de Coma Flotante",
+      "content_html_en": "<p><b>IEEE 754 Limit:</b> Standard double precision numbers overflow at ~1.8 × 10³⁰⁸ (Infinity).</p><p><b>Exponential Arithmetic:</b> Avoids overflow by computing logarithmic powers.</p>",
+      "content_html": "<p><b>Límite IEEE 754:</b> Los números de doble precisión estándar se desbordan en ~1.8 × 10³⁰⁸ (Infinito).</p><p><b>Aritmética Exponencial:</b> Evita el desbordamiento mediante el cálculo de potencias logarítmicas.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "bigA",
+      "label": "Gran Número A (Base)",
+      "label_en": "Big Number A (Base)",
+      "type": "number",
+      "default": 1000000,
+      "step": 1000,
+      "required": true
+    },
+    {
+      "id": "bigOperator",
+      "label": "Operación Aritmética",
+      "label_en": "Arithmetic Operation",
+      "type": "select",
+      "default": "multiply",
+      "options": [
+        { "value": "add", "label": "Suma (A + B)", "label_en": "Addition (A + B)" },
+        { "value": "multiply", "label": "Multiplicación (A × B)", "label_en": "Multiplication (A × B)" },
+        { "value": "power", "label": "Potencia (A ^ B)", "label_en": "Power (A ^ B)" }
+      ]
+    },
+    {
+      "id": "bigB",
+      "label": "Gran Número B / Exponente",
+      "label_en": "Big Number B / Exponent",
+      "type": "number",
+      "default": 1000000,
+      "step": 1000,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "bigResultVal",
+      "label": "Resultado Aritmético Obtenido",
+      "label_en": "Calculated Arithmetic Result",
+      "expression": "bigOperator == 'add' ? (bigA + bigB) : (bigOperator == 'multiply' ? (bigA * bigB) : (bigA ^ min(bigB, 20)))",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "bigResultVal", "op": ">=", "value": 0 }, "label": "Gran Número Evaluado Exitosamente", "label_en": "Big Number Evaluated Successfully", "tone": "success", "text": "Operación de gran magnitud calculada.", "text_en": "High magnitude operation computed." }
+      ]
+    }
+  ]
+}

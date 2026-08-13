@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "cooking-liquid-measurement-converter",
+    "title": "Conversor de Medidas de Cocina (Cucharadas, Tazas, mL, fl oz)",
+    "title_en": "Cooking & Baking Volume Measurement Converter",
+    "slug": "conversor-de-medidas-de-cocina-cucharadas-tazas-ml-onzas-liquidas",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["medidas-de-cocina", "tazas", "cucharadas", "cucharaditas", "mililitros", "onzas-liquidas", "recetas", "conversores"],
+    "tags_en": ["cooking-converter", "cups", "tablespoons", "teaspoons", "milliliters", "fluid-ounces", "recipes", "converters"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte instantáneamente volumen de recetas entre Cucharaditas (tsp), Cucharadas (tbsp), Tazas (cups), Mililitros (mL) y Onzas Líquidas.",
+    "shortDescription_en": "Instantly convert recipe volume between Teaspoons (tsp), Tablespoons (tbsp), Cups, Milliliters (mL), and Fluid Ounces.",
+    "longDescription": "Herramienta de cocina, repostería y gastronomía. Traduce medidas de recetas internacionales entre el sistema estadounidense, métrico e imperial.",
+    "longDescription_en": "Culinary, baking, and gastronomy tool. Translates international recipe measures between US, metric, and imperial systems.",
+    "howToUse": [
+      "Ingresa la Cantidad del Ingrediente a Convertir.",
+      "Selecciona la Unidad de Origen de la Receta (ej. Tazas US, Cucharadas tbsp, mL).",
+      "Consulta los Resultados Equivalentes en Mililitros (mL), Tazas, Cucharadas (tbsp) y Cucharaditas (tsp)."
+    ],
+    "howToUse_en": [
+      "Enter Ingredient Quantity to Convert.",
+      "Select Recipe Source Unit (e.g. US Cups, Tablespoons tbsp, mL).",
+      "View Equivalent Results in Milliliters (mL), Cups, Tablespoons (tbsp), and Teaspoons (tsp)."
+    ],
+    "methodology": "Factor base en Mililitros (mL): 1 mL = 1.0, 1 tsp US = 4.92892, 1 tbsp US = 14.7868, 1 cup US = 240.0, 1 fl oz US = 29.5735.",
+    "methodology_en": "Base factor in Milliliters (mL): 1 mL = 1.0, 1 tsp US = 4.92892, 1 tbsp US = 14.7868, 1 cup US = 240.0, 1 fl oz US = 29.5735."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Repostería y Conversión de Recetas Culinaras",
+    "role_en": "Baking & Culinary Recipe Measurement Specialist Assistant",
+    "includeData": ["cookingMlResult", "cookingCupsResult", "cookingTbspResult"],
+    "instructions": [
+      "Interpreta la conversión de volumen de ingrediente culinario realizada.",
+      "Muestra equivalencias de cocina estándar (1 Cucharada = 3 Cucharaditas = 15 mL, 1 Taza = 16 Cucharadas = 240 mL).",
+      "Explica la importancia de medir ingredientes secos por peso (gramos) en repostería fina."
+    ],
+    "instructions_en": [
+      "Interpret performed culinary ingredient volume conversion.",
+      "Show standard kitchen equivalences (1 Tablespoon = 3 Teaspoons = 15 mL, 1 Cup = 16 Tablespoons = 240 mL).",
+      "Explain importance of measuring dry ingredients by weight (grams) in fine baking."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "clm-guide",
+      "icon": "🥄",
+      "title": "Kitchen Volume Equivalences Reference",
+      "title_es": "Referencia de Equivalencias de Volumen en Cocina",
+      "content_html_en": "<p><b>1 US Tablespoon (tbsp):</b> 3 US Teaspoons = 14.79 mL (~15 mL)</p><p><b>1 US Cup:</b> 16 US Tablespoons = 8 US Fluid Ounces = 240 mL</p><p><b>1 US Teaspoon (tsp):</b> 4.93 mL (~5 mL)</p>",
+      "content_html": "<p><b>1 Cucharada US (tbsp):</b> 3 Cucharaditas US = 14.79 mL (~15 mL)</p><p><b>1 Taza US:</b> 16 Cucharadas US = 8 Onzas Líquidas US = 240 mL</p><p><b>1 Cucharadita US (tsp):</b> 4.93 mL (~5 mL)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputValueCooking",
+      "label": "Cantidad a Convertir",
+      "label_en": "Quantity to Convert",
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 10000,
+      "step": 0.25,
+      "required": true
+    },
+    {
+      "id": "inputCookingUnitFactor",
+      "label": "Unidad de Origen de la Receta",
+      "label_en": "Recipe Source Unit",
+      "type": "select",
+      "default": "240.0",
+      "options": [
+        { "value": "240.0", "label": "Tazas US (cups)", "label_en": "US Cups (cups)" },
+        { "value": "14.7867648", "label": "Cucharadas (tbsp)", "label_en": "Tablespoons (tbsp)" },
+        { "value": "4.92892159", "label": "Cucharaditas (tsp)", "label_en": "Teaspoons (tsp)" },
+        { "value": "1.0", "label": "Mililitros (mL)", "label_en": "Milliliters (mL)" },
+        { "value": "29.5735296", "label": "Onzas Líquidas US (fl oz)", "label_en": "US Fluid Ounces (fl oz)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "cookingMlResult",
+      "label": "Equivalente en Mililitros (mL)",
+      "label_en": "Equivalent in Milliliters (mL)",
+      "expression": "inputValueCooking * inputCookingUnitFactor",
+      "unit": "mL",
+      "unit_en": "mL",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "cookingMlResult", "op": ">=", "value": 0 }, "label": "Volumen Calculado", "label_en": "Volume Computed", "tone": "success", "text": "Volumen de ingrediente en mililitros cuantificado.", "text_en": "Ingredient volume in milliliters quantified." }
+      ]
+    },
+    {
+      "id": "cookingCupsResult",
+      "label": "Equivalente en Tazas US (cups)",
+      "label_en": "Equivalent in US Cups (cups)",
+      "expression": "cookingMlResult / 240.0",
+      "unit": "tazas",
+      "unit_en": "cups",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "cookingTbspResult",
+      "label": "Equivalente en Cucharadas (tbsp)",
+      "label_en": "Equivalent in Tablespoons (tbsp)",
+      "expression": "cookingMlResult / 14.7867648",
+      "unit": "tbsp",
+      "unit_en": "tbsp",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "cookingTspResult",
+      "label": "Equivalente en Cucharaditas (tsp)",
+      "label_en": "Equivalent in Teaspoons (tsp)",
+      "expression": "cookingMlResult / 4.92892159",
+      "unit": "tsp",
+      "unit_en": "tsp",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

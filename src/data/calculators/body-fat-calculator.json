@@ -1,0 +1,289 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "body-fat-calculator",
+    "title": "Calculadora de Porcentaje de Grasa Corporal (Métodos Clínicos)",
+    "title_en": "Body Fat Percentage Calculator (Clinical Multi-Method)",
+    "slug": "porcentaje-grasa-corporal",
+    "category": "fitness",
+    "subcategory": "body-composition",
+    "tags": ["grasa-corporal", "us-navy", "deurenberg", "ymca"],
+    "tags_en": ["body-fat", "us-navy", "deurenberg", "ymca"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula tu porcentaje de grasa corporal mediante 3 fórmulas validadas (U.S. Navy, Deurenberg IMC y Método YMCA).",
+    "shortDescription_en": "Calculate your body fat percentage using 3 validated clinical methods (U.S. Navy, Deurenberg BMI, and YMCA).",
+    "longDescription": "Auditoría de composición corporal que determina tu porcentaje de grasa corporal, masa grasa en kg/lbs, masa corporal magra (LBM) y el peso objetivo recomendado para alcanzar tu categoría física ideal según los estándares del American Council on Exercise (ACE).",
+    "longDescription_en": "Comprehensive body composition audit measuring body fat %, fat mass, lean body mass (LBM), and target body weight based on American Council on Exercise (ACE) standards.",
+    "howToUse": [
+      "Selecciona el método de cálculo (Marina de EE. UU. por cinta métrica, Deurenberg por IMC o Método YMCA).",
+      "Ingresa tu sexo, edad, peso y estatura.",
+      "Ingresa los perímetros corporales requeridos (cuello, cintura y cadera).",
+      "Consulta tu masa grasa en kg, masa magra y la recomendación de composición corporal."
+    ],
+    "howToUse_en": [
+      "Select calculation method (U.S. Navy tape measure, Deurenberg BMI formula, or YMCA method).",
+      "Enter sex, age, body weight, and height.",
+      "Enter required body circumference measurements (neck, waist, hip).",
+      "View calculated body fat %, fat mass in kg/lbs, lean mass, and ACE category classification."
+    ],
+    "methodology": "Métodos Clínicos: 1. U.S. Navy (Logaritmos de perímetros). 2. Ecuación de Deurenberg (BF% = 1.20×IMC + 0.23×Edad - 10.8×Sexo - 5.4). Estándares de clasificación del American Council on Exercise (ACE).",
+    "methodology_en": "Clinical Methods: 1. U.S. Navy Circumference. 2. Deurenberg BMI Formula (1.20×BMI + 0.23×Age - 10.8×Sex - 5.4). American Council on Exercise (ACE) standard classifications."
+  },
+  "guideSections": [
+    {
+      "id": "ace-standards",
+      "icon": "📊",
+      "title": "American Council on Exercise (ACE) Categories",
+      "title_es": "Categorías del American Council on Exercise (ACE)",
+      "content_html_en": "<p><b>Essential Fat:</b> Men 2-5%, Women 10-13%.</p><p><b>Athletes:</b> Men 6-13%, Women 14-20%.</p><p><b>Fitness:</b> Men 14-17%, Women 21-24%.</p><p><b>Average:</b> Men 18-24%, Women 25-31%.</p><p><b>Obesity:</b> Men 25%+, Women 32%+.</p>",
+      "content_html": "<p><b>Grasa Esencial:</b> Hombres 2-5%, Mujeres 10-13%.</p><p><b>Atletas:</b> Hombres 6-13%, Mujeres 14-20%.</p><p><b>Fitness Saludable:</b> Hombres 14-17%, Mujeres 21-24%.</p><p><b>Promedio:</b> Hombres 18-24%, Mujeres 25-31%.</p><p><b>Obesidad:</b> Hombres 25%+, Mujeres 32%+.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "method",
+      "label": "Método clínico de estimación de grasa",
+      "label_en": "Clinical Body Fat Estimation Method",
+      "type": "select",
+      "default": "navy",
+      "options": [
+        { "value": "navy", "label": "Método de la Marina de EE. UU. (Cinta Métrica - Recomendado)", "label_en": "U.S. Navy Method (Tape Measure - Recommended)" },
+        { "value": "deurenberg", "label": "Fórmula de Deurenberg (Basada en IMC y Edad)", "label_en": "Deurenberg Formula (Based on BMI & Age)" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "gender",
+      "label": "Sexo biológico",
+      "label_en": "Biological Sex",
+      "type": "select",
+      "default": "male",
+      "options": [
+        { "value": "male", "label": "Hombre", "label_en": "Male" },
+        { "value": "female", "label": "Mujer", "label_en": "Female" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "age",
+      "label": "Edad",
+      "label_en": "Age",
+      "type": "number",
+      "default": 30,
+      "min": 15,
+      "max": 100,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "weightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 30,
+      "max": 300,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "heightCm",
+      "label": "Estatura",
+      "label_en": "Height",
+      "type": "number",
+      "default": 178,
+      "min": 100,
+      "max": 230,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "neckCm",
+      "label": "Perímetro del cuello (punto más estrecho)",
+      "label_en": "Neck Circumference (narrowest point)",
+      "type": "number",
+      "default": 38,
+      "min": 20,
+      "max": 60,
+      "step": 0.5,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "in", "label": "in", "toBase": 2.54 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "waistCm",
+      "label": "Perímetro de la cintura (al ombligo)",
+      "label_en": "Waist Circumference (at navel)",
+      "type": "number",
+      "default": 84,
+      "min": 40,
+      "max": 200,
+      "step": 0.5,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "in", "label": "in", "toBase": 2.54 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "hipCm",
+      "label": "Perímetro de la cadera (solo mujeres)",
+      "label_en": "Hip Circumference (females only)",
+      "type": "number",
+      "default": 95,
+      "min": 40,
+      "max": 200,
+      "step": 0.5,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "in", "label": "in", "toBase": 2.54 }
+      ],
+      "required": false,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "bmiVal",
+      "label": "IMC Base",
+      "label_en": "BMI Base",
+      "expression": "weightKg / ((heightCm / 100) ^ 2)",
+      "unit": "kg/m²",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "navyBfPercent",
+      "label": "Grasa U.S. Navy",
+      "label_en": "U.S. Navy Body Fat",
+      "expression": "gender == 'male' ? max(464 / (1.0324 - 0.19077 * log10(max(waistCm - neckCm, 1)) + 0.15456 * log10(heightCm)) - 431, 3) : max(495 / (1.29579 - 0.35004 * log10(max(waistCm + hipCm - neckCm, 1)) + 0.22100 * log10(heightCm)) - 450, 10)",
+      "unit": "%",
+      "precision": 1,
+      "format": "percent",
+      "type": "secondary"
+    },
+    {
+      "id": "deurenbergBfPercent",
+      "label": "Grasa Deurenberg",
+      "label_en": "Deurenberg Body Fat",
+      "expression": "max(1.20 * bmiVal + 0.23 * age - 10.8 * (gender == 'male' ? 1 : 0) - 5.4, 3)",
+      "unit": "%",
+      "precision": 1,
+      "format": "percent",
+      "type": "secondary"
+    },
+    {
+      "id": "finalBodyFatPercent",
+      "label": "Porcentaje de Grasa Corporal Calculado",
+      "label_en": "Calculated Body Fat Percentage",
+      "expression": "method == 'deurenberg' ? deurenbergBfPercent : navyBfPercent",
+      "unit": "%",
+      "precision": 1,
+      "format": "percent",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "finalBodyFatPercent", "op": "<=", "value": 13.9 }, "label": "Atleta / Excelente Forma", "label_en": "Athletic / Excellent Shape", "tone": "success", "text": "Rango de grasa bajo propio de atletas con alta definición muscular.", "text_en": "Low body fat percentage typical of highly conditioned athletes." },
+        { "when": { "field": "finalBodyFatPercent", "op": "between", "value": [14.0, 24.9] }, "label": "Fitness / Rango Saludable", "label_en": "Fitness / Healthy Range", "tone": "info", "text": "Nivel de grasa dentro de los parámetros de salud recomendados.", "text_en": "Body fat percentage within healthy recommended fitness parameters." },
+        { "when": { "field": "finalBodyFatPercent", "op": ">=", "value": 25.0 }, "label": "Elevado / Obesidad", "label_en": "Above Average / Obesity Tier", "tone": "warning", "text": "Nivel de grasa superior al promedio de salud recomendada.", "text_en": "Body fat percentage higher than recommended healthy average." }
+      ]
+    },
+    {
+      "id": "fatMassKg",
+      "label": "Masa Grasa Total en Kilogramos",
+      "label_en": "Total Fat Mass in Kilograms",
+      "expression": "weightKg * (finalBodyFatPercent / 100)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "leanMassKg",
+      "label": "Masa Corporal Magra (LBM)",
+      "label_en": "Lean Body Mass (LBM)",
+      "expression": "weightKg - fatMassKg",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "idealWeightForFitnessKg",
+      "label": "Peso Objetivo para Alcanzar 15% Grasa (Hombres) / 22% (Mujeres)",
+      "label_en": "Target Weight for Ideal Fat % (15% Men / 22% Women)",
+      "expression": "leanMassKg / (1 - (gender == 'male' ? 0.15 : 0.22))",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "calorie-calculator", "type": "static", "message": "Calcula tus calorías diarias según tu % de grasa", "message_en": "Calculate daily calories based on body fat %", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Especialista en Cineantropometría y Composición Corporal",
+    "role_en": "Kineanthropometry & Body Composition Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y analítico",
+    "includeData": ["finalBodyFatPercent", "fatMassKg", "leanMassKg", "idealWeightForFitnessKg", "weightKg"],
+    "instructions": [
+      "Sintetiza el porcentaje de grasa corporal, la masa grasa en kg y la masa magra en 2 frases concisas.",
+      "Compara el peso actual con el peso objetivo para alcanzar un porcentaje de grasa fitness preservando la masa magra."
+    ],
+    "instructions_en": [
+      "Summarize body fat percentage, fat mass in kg, and lean body mass in 2 concise sentences.",
+      "Compare current weight with target weight required for optimal fitness body fat percentage while preserving lean muscle."
+    ],
+    "maxLengthWords": 100,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Porcentaje de Grasa Corporal (Métodos Clínicos) | CalculadoraHub",
+    "metaTitle_en": "Body Fat Percentage Calculator (Clinical Multi-Method) | CalculadoraHub",
+    "metaDescription": "Calcula tu porcentaje de grasa corporal con los métodos U.S. Navy y Deurenberg. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your body fat percentage using U.S. Navy and Deurenberg methods. Free, instant results.",
+    "keywords": ["body fat calculator", "grasa corporal", "porcentaje de grasa", "us navy body fat", "deurenberg"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

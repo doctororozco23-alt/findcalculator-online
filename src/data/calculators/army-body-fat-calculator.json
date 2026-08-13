@@ -1,0 +1,248 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "army-body-fat-calculator",
+    "title": "Calculadora de Grasa Corporal Militar (U.S. Army AR 600-9)",
+    "title_en": "U.S. Army Body Fat Calculator (AR 600-9 Standard)",
+    "slug": "grasa-corporal-militar-army",
+    "category": "fitness",
+    "subcategory": "body-composition",
+    "tags": ["army-body-fat", "tape-test", "ar-600-9", "militar"],
+    "tags_en": ["army-body-fat", "tape-test", "ar-600-9", "military"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula tu porcentaje de grasa corporal militar y evalúa el cumplimiento del estándar oficial de las Fuerzas Armadas de EE. UU. (AR 600-9).",
+    "shortDescription_en": "Calculate military body fat percentage and assess compliance with official U.S. Army Regulation AR 600-9 standards.",
+    "longDescription": "Auditoría oficial de aptitud física y composición corporal militar. Evalúa si tu porcentaje de grasa por cinta métrica cumple con los límites máximos permitidos por el Reglamento Militar de EE. UU. (AR 600-9) según tu rango de edad.",
+    "longDescription_en": "Official military body composition audit evaluating tape test body fat percentage against maximum allowed limits under U.S. Army Regulation AR 600-9 by age tier.",
+    "howToUse": [
+      "Selecciona tu sexo biológico y rango de edad.",
+      "Ingresa tu peso corporal y estatura.",
+      "Ingresa el perímetro del cuello y de la cintura (al ombligo).",
+      "En mujeres, ingresa también el perímetro de la cadera.",
+      "Consulta si apruebas el estándar militar oficial y el porcentaje máximo permitido."
+    ],
+    "howToUse_en": [
+      "Select biological sex and age bracket.",
+      "Enter body weight and height.",
+      "Enter neck and waist circumference measurements.",
+      "For females, enter hip circumference.",
+      "View official pass/fail compliance status and maximum allowed body fat limit."
+    ],
+    "methodology": "Reglamento U.S. Army AR 600-9: Ecuaciones logarítmicas oficiales de circunferencias en pulgadas ajustadas por estatura. Límites máximos: Hombres 20%-26%, Mujeres 30%-36% según grupo de edad.",
+    "methodology_en": "U.S. Army Regulation AR 600-9 official logarithmic tape equations. Max limits: Men 20%-26%, Women 30%-36% by age group."
+  },
+  "guideSections": [
+    {
+      "id": "army-standards-table",
+      "icon": "🎖️",
+      "title": "Official U.S. Army AR 600-9 Limits by Age",
+      "title_es": "Límites Oficiales U.S. Army AR 600-9 por Edad",
+      "content_html_en": "<p><b>Men Max Fat %:</b> Age 17-20 (20%), Age 21-27 (22%), Age 28-39 (24%), Age 40+ (26%).</p><p><b>Women Max Fat %:</b> Age 17-20 (30%), Age 21-27 (32%), Age 28-39 (34%), Age 40+ (36%).</p>",
+      "content_html": "<p><b>Límite Máximo Hombres:</b> Edad 17-20 (20%), Edad 21-27 (22%), Edad 28-39 (24%), Edad 40+ (26%).</p><p><b>Límite Máximo Mujeres:</b> Edad 17-20 (30%), Edad 21-27 (32%), Edad 28-39 (34%), Edad 40+ (36%).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "gender",
+      "label": "Sexo biológico",
+      "label_en": "Biological Sex",
+      "type": "select",
+      "default": "male",
+      "options": [
+        { "value": "male", "label": "Hombre", "label_en": "Male" },
+        { "value": "female", "label": "Mujer", "label_en": "Female" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "ageGroup",
+      "label": "Rango de edad militar",
+      "label_en": "Military Age Group",
+      "type": "select",
+      "default": "21_27",
+      "options": [
+        { "value": "17_20", "label": "17 a 20 años", "label_en": "17 to 20 years old" },
+        { "value": "21_27", "label": "21 a 27 años", "label_en": "21 to 27 years old" },
+        { "value": "28_39", "label": "28 a 39 años", "label_en": "28 to 39 years old" },
+        { "value": "40_plus", "label": "40 años o más", "label_en": "40 years or older" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "weightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 30,
+      "max": 300,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "heightCm",
+      "label": "Estatura",
+      "label_en": "Height",
+      "type": "number",
+      "default": 175,
+      "min": 120,
+      "max": 220,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "neckCm",
+      "label": "Perímetro del cuello",
+      "label_en": "Neck Circumference",
+      "type": "number",
+      "default": 38,
+      "min": 20,
+      "max": 60,
+      "step": 0.5,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "in", "label": "in", "toBase": 2.54 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "waistCm",
+      "label": "Perímetro de la cintura",
+      "label_en": "Waist Circumference",
+      "type": "number",
+      "default": 84,
+      "min": 40,
+      "max": 200,
+      "step": 0.5,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "in", "label": "in", "toBase": 2.54 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "hipCm",
+      "label": "Perímetro de la cadera (solo mujeres)",
+      "label_en": "Hip Circumference (females only)",
+      "type": "number",
+      "default": 96,
+      "min": 40,
+      "max": 200,
+      "step": 0.5,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "in", "label": "in", "toBase": 2.54 }
+      ],
+      "required": false,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "armyBodyFatPercent",
+      "label": "Porcentaje de Grasa Corporal Militar (AR 600-9)",
+      "label_en": "Estimated Army Body Fat Percentage (AR 600-9)",
+      "expression": "gender == 'male' ? max(86.010 * log10(max(waistCm - neckCm, 1)) - 70.041 * log10(heightCm) + 36.76, 4) : max(163.205 * log10(max(waistCm + hipCm - neckCm, 1)) - 97.684 * log10(heightCm) - 78.387, 10)",
+      "unit": "%",
+      "precision": 1,
+      "format": "percent",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "armyBodyFatPercent", "op": "<=", "value": 22 }, "label": "Cumple Estándar Militar", "label_en": "Passes Military Standard", "tone": "success", "text": "Porcentaje de grasa dentro de los límites de aptitud militar.", "text_en": "Body fat percentage compliant with official military standards." },
+        { "when": { "field": "armyBodyFatPercent", "op": ">", "value": 22 }, "label": "Excede Estándar / Requiere Reducción", "label_en": "Exceeds Standard / Reduction Needed", "tone": "warning", "text": "El porcentaje de grasa supera el límite permitido para tu rango de edad.", "text_en": "Body fat percentage exceeds maximum allowed limit for age group." }
+      ]
+    },
+    {
+      "id": "maxAllowedFatPercent",
+      "label": "Límite Máximo de Grasa Permitido para tu Edad",
+      "label_en": "Maximum Allowed Fat % for Age Group",
+      "expression": "gender == 'male' ? (ageGroup == '17_20' ? 20 : (ageGroup == '21_27' ? 22 : (ageGroup == '28_39' ? 24 : 26))) : (ageGroup == '17_20' ? 30 : (ageGroup == '21_27' ? 32 : (ageGroup == '28_39' ? 34 : 36)))",
+      "unit": "%",
+      "precision": 0,
+      "format": "percent",
+      "type": "secondary"
+    },
+    {
+      "id": "fatMassKg",
+      "label": "Masa Grasa Total",
+      "label_en": "Total Fat Mass",
+      "expression": "weightKg * (armyBodyFatPercent / 100)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "leanMassKg",
+      "label": "Masa Magra Corporal (LBM)",
+      "label_en": "Lean Body Mass (LBM)",
+      "expression": "weightKg - fatMassKg",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "body-fat-calculator", "type": "static", "message": "Compara con la fórmula de la Marina de EE. UU.", "message_en": "Compare with U.S. Navy Method", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Evaluador de Aptitud Física Militar U.S. Army",
+    "role_en": "U.S. Army Physical Fitness Evaluator",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y firme",
+    "includeData": ["armyBodyFatPercent", "maxAllowedFatPercent", "waistCm", "neckCm", "weightKg"],
+    "instructions": [
+      "Sintetiza el porcentaje de grasa corporal militar, el límite máximo permitido para el grupo de edad y la evaluación final en 2 frases concisas.",
+      "Destaca que la reducción de la circunferencia abdominal (waist) es el factor anatómico principal para aprobar la prueba."
+    ],
+    "instructions_en": [
+      "Summarize Army body fat %, maximum allowed limit for age tier, and pass/fail evaluation in 2 concise sentences.",
+      "Highlight that waist circumference reduction is the key anatomical variable to improve tape test scores."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Grasa Corporal Militar (U.S. Army AR 600-9) | CalculadoraHub",
+    "metaTitle_en": "U.S. Army Body Fat Calculator (AR 600-9 Standard) | CalculadoraHub",
+    "metaDescription": "Calcula tu porcentaje de grasa corporal con la fórmula oficial del Ejército de EE. UU. AR 600-9. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate military body fat percentage based on official U.S. Army AR 600-9 standards. Free, instant results.",
+    "keywords": ["army body fat calculator", "grasa corporal militar", "tape test army", "ar 600-9"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

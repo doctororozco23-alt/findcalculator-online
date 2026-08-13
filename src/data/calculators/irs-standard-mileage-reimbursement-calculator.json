@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "irs-standard-mileage-reimbursement-calculator",
+    "title": "Calculadora de Reembolso y Deducción Fiscal de Millaje IRS (67 cent/milla)",
+    "title_en": "IRS Standard Mileage Rate & Tax Deduction Reimbursement Calculator",
+    "slug": "calculadora-de-reembolso-deduccion-fiscal-millaje-irs-impuestos",
+    "category": "transport",
+    "subcategory": "fuel",
+    "tags": ["reembolso-de-millaje", "irs", "deduccion-de-impuestos", "millas-negocios", "gastos-de-vehiculo", "impuestos", "transporte"],
+    "tags_en": ["mileage-reimbursement", "irs-rate", "tax-deduction", "business-miles", "vehicle-expenses", "taxes", "transport"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la deducción fiscal e importe de reembolso por kilometraje/millaje de negocios según las tarifas oficiales del IRS.",
+    "shortDescription_en": "Calculate official tax deduction and mileage reimbursement amount for business driving using official IRS standard mileage rates.",
+    "longDescription": "Herramienta de contabilidad de trabajadores independientes (freelancers, Uber/Lyft, agentes comerciales) e impuestos empresariales. Aplica las tarifas estándar del IRS para negocios, fines médicos y organizaciones benéficas.",
+    "longDescription_en": "Freelancer, rideshare driver (Uber/Lyft), sales rep, and small business tax accounting tool. Applies official IRS standard rates for business, medical, and charitable driving.",
+    "howToUse": [
+      "Ingresa el Total de Millas Conducidas en el Período (ej. 2,500 millas).",
+      "Selecciona el Propósito del Viaje (Negocios 67 ¢/milla, Médico/Mudanza 21 ¢/milla, Benéfico 14 ¢/milla).",
+      "Consulta la Deducción Fiscal Total Calculada en Dólares ($)."
+    ],
+    "howToUse_en": [
+      "Enter Total Miles Driven in Period (e.g. 2,500 miles).",
+      "Select Driving Purpose (Business 67 ¢/mile, Medical/Moving 21 ¢/mile, Charitable 14 ¢/mile).",
+      "View Total Calculated Tax Deduction Amount in Dollars ($)."
+    ],
+    "methodology": "ReembolsoTotal = MillasConducidas * (TarifaIRS / 100).",
+    "methodology_en": "TotalReimbursement = DrivenMiles * (IrsRate / 100)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Deducciones Fiscales de Vehículos y Normativa IRS",
+    "role_en": "Vehicle Tax Deductions & IRS Regulations Specialist Assistant",
+    "includeData": ["totalTaxDeductionAmountResult"],
+    "instructions": [
+      "Interpreta el monto total de reembolso o deducción fiscal calculado en base a las tarifas oficiales del IRS.",
+      "Explica los requisitos del IRS para llevar un libro de registro contable (bitácora de millaje con fecha, origen, destino y motivo de negocios).",
+      "Compara el método de tarifa estándar de millaje vs el método de gastos reales (gasolina, seguro, mantenimiento, depreciación)."
+    ],
+    "instructions_en": [
+      "Interpret calculated total tax deduction or mileage reimbursement amount based on official IRS rates.",
+      "Explain IRS recordkeeping requirements for mileage logbooks (date, origin, destination, business purpose).",
+      "Compare Standard Mileage Rate method versus Actual Expenses method (gas, insurance, maintenance, depreciation)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ism-guide",
+      "icon": "💵",
+      "title": "Official IRS Mileage Rates Reference Table",
+      "title_es": "Tabla de Tarifas Oficiales de Millaje IRS",
+      "content_html_en": "<p><b>Business Driving:</b> 67 Cents ($0.67) per mile.</p><p><b>Medical / Moving (Military):</b> 21 Cents ($0.21) per mile.</p><p><b>Charitable Organization:</b> 14 Cents ($0.14) per mile.</p>",
+      "content_html": "<p><b>Conducción por Negocios:</b> 67 Centavos ($0.67) por milla.</p><p><b>Médico / Mudanza (Militar):</b> 21 Centavos ($0.21) por milla.</p><p><b>Organizaciones Benéficas:</b> 14 Centavos ($0.14) por milla.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "totalBusinessMilesDriven",
+      "label": "Total de Millas Conducidas en el Período",
+      "label_en": "Total Driven Miles in Period",
+      "type": "number",
+      "default": 3500,
+      "min": 1,
+      "max": 500000,
+      "step": 50,
+      "required": true
+    },
+    {
+      "id": "irsPurposeRateCents",
+      "label": "Propósito del Viaje (Tarifa IRS)",
+      "label_en": "Driving Purpose (IRS Rate)",
+      "type": "select",
+      "default": "67",
+      "options": [
+        { "value": "67", "label": "💼 Negocios / Trabajo Independiente (67 ¢/milla - $0.67)", "label_en": "Business / Freelance (67 ¢/mile - $0.67)" },
+        { "value": "21", "label": "🏥 Gastos Médicos / Mudanza Militar (21 ¢/milla - $0.21)", "label_en": "Medical / Military Moving (21 ¢/mile - $0.21)" },
+        { "value": "14", "label": "🎗️ Voluntariado / Organización Benéfica (14 ¢/milla - $0.14)", "label_en": "Charitable Service (14 ¢/mile - $0.14)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalTaxDeductionAmountResult",
+      "label": "Deducción Fiscal / Reembolso Total IRS ($)",
+      "label_en": "Total IRS Tax Deduction / Reimbursement ($)",
+      "expression": "totalBusinessMilesDriven * (irsPurposeRateCents / 100)",
+      "unit": "$",
+      "unit_en": "$",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalTaxDeductionAmountResult", "op": ">=", "value": 0 }, "label": "Deducción Calculada", "label_en": "Deduction Computed", "tone": "success", "text": "Monto de deducción fiscal de millaje IRS cuantificado.", "text_en": "IRS mileage tax deduction amount quantified." }
+      ]
+    }
+  ]
+}

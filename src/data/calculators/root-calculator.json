@@ -1,0 +1,120 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "root-calculator",
+    "title": "Calculadora de Raíces (Cuadrada, Cúbica y N-ésima)",
+    "title_en": "Root Calculator (Square, Cube & Nth Root)",
+    "slug": "calculadora-de-raices-cuadrada-cubica-nesima",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["raices", "raiz-cuadrada", "raiz-cubica", "radicales", "matematicas", "potencias"],
+    "tags_en": ["roots", "square-root", "cube-root", "radicals", "math", "powers"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la raíz cuadrada, cúbica y cualquier raíz n-ésima ( $\\sqrt[n]{x}$ ) de un número real con precisión decimal exacta.",
+    "shortDescription_en": "Calculate square root, cube root, and any nth root ( $\\sqrt[n]{x}$ ) of real numbers with exact precision.",
+    "longDescription": "Calculadora matemática universal para operar radicación y exponentes fraccionarios ($x^{1/n}$). Resuelve la raíz n-ésima de un radicando dado y muestra la forma simplificada del radical.",
+    "longDescription_en": "Universal math calculator for radicals and fractional exponents ($x^{1/n}$). Computes nth roots for any radicand.",
+    "howToUse": [
+      "Ingresa el valor del Radicando ($x$).",
+      "Ingresa el Índice de la raíz ($n$) (ej. 2 para raíz cuadrada, 3 para cúbica).",
+      "Consulta la raíz n-ésima calculada, la potencia de verificación ($y^n$) y la expresión en exponente fraccionario."
+    ],
+    "howToUse_en": [
+      "Enter Radicand value ($x$).",
+      "Enter Root Index ($n$) (e.g. 2 for square root, 3 for cube root).",
+      "View calculated nth root, verification power ($y^n$), and fractional exponent form."
+    ],
+    "methodology": "Definición: y = ⁿ√x  <=>  y^n = x. Exponente fraccionario: ⁿ√x = x^(1/n).",
+    "methodology_en": "Definition: y = ⁿ√x  <=>  y^n = x. Fractional exponent: ⁿ√x = x^(1/n)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Radicación y Álgebra",
+    "role_en": "Radicals & Algebra Math Specialist",
+    "includeData": ["nthRootResult", "squareRootVal", "cubeRootVal"],
+    "instructions": [
+      "Explica la equivalencia entre radicales y exponentes fraccionarios (x^(1/n)).",
+      "Analiza el comportamiento para índices pares e impares.",
+      "Muestra la verificación elevando la raíz obtenida al índice n."
+    ],
+    "instructions_en": [
+      "Explain the equivalence between radicals and fractional exponents (x^(1/n)).",
+      "Analyze behavior for even and odd root indices.",
+      "Show verification by powering the resulting root to index n."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "root-guide",
+      "icon": "√",
+      "title": "Radical Properties & Rules",
+      "title_es": "Propiedades de los Radicales y Reglas",
+      "content_html_en": "<p><b>Square Root (√x):</b> Index n = 2. Finds value y such that y² = x.</p><p><b>Cube Root (∛x):</b> Index n = 3. Finds value y such that y³ = x.</p><p><b>Nth Root (ⁿ√x):</b> Index n. Equivalent to raising x to (1/n).</p>",
+      "content_html": "<p><b>Raíz Cuadrada (√x):</b> Índice n = 2. Halla y tal que y² = x.</p><p><b>Raíz Cúbica (∛x):</b> Índice n = 3. Halla y tal que y³ = x.</p><p><b>Raíz N-ésima (ⁿ√x):</b> Índice n. Equivalente a elevar x a la (1/n).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "radicand",
+      "label": "Radicando (x)",
+      "label_en": "Radicand (x)",
+      "type": "number",
+      "default": 144,
+      "step": 0.01,
+      "required": true
+    },
+    {
+      "id": "rootIndex",
+      "label": "Índice de la Raíz (n)",
+      "label_en": "Root Index (n)",
+      "type": "number",
+      "default": 2,
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1, 100], "message": "El índice debe ser mayor o igual a 1", "message_en": "Index must be ≥ 1" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "nthRootResult",
+      "label": "Raíz N-ésima Calculada (ⁿ√x)",
+      "label_en": "Calculated Nth Root (ⁿ√x)",
+      "expression": "radicand >= 0 ? (radicand ^ (1 / rootIndex)) : -((-radicand) ^ (1 / rootIndex))",
+      "unit": "",
+      "precision": 6,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "nthRootResult", "op": ">=", "value": 0 }, "label": "Raíz Calculada Satisfactoriamente", "label_en": "Root Computed Successfully", "tone": "success", "text": "Radicación calculada en el dominio de números reales.", "text_en": "Radical evaluated in real numbers domain." }
+      ]
+    },
+    {
+      "id": "squareRootVal",
+      "label": "Raíz Cuadrada (√x)",
+      "label_en": "Square Root (√x)",
+      "expression": "radicand >= 0 ? sqrt(radicand) : 0",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "cubeRootVal",
+      "label": "Raíz Cúbica (∛x)",
+      "label_en": "Cube Root (∛x)",
+      "expression": "radicand >= 0 ? (radicand ^ (1/3)) : -((-radicand) ^ (1/3))",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

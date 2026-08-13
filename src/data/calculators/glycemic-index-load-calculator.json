@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "glycemic-index-load-calculator",
+    "title": "Calculadora de Carga Glicémica y Respuesta a Glucosa (GL & GI Harvard)",
+    "title_en": "Glycemic Load & Glucose Response Calculator (GL & GI Harvard)",
+    "slug": "carga-glicemica-indice-glicemico-gl",
+    "category": "food",
+    "subcategory": "nutrition",
+    "tags": ["carga-glicemica", "indice-glicemico", "gl", "gi", "glucemia"],
+    "tags_en": ["glycemic-load", "glycemic-index", "gl", "gi", "glucose"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Utensils"
+  },
+  "content": {
+    "shortDescription": "Calcula la Carga Glicémica (GL) real de tus raciones de comida multiplicando el Índice Glicémico por los carbohidratos netos según la Escuela de Salud Pública de Harvard.",
+    "shortDescription_en": "Calculate actual Glycemic Load (GL) of food servings by multiplying Glycemic Index by net carbs under Harvard School of Public Health standards.",
+    "longDescription": "Auditoría metabólica de impacto glucémico. A diferencia del Índice Glicémico (GI) aislado, la Carga Glicémica (GL) mide el impacto real en la glucosa en sangre al considerar la cantidad exacta de carbohidratos consumidos en la porción.",
+    "longDescription_en": "Metabolic glycemic impact audit. Unlike isolated Glycemic Index (GI), Glycemic Load (GL) measures real blood glucose impact by accounting for the exact portion size of net carbohydrates consumed.",
+    "howToUse": [
+      "Ingresa el Índice Glicémico (GI) del alimento (de 0 a 100).",
+      "Ingresa los gramos de carbohidratos totales de la ración.",
+      "Ingresa los gramos de fibra dietética en la ración.",
+      "Consulta la Carga Glicémica (GL) calculada y la evaluación del pico glucémico e insulínico."
+    ],
+    "howToUse_en": [
+      "Enter Glycemic Index (GI) of food (from 0 to 100).",
+      "Enter total carbohydrate grams in portion.",
+      "Enter dietary fiber grams in portion.",
+      "View calculated Glycemic Load (GL) and glycemic spike assessment."
+    ],
+    "methodology": "Ecuación Harvard / ADA: Carga Glicémica (GL) = (Índice Glicémico × Carbohidratos Netos_g) / 100. Categorías GL por Ración: Baja (≤ 10), Media (11-19), Alta (≥ 20).",
+    "methodology_en": "Harvard / ADA Formula: Glycemic Load (GL) = (Glycemic Index × Net Carbs_g) / 100. Serving GL Tiers: Low (≤ 10), Medium (11-19), High (≥ 20)."
+  },
+  "guideSections": [
+    {
+      "id": "gl-versus-gi-guide",
+      "icon": "🍇",
+      "title": "Why Glycemic Load (GL) Beats Glycemic Index (GI)",
+      "title_es": "Por Qué la Carga Glicémica (GL) Supera al Índice Glicémico (GI)",
+      "content_html_en": "<p><b>Watermelon Example:</b> Watermelon has a high GI (72) but very low net carbs per serving, yielding a Low GL of only 5.</p><p><b>Insulin Control:</b> Low GL meals (GL ≤ 10) prevent rapid blood sugar spikes, supporting appetite control and insulin sensitivity.</p>",
+      "content_html": "<p><b>Ejemplo de la Sandía:</b> La sandía tiene un GI alto (72) pero muy pocos carbohidratos por ración, resultando en una GL Baja de solo 5.</p><p><b>Control de Insulina:</b> Comidas con GL Baja (GL ≤ 10) previenen picos bruscos de azúcar e insulina, favoreciendo la saciedad.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "glycemicIndexGI",
+      "label": "Índice Glicémico del alimento (GI de 0 a 100)",
+      "label_en": "Food Glycemic Index (GI from 0 to 100)",
+      "type": "number",
+      "default": 55,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "GI",
+      "unit_en": "GI",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0, 100], "message": "GI entre 0 y 100", "message_en": "GI between 0 and 100" }]
+    },
+    {
+      "id": "totalCarbsGrams",
+      "label": "Carbohidratos totales de la ración",
+      "label_en": "Total Carbohydrate Grams in Portion",
+      "type": "number",
+      "default": 30,
+      "min": 0,
+      "max": 300,
+      "step": 1,
+      "unit": "g",
+      "unit_en": "g",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0, 300], "message": "Carbos entre 0 y 300 g", "message_en": "Carbs between 0 and 300 g" }]
+    },
+    {
+      "id": "fiberGrams",
+      "label": "Fibra dietética en la ración",
+      "label_en": "Dietary Fiber Grams in Portion",
+      "type": "number",
+      "default": 5,
+      "min": 0,
+      "max": 50,
+      "step": 0.5,
+      "unit": "g",
+      "unit_en": "g",
+      "required": false,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "netCarbsGrams",
+      "label": "Carbohidratos Netos Asimilables",
+      "label_en": "Net Digestible Carbohydrates",
+      "expression": "max(totalCarbsGrams - fiberGrams, 0)",
+      "unit": "g",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "glycemicLoadVal",
+      "label": "Carga Glicémica por Ración (GL)",
+      "label_en": "Serving Glycemic Load (GL)",
+      "expression": "(glycemicIndexGI * netCarbsGrams) / 100",
+      "unit": "GL",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "glycemicLoadVal", "op": "<=", "value": 10 }, "label": "Carga Glicémica Baja (GL ≤ 10)", "label_en": "Low Glycemic Load (GL ≤ 10)", "tone": "success", "text": "Respuesta glucémica e insulínica mínima y progresiva.", "text_en": "Minimal and gradual blood glucose and insulin response." },
+        { "when": { "field": "glycemicLoadVal", "op": "between", "value": [10.1, 19] }, "label": "Carga Glicémica Moderada (GL 11 - 19)", "label_en": "Medium Glycemic Load (GL 11 - 19)", "tone": "info", "text": "Respuesta glucémica intermedia bien tolerada.", "text_en": "Moderate glycemic response well tolerated in active individuals." },
+        { "when": { "field": "glycemicLoadVal", "op": ">=", "value": 19.1 }, "label": "Carga Glicémica Alta (GL ≥ 20)", "label_en": "High Glycemic Load (GL ≥ 20)", "tone": "warning", "text": "Pico glucémico e insulínico rápido en sangre.", "text_en": "Rapid blood glucose and insulin spike." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "blood-sugar-converter-calculator", "type": "static", "message": "Calcula tu glucosa promedio estimada eAG", "message_en": "Calculate estimated average glucose eAG", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Nutricionista Metabólico y Especialista en Endocrinología",
+    "role_en": "Metabolic Dietitian & Endocrinology Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y educativo",
+    "includeData": ["glycemicLoadVal", "netCarbsGrams", "glycemicIndexGI"],
+    "instructions": [
+      "Sintetiza la Carga Glicémica GL calculada, los carbohidratos netos y la respuesta a la insulina en 2 frases concisas.",
+      "Destaca que combinar carbohidratos con fibra, proteínas y grasas reduce el impacto glucémico total de la comida."
+    ],
+    "instructions_en": [
+      "Summarize calculated Glycemic Load (GL), net carbs, and insulin response in 2 concise sentences.",
+      "Highlight that combining carbs with fiber, protein, and healthy fats blunts the overall meal glycemic response."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Carga Glicémica (GL & GI Harvard) | CalculadoraHub",
+    "metaTitle_en": "Glycemic Load Calculator (GL & GI Harvard) | CalculadoraHub",
+    "metaDescription": "Calcula la Carga Glicémica (GL) real de tus comidas con la fórmula de Harvard. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate actual Glycemic Load (GL) of food portions using Harvard's formula. Free, instant results.",
+    "keywords": ["glycemic load calculator", "carga glicemica", "indice glicemico gl", "glucemia harvard"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

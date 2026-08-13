@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "day-of-the-week-calculator",
+    "title": "Calculadora del Día de la Semana de Cualquier Fecha",
+    "title_en": "Day of the Week Calculator for Any Date",
+    "slug": "calculadora-del-dia-de-la-semana-fecha",
+    "category": "datetime",
+    "subcategory": "dates",
+    "tags": ["dia-de-la-semana", "calendario", "que-dia-fue", "algoritmo-zeller", "cronologia"],
+    "tags_en": ["day-of-the-week", "calendar", "what-day-was-it", "zeller-congruence", "chronology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calendar"
+  },
+  "content": {
+    "shortDescription": "Descubre qué día de la semana (Lunes, Martes, Miércoles, etc.) fue o será cualquier fecha histórica o futura.",
+    "shortDescription_en": "Find out what day of the week (Monday, Tuesday, Wednesday, etc.) any past or future date falls on.",
+    "longDescription": "Herramienta cronológica basada en la congruencia de Zeller y cálculos de calendario gregoriano. Determina el día de la semana para cualquier fecha histórica.",
+    "longDescription_en": "Chronological tool based on Zeller's congruence and Gregorian calendar calculations. Determines the day of the week for any date.",
+    "howToUse": [
+      "Selecciona cualquier Fecha en el calendario.",
+      "Consulta el Día de la Semana obtenido (ej. Domingo, Lunes, etc.) y si es un día laborable o fin de semana."
+    ],
+    "howToUse_en": [
+      "Select any Date on the calendar.",
+      "View resulting Day of the Week (e.g., Sunday, Monday, etc.) and weekday/weekend classification."
+    ],
+    "methodology": "Algoritmo de la Congruencia de Zeller y Date.getDay() (0 = Domingo, 1 = Lunes, ..., 6 = Sábado).",
+    "methodology_en": "Zeller's Congruence algorithm and Date.getDay() (0 = Sunday, 1 = Monday, ..., 6 = Saturday)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Calendarios e Historia Cronológica",
+    "role_en": "Calendar & Chronological History Specialist Assistant",
+    "includeData": ["dayOfWeekIndexVal"],
+    "instructions": [
+      "Identifica el día de la semana correspondiente a la fecha seleccionada.",
+      "Clasifica si la fecha cae en fin de semana (Sábado/Domingo) o día laborable.",
+      "Muestra hechos o detalles del calendario gregoriano."
+    ],
+    "instructions_en": [
+      "Identify corresponding day of the week for the selected date.",
+      "Classify whether the date falls on a weekend or weekday.",
+      "Show interesting Gregorian calendar facts."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "dow-guide",
+      "icon": "🗓️",
+      "title": "Zeller's Congruence & Calendar Systems",
+      "title_es": "Congruencia de Zeller y Sistemas de Calendario",
+      "content_html_en": "<p><b>Zeller's Congruence:</b> Algorithm devised by Christian Zeller to calculate the day of the week for any Julian or Gregorian calendar date.</p>",
+      "content_html": "<p><b>Congruencia de Zeller:</b> Algoritmo ideado por Christian Zeller para calcular el día de la semana de cualquier fecha del calendario juliano o gregoriano.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "targetQueryDate",
+      "label": "Fecha a Consultar",
+      "label_en": "Date to Query",
+      "type": "date",
+      "default": "1969-07-20",
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "dayOfWeekIndexVal",
+      "label": "Índice del Día (0=Dom, 1=Lun ... 6=Sáb)",
+      "label_en": "Day Index (0=Sun, 1=Mon ... 6=Sat)",
+      "expression": "dayOfWeekIndex(targetQueryDate)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "dayOfWeekIndexVal", "op": "==", "value": 0 }, "label": "DOMINGO", "label_en": "SUNDAY", "tone": "info", "text": "Fin de Semana (Domingo).", "text_en": "Weekend (Sunday)." },
+        { "when": { "field": "dayOfWeekIndexVal", "op": "==", "value": 1 }, "label": "LUNES", "label_en": "MONDAY", "tone": "success", "text": "Día Laborable (Lunes).", "text_en": "Weekday (Monday)." },
+        { "when": { "field": "dayOfWeekIndexVal", "op": "==", "value": 2 }, "label": "MARTES", "label_en": "TUESDAY", "tone": "success", "text": "Día Laborable (Martes).", "text_en": "Weekday (Tuesday)." },
+        { "when": { "field": "dayOfWeekIndexVal", "op": "==", "value": 3 }, "label": "MIÉRCOLES", "label_en": "WEDNESDAY", "tone": "success", "text": "Día Laborable (Miércoles).", "text_en": "Weekday (Wednesday)." },
+        { "when": { "field": "dayOfWeekIndexVal", "op": "==", "value": 4 }, "label": "JUEVES", "label_en": "THURSDAY", "tone": "success", "text": "Día Laborable (Jueves).", "text_en": "Weekday (Thursday)." },
+        { "when": { "field": "dayOfWeekIndexVal", "op": "==", "value": 5 }, "label": "VIERNES", "label_en": "FRIDAY", "tone": "success", "text": "Día Laborable (Viernes).", "text_en": "Weekday (Friday)." },
+        { "when": { "field": "dayOfWeekIndexVal", "op": "==", "value": 6 }, "label": "SÁBADO", "label_en": "SATURDAY", "tone": "info", "text": "Fin de Semana (Sábado).", "text_en": "Weekend (Saturday)." }
+      ]
+    }
+  ]
+}

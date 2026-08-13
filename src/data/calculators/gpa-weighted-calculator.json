@@ -1,0 +1,160 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "gpa-weighted-calculator",
+    "title": "Calculadora de Promedio Ponderado de Calificaciones GPA (Escala 4.0)",
+    "title_en": "Weighted GPA Calculator (4.0 Grade Scale)",
+    "slug": "calculadora-de-promedio-ponderado-de-calificaciones-gpa-4-0",
+    "category": "education",
+    "subcategory": "grades",
+    "tags": ["gpa", "promedio-gpa", "gpa-ponderado", "creditos-universitarios", "calificaciones", "educacion"],
+    "tags_en": ["gpa", "weighted-gpa", "gpa-calculator", "college-credits", "grades", "education"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula tu promedio acumulado de calificaciones GPA en escala 4.0 ponderado por el número de créditos universitarios de cada asignatura.",
+    "shortDescription_en": "Calculate your cumulative GPA on a 4.0 scale weighted by credit hours for each college course.",
+    "longDescription": "Herramienta de nivel universitario y secundario. Multiplica la calificación de cada curso por sus créditos para obtener la nota media ponderada.",
+    "longDescription_en": "College and high school academic tool. Multiplies course grade points by credit hours to compute weighted average GPA.",
+    "howToUse": [
+      "Ingresa el Promedio de Puntos GPA de la Asignatura 1 (0.0 a 4.0).",
+      "Ingresa los Créditos de la Asignatura 1 (ej. 3 créditos).",
+      "Ingresa las notas y créditos de las asignaturas adicionales.",
+      "Consulta el GPA Ponderado Final y el Total de Créditos Cursados."
+    ],
+    "howToUse_en": [
+      "Enter Grade Point Average for Course 1 (0.0 to 4.0).",
+      "Enter Credit Hours for Course 1 (e.g. 3 credits).",
+      "Enter grade points and credits for additional courses.",
+      "View Final Weighted GPA and Total Course Credits Earned."
+    ],
+    "methodology": "GPA Ponderado = Σ(PuntosGPA * Créditos) / Σ(Créditos Totales).",
+    "methodology_en": "Weighted GPA = Σ(GradePoints * Credits) / Σ(Total Credits)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Asesoría Académica Universitaria y GPA",
+    "role_en": "College Academic Advising & GPA Specialist Assistant",
+    "includeData": ["finalWeightedGpaResult", "totalCourseCreditsSum"],
+    "instructions": [
+      "Interpreta el resultado del promedio ponderado GPA obtenido en escala 4.0.",
+      "Clasifica el rendimiento académico (GPA 3.8-4.0 Summa Cum Laude / Sobresaliente, GPA 3.5-3.7 Magna Cum Laude / Notable, GPA 3.0-3.4 Bueno, GPA < 2.0 En Riesgo Académico).",
+      "Proporciona recomendaciones para elevar el GPA acumulado en semestres posteriores."
+    ],
+    "instructions_en": [
+      "Interpret final calculated weighted GPA result on a 4.0 scale.",
+      "Classify academic standing honors (GPA 3.8-4.0 Summa Cum Laude / Outstanding, GPA 3.5-3.7 Magna Cum Laude, GPA 3.0-3.4 Good, GPA < 2.0 Academic Probation Risk).",
+      "Provide actionable advice to raise cumulative GPA in subsequent semesters."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "gwc-guide",
+      "icon": "🎓",
+      "title": "US 4.0 GPA Grade Conversion Scale",
+      "title_es": "Escala de Conversión de GPA 4.0 EE.UU.",
+      "content_html_en": "<p><b>A (93-100%):</b> 4.0 points</p><p><b>A- (90-92%):</b> 3.7 points</p><p><b>B+ (87-89%):</b> 3.3 points</p><p><b>B (83-86%):</b> 3.0 points</p><p><b>C (73-76%):</b> 2.0 points</p><p><b>F (&lt;60%):</b> 0.0 points</p>",
+      "content_html": "<p><b>A (93-100%):</b> 4.0 puntos</p><p><b>A- (90-92%):</b> 3.7 puntos</p><p><b>B+ (87-89%):</b> 3.3 puntos</p><p><b>B (83-86%):</b> 3.0 puntos</p><p><b>C (73-76%):</b> 2.0 puntos</p><p><b>F (&lt;60%):</b> 0.0 puntos</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "course1GpaPoints",
+      "label": "Nota Curso 1 (Puntos 0.0 - 4.0)",
+      "label_en": "Course 1 Grade (Points 0.0 - 4.0)",
+      "type": "number",
+      "default": 3.7,
+      "min": 0,
+      "max": 4.0,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "course1CreditsNum",
+      "label": "Créditos Curso 1",
+      "label_en": "Course 1 Credit Hours",
+      "type": "number",
+      "default": 4,
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "course2GpaPoints",
+      "label": "Nota Curso 2 (Puntos 0.0 - 4.0)",
+      "label_en": "Course 2 Grade (Points 0.0 - 4.0)",
+      "type": "number",
+      "default": 3.0,
+      "min": 0,
+      "max": 4.0,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "course2CreditsNum",
+      "label": "Créditos Curso 2",
+      "label_en": "Course 2 Credit Hours",
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "course3GpaPoints",
+      "label": "Nota Curso 3 (Puntos 0.0 - 4.0)",
+      "label_en": "Course 3 Grade (Points 0.0 - 4.0)",
+      "type": "number",
+      "default": 4.0,
+      "min": 0,
+      "max": 4.0,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "course3CreditsNum",
+      "label": "Créditos Curso 3",
+      "label_en": "Course 3 Credit Hours",
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalCourseCreditsSum",
+      "label": "Total de Créditos Cursados",
+      "label_en": "Total Credits Earned",
+      "expression": "course1CreditsNum + course2CreditsNum + course3CreditsNum",
+      "unit": "créditos",
+      "unit_en": "credits",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "finalWeightedGpaResult",
+      "label": "Promedio Ponderado GPA Final (0.0 - 4.0)",
+      "label_en": "Final Weighted GPA (0.0 - 4.0)",
+      "expression": "totalCourseCreditsSum > 0 ? ((course1GpaPoints * course1CreditsNum) + (course2GpaPoints * course2CreditsNum) + (course3GpaPoints * course3CreditsNum)) / totalCourseCreditsSum : 0",
+      "unit": "GPA",
+      "unit_en": "GPA",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "finalWeightedGpaResult", "op": ">=", "value": 3.5 }, "label": "Honor Académico Outstanding", "label_en": "Academic Distinction", "tone": "success", "text": "Excelente promedio GPA ponderado acumulado.", "text_en": "Excellent cumulative weighted GPA." },
+        { "when": { "field": "finalWeightedGpaResult", "op": "<", "value": 2.0 }, "label": "Alerta de Riesgo", "label_en": "Risk Warning", "tone": "danger", "text": "Promedio por debajo del umbral de aprobación estándar.", "text_en": "GPA below standard graduation passing threshold." }
+      ]
+    }
+  ]
+}

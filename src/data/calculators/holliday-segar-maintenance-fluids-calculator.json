@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "holliday-segar-maintenance-fluids-calculator",
+    "title": "Calculadora de Fluidoterapia de Mantenimiento Pediátrica (Regla 4-2-1 de Holliday-Segar)",
+    "title_en": "Holliday-Segar Pediatric Maintenance Fluids Calculator (4-2-1 Rule)",
+    "slug": "holliday-segar-fluidoterapia-mantenimiento-pediatria",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["holliday-segar", "fluidoterapia", "pediatria", "regla-4-2-1", "suero-mantenimiento", "deshidratacion"],
+    "tags_en": ["holliday-segar", "fluids", "pediatric", "4-2-1-rule", "maintenance-iv", "dehydration"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula la tasa de infusión IV horaria (mL/h) y el volumen total de 24 horas para mantenimiento pediátrico mediante la regla 4-2-1 de Holliday-Segar.",
+    "shortDescription_en": "Calculate hourly IV infusion rate (mL/h) and 24-hour total maintenance volume for children using the Holliday-Segar 4-2-1 rule.",
+    "longDescription": "Estándar clínico pediátrico (Holliday & Segar / Guías AAP 2018). Aplica la regla 4-2-1: 4 mL/kg/h para los primeros 10 kg + 2 mL/kg/h para los siguientes 10 kg + 1 mL/kg/h por cada kg adicional.",
+    "longDescription_en": "Pediatric clinical standard (Holliday & Segar / AAP 2018 Guidelines). Applies 4-2-1 rule based on child body weight.",
+    "howToUse": [
+      "Ingresa el peso corporal del niño en kilogramos (kg).",
+      "Consulta la tasa de infusión IV por hora (mL/h) y el volumen total diario de 24 horas."
+    ],
+    "howToUse_en": [
+      "Enter child body weight in kilograms (kg).",
+      "Review hourly IV infusion rate (mL/h) and 24-hour total maintenance volume."
+    ],
+    "methodology": "Regla 4-2-1: Peso 1-10 kg: 4 mL/kg/h. Peso 11-20 kg: 40 + 2 mL/kg/h por encima de 10 kg. Peso > 20 kg: 60 + 1 mL/kg/h por encima de 20 kg.",
+    "methodology_en": "4-2-1 Rule: Weight 1-10 kg: 4 mL/kg/h. Weight 11-20 kg: 40 + 2 mL/kg/h over 10 kg. Weight > 20 kg: 60 + 1 mL/kg/h over 20 kg."
+  },
+  "guideSections": [
+    {
+      "id": "holliday-guide",
+      "icon": "💧",
+      "title": "AAP 2018 Maintenance Solution Recommendations",
+      "title_es": "Recomendaciones de Soluciones de Mantenimiento (AAP 2018)",
+      "content_html_en": "<p><b>Isotonic Fluids:</b> Use 0.9% Normal Saline + 5% Dextrose (+ 20 mEq/L KCl) to prevent hospital-acquired hyponatremia.</p><p><b>Avoid Hypotonic Fluids:</b> Do not use 0.2% or 0.45% Saline as routine maintenance in hospitalized children.</p>",
+      "content_html": "<p><b>Soluciones Isotónicas:</b> Utilizar Suero Salino 0.9% + Dextrosa 5% (+ 20 mEq/L KCl) para prevenir la hiponatremia nosocomial.</p><p><b>Evitar Soluciones Hipotónicas:</b> No utilizar salino al 0.2% o 0.45% de forma rutinaria como mantenimiento en niños hospitalizados.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "weightKg",
+      "label": "Peso corporal del niño (kg)",
+      "label_en": "Child Body Weight (kg)",
+      "type": "number",
+      "default": 15,
+      "min": 1,
+      "max": 100,
+      "step": 0.5,
+      "unit": "kg",
+      "unit_en": "kg",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1, 100], "message": "Peso entre 1 y 100 kg", "message_en": "Weight between 1 and 100 kg" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "hourlyRateMlH",
+      "label": "Tasa de Infusión IV Horaria",
+      "label_en": "Hourly IV Infusion Rate",
+      "expression": "weightKg <= 10 ? (weightKg * 4) : (weightKg <= 20 ? (40 + (weightKg - 10) * 2) : (60 + (weightKg - 20) * 1))",
+      "unit": "mL/h",
+      "unit_en": "mL/h",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "hourlyRateMlH", "op": ">", "value": 0 }, "label": "Tasa de Infusión Pediátrica Calculada", "label_en": "Calculated Pediatric Infusion Rate", "tone": "success", "text": "Utilizar solución isotónica (Suero Salino 0.9% + Glucosa 5% + KCl 20 mEq/L).", "text_en": "Use isotonic solution (0.9% Normal Saline + D5W + 20 mEq/L KCl)." }
+      ]
+    },
+    {
+      "id": "dailyVolumeMl",
+      "label": "Volumen Total de 24 Horas",
+      "label_en": "Total 24-Hour Maintenance Volume",
+      "expression": "hourlyRateMlH * 24",
+      "unit": "mL/día",
+      "unit_en": "mL/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

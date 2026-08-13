@@ -1,0 +1,109 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "random-number-generator",
+    "title": "Generador de Números Aleatorios y Sorteos",
+    "title_en": "Random Number & Raffle Generator",
+    "slug": "generador-de-numeros-aleatorios-sorteos",
+    "category": "math",
+    "subcategory": "number-systems",
+    "tags": ["aleatorio", "generador-aleatorio", "random", "sorteo", "azar", "probabilidad"],
+    "tags_en": ["random", "random-generator", "raffle", "chance", "probability"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Genera valores numéricos aleatorios enteros o decimales entre un rango configurable de valor Mínimo y Máximo.",
+    "shortDescription_en": "Generate pseudo-random integer or decimal numbers within a configurable Minimum and Maximum range.",
+    "longDescription": "Herramienta de simulación, probabilidades y sorteos. Genera números aleatorios pseudo-uniformes en el rango especificado $[Min, Max]$.",
+    "longDescription_en": "Simulation, probability, and raffle tool. Generates pseudo-uniform random numbers in range $[Min, Max]$.",
+    "howToUse": [
+      "Ingresa el Valor Mínimo del rango.",
+      "Ingresa el Valor Máximo del rango ($Max > Min$).",
+      "Consulta el Número Aleatorio generado y la amplitud del rango."
+    ],
+    "howToUse_en": [
+      "Enter Minimum range value.",
+      "Enter Maximum range value ($Max > Min$).",
+      "View generated Random Number and range span."
+    ],
+    "methodology": "Generación Pseudo-aleatoria uniforme: floor(random() * (Max - Min + 1)) + Min.",
+    "methodology_en": "Uniform pseudo-random generation: floor(random() * (Max - Min + 1)) + Min."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Distribución Uniforme y Azar",
+    "role_en": "Uniform Distribution & Randomness Specialist Assistant",
+    "includeData": ["randomGeneratedVal", "rangeSpan"],
+    "instructions": [
+      "Explica la distribución uniforme continua/discreta en el intervalo [Min, Max].",
+      "Demuestra la equiprobabilidad de cada entero en el rango.",
+      "Identifica aplicaciones en experimentos Monte Carlo y criptografía."
+    ],
+    "instructions_en": [
+      "Explain uniform continuous/discrete distribution on [Min, Max].",
+      "Demonstrate equiprobability of each integer in range.",
+      "Identify Monte Carlo experiment and cryptography applications."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "rand-guide",
+      "icon": "🎲",
+      "title": "Pseudo-Random Number Generation",
+      "title_es": "Generación de Números Pseudo-Aleatorios",
+      "content_html_en": "<p><b>Uniform Distribution:</b> Every number within range [Min, Max] has equal probability of being selected (P = 1 / RangeSpan).</p><p><b>Applications:</b> Statistical sampling, gaming, simulations, and raffles.</p>",
+      "content_html": "<p><b>Distribución Uniforme:</b> Cada número en el rango [Mín, Máx] posee la misma probabilidad de ser seleccionado (P = 1 / Amplitud).</p><p><b>Aplicaciones:</b> Muestreo estadístico, juegos, simulaciones y sorteos.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "minRange",
+      "label": "Valor Mínimo",
+      "label_en": "Minimum Value",
+      "type": "number",
+      "default": 1,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "maxRange",
+      "label": "Valor Máximo",
+      "label_en": "Maximum Value",
+      "type": "number",
+      "default": 100,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [-1000000, 1000000], "message": "El máximo debe ser superior al mínimo", "message_en": "Max must be greater than Min" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "rangeSpan",
+      "label": "Amplitud del Rango (Máx − Mín + 1)",
+      "label_en": "Range Span (Max − Min + 1)",
+      "expression": "maxRange >= minRange ? (maxRange - minRange + 1) : 1",
+      "unit": "valores",
+      "unit_en": "values",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "randomGeneratedVal",
+      "label": "Número Aleatorio Generado",
+      "label_en": "Generated Random Number",
+      "expression": "maxRange >= minRange ? (minRange + floor(random() * rangeSpan)) : minRange",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "randomGeneratedVal", "op": ">=", "value": 0 }, "label": "Número Aleatorio Generado", "label_en": "Random Number Generated", "tone": "success", "text": "Valor pseudo-aleatorio obtenido en la muestra.", "text_en": "Pseudo-random value obtained in sample." }
+      ]
+    }
+  ]
+}

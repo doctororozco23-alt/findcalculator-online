@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "wall-framing-studs-calculator",
+    "title": "Calculadora de Pernos de Madera y Estructura de Tabiques (Studs)",
+    "title_en": "Wall Framing Studs & Plate Materials Calculator",
+    "slug": "calculadora-de-pernos-de-madera-estructura-de-tabiques-studs",
+    "category": "construction",
+    "subcategory": "remodeling",
+    "tags": ["pernos-de-madera", "studs", "framing", "tabiques", "estructura-de-madera", "construccion", "reformas"],
+    "tags_en": ["wall-studs", "studs", "framing", "partition-wall", "wood-framing", "construction", "remodeling"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el número de pies derechos / pernos de madera (studs 2x4 o 2x6) y soleras para entramados de muros.",
+    "shortDescription_en": "Calculate number of wood studs (2x4 or 2x6) and top/bottom plates needed for wall framing.",
+    "longDescription": "Herramienta de carpintería estructural y edificación. Determina la cantidad de pernos verticales según la separación estándar (16 o 24 pulgadas OC) y soleras superior e inferior.",
+    "longDescription_en": "Structural carpentry and building tool. Determines vertical stud count based on standard spacing (16 or 24 inches OC) plus top and bottom plates.",
+    "howToUse": [
+      "Ingresa la Longitud Total de la Pared / Tabique (en metros o pies).",
+      "Selecciona la Separación entre Pernos (16 pulgadas / 40 cm OC o 24 pulgadas / 60 cm OC).",
+      "Ingresa el Número de Esquinas y Pasos de Puertas / Ventanas.",
+      "Consulta el Número Total de Pernos (Studs) y Pies Lineales de Soleras."
+    ],
+    "howToUse_en": [
+      "Enter Total Wall Length (in meters or feet).",
+      "Select Stud Spacing (16 inches / 40 cm OC or 24 inches / 60 cm OC).",
+      "Enter Number of Corners and Door/Window Openings.",
+      "View Total Stud Count and Plate Linear Footage."
+    ],
+    "methodology": "Pernos Base = ceil(LongitudPared / Separacion) + 1. Adicionales: 2 pernos por esquina + 2 por abertura. Soleras = 3 * LongitudPared (1 inferior + 2 superiores).",
+    "methodology_en": "Base Studs = ceil(WallLength / Spacing) + 1. Extras: 2 studs per corner + 2 per opening. Plates = 3 * WallLength (1 bottom + 2 top)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Carpintería Estructural y Entramados de Madera",
+    "role_en": "Structural Carpentry & Timber Framing Specialist Assistant",
+    "includeData": ["totalStudsCountResult", "totalPlatesLinearMetersResult"],
+    "instructions": [
+      "Interpreta la cantidad de pernos y soleras calculada para el entramado.",
+      "Explica la diferencia entre la separación a 16 pulgadas OC (resistencia estructural) vs 24 pulgadas OC (técnica OVE de eficiencia de madera).",
+      "Aconseja un margen de desperdicio del 10% por madera alabeada o recortes."
+    ],
+    "instructions_en": [
+      "Interpret calculated stud and plate counts for framing.",
+      "Explain difference between 16-inch OC spacing (standard load capacity) vs 24-inch OC spacing (advanced framing OVE technique).",
+      "Advise a 10% waste margin for warped lumber or cut-offs."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "wfs-guide",
+      "icon": "🔨",
+      "title": "Wall Framing Standard Spacing Rules",
+      "title_es": "Reglas de Separación Estándar en Tabiquería",
+      "content_html_en": "<p><b>16 Inches OC (40.6 cm):</b> Standard load-bearing exterior wall spacing.</p><p><b>24 Inches OC (60.9 cm):</b> Interior non-bearing wall or advanced framing spacing.</p><p><b>Plates:</b> 1 treated bottom plate + 2 top plates.</p>",
+      "content_html": "<p><b>16 Pulgadas OC (40.6 cm):</b> Separación estándar para muros exteriores de carga.</p><p><b>24 Pulgadas OC (60.9 cm):</b> Separación para tabiques interiores o entramado avanzado.</p><p><b>Soleras:</b> 1 solera inferior tratada + 2 soleras superiores.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "wallLengthMeters",
+      "label": "Longitud Total de la Pared (metros)",
+      "label_en": "Total Wall Length (meters)",
+      "type": "number",
+      "default": 6.0,
+      "min": 0.5,
+      "max": 500,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "studSpacingMeterVal",
+      "label": "Separación Entre Pernos (OC)",
+      "label_en": "Stud Spacing (OC)",
+      "type": "select",
+      "default": "0.4064",
+      "options": [
+        { "value": "0.4064", "label": "16 Pulgadas (40.6 cm OC - Estándar)", "label_en": "16 Inches (40.6 cm OC - Standard)" },
+        { "value": "0.6096", "label": "24 Pulgadas (61.0 cm OC - Ligero)", "label_en": "24 Inches (61.0 cm OC - Light)" }
+      ]
+    },
+    {
+      "id": "wallCornersCount",
+      "label": "Número de Esquinas e Intersecciones",
+      "label_en": "Number of Corners & Intersections",
+      "type": "number",
+      "default": 2,
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "doorWindowOpeningsCount",
+      "label": "Número de Puertas y Ventanas",
+      "label_en": "Number of Door & Window Openings",
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "baseStudsCountResult",
+      "label": "Pernos Base de Tramo Recto",
+      "label_en": "Base Straight Wall Studs",
+      "expression": "ceil(wallLengthMeters / studSpacingMeterVal) + 1",
+      "unit": "unidades",
+      "unit_en": "units",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalStudsCountResult",
+      "label": "Total de Pernos (Studs) Requeridos (con esquinas y vanos)",
+      "label_en": "Total Required Studs (incl. corners & openings)",
+      "expression": "ceil((baseStudsCountResult + (wallCornersCount * 2) + (doorWindowOpeningsCount * 2)) * 1.1)",
+      "unit": "unidades",
+      "unit_en": "units",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalStudsCountResult", "op": ">=", "value": 0 }, "label": "Pernos Calculados", "label_en": "Studs Computed", "tone": "success", "text": "Número total de pies derechos con desperdicio evaluado.", "text_en": "Total vertical stud count with waste evaluated." }
+      ]
+    },
+    {
+      "id": "totalPlatesLinearMetersResult",
+      "label": "Metros Lineales de Soleras (1 Inferior + 2 Superiores)",
+      "label_en": "Plates Linear Meters (1 Bottom + 2 Top)",
+      "expression": "wallLengthMeters * 3 * 1.05",
+      "unit": "m",
+      "unit_en": "m",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

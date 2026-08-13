@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "business-loan-calculator",
+    "title": "Calculadora de Préstamo Empresarial",
+    "title_en": "Business Loan Repayment Calculator",
+    "slug": "prestamo-empresarial-negocios",
+    "category": "finance",
+    "subcategory": "business",
+    "tags": ["prestamo-empresarial", "credito-pyme", "amortizacion"],
+    "tags_en": ["business-loan", "sba-loan", "amortization"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Briefcase"
+  },
+  "content": {
+    "shortDescription": "Calcula la cuota mensual de amortización y los costes financieros de un préstamo comercial o crédito para PYMEs.",
+    "shortDescription_en": "Calculate monthly installment payment and total financing cost for commercial or business loans.",
+    "longDescription": "Estima el cuadro de pagos mensual de un crédito comercial de capital de trabajo, adquisición de maquinaria o préstamo bancario para PYMEs.",
+    "longDescription_en": "Estimate monthly debt repayment schedule for commercial equipment financing, working capital loans, or business bank debt.",
+    "howToUse": [
+      "Ingresa el monto del préstamo comercial financiado.",
+      "Establece la tasa de interés anual de la deuda empresarial (%).",
+      "Indica el plazo de amortización en años.",
+      "Añade comisiones de apertura (origination fee %) y consulta la cuota mensual."
+    ],
+    "howToUse_en": [
+      "Enter financed commercial business loan amount and active currency.",
+      "Set annual business loan interest rate (%).",
+      "Enter loan repayment term in years.",
+      "Add upfront origination fee (%) and view total monthly payment."
+    ],
+    "methodology": "Fórmula Préstamo Empresarial: Cuota = Capital × [ (r / 12) / (1 - (1 + r / 12)^-(Años × 12)) ] + Comisiones.",
+    "methodology_en": "Business Loan Formula: Monthly Payment = Principal × [ (r / 12) / (1 - (1 + r / 12)^-(Years × 12)) ] + Origination Fee."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "💼",
+      "title": "Commercial Loan Amortization & Debt Service Coverage",
+      "title_es": "Amortización de Préstamos Comerciales y Cobertura de Deuda",
+      "content_html_en": "<p>Commercial lenders evaluate your Debt Service Coverage Ratio (DSCR) to ensure operating cash flows easily cover monthly loan repayments.</p>",
+      "content_html": "<p>Las entidades financieras evalúan la Cobertura del Servicio de Deuda (DSCR) para comprobar que el flujo operativo cubre las cuotas mensuales.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "businessLoanAmount",
+      "label": "Monto del préstamo empresarial",
+      "label_en": "Commercial Loan Principal Amount",
+      "type": "currency",
+      "default": 100000,
+      "min": 5000,
+      "max": 10000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [5000, 10000000], "message": "Monto entre 5.000 y 10.000.000", "message_en": "Amount between 5,000 and 10,000,000" }]
+    },
+    {
+      "id": "annualInterestRate",
+      "label": "Tasa de interés anual de la deuda (%)",
+      "label_en": "Annual Loan Interest Rate (%)",
+      "type": "number",
+      "default": 7.5,
+      "min": 0.1,
+      "max": 30,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "loanYears",
+      "label": "Plazo de amortización (años)",
+      "label_en": "Repayment Term (years)",
+      "type": "slider",
+      "default": 5,
+      "min": 1,
+      "max": 25,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "originationFeePercent",
+      "label": "Comisión de apertura u originación (%)",
+      "label_en": "Upfront Origination Fee (%)",
+      "type": "slider",
+      "default": 1.5,
+      "min": 0,
+      "max": 5.0,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "upfrontFeeAmount",
+      "label": "Comisión inicial de apertura en dinero",
+      "label_en": "Upfront Origination Fee Cash Amount",
+      "expression": "businessLoanAmount * (originationFeePercent / 100)",
+      "unit": { "follows": "businessLoanAmount" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "monthlyLoanPayment",
+      "label": "Cuota Mensual del Préstamo Empresarial",
+      "label_en": "Monthly Commercial Loan Payment",
+      "expression": "businessLoanAmount * (annualInterestRate / 1200) / (1 - (1 + annualInterestRate / 1200) ^ -(loanYears * 12))",
+      "unit": { "follows": "businessLoanAmount" },
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "monthlyLoanPayment", "op": ">", "value": 0 }, "label": "Cuota Comercial Calculada", "label_en": "Commercial Loan Installment", "tone": "info", "text": "Cuota mensual fensa para atender la deuda empresarial.", "text_en": "Fixed monthly payment required for commercial loan repayment." }
+      ]
+    },
+    {
+      "id": "totalInterestPaid",
+      "label": "Total intereses financieros pagados",
+      "label_en": "Total Finance Interest Paid",
+      "expression": "(monthlyLoanPayment * loanYears * 12) - businessLoanAmount",
+      "unit": { "follows": "businessLoanAmount" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "personal-loan-calculator", "type": "static", "message": "Compara con un préstamo personal", "message_en": "Compare with personal loan options", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Créditos Empresariales y PYMEs",
+    "role_en": "Commercial Lending Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y ejecutivo",
+    "includeData": ["monthlyLoanPayment", "totalInterestPaid", "upfrontFeeAmount", "businessLoanAmount"],
+    "instructions": [
+      "Sintetiza la cuota mensual del préstamo comercial y el total de intereses en 2 frases concisas.",
+      "Destaca que el flujo de caja del negocio debe absorber la cuota mensual holgadamente."
+    ],
+    "instructions_en": [
+      "Summarize monthly commercial loan payment and total interest costs in 2 concise sentences.",
+      "Highlight that operating cash flows must comfortably service monthly loan obligations."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Préstamo Empresarial | CalculadoraHub",
+    "metaTitle_en": "Business Loan Repayment Calculator | CalculadoraHub",
+    "metaDescription": "Calcula la cuota mensual y el coste total de intereses de tu préstamo empresarial. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate monthly installment payments and total interest costs for business loans. Free, instant results.",
+    "keywords": ["business loan calculator", "prestamo empresarial", "credito pyme", "amortizacion comercial"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

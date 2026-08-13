@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "speed-distance-time-travel-calculator",
+    "title": "Calculadora de Tiempo de Viaje, Distancia y Velocidad Media (d = v × t)",
+    "title_en": "Travel Time, Distance & Average Speed Calculator (d = v × t)",
+    "slug": "calculadora-de-tiempo-de-viaje-distancia-velocidad-media",
+    "category": "transport",
+    "subcategory": "fuel",
+    "tags": ["tiempo-de-viaje", "distancia", "velocidad-media", "cinematica", "duracion-de-trayecto", "transporte"],
+    "tags_en": ["travel-time", "distance", "average-speed", "kinematics", "trip-duration", "transport"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el tiempo de viaje necesario, la distancia recorrida o la velocidad media requerida utilizando la ecuación fundamental cinemática.",
+    "shortDescription_en": "Calculate necessary travel time, distance covered, or required average speed using fundamental kinematic relationship.",
+    "longDescription": "Herramienta de planificación de viajes en coche, tren, autobús y logística terrestre. Permite estimar horas y minutos de llegada.",
+    "longDescription_en": "Car, train, bus, and land logistics travel planner. Estimates arrival hours and minutes.",
+    "howToUse": [
+      "Ingresa la Distancia del Viaje (millas o km, ej. 300 millas).",
+      "Ingresa la Velocidad Media Estimada (mph o km/h, ej. 60 mph).",
+      "Consulta el Tiempo de Viaje en Horas Decimales, Horas + Minutos y Ritmo de Viaje."
+    ],
+    "howToUse_en": [
+      "Enter Trip Distance (miles or km, e.g. 300 miles).",
+      "Enter Estimated Average Speed (mph or km/h, e.g. 60 mph).",
+      "View Travel Time in Decimal Hours, Hours + Minutes, and Travel Pace."
+    ],
+    "methodology": "TiempoHoras = Distancia / VelocidadMedia. Minutos = (TiempoHoras - floor(TiempoHoras)) * 60.",
+    "methodology_en": "TravelHours = Distance / AverageSpeed. Minutes = (TravelHours - floor(TravelHours)) * 60."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Planificación de Rutas y Cinemática de Transporte",
+    "role_en": "Route Planning & Transport Kinematics Specialist Assistant",
+    "includeData": ["travelTimeDecimalHoursResult", "travelTimeMinutesPortionResult"],
+    "instructions": [
+      "Interpreta la duración estimada del viaje expresada en horas y minutos.",
+      "Explica cómo influyen el tráfico pesado, las paradas de descanso y los peajes en la velocidad media real.",
+      "Muestra recomendaciones para planificar la hora de salida y evitar retenciones."
+    ],
+    "instructions_en": [
+      "Interpret estimated trip duration expressed in hours and minutes.",
+      "Explain how heavy traffic, rest stops, and toll booths reduce real-world average speed.",
+      "Show recommendations for departure timing to avoid highway traffic congestion."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "sdt-guide",
+      "icon": "🚗",
+      "title": "Kinematic Distance Formulas",
+      "title_es": "Fórmulas Cinemáticas de Distancia",
+      "content_html_en": "<p><b>Time:</b> t = d / v</p><p><b>Distance:</b> d = v × t</p><p><b>Speed:</b> v = d / t</p>",
+      "content_html": "<p><b>Tiempo:</b> t = d / v</p><p><b>Distancia:</b> d = v × t</p><p><b>Velocidad:</b> v = d / t</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "travelTripDistanceInput",
+      "label": "Distancia del Viaje (millas o km)",
+      "label_en": "Trip Distance (miles or km)",
+      "type": "number",
+      "default": 350,
+      "min": 1,
+      "max": 50000,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "averageTravelSpeedInput",
+      "label": "Velocidad Media del Vehículo (mph o km/h)",
+      "label_en": "Vehicle Average Speed (mph or km/h)",
+      "type": "number",
+      "default": 65,
+      "min": 5,
+      "max": 300,
+      "step": 5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "travelTimeDecimalHoursResult",
+      "label": "Tiempo de Viaje en Horas Decimales",
+      "label_en": "Travel Time in Decimal Hours",
+      "expression": "averageTravelSpeedInput > 0 ? (travelTripDistanceInput / averageTravelSpeedInput) : 0",
+      "unit": "horas",
+      "unit_en": "hours",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "travelTimeDecimalHoursResult", "op": ">=", "value": 0 }, "label": "Tiempo Calculado", "label_en": "Time Computed", "tone": "success", "text": "Tiempo estimado de travesía cuantificado.", "text_en": "Estimated travel duration quantified." }
+      ]
+    },
+    {
+      "id": "travelTimeWholeHoursResult",
+      "label": "Horas Enteras del Viaje",
+      "label_en": "Travel Whole Hours",
+      "expression": "floor(travelTimeDecimalHoursResult)",
+      "unit": "h",
+      "unit_en": "h",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "travelTimeMinutesPortionResult",
+      "label": "Minutos Adicionales del Viaje",
+      "label_en": "Additional Travel Minutes",
+      "expression": "round((travelTimeDecimalHoursResult - floor(travelTimeDecimalHoursResult)) * 60)",
+      "unit": "min",
+      "unit_en": "min",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

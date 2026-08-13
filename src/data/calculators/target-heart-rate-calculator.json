@@ -1,0 +1,200 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "target-heart-rate-calculator",
+    "title": "Calculadora de Frecuencia Cardíaca Objetivo (Karvonen & Tanaka)",
+    "title_en": "Target Heart Rate Calculator (Karvonen & Tanaka Methods)",
+    "slug": "frecuencia-cardiaca-objetivo-zonas",
+    "category": "fitness",
+    "subcategory": "training",
+    "tags": ["frecuencia-cardiaca", "karvonen", "tanaka", "zonas-cardio"],
+    "tags_en": ["heart-rate", "karvonen", "tanaka", "cardio-zones"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Heart"
+  },
+  "content": {
+    "shortDescription": "Calcula tus 5 zonas de entrenamiento cardiovascular y tu frecuencia cardíaca máxima mediante el método clínico de Karvonen y la fórmula Tanaka.",
+    "shortDescription_en": "Calculate your 5 cardiovascular training zones and maximum heart rate using Karvonen Heart Rate Reserve and Tanaka formulas.",
+    "longDescription": "Auditoría de cardiología deportiva para optimizar el entrenamiento por zonas de pulso. Calcula tu Frecuencia Cardíaca Máxima (FCmáx / HRmax), la Reserva de Frecuencia Cardíaca (Karvonen HRR) y las pulsaciones exactas (ppm) para cada una de las 5 zonas de entrenamiento.",
+    "longDescription_en": "Sports cardiology audit to optimize pulse zone training. Calculates Maximum Heart Rate (HRmax), Heart Rate Reserve (Karvonen HRR), and exact target beats per minute (bpm) across 5 training zones.",
+    "howToUse": [
+      "Ingresa tu edad actual.",
+      "Ingresa tu frecuencia cardíaca en reposo al despertar (pulsaciones por minuto / ppm).",
+      "Selecciona la fórmula de FCmáx (Tanaka 208-0.7×Edad o Tradicional 220-Edad).",
+      "Consulta el desglose de pulsaciones de tus 5 Zonas de Entrenamiento Cardio."
+    ],
+    "howToUse_en": [
+      "Enter current age.",
+      "Enter resting heart rate (bpm measured upon waking).",
+      "Select HRmax formula (Tanaka 208-0.7×Age or Traditional 220-Age).",
+      "View exact heart rate target ranges (bpm) across all 5 Cardio Training Zones."
+    ],
+    "methodology": "Método Karvonen: Frecuencia Cardíaca Objetivo = FCReposo + (ReservaCardíaca × %Zona). Reserva = FCmáx - FCReposo. Ecuación Tanaka (2001): FCmáx = 208 - (0.7 × Edad).",
+    "methodology_en": "Karvonen Formula: Target HR = HRrest + (HRR × Zone%). Heart Rate Reserve (HRR) = HRmax - HRrest. Tanaka Formula (2001): HRmax = 208 - (0.7 × Age)."
+  },
+  "guideSections": [
+    {
+      "id": "cardio-zones-table",
+      "icon": "❤️",
+      "title": "Clinical 5-Zone Cardio Training Matrix",
+      "title_es": "Matriz Clínica de las 5 Zonas de Entrenamiento Cardio",
+      "content_html_en": "<p><b>Zone 1 (50-60% HRR):</b> Active Recovery & Health Maintenance.</p><p><b>Zone 2 (60-70% HRR):</b> Aerobic Endurance & Fat Oxidation (Fat-Burn Zone).</p><p><b>Zone 3 (70-80% HRR):</b> Aerobic Efficiency & Tempo Building.</p><p><b>Zone 4 (80-90% HRR):</b> Anaerobic Lactate Threshold & Speed Endurance.</p><p><b>Zone 5 (90-100% HRR):</b> Neuromuscular Speed & VO2max Sprints.</p>",
+      "content_html": "<p><b>Zona 1 (50-60% Karvonen):</b> Recuperación Activa y Salud Cardíaca.</p><p><b>Zona 2 (60-70% Karvonen):</b> Resistencia Aeróbica y Oxidación de Grasa (Zona Quema-Grasa).</p><p><b>Zona 3 (70-80% Karvonen):</b> Eficiencia Aeróbica y Ritmo Umbral.</p><p><b>Zona 4 (80-90% Karvonen):</b> Umbral Anaeróbico de Lactato.</p><p><b>Zona 5 (90-100% Karvonen):</b> Potencia Máxima VO2max y Sprints.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "age",
+      "label": "Edad",
+      "label_en": "Age",
+      "type": "number",
+      "default": 30,
+      "min": 15,
+      "max": 90,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [15, 90], "message": "Edad entre 15 y 90", "message_en": "Age between 15 and 90" }]
+    },
+    {
+      "id": "restingHrBpm",
+      "label": "Frecuencia cardíaca en reposo al despertar",
+      "label_en": "Resting Heart Rate (measured upon waking)",
+      "type": "number",
+      "default": 65,
+      "min": 35,
+      "max": 110,
+      "step": 1,
+      "unit": "ppm / bpm",
+      "unit_en": "bpm",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [35, 110], "message": "Pulsaciones entre 35 y 110 bpm", "message_en": "BPM between 35 and 110" }]
+    },
+    {
+      "id": "hrMaxFormula",
+      "label": "Fórmula médica de FCmáx",
+      "label_en": "Medical HRmax Formula",
+      "type": "select",
+      "default": "tanaka",
+      "options": [
+        { "value": "tanaka", "label": "Fórmula Tanaka et al. (2001: FCmáx = 208 - 0.7 × Edad - Recomendada)", "label_en": "Tanaka Formula (2001: HRmax = 208 - 0.7 × Age - Recommended)" },
+        { "value": "gellish", "label": "Fórmula Gellish et al. (2007: FCmáx = 207 - 0.7 × Edad)", "label_en": "Gellish Formula (2007: HRmax = 207 - 0.7 × Age)" },
+        { "value": "haskell", "label": "Fórmula Tradicional Fox & Haskell (FCmáx = 220 - Edad)", "label_en": "Traditional Fox & Haskell (HRmax = 220 - Age)" }
+      ],
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "hrMaxCalculated",
+      "label": "Frecuencia Cardíaca Máxima Teórica (FCmáx)",
+      "label_en": "Calculated Maximum Heart Rate (HRmax)",
+      "expression": "hrMaxFormula == 'gellish' ? (207 - (0.7 * age)) : (hrMaxFormula == 'haskell' ? (220 - age) : (208 - (0.7 * age)))",
+      "unit": "ppm",
+      "unit_en": "bpm",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "hrReserveCalculated",
+      "label": "Reserva de Frecuencia Cardíaca (HRR Karvonen)",
+      "label_en": "Heart Rate Reserve (Karvonen HRR)",
+      "expression": "max(hrMaxCalculated - restingHrBpm, 40)",
+      "unit": "ppm",
+      "unit_en": "bpm",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "zone2FatBurnStartBpm",
+      "label": "Zona 2 Quema de Grasa Aeróbica (60% Karvonen)",
+      "label_en": "Zone 2 Fat-Burn Lower Limit (60% Karvonen)",
+      "expression": "round(restingHrBpm + (hrReserveCalculated * 0.60))",
+      "unit": "ppm",
+      "unit_en": "bpm",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "zone2FatBurnStartBpm", "op": ">", "value": 0 }, "label": "Inicio Zona Aeróbica", "label_en": "Aerobic Zone Entry", "tone": "info", "text": "Pulsaciones mínimas para ingresar en la zona de resistencia aeróbica y máxima oxidación de grasas.", "text_en": "Minimum beats per minute to enter aerobic endurance fat oxidation zone." }
+      ]
+    },
+    {
+      "id": "zone2FatBurnEndBpm",
+      "label": "Zona 2 Quema de Grasa Aeróbica (70% Karvonen)",
+      "label_en": "Zone 2 Fat-Burn Upper Limit (70% Karvonen)",
+      "expression": "round(restingHrBpm + (hrReserveCalculated * 0.70))",
+      "unit": "ppm",
+      "unit_en": "bpm",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "zone3TempoStartBpm",
+      "label": "Zona 3 Eficiencia Aeróbica / Ritmo (70-80% Karvonen)",
+      "label_en": "Zone 3 Aerobic Tempo Range (70-80% Karvonen)",
+      "expression": "round(restingHrBpm + (hrReserveCalculated * 0.80))",
+      "unit": "ppm",
+      "unit_en": "bpm",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "zone4ThresholdStartBpm",
+      "label": "Zona 4 Umbral Anaeróbico de Lactato (80-90% Karvonen)",
+      "label_en": "Zone 4 Anaerobic Threshold Range (80-90% Karvonen)",
+      "expression": "round(restingHrBpm + (hrReserveCalculated * 0.90))",
+      "unit": "ppm",
+      "unit_en": "bpm",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "pace-calculator", "type": "static", "message": "Calcula tu ritmo de carrera running", "message_en": "Calculate running pace per km", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Cardiólogo Deportivo y Entrenador de Rendimiento",
+    "role_en": "Sports Cardiologist & Performance Coach",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y motivador",
+    "includeData": ["zone2FatBurnStartBpm", "zone2FatBurnEndBpm", "hrMaxCalculated", "hrReserveCalculated", "restingHrBpm"],
+    "instructions": [
+      "Sintetiza la Frecuencia Cardíaca Máxima estimada, el rango óptimo para la Zona 2 Quema de Grasa y la Zona 4 Umbral en 2 frases concisas.",
+      "Destaca que el 70-80% del volumen semanal de entrenamiento de resistencia debe realizarse en Zona 2 para optimizar la salud mitocondrial."
+    ],
+    "instructions_en": [
+      "Summarize estimated Maximum Heart Rate, target Zone 2 Fat-Burn pulse range, and Zone 4 Threshold in 2 concise sentences.",
+      "Highlight that 70-80% of weekly endurance volume should be performed in Zone 2 for optimal mitochondrial health."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Frecuencia Cardíaca Objetivo (Karvonen & Tanaka) | CalculadoraHub",
+    "metaTitle_en": "Target Heart Rate Calculator (Karvonen & Tanaka) | CalculadoraHub",
+    "metaDescription": "Calcula tus 5 zonas de frecuencia cardíaca de entrenamiento con el método Karvonen y Tanaka. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your 5 cardio training pulse zones using Karvonen Heart Rate Reserve and Tanaka formulas. Free, instant results.",
+    "keywords": ["target heart rate calculator", "frecuencia cardiaca objetivo", "formula karvonen", "tanaka hrmax", "zonas de pulso"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

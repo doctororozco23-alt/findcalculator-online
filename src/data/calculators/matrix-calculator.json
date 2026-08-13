@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "matrix-calculator",
+    "title": "Calculadora de Matrices (Determinante y Traza 2x2)",
+    "title_en": "Matrix Calculator (2x2 Determinant & Trace)",
+    "slug": "calculadora-de-matrices-determinante-traza",
+    "category": "math",
+    "subcategory": "algebra",
+    "tags": ["matrices", "determinante", "traza", "matriz-2x2", "algebra-lineal", "inversa"],
+    "tags_en": ["matrices", "determinant", "trace", "2x2-matrix", "linear-algebra", "inverse"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el Determinante ( $|A|$ ), Traza ( $Tr(A)$ ), Matriz Traspuesta y evaluador de Invertibilidad para matrices cuadradas de orden 2x2.",
+    "shortDescription_en": "Compute Determinant ( $|A|$ ), Trace ( $Tr(A)$ ), Transpose, and Invertibility for 2x2 square matrices.",
+    "longDescription": "Herramienta de álgebra lineal para análisis matricial. Para una matriz $A = \\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}$, calcula el determinante $|A| = ad - bc$, la traza $Tr(A) = a + d$ y determina si la matriz es invertible ($|A| \\neq 0$).",
+    "longDescription_en": "Linear algebra tool. For a matrix $A = \\begin{pmatrix} a & b \\\\ c & d \\end{pmatrix}$, calculates determinant $|A| = ad - bc$, trace $Tr(A) = a + d$, and invertibility.",
+    "howToUse": [
+      "Ingresa las entradas de la primera fila: $a_{11}$ y $a_{12}$.",
+      "Ingresa las entradas de la segunda fila: $a_{21}$ y $a_{22}$.",
+      "Consulta el Determinante $|A|$, la Traza $Tr(A)$ y la evaluación de matriz invertible."
+    ],
+    "howToUse_en": [
+      "Enter Row 1 elements: $a_{11}$ and $a_{12}$.",
+      "Enter Row 2 elements: $a_{21}$ and $a_{22}$.",
+      "View Determinant $|A|$, Trace $Tr(A)$, and invertibility status."
+    ],
+    "methodology": "Matriz 2x2: A = [[a, b], [c, d]]. Determinante: |A| = a*d - b*c. Traza: Tr(A) = a + d. Invertible si |A| ≠ 0.",
+    "methodology_en": "2x2 Matrix: A = [[a, b], [c, d]]. Determinant: |A| = a*d - b*c. Trace: Tr(A) = a + d. Invertible if |A| ≠ 0."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Álgebra Lineal y Análisis Matricial",
+    "role_en": "Linear Algebra & Matrix Analysis Assistant",
+    "includeData": ["determinantVal", "traceVal"],
+    "instructions": [
+      "Interpreta la invertibilidad de la matriz según el Determinante |A|.",
+      "Explica la traza Tr(A) como la suma de la diagonal principal.",
+      "Muestra la matriz inversa A⁻¹ si |A| != 0."
+    ],
+    "instructions_en": [
+      "Interpret matrix invertibility based on Determinant |A|.",
+      "Explain trace Tr(A) as main diagonal sum.",
+      "Show inverse matrix A⁻¹ if |A| != 0."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "matrix-guide",
+      "icon": "🔲",
+      "title": "Matrix Properties & Invertibility",
+      "title_es": "Propiedades de las Matrices e Invertibilidad",
+      "content_html_en": "<p><b>Determinant (|A|):</b> Scalar value that indicates if a linear system has a unique solution.</p><p><b>Invertible (Non-Singular):</b> Matrix A has an inverse A⁻¹ if and only if |A| ≠ 0.</p><p><b>Singular Matrix:</b> |A| = 0. Matrix cannot be inverted.</p>",
+      "content_html": "<p><b>Determinante (|A|):</b> Valor escalar que indica si un sistema lineal tiene solución única.</p><p><b>Invertible (No Singular):</b> La matriz A posee inversa A⁻¹ si y solo si |A| ≠ 0.</p><p><b>Matriz Singular:</b> |A| = 0. La matriz no se puede invertir.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "m11",
+      "label": "Fila 1, Columna 1 (a₁₁)",
+      "label_en": "Row 1, Col 1 (a₁₁)",
+      "type": "number",
+      "default": 4,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "m12",
+      "label": "Fila 1, Columna 2 (a₁₂)",
+      "label_en": "Row 1, Col 2 (a₁₂)",
+      "type": "number",
+      "default": 7,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "m21",
+      "label": "Fila 2, Columna 1 (a₂₁)",
+      "label_en": "Row 2, Col 1 (a₂₁)",
+      "type": "number",
+      "default": 2,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "m22",
+      "label": "Fila 2, Columna 2 (a₂₂)",
+      "label_en": "Row 2, Col 2 (a₂₂)",
+      "type": "number",
+      "default": 6,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "determinantVal",
+      "label": "Determinante de la Matriz (|A|)",
+      "label_en": "Matrix Determinant (|A|)",
+      "expression": "(m11 * m22) - (m12 * m21)",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "determinantVal", "op": "!=", "value": 0 }, "label": "Matriz No Singular (Invertible)", "label_en": "Non-Singular Matrix (Invertible)", "tone": "success", "text": "El determinante es distinto de cero. La matriz posee inversa única A⁻¹.", "text_en": "Determinant is non-zero. Matrix has a unique inverse A⁻¹." },
+        { "when": { "field": "determinantVal", "op": "==", "value": 0 }, "label": "Matriz Singular (No Invertible)", "label_en": "Singular Matrix (Non-Invertible)", "tone": "warning", "text": "El determinante es igual a cero. La matriz no se puede invertir.", "text_en": "Determinant is zero. Matrix cannot be inverted." }
+      ]
+    },
+    {
+      "id": "traceVal",
+      "label": "Traza de la Matriz (Tr(A) = a₁₁ + a₂₂)",
+      "label_en": "Matrix Trace (Tr(A) = a₁₁ + a₂₂)",
+      "expression": "m11 + m22",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

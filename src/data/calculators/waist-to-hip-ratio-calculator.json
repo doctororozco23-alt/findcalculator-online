@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "waist-to-hip-ratio-calculator",
+    "title": "Calculadora de Índice Cintura-Cadera (WHR OMS - Androide vs Ginoide)",
+    "title_en": "Waist-to-Hip Ratio Calculator (WHO WHR - Android vs Gynoid)",
+    "slug": "indice-cintura-cadera-whr",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["whr", "cintura-cadera", "androide", "ginoide", "oms"],
+    "tags_en": ["whr", "waist-to-hip", "android", "gynoid", "who"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula tu Índice Cintura-Cadera (WHR) y clasifica tu patrón de distribución de grasa corporal (Androide/Manzana vs Ginoide/Pera) según los umbrales de la OMS.",
+    "shortDescription_en": "Calculate your Waist-to-Hip Ratio (WHR) and evaluate body fat distribution pattern (Android/Apple vs Gynoid/Pear) under WHO guidelines.",
+    "longDescription": "Auditoría clínica de distribución adiposa. El Índice Cintura-Cadera (WHR) clasifica si la grasa se acumula en la zona abdominal (Patrón Androide en Manzana - alto riesgo cardiovascular) o en caderas y muslos (Patrón Ginoide en Pera).",
+    "longDescription_en": "Clinical fat distribution audit. Waist-to-Hip Ratio (WHR) classifies whether body fat accumulates in the abdominal trunk (Android/Apple pattern - elevated risk) or hips and thighs (Gynoid/Pear pattern).",
+    "howToUse": [
+      "Selecciona tu sexo biológico.",
+      "Ingresa el perímetro de tu cintura (al ombligo).",
+      "Ingresa el perímetro máximo de tu cadera.",
+      "Consulta tu ratio WHR, el patrón corporal (Manzana vs Pera) y la clasificación de riesgo de la OMS."
+    ],
+    "howToUse_en": [
+      "Select biological sex.",
+      "Enter waist circumference (at umbilicus).",
+      "Enter maximum hip circumference.",
+      "View WHR ratio, fat distribution pattern (Apple vs Pear), and WHO risk tier."
+    ],
+    "methodology": "Criterios OMS: Ratio WHR = Cintura_cm / Cadera_cm. Umbral Alto Riesgo: Hombres > 0.95 / Mujeres > 0.85 (Patrón Androide/Manzana). Bajo Riesgo: Hombres < 0.90 / Mujeres < 0.80 (Patrón Ginoide/Pera).",
+    "methodology_en": "WHO Standards: WHR Ratio = Waist_cm / Hip_cm. High Risk Threshold: Men > 0.95 / Women > 0.85 (Android/Apple pattern). Low Risk: Men < 0.90 / Women < 0.80 (Gynoid/Pear pattern)."
+  },
+  "guideSections": [
+    {
+      "id": "whr-who-table",
+      "icon": "🍐",
+      "title": "WHO Risk Categories by Sex (WHR Thresholds)",
+      "title_es": "Categorías de Riesgo de la OMS por Sexo (Umbrales WHR)",
+      "content_html_en": "<p><b>Men WHR:</b> Low Risk (< 0.90 - Gynoid/Pear), Moderate (0.90 - 0.95), High Risk (> 0.95 - Android/Apple).</p><p><b>Women WHR:</b> Low Risk (< 0.80 - Gynoid/Pear), Moderate (0.80 - 0.85), High Risk (> 0.85 - Android/Apple).</p>",
+      "content_html": "<p><b>WHR Hombres:</b> Bajo Riesgo (< 0.90 - Ginoide/Pera), Moderado (0.90 - 0.95), Alto Riesgo (> 0.95 - Androide/Manzana).</p><p><b>WHR Mujeres:</b> Bajo Riesgo (< 0.80 - Ginoide/Pera), Moderado (0.80 - 0.85), Alto Riesgo (> 0.85 - Androide/Manzana).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "gender",
+      "label": "Sexo biológico",
+      "label_en": "Biological Sex",
+      "type": "select",
+      "default": "female",
+      "options": [
+        { "value": "male", "label": "Hombre", "label_en": "Male" },
+        { "value": "female", "label": "Mujer", "label_en": "Female" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "waistCm",
+      "label": "Perímetro de la cintura (al ombligo)",
+      "label_en": "Waist Circumference (at umbilicus)",
+      "type": "number",
+      "default": 76,
+      "min": 40,
+      "max": 200,
+      "step": 0.5,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "in", "label": "in", "toBase": 2.54 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [40, 200], "message": "Cintura entre 40 y 200 cm", "message_en": "Waist between 40 and 200 cm" }]
+    },
+    {
+      "id": "hipCm",
+      "label": "Perímetro máximo de la cadera",
+      "label_en": "Maximum Hip Circumference",
+      "type": "number",
+      "default": 98,
+      "min": 50,
+      "max": 200,
+      "step": 0.5,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "in", "label": "in", "toBase": 2.54 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [50, 200], "message": "Cadera entre 50 y 200 cm", "message_en": "Hip between 50 and 200 cm" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "whrVal",
+      "label": "Índice Cintura-Cadera (WHR Ratio)",
+      "label_en": "Waist-to-Hip Ratio (WHR)",
+      "expression": "waistCm / hipCm",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "whrVal", "op": "<", "value": 0.80 }, "label": "Bajo Riesgo / Patrón Ginoide (Pera)", "label_en": "Low Risk / Gynoid Pattern (Pear Shape)", "tone": "success", "text": "Distribución adiposa periférica de bajo riesgo cardiovascular.", "text_en": "Peripheral fat distribution with low cardiovascular risk profile." },
+        { "when": { "field": "whrVal", "op": "between", "value": [0.80, 0.85] }, "label": "Riesgo Moderado", "label_en": "Moderate Risk Tier", "tone": "warning", "text": "Distribución adiposa intermedia según criterios de la OMS.", "text_en": "Intermediate adiposity distribution under WHO criteria." },
+        { "when": { "field": "whrVal", "op": ">", "value": 0.85 }, "label": "Alto Riesgo / Patrón Androide (Manzana)", "label_en": "High Risk / Android Pattern (Apple Shape)", "tone": "warning", "text": "Acumulación central de grasa abdominal asociada a riesgo metabólico.", "text_en": "Abdominal central adiposity associated with elevated metabolic risk." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "waist-to-height-ratio-calculator", "type": "static", "message": "Evalúa la regla clínica del 50% cintura/estatura", "message_en": "Evaluate clinical 50% waist/height rule", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Especialista en Riesgo Cardiometabólico y OMS",
+    "role_en": "Cardiometabolic Risk & WHO Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y analítico",
+    "includeData": ["whrVal", "waistCm", "hipCm", "gender"],
+    "instructions": [
+      "Sintetiza el ratio WHR, la clasificación de riesgo OMS y el patrón de distribución de grasa (Manzana vs Pera) en 2 frases concisas.",
+      "Explica que el patrón Androide (Manzana) requiere reducir el perímetro de cintura mediante ejercicio aeróbico y nutrición."
+    ],
+    "instructions_en": [
+      "Summarize WHR ratio, WHO risk classification, and fat pattern (Apple vs Pear) in 2 concise sentences.",
+      "Explain that Android (Apple) pattern calls for reducing waist circumference through aerobic exercise and nutrition."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Índice Cintura-Cadera (WHR OMS) | CalculadoraHub",
+    "metaTitle_en": "Waist-to-Hip Ratio Calculator (WHO WHR) | CalculadoraHub",
+    "metaDescription": "Calcula tu Índice Cintura-Cadera (WHR) y evalúa tu patrón androide o ginoide según la OMS. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your Waist-to-Hip Ratio (WHR) to assess Android vs Gynoid fat distribution under WHO guidelines. Free, instant results.",
+    "keywords": ["whr calculator", "indice cintura cadera", "patron androide ginoide", "whr oms"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

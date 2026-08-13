@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "buffer-solution-calculator",
+    "title": "Calculadora de Soluciones Amortiguadoras (Henderson-Hasselbalch)",
+    "title_en": "Buffer Solution Calculator (Henderson-Hasselbalch)",
+    "slug": "calculadora-de-soluciones-amortiguadoras-tampon-buffer-ph",
+    "category": "chemistry",
+    "subcategory": "solutions",
+    "tags": ["buffer", "amortiguador", "tampon", "henderson-hasselbalch", "pka", "ph", "soluciones", "quimica"],
+    "tags_en": ["buffer", "buffer-solution", "henderson-hasselbalch", "pka", "ph", "solutions", "chemistry"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el pH resultante de una solución tampón/amortiguadora mediante la ecuación de Henderson-Hasselbalch ($pH = pKa + \\log_{10}\\frac{[A^-]}{[HA]}$).",
+    "shortDescription_en": "Calculate resulting pH of a buffer solution using the Henderson-Hasselbalch equation ($pH = pKa + \\log_{10}\\frac{[A^-]}{[HA]}$).",
+    "longDescription": "Herramienta de bioquímica y química analítica. Evalúa la capacidad reguladora de pH ante la adición de ácidos o bases fuertes en mezclas de un ácido débil y su base conjugada.",
+    "longDescription_en": "Biochemistry and analytical chemistry tool. Evaluates pH buffering capacity against strong acid or base additions in weak acid/conjugate base mixtures.",
+    "howToUse": [
+      "Ingresa o Selecciona el constante $pKa$ del Ácido Débil (ej. Ácido Acético $pKa = 4.76$).",
+      "Ingresa la Concentración de la Base Conjugada ($[A^-]$ en mol/L).",
+      "Ingresa la Concentración del Ácido Débil ($[HA]$ en mol/L).",
+      "Consulta el pH Calculado de la Solución Amortiguadora."
+    ],
+    "howToUse_en": [
+      "Enter or Select Weak Acid Constant $pKa$ (e.g. Acetic Acid $pKa = 4.76$).",
+      "Enter Conjugate Base Concentration ($[A^-]$ in mol/L).",
+      "Enter Weak Acid Concentration ($[HA]$ in mol/L).",
+      "View Calculated Buffer Solution pH."
+    ],
+    "methodology": "Ecuación Henderson-Hasselbalch: pH = pKa + log10([A-] / [HA]). Si [A-] = [HA] ➔ pH = pKa.",
+    "methodology_en": "Henderson-Hasselbalch Equation: pH = pKa + log10([A-] / [HA]). If [A-] = [HA] ➔ pH = pKa."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Bioquímica y Soluciones Amortiguadoras Fisiológicas",
+    "role_en": "Biochemistry & Physiological Buffer Solutions Specialist Assistant",
+    "includeData": ["bufferPhResult"],
+    "instructions": [
+      "Interpreta el pH de la solución amortiguadora obtenida.",
+      "Explica la zona de máxima capacidad amortiguadora ($pH = pKa \\pm 1$).",
+      "Muestra la importancia biológica de los tampones fisiológicos (tampón bicarbonato $H_2CO_3/HCO_3^-$ en sangre a pH 7.40)."
+    ],
+    "instructions_en": [
+      "Interpret calculated buffer solution pH.",
+      "Explain maximum buffering capacity zone ($pH = pKa \\pm 1$).",
+      "Show biological importance of physiological buffers (bicarbonate buffer $H_2CO_3/HCO_3^-$ in blood at pH 7.40)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "buf-guide",
+      "icon": "🧪",
+      "title": "Henderson-Hasselbalch Equation",
+      "title_es": "Ecuación de Henderson-Hasselbalch",
+      "content_html_en": "<p><b>Formula:</b> pH = pKa + log₁₀([Conjugate Base] / [Weak Acid])</p><p><b>Maximum Capacity:</b> Buffer capacity is highest when [A⁻] = [HA], where pH = pKa.</p>",
+      "content_html": "<p><b>Fórmula:</b> pH = pKa + log₁₀([Base Conjugada] / [Ácido Débil])</p><p><b>Máxima Capacidad:</b> La capacidad tampón es máxima cuando [A⁻] = [HA], resultando pH = pKa.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "weakAcidPkaValue",
+      "label": "Constante de Acidez (pKa del Ácido)",
+      "label_en": "Acid Dissociation Constant (pKa)",
+      "type": "number",
+      "default": 4.76,
+      "min": 0.1,
+      "max": 14,
+      "step": 0.01,
+      "required": true
+    },
+    {
+      "id": "conjugateBaseConc",
+      "label": "Concentración de Base Conjugada [A⁻] (M)",
+      "label_en": "Conjugate Base Concentration [A⁻] (M)",
+      "type": "number",
+      "default": 0.20,
+      "min": 0.001,
+      "max": 10,
+      "step": 0.01,
+      "required": true
+    },
+    {
+      "id": "weakAcidConc",
+      "label": "Concentración de Ácido Débil [HA] (M)",
+      "label_en": "Weak Acid Concentration [HA] (M)",
+      "type": "number",
+      "default": 0.10,
+      "min": 0.001,
+      "max": 10,
+      "step": 0.01,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "bufferPhResult",
+      "label": "pH Calculado de la Solución Amortiguadora",
+      "label_en": "Calculated Buffer Solution pH",
+      "expression": "weakAcidConc > 0 ? (weakAcidPkaValue + log10(conjugateBaseConc / weakAcidConc)) : 0",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "bufferPhResult", "op": ">=", "value": 0 }, "label": "pH Tampón Calculado", "label_en": "Buffer pH Computed", "tone": "success", "text": "pH regulado por sistema amortiguador cuantificado.", "text_en": "Regulated buffer system pH quantified." }
+      ]
+    }
+  ]
+}

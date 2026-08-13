@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "love-calculator",
+    "title": "Calculadora del Amor y Compatibilidad de Pareja",
+    "title_en": "Love & Relationship Compatibility Calculator",
+    "slug": "calculadora-del-amor-compatibilidad-de-pareja",
+    "category": "home",
+    "subcategory": "entertainment",
+    "tags": ["amor", "calculadora-del-amor", "compatibilidad", "pareja", "relaciones", "entretenimiento"],
+    "tags_en": ["love", "love-calculator", "compatibility", "relationship", "couples", "fun"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Heart"
+  },
+  "content": {
+    "shortDescription": "Calcula el porcentaje de compatibilidad y química de pareja entre dos personas ingresando sus nombres.",
+    "shortDescription_en": "Calculate love compatibility score and relationship chemistry percentage between two people by entering their names.",
+    "longDescription": "Herramienta lúdica de entretenimiento y afinidad personal. Analiza la compatibilidad nominal y numérológica de dos nombres para generar una puntuación de química de pareja.",
+    "longDescription_en": "Fun entertainment tool for relationship affinity. Analyzes nominal and numerological compatibility of two names to generate a couple chemistry score.",
+    "howToUse": [
+      "Ingresa el Nombre de la Primera Persona.",
+      "Ingresa el Nombre de la Segunda Persona.",
+      "Consulta el Porcentaje % de Compatibilidad Amorosa y la interpretación divertida."
+    ],
+    "howToUse_en": [
+      "Enter First Person's Name.",
+      "Enter Second Person's Name.",
+      "View Love Compatibility Percentage % and fun interpretation."
+    ],
+    "methodology": "Algoritmo de Hashing Determinista: loveMatchScore(name1, name2) mapeado al rango de 60% a 99%.",
+    "methodology_en": "Deterministic Hash Algorithm: loveMatchScore(name1, name2) mapped to 60% to 99% range."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Relaciones de Pareja y Dinámicas de Afinidad",
+    "role_en": "Relationship Dynamics & Affinity Assistant",
+    "includeData": ["loveMatchPercentResult"],
+    "instructions": [
+      "Interpreta de forma empática y divertida la puntuación de compatibilidad obtenida.",
+      "Resalta que el respeto, la comunicación y los valores compartidos son la clave real de una relación duradera.",
+      "Proporciona una sugerencia positiva para la pareja."
+    ],
+    "instructions_en": [
+      "Interpret the compatibility score in an empathetic, fun tone.",
+      "Highlight that respect, communication, and shared values are the true keys to a lasting relationship.",
+      "Provide a positive activity suggestion for the couple."
+    ],
+    "disclaimer": true
+  },
+  "guideSections": [
+    {
+      "id": "love-guide",
+      "icon": "💖",
+      "title": "Relationship Science & Communication",
+      "title_es": "Ciencia de las Relaciones y Comunicación",
+      "content_html_en": "<p><b>Gottman Method Key Principles:</b> Active listening, mutual respect, shared goals, and constructive conflict resolution make healthy long-term relationships.</p>",
+      "content_html": "<p><b>Principios Clave de Gottman:</b> Escucha activa, respeto mutuo, metas compartidas y resolución constructiva de conflictos crean relaciones saludables a largo plazo.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "personName1",
+      "label": "Nombre Persona 1",
+      "label_en": "Person 1 Name",
+      "type": "select",
+      "default": "Alex",
+      "options": [
+        { "value": "Alex", "label": "Alex", "label_en": "Alex" },
+        { "value": "Daniel", "label": "Daniel", "label_en": "Daniel" },
+        { "value": "Carlos", "label": "Carlos", "label_en": "Carlos" },
+        { "value": "Gabriel", "label": "Gabriel", "label_en": "Gabriel" }
+      ]
+    },
+    {
+      "id": "personName2",
+      "label": "Nombre Persona 2",
+      "label_en": "Person 2 Name",
+      "type": "select",
+      "default": "Sophia",
+      "options": [
+        { "value": "Sophia", "label": "Sophia", "label_en": "Sophia" },
+        { "value": "Maria", "label": "María", "label_en": "Maria" },
+        { "value": "Isabella", "label": "Isabella", "label_en": "Isabella" },
+        { "value": "Emma", "label": "Emma", "label_en": "Emma" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "loveMatchPercentResult",
+      "label": "Compatibilidad Amorosa Obtenida",
+      "label_en": "Love Compatibility Score",
+      "expression": "loveMatchScore(personName1, personName2)",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "loveMatchPercentResult", "op": ">=", "value": 85 }, "label": "Química Extraordinaria (≥ 85%)", "label_en": "Extraordinary Chemistry (≥ 85%)", "tone": "success", "text": "Afinidad y conexión excepcional.", "text_en": "Exceptional affinity and connection." },
+        { "when": { "field": "loveMatchPercentResult", "op": "between", "value": [70, 84] }, "label": "Gran Compatibilidad (70% - 84%)", "label_en": "Great Compatibility (70% - 84%)", "tone": "info", "text": "Excelente potencial de entendimiento mutuo.", "text_en": "Great mutual understanding potential." },
+        { "when": { "field": "loveMatchPercentResult", "op": "<", "value": 70 }, "label": "Buena Compatibilidad (< 70%)", "label_en": "Good Compatibility (< 70%)", "tone": "warning", "text": "La comunicación constante potenciará la relación.", "text_en": "Consistent communication will enhance relationship." }
+      ]
+    }
+  ]
+}

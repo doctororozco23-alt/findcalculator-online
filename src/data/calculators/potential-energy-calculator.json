@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "potential-energy-calculator",
+    "title": "Calculadora de Energía Potencial Gravitatoria (E_p = m g h)",
+    "title_en": "Gravitational Potential Energy Calculator (E_p = m g h)",
+    "slug": "calculadora-de-energia-potencial-gravitatoria-masa-altura",
+    "category": "physics",
+    "subcategory": "mechanics",
+    "tags": ["energia-potencial", "gravedad", "altura", "masa", "mgh", "julios", "mecanica-clasica"],
+    "tags_en": ["potential-energy", "gravity", "height", "mass", "mgh", "joules", "classical-physics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la energía potencial gravitatoria ($E_p = m \\cdot g \\cdot h$) almacenada por un cuerpo situado a cierta altura.",
+    "shortDescription_en": "Calculate gravitational potential energy ($E_p = m \\cdot g \\cdot h$) stored by a body elevated at a given height.",
+    "longDescription": "Herramienta de física newtoniana y conservación de la energía mecánica. Determina el trabajo almacenado en función de la masa, aceleración de la gravedad y elevación relativa.",
+    "longDescription_en": "Newtonian physics and mechanical energy conservation tool. Computes stored work based on mass, gravitational acceleration, and relative elevation.",
+    "howToUse": [
+      "Ingresa la Masa del Cuerpo ($m$ en kg).",
+      "Ingresa la Altura de Elevación ($h$ en metros).",
+      "Selecciona la Gravedad Local ($g$, Estándar Tierra = 9.81 m/s²).",
+      "Consulta la Energía Potencial Almacenada en Joules (J) y Kilojoules (kJ)."
+    ],
+    "howToUse_en": [
+      "Enter Body Mass ($m$ in kg).",
+      "Enter Elevation Height ($h$ in meters).",
+      "Select Local Gravity ($g$, Standard Earth = 9.81 m/s²).",
+      "View Stored Potential Energy in Joules (J) and Kilojoules (kJ)."
+    ],
+    "methodology": "Energía Potencial Gravitatoria E_p = m * g * h. g_Tierra = 9.80665 m/s².",
+    "methodology_en": "Gravitational Potential Energy E_p = m * g * h. g_Earth = 9.80665 m/s²."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Mecánica Clásica y Conservación de Energía",
+    "role_en": "Classical Mechanics & Energy Conservation Specialist Assistant",
+    "includeData": ["potentialEnergyJoulesResult", "potentialEnergyKilojoulesResult"],
+    "instructions": [
+      "Interpreta la energía potencial almacenada y su conversión total a energía cinética en caída libre ($E_p = E_k$).",
+      "Explica la dependencia directa lineal de la altura y la masa.",
+      "Compara la energía potencial con situaciones prácticas (embalses hidroeléctricos, montañas rusas)."
+    ],
+    "instructions_en": [
+      "Interpret stored potential energy and its full conversion into kinetic energy during free fall ($E_p = E_k$).",
+      "Explain linear dependence on height and mass.",
+      "Compare potential energy against practical scenarios (hydroelectric dams, roller coasters)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "pe-guide",
+      "icon": "⛰️",
+      "title": "Gravitational Potential Energy Principle",
+      "title_es": "Principio de Energía Potencial Gravitatoria",
+      "content_html_en": "<p><b>Formula:</b> E_p = m × g × h</p><p><b>Conservation Law:</b> Neglecting friction, maximum potential energy at top equals maximum kinetic energy at bottom (m·g·h = ½·m·v²).</p>",
+      "content_html": "<p><b>Fórmula:</b> E_p = m × g × h</p><p><b>Ley de Conservación:</b> Despreciando fricción, la energía potencial máxima en la cima equivale a la energía cinética máxima en el suelo (m·g·h = ½·m·v²).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "massBodyKg",
+      "label": "Masa del Objeto (m en kg)",
+      "label_en": "Object Mass (m in kg)",
+      "type": "number",
+      "default": 50,
+      "min": 0.001,
+      "max": 1000000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "heightElevationMeters",
+      "label": "Altura de Elevación (h en metros)",
+      "label_en": "Elevation Height (h in meters)",
+      "type": "number",
+      "default": 20,
+      "min": 0.01,
+      "max": 10000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "gravityAccelMps2",
+      "label": "Aceleración de la Gravedad (g)",
+      "label_en": "Gravitational Acceleration (g)",
+      "type": "select",
+      "default": "9.80665",
+      "options": [
+        { "value": "9.80665", "label": "Tierra (g = 9.81 m/s²)", "label_en": "Earth (g = 9.81 m/s²)" },
+        { "value": "1.62", "label": "Luna (g = 1.62 m/s²)", "label_en": "Moon (g = 1.62 m/s²)" },
+        { "value": "3.71", "label": "Marte (g = 3.71 m/s²)", "label_en": "Mars (g = 3.71 m/s²)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "potentialEnergyJoulesResult",
+      "label": "Energía Potencial Gravitatoria (Joules - J)",
+      "label_en": "Gravitational Potential Energy (Joules - J)",
+      "expression": "massBodyKg * gravityAccelMps2 * heightElevationMeters",
+      "unit": "J",
+      "unit_en": "J",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "potentialEnergyJoulesResult", "op": ">=", "value": 0 }, "label": "Energía Calculada", "label_en": "Energy Computed", "tone": "success", "text": "Energía potencial de elevación cuantificada.", "text_en": "Elevation potential energy quantified." }
+      ]
+    },
+    {
+      "id": "potentialEnergyKilojoulesResult",
+      "label": "Energía Potencial en Kilojoules (kJ)",
+      "label_en": "Potential Energy in Kilojoules (kJ)",
+      "expression": "potentialEnergyJoulesResult / 1000",
+      "unit": "kJ",
+      "unit_en": "kJ",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

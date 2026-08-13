@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "temperature-unit-converter",
+    "title": "Conversor de Temperatura (Celsius °C, Fahrenheit °F, Kelvin K)",
+    "title_en": "Temperature Scale Converter (°C, °F, K)",
+    "slug": "conversor-de-temperatura-celsius-fahrenheit-kelvin",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["conversor-de-temperatura", "celsius", "fahrenheit", "kelvin", "grados", "termometro", "conversores"],
+    "tags_en": ["temperature-converter", "celsius", "fahrenheit", "kelvin", "degrees", "thermometer", "converters"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte instantáneamente lecturas térmicas entre las escalas Celsius (°C), Fahrenheit (°F) y Kelvin (K).",
+    "shortDescription_en": "Instantly convert thermal readings between Celsius (°C), Fahrenheit (°F), and Kelvin (K) scales.",
+    "longDescription": "Herramienta de física termodinámica y meteorología. Aplica las ecuaciones exactas de transformación de escalas termométricas.",
+    "longDescription_en": "Thermodynamic physics and meteorology tool. Applies exact thermometric scale transformation equations.",
+    "howToUse": [
+      "Ingresa el Valor de Temperatura a Convertir.",
+      "Selecciona la Escala de Origen (Celsius °C, Fahrenheit °F o Kelvin K).",
+      "Consulta la Conversión Simultánea en las tres escalas de temperatura."
+    ],
+    "howToUse_en": [
+      "Enter Temperature Value to Convert.",
+      "Select Source Scale (Celsius °C, Fahrenheit °F, or Kelvin K).",
+      "View Simultaneous Conversion across all three temperature scales."
+    ],
+    "methodology": "°C = (°F - 32) * 5/9 = K - 273.15. °F = (°C * 9/5) + 32. K = °C + 273.15.",
+    "methodology_en": "°C = (°F - 32) * 5/9 = K - 273.15. °F = (°C * 9/5) + 32. K = °C + 273.15."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Termodinámica y Escalas de Temperatura",
+    "role_en": "Thermodynamics & Temperature Scales Specialist Assistant",
+    "includeData": ["tempInCelsiusResult", "tempInFahrenheitResult", "tempInKelvinResult"],
+    "instructions": [
+      "Interpreta la conversión de temperatura realizada.",
+      "Muestra puntos de referencia conocidos (Cero Absoluto = -273.15 °C / 0 K, Congelación del Agua = 0 °C / 32 °F, Ebullición = 100 °C / 212 °F).",
+      "Explica la aplicación práctica del sistema Fahrenheit en EE.UU. vs Celsius en la ciencia mundial."
+    ],
+    "instructions_en": [
+      "Interpret performed temperature conversion.",
+      "Show well-known benchmark points (Absolute Zero = -273.15 °C / 0 K, Water Freezing = 0 °C / 32 °F, Boiling = 100 °C / 212 °F).",
+      "Explain practical usage of Fahrenheit in US vs Celsius in global science."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "tuc-guide",
+      "icon": "🌡️",
+      "title": "Temperature Benchmarks Reference",
+      "title_es": "Puntos de Referencia de Temperatura",
+      "content_html_en": "<p><b>Absolute Zero:</b> -273.15 °C = -459.67 °F = 0 K</p><p><b>Water Freezing:</b> 0 °C = 32 °F = 273.15 K</p><p><b>Human Body Temp:</b> 37 °C = 98.6 °F = 310.15 K</p><p><b>Water Boiling:</b> 100 °C = 212 °F = 373.15 K</p>",
+      "content_html": "<p><b>Cero Absoluto:</b> -273.15 °C = -459.67 °F = 0 K</p><p><b>Congelación del Agua:</b> 0 °C = 32 °F = 273.15 K</p><p><b>Temperatura Corporal:</b> 37 °C = 98.6 °F = 310.15 K</p><p><b>Ebullición del Agua:</b> 100 °C = 212 °F = 373.15 K</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputValueTemp",
+      "label": "Temperatura a Convertir",
+      "label_en": "Temperature to Convert",
+      "type": "number",
+      "default": 25,
+      "min": -500,
+      "max": 1000000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "inputTempScaleSource",
+      "label": "Escala de Origen",
+      "label_en": "Source Scale",
+      "type": "select",
+      "default": "celsius",
+      "options": [
+        { "value": "celsius", "label": "Celsius (°C)", "label_en": "Celsius (°C)" },
+        { "value": "fahrenheit", "label": "Fahrenheit (°F)", "label_en": "Fahrenheit (°F)" },
+        { "value": "kelvin", "label": "Kelvin (K)", "label_en": "Kelvin (K)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "tempInCelsiusResult",
+      "label": "Temperatura en Celsius (°C)",
+      "label_en": "Temperature in Celsius (°C)",
+      "expression": "inputTempScaleSource == 'celsius' ? inputValueTemp : (inputTempScaleSource == 'fahrenheit' ? ((inputValueTemp - 32) * (5 / 9)) : (inputValueTemp - 273.15))",
+      "unit": "°C",
+      "unit_en": "°C",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "tempInCelsiusResult", "op": ">=", "value": -273.15 }, "label": "Temperatura Calculada", "label_en": "Temperature Computed", "tone": "success", "text": "Lectura térmica en la escala Celsius cuantificada.", "text_en": "Thermal reading in Celsius scale quantified." }
+      ]
+    },
+    {
+      "id": "tempInFahrenheitResult",
+      "label": "Temperatura en Fahrenheit (°F)",
+      "label_en": "Temperature in Fahrenheit (°F)",
+      "expression": "(tempInCelsiusResult * (9 / 5)) + 32",
+      "unit": "°F",
+      "unit_en": "°F",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "tempInKelvinResult",
+      "label": "Temperatura Absoluta en Kelvin (K)",
+      "label_en": "Absolute Temperature in Kelvin (K)",
+      "expression": "tempInCelsiusResult + 273.15",
+      "unit": "K",
+      "unit_en": "K",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

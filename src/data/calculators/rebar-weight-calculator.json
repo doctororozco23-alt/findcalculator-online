@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "rebar-weight-calculator",
+    "title": "Calculadora de Peso y Metros de Varillas de Fierro / Rebar",
+    "title_en": "Rebar Weight & Total Steel Reinforcement Calculator",
+    "slug": "calculadora-de-peso-y-metros-de-varillas-de-fierro-rebar",
+    "category": "construction",
+    "subcategory": "materials",
+    "tags": ["rebar", "varillas-de-fierro", "acero-de-refuerzo", "peso-de-acero", "armadura", "hormigon-armado", "construccion"],
+    "tags_en": ["rebar", "steel-reinforcement", "rebar-weight", "rebar-length", "reinforced-concrete", "construction", "civil"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el peso total en kilogramos y toneladas de varillas de acero de refuerzo / fierro corrugado según el diámetro y longitud.",
+    "shortDescription_en": "Calculate total weight in kilograms and metric tons of rebar steel reinforcement based on diameter and length.",
+    "longDescription": "Herramienta de estructuras de hormigón armado y presupuestos. Aplica el peso nominal por metro lineal ($W = \\frac{d^2}{162}$) de las barras de acero corrugado.",
+    "longDescription_en": "Reinforced concrete structures and estimating tool. Applies nominal linear weight ($W = \\frac{d^2}{162}$) for deformed steel rebar.",
+    "howToUse": [
+      "Selecciona el Diámetro Nominal de la Varilla (ej. 8 mm, 10 mm, 12 mm, 16 mm o #3, #4, #5).",
+      "Ingresa la Longitud Total de Varillas Requeridas (metros liniares).",
+      "Consulta el Peso Total Calculado en Kilogramos (kg) y Toneladas (t), y la cantidad de barras comerciales de 12m."
+    ],
+    "howToUse_en": [
+      "Select Rebar Nominal Diameter (e.g. 8 mm, 10 mm, 12 mm, 16 mm or #3, #4, #5).",
+      "Enter Total Required Rebar Length (linear meters).",
+      "View Calculated Total Weight in Kilograms (kg) and Metric Tons (t), plus 12m commercial bars count."
+    ],
+    "methodology": "Peso nominal w (kg/m) ≈ d² / 162. Peso Total = LongitudTotal * w. Barras 12m = ceil(LongitudTotal / 12).",
+    "methodology_en": "Nominal weight w (kg/m) ≈ d² / 162. Total Weight = TotalLength * w. 12m Bars = ceil(TotalLength / 12)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Estructuras de Hormigón Armado y Ferralla",
+    "role_en": "Reinforced Concrete Structures & Rebar Detailing Specialist Assistant",
+    "includeData": ["totalRebarWeightKgResult", "commercialBars12mCountResult"],
+    "instructions": [
+      "Interpreta el peso total de acero corrugado de refuerzo calculado.",
+      "Explica la traslapación / solape estándar de armaduras (generalmente 40 a 50 veces el diámetro del fierro).",
+      "Muestra la equivalencia en barras comerciales estándar de 12 metros de largo."
+    ],
+    "instructions_en": [
+      "Interpret calculated total deformed rebar weight.",
+      "Explain standard rebar lap splice length (typically 40 to 50 times bar diameter).",
+      "Show equivalence in standard 12-meter commercial rebar lengths."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "rbw-guide",
+      "icon": "🏗️",
+      "title": "Standard Rebar Nominal Weights",
+      "title_es": "Pesos Nominales Estándar de Varillas",
+      "content_html_en": "<p><b>8 mm (#2.5):</b> 0.395 kg/m</p><p><b>10 mm (#3):</b> 0.617 kg/m</p><p><b>12 mm (#4):</b> 0.888 kg/m</p><p><b>16 mm (#5):</b> 1.578 kg/m</p>",
+      "content_html": "<p><b>8 mm (#2.5):</b> 0.395 kg/m</p><p><b>10 mm (#3):</b> 0.617 kg/m</p><p><b>12 mm (#4):</b> 0.888 kg/m</p><p><b>16 mm (#5):</b> 1.578 kg/m</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "rebarLinearWeightKgPerM",
+      "label": "Diámetro Nominal de Varilla (Fierro)",
+      "label_en": "Rebar Nominal Diameter",
+      "type": "select",
+      "default": "0.888",
+      "options": [
+        { "value": "0.395", "label": "8 mm / 5/16\" (0.395 kg/m)", "label_en": "8 mm / 5/16\" (0.395 kg/m)" },
+        { "value": "0.617", "label": "10 mm / 3/8\" - #3 (0.617 kg/m)", "label_en": "10 mm / 3/8\" - #3 (0.617 kg/m)" },
+        { "value": "0.888", "label": "12 mm / 1/2\" - #4 (0.888 kg/m)", "label_en": "12 mm / 1/2\" - #4 (0.888 kg/m)" },
+        { "value": "1.578", "label": "16 mm / 5/8\" - #5 (1.578 kg/m)", "label_en": "16 mm / 5/8\" - #5 (1.578 kg/m)" },
+        { "value": "2.466", "label": "20 mm / 3/4\" - #6 (2.466 kg/m)", "label_en": "20 mm / 3/4\" - #6 (2.466 kg/m)" }
+      ]
+    },
+    {
+      "id": "totalRebarLengthMeters",
+      "label": "Longitud Total Requerida (metros lineales)",
+      "label_en": "Total Required Length (linear meters)",
+      "type": "number",
+      "default": 450,
+      "min": 1,
+      "max": 100000,
+      "step": 10,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalRebarWeightKgResult",
+      "label": "Peso Total del Acero (Kilogramos - kg)",
+      "label_en": "Total Steel Weight (Kilograms - kg)",
+      "expression": "totalRebarLengthMeters * rebarLinearWeightKgPerM",
+      "unit": "kg",
+      "unit_en": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalRebarWeightKgResult", "op": ">=", "value": 0 }, "label": "Peso de Acero Calculado", "label_en": "Steel Weight Computed", "tone": "success", "text": "Masa total de fierro corrugado cuantificada.", "text_en": "Total deformed rebar mass quantified." }
+      ]
+    },
+    {
+      "id": "totalRebarWeightTonsResult",
+      "label": "Peso Total en Toneladas (t)",
+      "label_en": "Total Weight in Metric Tons (t)",
+      "expression": "totalRebarWeightKgResult / 1000",
+      "unit": "t",
+      "unit_en": "t",
+      "precision": 3,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "commercialBars12mCountResult",
+      "label": "Barras Comerciales de 12 metros Requeridas",
+      "label_en": "Required 12-meter Commercial Bars Count",
+      "expression": "ceil(totalRebarLengthMeters / 12)",
+      "unit": "barras",
+      "unit_en": "bars",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

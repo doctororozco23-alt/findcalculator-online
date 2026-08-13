@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "hex-calculator",
+    "title": "Calculadora Hexadecimal (Base 16, Decimal y Colores HEX)",
+    "title_en": "Hexadecimal Calculator (Base 16, Decimal & HEX Colors)",
+    "slug": "calculadora-hexadecimal-base-16-colores-hex",
+    "category": "math",
+    "subcategory": "number-systems",
+    "tags": ["hexadecimal", "hex", "base-16", "colores-hex", "programacion", "sistemas-numericos"],
+    "tags_en": ["hexadecimal", "hex", "base-16", "hex-colors", "programming", "number-systems"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte enteros decimales a sistema Hexadecimal Base 16 (0-9, A-F) y calcula equivalentes de bytes y colores HEX.",
+    "shortDescription_en": "Convert decimal integers to Hexadecimal Base 16 (0-9, A-F) and compute byte equivalents and HEX colors.",
+    "longDescription": "Herramienta de desarrollo de software y diseño web. Convierte valores decimales a código Hexadecimal Base 16 ampliamente usado en memoria informática y colores web.",
+    "longDescription_en": "Software development and web design tool. Converts decimal values to Base 16 Hexadecimal code used in memory and web colors.",
+    "howToUse": [
+      "Ingresa el Número Decimal entero.",
+      "Consulta el número de Digitos Hexadecimales requeridos y la equivalencia en bytes."
+    ],
+    "howToUse_en": [
+      "Enter Integer Decimal Number.",
+      "View required Hexadecimal digits count and byte equivalence."
+    ],
+    "methodology": "Hexadecimal Base 16: dígitos 0-9 y letras A-F. Conteo dígitos: floor(log16(N)) + 1.",
+    "methodology_en": "Hexadecimal Base 16: digits 0-9 and letters A-F. Digits count: floor(log16(N)) + 1."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Sistemas Hexadecimales y Código de Colores",
+    "role_en": "Hexadecimal Systems & Color Codes Specialist Assistant",
+    "includeData": ["hexValInput", "hexDigitsNeeded"],
+    "instructions": [
+      "Explica la notación hexadecimal Base 16 (dígitos 0-9 y A=10, B=11, C=12, D=13, E=14, F=15).",
+      "Demuestra la correspondencia entre 1 dígito Hex y 4 bits (Nibble).",
+      "Analiza el uso de Hex en códigos de color web CSS (#RRGGBB)."
+    ],
+    "instructions_en": [
+      "Explain Base 16 hex notation (digits 0-9 and A=10, B=11, C=12, D=13, E=14, F=15).",
+      "Demonstrate 1 Hex digit = 4 bits (Nibble) correspondence.",
+      "Analyze Hex usage in CSS web color codes (#RRGGBB)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "hex-guide",
+      "icon": "🎨",
+      "title": "Hexadecimal Base 16 & Nibbles",
+      "title_es": "Sistema Hexadecimal Base 16 y Nibbles",
+      "content_html_en": "<p><b>Hex Digits:</b> 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A(10), B(11), C(12), D(13), E(14), F(15).</p><p><b>Nibble:</b> 1 Hex digit equals 4 binary bits (e.g. F₁₆ = 1111₂ = 15₁₀).</p>",
+      "content_html": "<p><b>Dígitos Hex:</b> 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A(10), B(11), C(12), D(13), E(14), F(15).</p><p><b>Nibble:</b> 1 dígito Hex equivale a 4 bits binarios (ej. F₁₆ = 1111₂ = 15₁₀).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "hexValInput",
+      "label": "Número Decimal Entero",
+      "label_en": "Integer Decimal Number",
+      "type": "number",
+      "default": 255,
+      "min": 0,
+      "max": 16777215,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0, 16777215], "message": "Ingresa entero entre 0 y 16,777,215", "message_en": "Enter integer between 0 and 16,777,215" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "hexDigitsNeeded",
+      "label": "Dígitos Hexadecimales Necesarios",
+      "label_en": "Required Hex Digits Count",
+      "expression": "hexValInput > 0 ? (floor(log(hexValInput) / log(16)) + 1) : 1",
+      "unit": "dígitos",
+      "unit_en": "digits",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "hexDigitsNeeded", "op": ">=", "value": 1 }, "label": "Hexadecimal Evaluado", "label_en": "Hexadecimal Evaluated", "tone": "success", "text": "Dígitos hexadecimales en base 16 calculados.", "text_en": "Base 16 hexadecimal digits computed." }
+      ]
+    }
+  ]
+}

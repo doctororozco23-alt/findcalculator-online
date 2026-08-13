@@ -1,0 +1,191 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "house-affordability-calculator",
+    "title": "Calculadora de Capacidad de Compra de Vivienda",
+    "title_en": "House Affordability Calculator",
+    "slug": "capacidad-compra-vivienda",
+    "category": "finance",
+    "subcategory": "mortgages",
+    "tags": ["vivienda", "hipoteca", "presupuesto"],
+    "tags_en": ["housing", "mortgage", "affordability"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Home"
+  },
+  "content": {
+    "shortDescription": "Calcula el precio máximo de vivienda e importe hipotecario que puedes permitirte según tus ingresos y deudas actuales.",
+    "shortDescription_en": "Calculate the maximum home price and mortgage loan amount you can afford based on your household income and debt.",
+    "longDescription": "Determina tu presupuesto máximo de compra inmobiliaria aplicando la regla financiera del 28/36 sobre tus ingresos brutos del hogar, deudas mensuales recurrentes y ahorros iniciales para el enganche.",
+    "longDescription_en": "Determine your maximum home purchase budget applying the standard 28/36 financial debt ratio rule on household gross income, monthly debt obligations, and down payment savings.",
+    "howToUse": [
+      "Ingresa los ingresos brutos anuales del hogar.",
+      "Añade tus deudas mensuales recurrentes (autos, tarjetas, préstamos).",
+      "Indica tus ahorros disponibles para la entrada / enganche.",
+      "Consulta el precio máximo recomendado de vivienda y la cuota hipotecaria mensual."
+    ],
+    "howToUse_en": [
+      "Enter your annual gross household income.",
+      "Add your monthly recurring debt payments (auto loans, credit cards, student debt).",
+      "Enter your available savings for down payment.",
+      "View your recommended maximum home purchase price and maximum monthly housing payment."
+    ],
+    "methodology": "Regla de Endeudamiento 28/36: La cuota de vivienda no debe exceder el 28% del ingreso bruto mensual y la deuda total no debe superar el 36%.",
+    "methodology_en": "28/36 Debt Rule: Housing expenses should not exceed 28% of gross monthly income, and total debt should not exceed 36%."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🔑",
+      "title": "The 28/36 Rule of Home Affordability",
+      "title_es": "La Regla del 28/36 para Comprar Vivienda",
+      "content_html_en": "<p>Lenders use the 28/36 rule to determine your borrowing capacity. Front-end ratio (28%) specifies maximum monthly housing costs; back-end ratio (36%) specifies total monthly debt limits including housing.</p>",
+      "content_html": "<p>Los bancos aplican la regla 28/36: los costes de vivienda no deben superar el 28% del ingreso bruto y el total de deudas no debe rebasar el 36%.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "annualIncome",
+      "label": "Ingresos brutos anuales del hogar",
+      "label_en": "Annual Gross Household Income",
+      "type": "currency",
+      "default": 85000,
+      "min": 10000,
+      "max": 1000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [10000, 1000000], "message": "Ingresos entre 10.000 y 1.000.000", "message_en": "Income between 10,000 and 1,000,000" }]
+    },
+    {
+      "id": "monthlyDebts",
+      "label": "Deudas mensuales recurrentes (tarjetas, auto, etc.)",
+      "label_en": "Monthly Recurring Debts (cards, auto, loans)",
+      "type": "currency",
+      "default": 500,
+      "min": 0,
+      "max": 50000,
+      "step": 100,
+      "unit": { "follows": "annualIncome" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "downPaymentSavings",
+      "label": "Ahorro disponible para el enganche / entrada",
+      "label_en": "Available Down Payment Savings",
+      "type": "currency",
+      "default": 40000,
+      "min": 0,
+      "max": 500000,
+      "step": 5000,
+      "unit": { "follows": "annualIncome" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "interestRate",
+      "label": "Tasa de interés estimada de hipoteca (%)",
+      "label_en": "Estimated Mortgage Interest Rate (%)",
+      "type": "number",
+      "default": 4.5,
+      "min": 0.1,
+      "max": 15,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "monthlyGrossIncome",
+      "label": "Ingreso mensual bruto",
+      "label_en": "Monthly Gross Income",
+      "expression": "annualIncome / 12",
+      "unit": { "follows": "annualIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "hidden"
+    },
+    {
+      "id": "maxHousingPayment",
+      "label": "Cuota Mensual Máxima de Vivienda Recomendada",
+      "label_en": "Max Recommended Monthly Housing Payment",
+      "expression": "min(monthlyGrossIncome * 0.28, max((monthlyGrossIncome * 0.36) - monthlyDebts, 0))",
+      "unit": { "follows": "annualIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "maxHousingPayment", "op": ">", "value": 0 }, "label": "Presupuesto Saludable", "label_en": "Healthy Home Budget", "tone": "success", "text": "Basado en la regla de endeudamiento bancario 28/36.", "text_en": "Based on standard banking 28/36 debt capacity rule." }
+      ]
+    },
+    {
+      "id": "maxAffordableMortgage",
+      "label": "Préstamo Hipotecario Máximo Aprobatorio",
+      "label_en": "Max Affordable Loan Principal",
+      "expression": "maxHousingPayment * (1 - (1 + interestRate / 1200) ^ -360) / (interestRate / 1200)",
+      "unit": { "follows": "annualIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "maxHomePrice",
+      "label": "Precio Máximo Estimado de Vivienda",
+      "label_en": "Max Estimated Home Purchase Price",
+      "expression": "maxAffordableMortgage + downPaymentSavings",
+      "unit": { "follows": "annualIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "mortgage-calculator", "type": "static", "message": "Calcula el desglose exacto de cuotas hipotecarias", "message_en": "Calculate exact mortgage payment schedule", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Compra Inmobiliaria",
+    "role_en": "Home Affordability Assistant",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y orientador",
+    "includeData": ["maxHomePrice", "maxHousingPayment", "maxAffordableMortgage", "annualIncome", "downPaymentSavings"],
+    "instructions": [
+      "Sintetiza el precio máximo recomendado de vivienda y la cuota mensual en 2 frases concisas.",
+      "Destaca que mantener las deudas por debajo del 36% preserva la aprobación crediticia bancaria."
+    ],
+    "instructions_en": [
+      "Summarize max home purchase price and max monthly payment capacity in 2 concise sentences.",
+      "Highlight keeping total monthly debt payments below 36% to ensure bank mortgage approval."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Capacidad de Compra de Vivienda | CalculadoraHub",
+    "metaTitle_en": "House Affordability Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el precio máximo de vivienda e hipoteca que puedes permitirte. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate max home purchase price and loan amount you can afford. Free, instant results.",
+    "keywords": ["house affordability calculator", "cuanto puedo pagar por una casa", "presupuesto vivienda"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

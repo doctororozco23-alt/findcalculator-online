@@ -1,0 +1,145 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "payback-period-calculator",
+    "title": "Calculadora de Periodo de Recuperación del Capital",
+    "title_en": "Payback Period Calculator",
+    "slug": "periodo-recuperacion-capital",
+    "category": "finance",
+    "subcategory": "investments",
+    "tags": ["payback", "retorno", "recuperacion"],
+    "tags_en": ["payback", "return", "recovery"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Clock"
+  },
+  "content": {
+    "shortDescription": "Calcula el número exacto de años necesarios para recuperar la inversión inicial a partir de los ingresos generados.",
+    "shortDescription_en": "Calculate the exact timeframe in years required to recoup an initial investment outlay from cash flows.",
+    "longDescription": "Determina el tiempo en años y meses que tardará un proyecto de inversión o negocio en retornar la inversión inicial desembolsada.",
+    "longDescription_en": "Determine the timeframe in years and months required for a business project or investment to fully recover initial cash outlay.",
+    "howToUse": [
+      "Ingresa la inversión inicial total desembolsada.",
+      "Indica el flujo de caja positivo anual generado.",
+      "Consulta el periodo de recuperación (Payback Period) en años."
+    ],
+    "howToUse_en": [
+      "Enter total initial investment cost and active currency.",
+      "Enter expected annual net cash flow generated.",
+      "View calculated Payback Period in years."
+    ],
+    "methodology": "Fórmula Payback: Periodo de Recuperación (Años) = Inversión Inicial / Flujo de Caja Anual.",
+    "methodology_en": "Payback Formula: Payback Period (Years) = Initial Outlay / Annual Cash Flow."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "⏱️",
+      "title": "Why Payback Period Matters",
+      "title_es": "Importancia del Periodo de Recuperación",
+      "content_html_en": "<p>Payback period measures liquidity risk. Shorter payback periods are preferred because capital is committed for less time, reducing risk exposure.</p>",
+      "content_html": "<p>El periodo de recuperación mide el riesgo de liquidez. Cuanto más rápido se recupere la inversión inicial, menor es el riesgo expuesto.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "initialInvestment",
+      "label": "Inversión inicial desembolsada",
+      "label_en": "Initial Investment Outlay",
+      "type": "currency",
+      "default": 60000,
+      "min": 1000,
+      "max": 10000000,
+      "step": 1000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1000, 10000000], "message": "Inversión entre 1.000 y 10.000.000", "message_en": "Outlay between 1,000 and 10,000,000" }]
+    },
+    {
+      "id": "annualCashFlow",
+      "label": "Flujo de caja neto anual generado",
+      "label_en": "Annual Net Cash Flow Generated",
+      "type": "currency",
+      "default": 15000,
+      "min": 100,
+      "max": 5000000,
+      "step": 500,
+      "unit": { "follows": "initialInvestment" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "paybackYears",
+      "label": "Periodo de Recuperación del Capital",
+      "label_en": "Payback Period Timeframe",
+      "expression": "initialInvestment / annualCashFlow",
+      "unit": "años",
+      "unit_en": "years",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "paybackYears", "op": "<=", "value": 4 }, "label": "Recuperación Rápida", "label_en": "Fast Recovery Rate", "tone": "success", "text": "Capital recuperado en un horizonte de bajo riesgo.", "text_en": "Outlay fully recovered within a low liquidity risk timeframe." }
+      ]
+    },
+    {
+      "id": "paybackMonths",
+      "label": "Equivalente en meses",
+      "label_en": "Equivalent Months",
+      "expression": "paybackYears * 12",
+      "unit": "meses",
+      "unit_en": "months",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "roi-calculator", "type": "static", "message": "Calcula el retorno de inversión ROI", "message_en": "Calculate Return on Investment ROI", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Liquidez y Payback",
+    "role_en": "Payback & Liquidity Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y directo",
+    "includeData": ["paybackYears", "paybackMonths", "initialInvestment", "annualCashFlow"],
+    "instructions": [
+      "Sintetiza el tiempo en años y meses necesarios para recuperar el capital en 2 frases concisas.",
+      "Destaca que un plazo de recuperación más corto minimiza el riesgo del inversor."
+    ],
+    "instructions_en": [
+      "Summarize time in years and months needed to fully recoup capital in 2 concise sentences.",
+      "Highlight that a shorter payback timeframe minimizes investor capital risk exposure."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Periodo de Recuperación del Capital | CalculadoraHub",
+    "metaTitle_en": "Payback Period Calculator | CalculadoraHub",
+    "metaDescription": "Calcula los años y meses necesarios para recuperar una inversión inicial. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate exact years and months needed to fully recover initial investment outlay. Free, instant results.",
+    "keywords": ["payback period calculator", "periodo de recuperacion", "retorno capital", "inversion"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

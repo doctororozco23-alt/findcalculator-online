@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "density-calculator",
+    "title": "Calculadora de Densidad (Masa y Volumen)",
+    "title_en": "Density Calculator (Mass & Volume)",
+    "slug": "calculadora-de-densidad-masa-volumen-fisica",
+    "category": "physics",
+    "subcategory": "mechanics",
+    "tags": ["densidad", "masa", "volumen", "fisica", "gramos-por-cm3", "kg-por-m3", "materiales"],
+    "tags_en": ["density", "mass", "volume", "physics", "g-per-cm3", "kg-per-m3", "materials"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la densidad de cualquier objeto o fluido ($\\rho = m / V$) en $g/cm^3$ o $kg/m^3$ a partir de su masa y volumen.",
+    "shortDescription_en": "Calculate density of any solid object or fluid ($\\rho = m / V$) in $g/cm^3$ or $kg/m^3$ from mass and volume.",
+    "longDescription": "Herramienta de física clásica y ciencia de materiales. Aplica la ecuación fundamental de densidad volumétrica $\\rho = m / V$ para determinar la compacidad de la materia.",
+    "longDescription_en": "Classical physics and materials science tool. Applies core volumetric density equation $\\rho = m / V$ to compute material compactness.",
+    "howToUse": [
+      "Ingresa la Masa del objeto (gramos o kg).",
+      "Ingresa el Volumen del objeto ($cm^3$ o $m^3$).",
+      "Consulta la Densidad Calculada en $g/cm^3$ y en $kg/m^3$."
+    ],
+    "howToUse_en": [
+      "Enter Object Mass (grams or kg).",
+      "Enter Object Volume ($cm^3$ or $m^3$).",
+      "View Calculated Density in $g/cm^3$ and $kg/m^3$."
+    ],
+    "methodology": "Densidad ρ = Masa / Volumen. Conversión 1 g/cm³ = 1,000 kg/m³.",
+    "methodology_en": "Density ρ = Mass / Volume. Conversion 1 g/cm³ = 1,000 kg/m³."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Física de la Materia y Mecánica de Fluidos",
+    "role_en": "Physics of Matter & Fluid Mechanics Specialist Assistant",
+    "includeData": ["densityGramsPerCm3", "densityKgPerM3"],
+    "instructions": [
+      "Interpreta la densidad obtenida comparándola con sustancias de referencia (Agua = 1.0 g/cm³, Aluminio = 2.7 g/cm³, Hierro = 7.87 g/cm³, Oro = 19.3 g/cm³).",
+      "Indica si el objeto flotaría o se hundiría en agua (Principio de Arquímedes).",
+      "Explica la influencia de la temperatura en la densidad de los fluidos."
+    ],
+    "instructions_en": [
+      "Interpret calculated density compared to reference materials (Water = 1.0 g/cm³, Aluminum = 2.7 g/cm³, Iron = 7.87 g/cm³, Gold = 19.3 g/cm³).",
+      "Indicate if object floats or sinks in water (Archimedes Principle).",
+      "Explain temperature influence on fluid density."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "dns-guide",
+      "icon": "⚖️",
+      "title": "Density Formula & Standard Material Table",
+      "title_es": "Fórmula de Densidad y Tabla de Materiales Estándar",
+      "content_html_en": "<p><b>Density Formula:</b> ρ = Mass / Volume.</p><p><b>Water Density:</b> 1.00 g/cm³ (at 4°C).</p><p><b>Archimedes Principle:</b> Objects with density &lt; 1.0 g/cm³ float in pure water.</p>",
+      "content_html": "<p><b>Fórmula de Densidad:</b> ρ = Masa / Volumen.</p><p><b>Densidad del Agua:</b> 1.00 g/cm³ (a 4°C).</p><p><b>Principio de Arquímedes:</b> Objetos con densidad &lt; 1.0 g/cm³ flotan en agua pura.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "massGrams",
+      "label": "Masa del Objeto (gramos - g)",
+      "label_en": "Object Mass (grams - g)",
+      "type": "number",
+      "default": 270,
+      "min": 0.01,
+      "max": 1000000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "volumeCm3",
+      "label": "Volumen del Objeto (cm³)",
+      "label_en": "Object Volume (cm³)",
+      "type": "number",
+      "default": 100,
+      "min": 0.01,
+      "max": 1000000,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "densityGramsPerCm3",
+      "label": "Densidad Calculada (g/cm³)",
+      "label_en": "Calculated Density (g/cm³)",
+      "expression": "volumeCm3 > 0 ? (massGrams / volumeCm3) : 0",
+      "unit": "g/cm³",
+      "unit_en": "g/cm³",
+      "precision": 3,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "densityGramsPerCm3", "op": "<", "value": 1.0 }, "label": "Flota en Agua (< 1.0 g/cm³)", "label_en": "Floats in Water (< 1.0 g/cm³)", "tone": "success", "text": "Densidad menor que el agua: el cuerpo flota.", "text_en": "Density lower than water: body floats." },
+        { "when": { "field": "densityGramsPerCm3", "op": ">=", "value": 1.0 }, "label": "Se Hunde en Agua (≥ 1.0 g/cm³)", "label_en": "Sinks in Water (≥ 1.0 g/cm³)", "tone": "info", "text": "Densidad igual o mayor que el agua: el cuerpo se hunde.", "text_en": "Density equal or higher than water: body sinks." }
+      ]
+    },
+    {
+      "id": "densityKgPerM3",
+      "label": "Densidad en Kilogramos por Metro Cúbico (kg/m³)",
+      "label_en": "Density in Kilograms per Cubic Meter (kg/m³)",
+      "expression": "densityGramsPerCm3 * 1000",
+      "unit": "kg/m³",
+      "unit_en": "kg/m³",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

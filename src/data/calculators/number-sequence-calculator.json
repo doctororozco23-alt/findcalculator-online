@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "number-sequence-calculator",
+    "title": "Calculadora de Sucesiones Numéricas (Aritmética y Geométrica)",
+    "title_en": "Number Sequence Calculator (Arithmetic & Geometric)",
+    "slug": "calculadora-de-sucesiones-numericas-aritmetica-geometrica",
+    "category": "math",
+    "subcategory": "algebra",
+    "tags": ["sucesiones", "progresion-aritmetica", "progresion-geometrica", "series", "termino-general", "algebra"],
+    "tags_en": ["sequences", "arithmetic-progression", "geometric-progression", "series", "general-term", "algebra"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el término $n$-ésimo ( $a_n$ ) y la suma de la serie ( $S_n$ ) para progresiones aritméticas y geométricas.",
+    "shortDescription_en": "Compute nth term ( $a_n$ ) and sum of series ( $S_n$ ) for arithmetic and geometric progressions.",
+    "longDescription": "Herramienta de álgebra y sucesiones numéricas. Para una Progresión Aritmética calcula $a_n = a_1 + (n-1)d$ y $S_n = \\frac{n(a_1 + a_n)}{2}$. Para una Progresión Geométrica calcula $a_n = a_1 \\cdot r^{n-1}$ y $S_n = a_1 \\frac{r^n - 1}{r - 1}$.",
+    "longDescription_en": "Algebra and series calculator. For Arithmetic Progression computes $a_n = a_1 + (n-1)d$ and $S_n$. For Geometric Progression computes $a_n = a_1 \\cdot r^{n-1}$ and $S_n$.",
+    "howToUse": [
+      "Selecciona el Tipo de Progresión (Aritmética vs Geométrica).",
+      "Ingresa el Primer Término ($a_1$).",
+      "Ingresa la Diferencia común ($d$) o Razón común ($r$).",
+      "Ingresa el número de términos ($n$).",
+      "Consulta el término $n$-ésimo $a_n$ y la suma acumulada de la serie $S_n$."
+    ],
+    "howToUse_en": [
+      "Select Progression Type (Arithmetic vs Geometric).",
+      "Enter First Term ($a_1$).",
+      "Enter Common Difference ($d$) or Ratio ($r$).",
+      "Enter number of terms ($n$).",
+      "View nth term $a_n$ and series sum $S_n$."
+    ],
+    "methodology": "Aritmética: a_n = a1 + (n-1)*d, S_n = n*(a1 + a_n)/2. Geométrica: a_n = a1 * r^(n-1), S_n = a1*(r^n - 1)/(r - 1).",
+    "methodology_en": "Arithmetic: a_n = a1 + (n-1)*d, S_n = n*(a1 + a_n)/2. Geometric: a_n = a1 * r^(n-1), S_n = a1*(r^n - 1)/(r - 1)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Sucesiones y Series",
+    "role_en": "Sequences & Series Specialist Assistant",
+    "includeData": ["nthTermResult", "sumSeriesResult"],
+    "instructions": [
+      "Distingue entre progresión aritmética (diferencia constante) y geométrica (razón constante).",
+      "Explica la suma acumulada de la serie S_n.",
+      "Compara el crecimiento lineal vs exponencial de la secuencia."
+    ],
+    "instructions_en": [
+      "Distinguish arithmetic (constant difference) vs geometric (constant ratio) progression.",
+      "Explain the cumulative sum of series S_n.",
+      "Compare linear vs exponential sequence growth."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "seq-guide",
+      "icon": "🔢",
+      "title": "Arithmetic vs Geometric Sequences",
+      "title_es": "Sucesiones Aritméticas vs Geométricas",
+      "content_html_en": "<p><b>Arithmetic Sequence:</b> Each term is obtained by adding a constant difference <i>d</i> to the previous term (e.g. 2, 5, 8, 11...).</p><p><b>Geometric Sequence:</b> Each term is obtained by multiplying the previous term by a constant ratio <i>r</i> (e.g. 3, 6, 12, 24...).</p>",
+      "content_html": "<p><b>Sucesión Aritmética:</b> Cada término se obtiene sumando una diferencia constante <i>d</i> al anterior (ej. 2, 5, 8, 11...).</p><p><b>Sucesión Geométrica:</b> Cada término se obtiene multiplicando el anterior por una razón constante <i>r</i> (ej. 3, 6, 12, 24...).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "seqType",
+      "label": "Tipo de Progresión / Sucesión",
+      "label_en": "Sequence Type",
+      "type": "select",
+      "default": "arithmetic",
+      "options": [
+        { "value": "arithmetic", "label": "Aritmética (Diferencia constante d)", "label_en": "Arithmetic (Common difference d)" },
+        { "value": "geometric", "label": "Geométrica (Razón constante r)", "label_en": "Geometric (Common ratio r)" }
+      ]
+    },
+    {
+      "id": "firstTerm",
+      "label": "Primer Término (a₁)",
+      "label_en": "First Term (a₁)",
+      "type": "number",
+      "default": 2,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "stepVal",
+      "label": "Diferencia común (d) / Razón común (r)",
+      "label_en": "Common Difference (d) / Ratio (r)",
+      "type": "number",
+      "default": 3,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "nTerms",
+      "label": "Posición / Número de Términos (n)",
+      "label_en": "Number of Terms (n)",
+      "type": "number",
+      "default": 10,
+      "min": 1,
+      "max": 1000,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1, 1000], "message": "Ingresa n entre 1 y 1000", "message_en": "Enter n between 1 and 1000" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "nthTermResult",
+      "label": "Término n-ésimo (aₙ)",
+      "label_en": "Nth Term (aₙ)",
+      "expression": "seqType == 'arithmetic' ? (firstTerm + (nTerms - 1) * stepVal) : (firstTerm * (stepVal ^ (nTerms - 1)))",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "nthTermResult", "op": ">=", "value": 0 }, "label": "Sucesión Calculada Correctamente", "label_en": "Sequence Computed Successfully", "tone": "success", "text": "Término n-ésimo y suma de la serie obtenidos.", "text_en": "Nth term and series sum computed." }
+      ]
+    },
+    {
+      "id": "sumSeriesResult",
+      "label": "Suma de la Serie de n Términos (Sₙ)",
+      "label_en": "Sum of n Terms (Sₙ)",
+      "expression": "seqType == 'arithmetic' ? (nTerms * (firstTerm + nthTermResult) / 2) : (stepVal != 1 ? (firstTerm * (stepVal^nTerms - 1) / (stepVal - 1)) : (firstTerm * nTerms))",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

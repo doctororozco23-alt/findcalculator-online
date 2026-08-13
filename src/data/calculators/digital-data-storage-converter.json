@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "digital-data-storage-converter",
+    "title": "Conversor de Almacenamiento Digital (Bytes, KB, MB, GB, TB)",
+    "title_en": "Digital Data Storage Unit Converter (Bytes, KB, MB, GB, TB)",
+    "slug": "conversor-de-almacenamiento-digital-bytes-kb-mb-gb-tb",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["almacenamiento-digital", "bytes", "gigabytes", "terabytes", "megabytes", "informática", "conversores"],
+    "tags_en": ["digital-storage", "bytes", "gigabytes", "terabytes", "megabytes", "computer-science", "converters"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte instantáneamente entre Bytes, Kilobytes (KB), Megabytes (MB), Gigabytes (GB), Terabytes (TB) y Petabytes (PB).",
+    "shortDescription_en": "Instantly convert between Bytes, Kilobytes (KB), Megabytes (MB), Gigabytes (GB), Terabytes (TB), and Petabytes (PB).",
+    "longDescription": "Herramienta de informática, almacenamiento en nube y sistemas informáticos. Permite convertir capacidades de disco tanto en estándar decimal (1000) como binario IEC (1024 GiB).",
+    "longDescription_en": "Computer science, cloud storage, and IT systems tool. Converts storage capacities in both decimal standard (1000) and IEC binary (1024 GiB).",
+    "howToUse": [
+      "Ingresa el Valor de Almacenamiento a Convertir.",
+      "Selecciona la Unidad de Origen (ej. MB, GB, TB).",
+      "Consulta los Resultados Equivalentes en Bytes, KB, MB, GB y TB."
+    ],
+    "howToUse_en": [
+      "Enter Data Storage Value to Convert.",
+      "Select Source Unit (e.g. MB, GB, TB).",
+      "View Equivalent Results in Bytes, KB, MB, GB, and TB."
+    ],
+    "methodology": "Factor base en Gigabytes (GB): 1 GB = 1.0, 1 MB = 0.001, 1 KB = 0.000001, 1 Byte = 1e-9, 1 TB = 1000.0, 1 PB = 1000000.0.",
+    "methodology_en": "Base factor in Gigabytes (GB): 1 GB = 1.0, 1 MB = 0.001, 1 KB = 0.000001, 1 Byte = 1e-9, 1 TB = 1000.0, 1 PB = 1000000.0."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Arquitectura de Almacenamiento Digital y Datos",
+    "role_en": "Digital Storage Architecture & Data Specialist Assistant",
+    "includeData": ["dataStorageGbResult", "dataStorageMbResult", "dataStorageTbResult"],
+    "instructions": [
+      "Interpreta la conversión de capacidad de almacenamiento digital realizada.",
+      "Explica la discrepancia común entre fabricantes de discos (1 GB = 1,000,000,000 Bytes) vs los sistemas operativos (1 GiB = 1,073,741,824 Bytes).",
+      "Muestra equivalencias de contenido (ej. 1 GB de almacenamiento guarda ~250 canciones MP3 o ~300 fotos de 12MP)."
+    ],
+    "instructions_en": [
+      "Interpret performed digital data storage unit conversion.",
+      "Explain common drive manufacturer marketing discrepancy (1 GB = 10^9 Bytes) vs OS binary indexing (1 GiB = 2^30 Bytes).",
+      "Show content equivalences (e.g. 1 GB stores ~250 MP3 songs or ~300 12MP photos)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "dds-guide",
+      "icon": "💾",
+      "title": "Decimal vs Binary Storage Standards",
+      "title_es": "Estándares de Almacenamiento Decimal vs Binario",
+      "content_html_en": "<p><b>Decimal (SI):</b> 1 KB = 1,000 Bytes | 1 MB = 1,000 KB | 1 GB = 1,000 MB</p><p><b>Binary (IEC):</b> 1 KiB = 1,024 Bytes | 1 MiB = 1,024 KiB | 1 GiB = 1,024 MiB</p>",
+      "content_html": "<p><b>Decimal (SI):</b> 1 KB = 1,000 Bytes | 1 MB = 1,000 KB | 1 GB = 1,000 MB</p><p><b>Binario (IEC):</b> 1 KiB = 1,024 Bytes | 1 MiB = 1,024 KiB | 1 GiB = 1,024 MiB</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputValueDataStorage",
+      "label": "Valor a Convertir",
+      "label_en": "Value to Convert",
+      "type": "number",
+      "default": 64,
+      "min": 0,
+      "max": 1000000000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "inputDataStorageUnitFactor",
+      "label": "Unidad de Origen",
+      "label_en": "Source Unit",
+      "type": "select",
+      "default": "1.0",
+      "options": [
+        { "value": "1.0", "label": "Gigabytes (GB)", "label_en": "Gigabytes (GB)" },
+        { "value": "0.001", "label": "Megabytes (MB)", "label_en": "Megabytes (MB)" },
+        { "value": "0.000001", "label": "Kilobytes (KB)", "label_en": "Kilobytes (KB)" },
+        { "value": "1000.0", "label": "Terabytes (TB)", "label_en": "Terabytes (TB)" },
+        { "value": "1000000.0", "label": "Petabytes (PB)", "label_en": "Petabytes (PB)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "dataStorageGbResult",
+      "label": "Equivalente en Gigabytes (GB)",
+      "label_en": "Equivalent in Gigabytes (GB)",
+      "expression": "inputValueDataStorage * inputDataStorageUnitFactor",
+      "unit": "GB",
+      "unit_en": "GB",
+      "precision": 3,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "dataStorageGbResult", "op": ">=", "value": 0 }, "label": "Capacidad Calculada", "label_en": "Capacity Computed", "tone": "success", "text": "Almacenamiento equivalente en Gigabytes cuantificado.", "text_en": "Equivalent storage in Gigabytes quantified." }
+      ]
+    },
+    {
+      "id": "dataStorageMbResult",
+      "label": "Equivalente en Megabytes (MB)",
+      "label_en": "Equivalent in Megabytes (MB)",
+      "expression": "dataStorageGbResult * 1000",
+      "unit": "MB",
+      "unit_en": "MB",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "dataStorageTbResult",
+      "label": "Equivalente en Terabytes (TB)",
+      "label_en": "Equivalent in Terabytes (TB)",
+      "expression": "dataStorageGbResult / 1000",
+      "unit": "TB",
+      "unit_en": "TB",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "dataStorageKbResult",
+      "label": "Equivalente en Kilobytes (KB)",
+      "label_en": "Equivalent in Kilobytes (KB)",
+      "expression": "dataStorageGbResult * 1000000",
+      "unit": "KB",
+      "unit_en": "KB",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

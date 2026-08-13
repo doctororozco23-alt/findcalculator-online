@@ -1,0 +1,192 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "balance-transfer-calculator",
+    "title": "Calculadora de Transferencia de Saldo de Tarjeta",
+    "title_en": "Balance Transfer Calculator",
+    "slug": "transferencia-saldo-tarjeta",
+    "category": "finance",
+    "subcategory": "loans",
+    "tags": ["transferencia-saldo", "tarjeta", "interes-0"],
+    "tags_en": ["balance-transfer", "card", "0-apr"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "ArrowRightLeft"
+  },
+  "content": {
+    "shortDescription": "Calcula el ahorro neto en intereses al transferir el saldo de tu tarjeta de crédito a una oferta promocional del 0% APR.",
+    "shortDescription_en": "Calculate net interest savings when transferring high-APR credit card balance to a 0% APR promotional card.",
+    "longDescription": "Determina el dinero exacto que ahorrarás en intereses tras descontar la comisión por transferencia de saldo (ej. 3% o 5%) al mover tu deuda a una tarjeta con 0% APR promocional.",
+    "longDescription_en": "Determine exact net interest savings after factoring in the upfront balance transfer fee (e.g. 3% or 5%) when moving high-APR debt to a 0% promotional APR card.",
+    "howToUse": [
+      "Ingresa el saldo deudor a transferir.",
+      "Establece la tasa de interés actual de tu tarjeta (APR %).",
+      "Indica la duración de la promoción a 0% APR (meses) y la comisión de transferencia (%).",
+      "Consulta el ahorro neto total en intereses."
+    ],
+    "howToUse_en": [
+      "Enter high-APR card debt balance to transfer and active currency.",
+      "Set current card interest rate (APR %).",
+      "Enter 0% APR promotional period duration (months) and transfer fee (%).",
+      "View calculated net interest savings."
+    ],
+    "methodology": "Fórmula Transferencia Saldo: Comisión = Saldo × (TasaComisión / 100). Interés Ahorrado = InterésTarjetaOriginal - Comisión.",
+    "methodology_en": "Balance Transfer Formula: Transfer Fee = Balance × (FeeRate / 100). Net Saved = OriginalInterest - TransferFee."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🔄",
+      "title": "How 0% Balance Transfers Work",
+      "title_es": "Cómo Funciona la Transferencia de Saldo al 0%",
+      "content_html_en": "<p>A 0% APR balance transfer lets you freeze interest charges for 12-21 months, allowing 100% of your monthly payments to go directly to paying down principal.</p>",
+      "content_html": "<p>Una tarjeta de transferencia de saldo al 0% APR congela los intereses durante 12-21 meses, destinando el 100% de tus pagos a liquidar el capital.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "transferBalance",
+      "label": "Saldo deudor a transferir",
+      "label_en": "Debt Balance to Transfer",
+      "type": "currency",
+      "default": 8000,
+      "min": 500,
+      "max": 100000,
+      "step": 500,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "currentAprRate",
+      "label": "Tasa de interés de tu tarjeta actual (APR %)",
+      "label_en": "Current Card Interest Rate (APR %)",
+      "type": "number",
+      "default": 22.0,
+      "min": 1.0,
+      "max": 40.0,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "promoMonths",
+      "label": "Duración de la oferta a 0% APR (meses)",
+      "label_en": "0% APR Promotional Duration (months)",
+      "type": "slider",
+      "default": 18,
+      "min": 6,
+      "max": 24,
+      "step": 3,
+      "unit": "meses",
+      "unit_en": "months",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "transferFeePercent",
+      "label": "Comisión de transferencia de saldo (%)",
+      "label_en": "Balance Transfer Fee (%)",
+      "type": "slider",
+      "default": 3.0,
+      "min": 0,
+      "max": 5.0,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "upfrontTransferFee",
+      "label": "Comisión de transferencia de saldo inicial",
+      "label_en": "Upfront Balance Transfer Fee Amount",
+      "expression": "transferBalance * (transferFeePercent / 100)",
+      "unit": { "follows": "transferBalance" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "interestWithoutTransfer",
+      "label": "Interés estimado en la tarjeta original",
+      "label_en": "Estimated Interest Owed Original Card",
+      "expression": "transferBalance * (currentAprRate / 100) * (promoMonths / 12)",
+      "unit": { "follows": "transferBalance" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "netSavingsFromTransfer",
+      "label": "Ahorro Neto Real de Intereses",
+      "label_en": "Net Realized Interest Savings",
+      "expression": "max(interestWithoutTransfer - upfrontTransferFee, 0)",
+      "unit": { "follows": "transferBalance" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "netSavingsFromTransfer", "op": ">", "value": 0 }, "label": "Ahorro Neto Confirmado", "label_en": "Confirmed Net Savings", "tone": "success", "text": "Ahorro neto tras restar la comisión inicial de transferencia.", "text_en": "Net financial savings generated after deducting upfront balance transfer fee." }
+      ]
+    },
+    {
+      "id": "monthlyPayoffRequired",
+      "label": "Pago mensual para liquidar antes de acabar el 0%",
+      "label_en": "Monthly Payment Needed to Liquidate at 0%",
+      "expression": "(transferBalance + upfrontTransferFee) / promoMonths",
+      "unit": { "follows": "transferBalance" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "credit-card-payoff-calculator", "type": "static", "message": "Calcula el pago estándar de tarjeta", "message_en": "Calculate standard card payoff schedule", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Especialista en Transferencia de Saldo de Tarjetas",
+    "role_en": "Balance Transfer Debt Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y prudente",
+    "includeData": ["netSavingsFromTransfer", "monthlyPayoffRequired", "upfrontTransferFee", "transferBalance"],
+    "instructions": [
+      "Sintetiza el ahorro neto real de intereses y la cuota mensual requerida para liquidar al 0% en 2 frases concisas.",
+      "Advierte sobre la importancia de liquidar la deuda antes de que venza la ventana del 0% APR."
+    ],
+    "instructions_en": [
+      "Summarize net realized interest savings and monthly payment required to clear balance during 0% window in 2 concise sentences.",
+      "Warn about importance of eliminating entire balance before 0% APR promotional window expires."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Transferencia de Saldo de Tarjeta | CalculadoraHub",
+    "metaTitle_en": "Balance Transfer Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el ahorro en intereses al transferir tu saldo a una tarjeta con 0% APR. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate net interest savings moving card balance to 0% APR promotional offer. Free, instant results.",
+    "keywords": ["balance transfer calculator", "transferencia de saldo", "tarjeta 0 apr", "ahorro intereses"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

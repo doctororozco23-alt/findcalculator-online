@@ -1,0 +1,206 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "refinance-calculator",
+    "title": "Calculadora de Refinanciación Hipotecaria",
+    "title_en": "Refinance Calculator",
+    "slug": "refinanciacion-hipotecaria",
+    "category": "finance",
+    "subcategory": "mortgages",
+    "tags": ["hipoteca", "refinanciacion", "ahorro"],
+    "tags_en": ["mortgage", "refinance", "savings"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "RefreshCw"
+  },
+  "content": {
+    "shortDescription": "Evalúa si refinanciar tu hipoteca a una tasa más baja reducirá tus cuotas mensuales y te ahorrará dinero.",
+    "shortDescription_en": "Evaluate whether refinancing your mortgage to a lower interest rate will reduce monthly payments and save money.",
+    "longDescription": "Compara tu cuota e intereses actuales frente a las condiciones del nuevo préstamo refinanciado. Incluye el costo de gastos de tramitación y el punto de equilibrio (break-even).",
+    "longDescription_en": "Compare current mortgage payments against new refinanced loan terms. Factors in closing costs and calculates break-even timeframe.",
+    "howToUse": [
+      "Ingresa el saldo pendiente actual y tu tipo de interés actual (%).",
+      "Añade la nueva tasa de interés refinanciada (%) y el nuevo plazo en años.",
+      "Indica los gastos de cierre/refinanciación esperados.",
+      "Consulta el ahorro mensual y el tiempo de amortización del gasto."
+    ],
+    "howToUse_en": [
+      "Enter current remaining loan balance and current interest rate (%).",
+      "Enter new proposed interest rate (%) and new loan term in years.",
+      "Add expected refinance closing costs.",
+      "View monthly payment reduction and break-even timeframe."
+    ],
+    "methodology": "Comparativa de Refinanciación: Ahorro Mensual = Cuota Actual - Nueva Cuota. Punto de Equilibrio (meses) = Gastos Cierre / Ahorro Mensual.",
+    "methodology_en": "Refinance Analysis: Monthly Savings = Current Payment - New Payment. Break-Even (months) = Closing Costs / Monthly Savings."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🔄",
+      "title": "When Should You Refinance?",
+      "title_es": "¿Cuándo Conviene Refinanciar?",
+      "content_html_en": "<p>Refinancing makes financial sense if the interest rate reduction is significant enough to recoup closing costs within your expected timeframe of staying in the home.</p>",
+      "content_html": "<p>Refinanciar es beneficioso cuando la bajada de la tasa de interés permite recuperar los gastos de tramitación en un tiempo inferior a tu estancia prevista en la vivienda.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "currentBalance",
+      "label": "Saldo pendiente actual del préstamo",
+      "label_en": "Current Remaining Loan Balance",
+      "type": "currency",
+      "default": 220000,
+      "min": 10000,
+      "max": 5000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "currentRate",
+      "label": "Tasa de interés actual (%)",
+      "label_en": "Current Interest Rate (%)",
+      "type": "number",
+      "default": 6.5,
+      "min": 0.1,
+      "max": 20,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "newRate",
+      "label": "Nueva tasa de interés refinanciada (%)",
+      "label_en": "New Proposed Interest Rate (%)",
+      "type": "number",
+      "default": 4.5,
+      "min": 0.1,
+      "max": 20,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "newTermYears",
+      "label": "Nuevo plazo deseado (años)",
+      "label_en": "New Proposed Term (years)",
+      "type": "slider",
+      "default": 25,
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "refinanceCosts",
+      "label": "Gastos de tramitación / cierre",
+      "label_en": "Estimated Refinance Closing Costs",
+      "type": "currency",
+      "default": 3500,
+      "min": 0,
+      "max": 50000,
+      "step": 500,
+      "unit": { "follows": "currentBalance" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "currentMonthlyPayment",
+      "label": "Cuota mensual actual",
+      "label_en": "Current Monthly Payment",
+      "expression": "currentBalance * (currentRate / 1200) / (1 - (1 + currentRate / 1200) ^ -(newTermYears * 12))",
+      "unit": { "follows": "currentBalance" },
+      "precision": 2,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "newMonthlyPayment",
+      "label": "Nueva Cuota Mensual Refinanciada",
+      "label_en": "New Refinanced Monthly Payment",
+      "expression": "currentBalance * (newRate / 1200) / (1 - (1 + newRate / 1200) ^ -(newTermYears * 12))",
+      "unit": { "follows": "currentBalance" },
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "newMonthlyPayment", "op": "<", "value": 1500 }, "label": "Reducción de Cuota", "label_en": "Lower Monthly Payment", "tone": "success", "text": "Disminución efectiva en la carga financiera mensual.", "text_en": "Effective reduction in monthly cash outlay." }
+      ]
+    },
+    {
+      "id": "monthlySavings",
+      "label": "Ahorro mensual directo",
+      "label_en": "Direct Monthly Cash Savings",
+      "expression": "max(currentMonthlyPayment - newMonthlyPayment, 0)",
+      "unit": { "follows": "currentBalance" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "breakEvenMonths",
+      "label": "Tiempo de amortización del gasto (Punto de Equilibrio)",
+      "label_en": "Break-Even Timeframe (Months to Recoup Costs)",
+      "expression": "refinanceCosts / (monthlySavings + 0.01)",
+      "unit": "meses",
+      "unit_en": "months",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "mortgage-calculator", "type": "static", "message": "Calcula condiciones hipotecarias estándar", "message_en": "Calculate standard mortgage terms", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Refinanciación Hipotecaria",
+    "role_en": "Mortgage Refinance Assistant",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["monthlySavings", "breakEvenMonths", "newMonthlyPayment", "currentMonthlyPayment"],
+    "instructions": [
+      "Sintetiza el ahorro mensual directo y los meses necesarios para amortizar los gastos de refinanciación en 2 frases concisas.",
+      "Aconseja comparar si el cliente permanecerá en la vivienda más tiempo que el punto de equilibrio."
+    ],
+    "instructions_en": [
+      "Summarize monthly savings and break-even timeframe in 2 concise sentences.",
+      "Advise comparing break-even months against intended duration of staying in property."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Refinanciación Hipotecaria | CalculadoraHub",
+    "metaTitle_en": "Refinance Calculator | CalculadoraHub",
+    "metaDescription": "Evalúa el ahorro mensual y el punto de equilibrio de refinanciar tu hipoteca. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate monthly savings and break-even timeframe of refinancing mortgage. Free, instant results.",
+    "keywords": ["refinance calculator", "refinanciacion hipoteca", "ahorro hipotecario", "break-even"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

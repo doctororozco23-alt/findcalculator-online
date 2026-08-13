@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "egfr-ckd-epi-calculator",
+    "title": "Calculadora de Filtración Glomerular Estimada (eGFR CKD-EPI 2021)",
+    "title_en": "Estimated Glomerular Filtration Rate Calculator (eGFR CKD-EPI 2021)",
+    "slug": "egfr-filtracion-glomerular-ckd-epi",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["egfr", "ckd-epi", "filtracion-glomerular", "riñon", "creatinina", "erc"],
+    "tags_en": ["egfr", "ckd-epi", "glomerular-filtration", "kidney", "creatinine", "ckd"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula la Tasa de Filtración Glomerular Estimada (eGFR) utilizando la fórmula oficial CKD-EPI 2021 libre de raza recomendada por la NKF y ASN.",
+    "shortDescription_en": "Calculate Estimated Glomerular Filtration Rate (eGFR) using the official race-free 2021 CKD-EPI equation recommended by NKF and ASN.",
+    "longDescription": "Auditoría de función renal clínica. La ecuación CKD-EPI 2021 (Inker et al. NEJM) es el estándar médico internacional para estadificar la Enfermedad Renal Crónica (ERC Criterios KDIGO G1 a G5) sin sesgos raciales.",
+    "longDescription_en": "Clinical renal function audit. The 2021 CKD-EPI equation (Inker et al. NEJM) is the international medical standard for Chronic Kidney Disease staging (KDIGO G1 to G5 stages) without racial bias.",
+    "howToUse": [
+      "Selecciona el sexo biológico del paciente.",
+      "Ingresa la edad en años.",
+      "Ingresa el valor de creatinina sérica en mg/dL (obtenido en laboratorio).",
+      "Consulta el eGFR calculado en mL/min/1.73m² y el estadio clínico KDIGO de función renal."
+    ],
+    "howToUse_en": [
+      "Select patient biological sex.",
+      "Enter age in years.",
+      "Enter serum creatinine level in mg/dL from lab results.",
+      "View calculated eGFR in mL/min/1.73m² and official KDIGO renal function tier."
+    ],
+    "methodology": "Ecuación CKD-EPI 2021 (Inker et al. NEJM 2021): eGFR = 142 × (min(Scr/κ, 1)^α) × (max(Scr/κ, 1)^-1.200) × (0.9938^Edad) × FactorSexo. Estadios KDIGO: G1 (≥90), G2 (60-89), G3a (45-59), G3b (30-44), G4 (15-29), G5 (<15 Fallo Renal).",
+    "methodology_en": "2021 CKD-EPI Equation (Inker et al. NEJM 2021): eGFR = 142 × (min(Scr/κ, 1)^α) × (max(Scr/κ, 1)^-1.200) × (0.9938^Age) × SexFactor. KDIGO Stages: G1 (≥90), G2 (60-89), G3a (45-59), G3b (30-44), G4 (15-29), G5 (<15 Kidney Failure)."
+  },
+  "guideSections": [
+    {
+      "id": "kdigo-stages-guide",
+      "icon": "🫘",
+      "title": "KDIGO Clinical CKD Staging Categories",
+      "title_es": "Estadios Clínicos de ERC según Criterios KDIGO",
+      "content_html_en": "<p><b>Stage G1 (≥ 90 mL/min/1.73m²):</b> Normal or high kidney function with albuminuria markers.</p><p><b>Stage G2 (60 - 89):</b> Mildly decreased kidney function.</p><p><b>Stage G3a (45 - 59):</b> Mild to moderate decrease.</p><p><b>Stage G3b (30 - 44):</b> Moderate to severe decrease.</p><p><b>Stage G4 (15 - 29):</b> Severely decreased kidney function.</p><p><b>Stage G5 (< 15):</b> Kidney Failure / End-Stage Renal Disease (ESRD).</p>",
+      "content_html": "<p><b>Estadio G1 (≥ 90 mL/min/1.73m²):</b> Función renal normal o elevada con marcadores de daño estructural.</p><p><b>Estadio G2 (60 - 89):</b> Levemente disminuida.</p><p><b>Estadio G3a (45 - 59):</b> Moderadamente disminuida (Leve-Moderada).</p><p><b>Estadio G3b (30 - 44):</b> Moderadamente disminuida (Moderada-Grave).</p><p><b>Estadio G4 (15 - 29):</b> Severamente disminuida.</p><p><b>Estadio G5 (< 15):</b> Fallo Renal Terminal (Necesidad de diálisis o trasplante).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "gender",
+      "label": "Sexo biológico del paciente",
+      "label_en": "Patient Biological Sex",
+      "type": "select",
+      "default": "female",
+      "options": [
+        { "value": "female", "label": "Mujer", "label_en": "Female" },
+        { "value": "male", "label": "Hombre", "label_en": "Male" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "ageYears",
+      "label": "Edad del paciente",
+      "label_en": "Patient Age",
+      "type": "number",
+      "default": 55,
+      "min": 18,
+      "max": 110,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [18, 110], "message": "Edad entre 18 y 110 años", "message_en": "Age between 18 and 110 years" }]
+    },
+    {
+      "id": "serumCreatinineMgDl",
+      "label": "Creatinina sérica",
+      "label_en": "Serum Creatinine",
+      "type": "number",
+      "default": 1.1,
+      "min": 0.2,
+      "max": 18.0,
+      "step": 0.1,
+      "unit": "mg/dL",
+      "units": [
+        { "id": "mgdl", "label": "mg/dL", "toBase": 1 },
+        { "id": "umoll", "label": "µmol/L", "toBase": 0.011312 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.2, 18.0], "message": "Creatinina entre 0.2 y 18.0 mg/dL", "message_en": "Creatinine between 0.2 and 18.0 mg/dL" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "kappaVal",
+      "label": "Constante Kappa (κ)",
+      "label_en": "Kappa Constant (κ)",
+      "expression": "gender == 'female' ? 0.7 : 0.9",
+      "unit": "",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "alphaVal",
+      "label": "Exponente Alpha (α)",
+      "label_en": "Alpha Exponent (α)",
+      "expression": "gender == 'female' ? -0.241 : -0.302",
+      "unit": "",
+      "precision": 3,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "genderFactorVal",
+      "label": "Factor Corrector de Sexo",
+      "label_en": "Sex Correction Factor",
+      "expression": "gender == 'female' ? 1.012 : 1.000",
+      "unit": "",
+      "precision": 3,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "egfrVal",
+      "label": "Filtración Glomerular Estimada (eGFR CKD-EPI 2021)",
+      "label_en": "Estimated Glomerular Filtration Rate (eGFR CKD-EPI 2021)",
+      "expression": "142 * (min(serumCreatinineMgDl / kappaVal, 1.0) ^ alphaVal) * (max(serumCreatinineMgDl / kappaVal, 1.0) ^ -1.200) * (0.9938 ^ ageYears) * genderFactorVal",
+      "unit": "mL/min/1.73m²",
+      "unit_en": "mL/min/1.73m²",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "egfrVal", "op": ">=", "value": 90 }, "label": "Estadio G1: Función Normal (≥ 90)", "label_en": "Stage G1: Normal Function (≥ 90)", "tone": "success", "text": "Tasa de filtración glomerular conservada.", "text_en": "Preserved glomerular filtration rate." },
+        { "when": { "field": "egfrVal", "op": "between", "value": [60, 89.9] }, "label": "Estadio G2: Leve Disminución (60 - 89)", "label_en": "Stage G2: Mildly Decreased (60 - 89)", "tone": "info", "text": "Leve reducción de la función renal.", "text_en": "Mild reduction in renal function." },
+        { "when": { "field": "egfrVal", "op": "between", "value": [45, 59.9] }, "label": "Estadio G3a: Disminución Leve-Moderada (45 - 59)", "label_en": "Stage G3a: Mild-Moderate Decrease (45 - 59)", "tone": "warning", "text": "Disminución moderada. Requiere ajuste de dosis farmacológicas.", "text_en": "Moderate decrease. Medication dosage adjustment required." },
+        { "when": { "field": "egfrVal", "op": "between", "value": [30, 44.9] }, "label": "Estadio G3b: Disminución Moderada-Grave (30 - 44)", "label_en": "Stage G3b: Moderate-Severe Decrease (30 - 44)", "tone": "warning", "text": "Disminución moderada a grave. Evaluación por Nefrología.", "text_en": "Moderate to severe decrease. Nephrology consultation recommended." },
+        { "when": { "field": "egfrVal", "op": "between", "value": [15, 29.9] }, "label": "Estadio G4: Disminución Severa (15 - 29)", "label_en": "Stage G4: Severely Decreased (15 - 29)", "tone": "warning", "text": "Fallo renal severo. Preparación para terapia de reemplazo renal.", "text_en": "Severe renal decrease. Preparation for renal replacement therapy." },
+        { "when": { "field": "egfrVal", "op": "<", "value": 15 }, "label": "Estadio G5: Fallo Renal Terminal (< 15)", "label_en": "Stage G5: Kidney Failure (< 15)", "tone": "warning", "text": "Insuficiencia renal terminal. Diálisis o trasplante renal.", "text_en": "End-stage renal failure. Dialysis or kidney transplant required." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "creatinine-clearance-cockcroft-gault-calculator", "type": "static", "message": "Calcula el aclaramiento de creatinina Cockcroft-Gault para fármacos", "message_en": "Calculate Cockcroft-Gault CrCl for drug dosing", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Nefrólogo Clínico y Especialista en Función Renal",
+    "role_en": "Clinical Nephrologist & Renal Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y clínico",
+    "includeData": ["egfrVal", "serumCreatinineMgDl", "ageYears", "gender"],
+    "instructions": [
+      "Sintetiza la Tasa de Filtración Glomerular Estimada eGFR en mL/min/1.73m², la creatinina sérica y el estadio KDIGO en 2 frases concisas.",
+      "Destaca que la fórmula CKD-EPI 2021 es la recomendación médica oficial para el ajuste de fármacos nefrotóxicos."
+    ],
+    "instructions_en": [
+      "Summarize Estimated Glomerular Filtration Rate (eGFR) in mL/min/1.73m², serum creatinine, and KDIGO stage in 2 concise sentences.",
+      "Highlight that 2021 CKD-EPI is the official medical standard for nephrotoxic drug dosing adjustments."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Filtración Glomerular eGFR (CKD-EPI 2021) | CalculadoraHub",
+    "metaTitle_en": "eGFR Calculator (2021 Race-Free CKD-EPI) | CalculadoraHub",
+    "metaDescription": "Calcula la Tasa de Filtración Glomerular Estimada (eGFR) con la fórmula CKD-EPI 2021 de la NKF. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate Estimated Glomerular Filtration Rate (eGFR) with official 2021 CKD-EPI formula. Free, instant results.",
+    "keywords": ["egfr calculator", "ckd-epi 2021", "filtracion glomerular", "creatinina serica erc"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

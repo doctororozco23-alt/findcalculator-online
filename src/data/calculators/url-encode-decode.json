@@ -1,0 +1,103 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "url-encode-decode",
+    "title": "Calculadora de Longitud de URL y Percent-Encoding",
+    "title_en": "URL Length & Percent-Encoding Calculator",
+    "slug": "calculadora-de-longitud-url-percent-encoding-caracteres",
+    "category": "technology",
+    "subcategory": "internet",
+    "tags": ["url-encoding", "percent-encoding", "longitud-url", "caracteres-especiales", "desarrollo-web", "seo", "http"],
+    "tags_en": ["url-encoding", "percent-encoding", "url-length", "special-characters", "web-dev", "seo", "http"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el incremento de caracteres de una dirección URL al aplicar codificación porcentual de caracteres especiales.",
+    "shortDescription_en": "Calculate character count increase in URLs when special characters are percent-encoded.",
+    "longDescription": "Herramienta de desarrollo web, SEO y protocolos HTTP. Evalúa si una URL codificada cumple los límites seguros de navegadores (2,048 caracteres).",
+    "longDescription_en": "Web development, SEO, and HTTP protocol tool. Evaluates whether encoded URL meets browser safe limits (2,048 characters).",
+    "howToUse": [
+      "Ingresa la Longitud de la URL Original (número de caracteres).",
+      "Ingresa la Cantidad de Caracteres Especiales / Espacios a codificar (ej. espacio=%20, &=%26).",
+      "Consulta la Longitud Final Codificada y la compatibilidad con el límite de 2,048 caracteres."
+    ],
+    "howToUse_en": [
+      "Enter Original URL Length (character count).",
+      "Enter Special Characters / Spaces Count to encode (e.g. space=%20, &=%26).",
+      "View Final Encoded URL Length and compatibility with 2,048 character limit."
+    ],
+    "methodology": "Cada carácter especial reservado de 1 byte se convierte en 3 caracteres (%XX) (+2 caracteres de incremento por símbolo).",
+    "methodology_en": "Each reserved 1-byte special character converts to 3 characters (%XX) (+2 characters increase per symbol)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Estándares URI y Protocolos HTTP",
+    "role_en": "URI Standards & HTTP Protocols Specialist Assistant",
+    "includeData": ["encodedUrlLengthResult"],
+    "instructions": [
+      "Interpreta la longitud final codificada de la URL respecto al límite estándar de 2,048 caracteres (Internet Explorer/Edge legacy).",
+      "Explica la razón de codificar caracteres reservados en consultas GET (`?key=value`).",
+      "Aconseja cambiar a solicitudes HTTP POST si las URLs de consulta superan los 2,000 caracteres."
+    ],
+    "instructions_en": [
+      "Interpret final encoded URL length against 2,048 character browser limit.",
+      "Explain reason for encoding reserved characters in GET queries (`?key=value`).",
+      "Advise switching to HTTP POST requests if query URLs exceed 2,000 characters."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "url-guide",
+      "icon": "🔗",
+      "title": "RFC 3986 Percent-Encoding Rules",
+      "title_es": "Reglas de Codificación Porcentual RFC 3986",
+      "content_html_en": "<p><b>Reserved Symbols (+2 Chars):</b> Space becomes %20, & becomes %26, = becomes %3D.</p><p><b>Browser Limit:</b> Keeping URLs under 2,048 characters ensures compatibility across all web clients and proxy servers.</p>",
+      "content_html": "<p><b>Símbolos Reservados (+2 Caracteres):</b> Espacio pasa a %20, & a %26, = a %3D.</p><p><b>Límite de Navegador:</b> Mantener las URLs por debajo de 2,048 caracteres garantiza compatibilidad en todos los clientes y proxys.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "rawUrlLength",
+      "label": "Longitud de la URL Original (caracteres)",
+      "label_en": "Original URL Length (characters)",
+      "type": "number",
+      "default": 120,
+      "min": 10,
+      "max": 10000,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "specialCharsCount",
+      "label": "Número de Caracteres Especiales a Codificar",
+      "label_en": "Special Characters Count to Encode",
+      "type": "number",
+      "default": 15,
+      "min": 0,
+      "max": 1000,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "encodedUrlLengthResult",
+      "label": "Longitud Final de la URL Codificada",
+      "label_en": "Final Encoded URL Length",
+      "expression": "rawUrlLength + (specialCharsCount * 2)",
+      "unit": "caracteres",
+      "unit_en": "chars",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "encodedUrlLengthResult", "op": "<=", "value": 2048 }, "label": "Compatible / Seguro (≤ 2,048 chars)", "label_en": "Compatible / Safe (≤ 2,048 chars)", "tone": "success", "text": "URL dentro del límite estándar de compatibilidad HTTP.", "text_en": "URL within standard HTTP compatibility limit." },
+        { "when": { "field": "encodedUrlLengthResult", "op": ">", "value": 2048 }, "label": "Excede Límite (> 2,048 chars)", "label_en": "Exceeds Limit (> 2,048 chars)", "tone": "warning", "text": "Riesgo de truncado en navegadores. Usar método POST.", "text_en": "Risk of browser truncation. Use POST method instead." }
+      ]
+    }
+  ]
+}

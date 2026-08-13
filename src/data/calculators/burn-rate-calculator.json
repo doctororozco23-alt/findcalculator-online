@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "burn-rate-calculator",
+    "title": "Calculadora de Flujo de Caja y Consumo de Efectivo (Burn Rate)",
+    "title_en": "Cash Flow & Burn Rate Calculator",
+    "slug": "flujo-caja-consumo-efectivo-burn-rate",
+    "category": "finance",
+    "subcategory": "business",
+    "tags": ["burn-rate", "flujo-caja", "runway"],
+    "tags_en": ["burn-rate", "cash-flow", "runway"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Flame"
+  },
+  "content": {
+    "shortDescription": "Calcula la velocidad de consumo de caja mensual (Burn Rate) y la reserva de tiempo (Runway) de tu empresa.",
+    "shortDescription_en": "Calculate monthly cash burn rate and cash runway timeline for startups and small businesses.",
+    "longDescription": "Estima cuántos meses le quedan a tu empresa antes de agotar la reserva de caja disponible (Runway) en función del flujo de ingresos mensuales y los gastos operativos devengados.",
+    "longDescription_en": "Estimate total remaining operating runway in months before available cash balance is fully depleted given monthly revenues and operating expenditures.",
+    "howToUse": [
+      "Ingresa el saldo de caja o reservas de efectivo actual disponible.",
+      "Establece los gastos operativos brutos mensuales totales.",
+      "Ingresa los ingresos de venta mensuales promedio.",
+      "Consulta el Burn Rate Neto mensual y los meses de supervivencia (Runway)."
+    ],
+    "howToUse_en": [
+      "Enter total current available cash balance reserve and active currency.",
+      "Set gross monthly operating expenses.",
+      "Enter average monthly recurring sales revenues.",
+      "View Net Monthly Burn Rate and remaining Cash Runway in months."
+    ],
+    "methodology": "Fórmula Burn Rate: Burn Rate Neto = Gastos Mensuales - Ingresos Mensuales. Runway (Meses) = Reserva Caja / Burn Rate Neto.",
+    "methodology_en": "Burn Rate Formula: Net Monthly Burn = Monthly Expenses - Monthly Revenues. Runway (Months) = Cash Reserve / Net Monthly Burn."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🔥",
+      "title": "Startup Runway Management",
+      "title_es": "Gestión de la Reserva de Tiempo (Runway)",
+      "content_html_en": "<p>Maintaining a minimum 12-18 month cash runway provides startups sufficient cushion to reach profitability or raise new capital rounds safely.</p>",
+      "content_html": "<p>Mantener un horizonte mínimo de 12-18 meses de caja (Runway) proporciona la estabilidad necesaria para alcanzar la rentabilidad.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "cashReserve",
+      "label": "Reserva de caja o efectivo disponible hoy",
+      "label_en": "Current Available Cash Reserve",
+      "type": "currency",
+      "default": 180000,
+      "min": 1000,
+      "max": 50000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "monthlyExpenses",
+      "label": "Gastos operativos brutos mensuales",
+      "label_en": "Gross Monthly Operating Expenses",
+      "type": "currency",
+      "default": 25000,
+      "min": 500,
+      "max": 5000000,
+      "step": 1000,
+      "unit": { "follows": "cashReserve" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "monthlyRevenues",
+      "label": "Ingresos mensuales promedio de ventas",
+      "label_en": "Average Monthly Sales Revenues",
+      "type": "currency",
+      "default": 10000,
+      "min": 0,
+      "max": 5000000,
+      "step": 1000,
+      "unit": { "follows": "cashReserve" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "netMonthlyBurnRate",
+      "label": "Consumo de Caja Neto Mensual (Net Burn Rate)",
+      "label_en": "Net Monthly Cash Burn Rate",
+      "expression": "max(monthlyExpenses - monthlyRevenues, 0)",
+      "unit": { "follows": "cashReserve" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "cashRunwayMonths",
+      "label": "Reserva de Tiempo Restante (Cash Runway)",
+      "label_en": "Remaining Cash Runway Timeline",
+      "expression": "cashReserve / netMonthlyBurnRate",
+      "unit": "meses",
+      "unit_en": "months",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "cashRunwayMonths", "op": ">=", "value": 12 }, "label": "Runway Saludable", "label_en": "Healthy Runway Margin", "tone": "success", "text": "Reserva de tiempo superior a 12 meses para operación continua.", "text_en": "Cash runway exceeding 12 months providing stable operational cushion." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "working-capital-calculator", "type": "static", "message": "Calcula el capital de trabajo de la empresa", "message_en": "Calculate net working capital balance", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Flujo de Caja y Burn Rate",
+    "role_en": "Cash Flow & Burn Rate Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["cashRunwayMonths", "netMonthlyBurnRate", "cashReserve", "monthlyExpenses"],
+    "instructions": [
+      "Sintetiza la reserva de tiempo en meses (Runway) y el consumo de caja neto mensual en 2 frases concisas.",
+      "Advierte si la reserva de tiempo es inferior a 6 meses de operación."
+    ],
+    "instructions_en": [
+      "Summarize cash runway in months and net monthly burn rate in 2 concise sentences.",
+      "Warn if remaining cash runway is less than 6 operating months."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Flujo de Caja y Consumo de Efectivo (Burn Rate) | CalculadoraHub",
+    "metaTitle_en": "Cash Flow & Burn Rate Calculator | CalculadoraHub",
+    "metaDescription": "Calcula la velocidad de consumo de caja (Burn Rate) y la reserva de tiempo (Runway) de tu empresa. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate monthly cash burn rate and cash runway in months. Free, instant results.",
+    "keywords": ["burn rate calculator", "flujo de caja", "runway calculator", "consumo caja"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

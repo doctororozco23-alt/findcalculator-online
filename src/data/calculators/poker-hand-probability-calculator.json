@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "poker-hand-probability-calculator",
+    "title": "Calculadora de Probabilidad de Manos de Póker Texas Hold'em",
+    "title_en": "Texas Hold'em Poker Hand Odds & Outs Calculator",
+    "slug": "calculadora-de-probabilidad-de-manos-de-poker-texas-holdem-outs",
+    "category": "home",
+    "subcategory": "entertainment",
+    "tags": ["poker", "texas-holdem", "probabilidad-de-poker", "outs-poker", "manos-de-poker", "entretenimiento", "hogar"],
+    "tags_en": ["poker", "texas-holdem", "poker-odds", "poker-outs", "poker-hands", "entertainment", "home"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la probabilidad porcentual de completar una mano de póker (Color, Escalera, Set) a partir del número de cartas favorables (Outs).",
+    "shortDescription_en": "Calculate percentage probability of completing a poker hand (Flush, Straight, Set) from number of outs.",
+    "longDescription": "Herramienta de entretenimiento y estrategia para juegos de cartas caseros. Aplica la Regla del 4 y del 2 para estimar la equidad del bote en el Flop y Turn.",
+    "longDescription_en": "Entertainment and strategy tool for home card games. Applies the Rule of 4 and 2 to estimate pot equity on the Flop and Turn.",
+    "howToUse": [
+      "Ingresa el Número de Cartas Favorables / Salidas (Outs, ej. 9 outs para proyecto de Color o 8 para Escalera abierta).",
+      "Selecciona la Ronda Actual del Juego (Flop con 2 cartas por venir o Turn con 1 carta por venir).",
+      "Consulta la Probabilidad Porcentual Calculada y la Equidad de la Mano."
+    ],
+    "howToUse_en": [
+      "Enter Number of Winning Out Cards (Outs, e.g. 9 outs for Flush draw or 8 for Open-ended Straight).",
+      "Select Current Game Round (Flop with 2 cards to come, or Turn with 1 card to come).",
+      "View Calculated Percentage Probability and Hand Equity."
+    ],
+    "methodology": "Regla del 4 en el Flop: P(Completo) ≈ Outs * 4 - (Outs > 8 ? Outs - 8 : 0). Regla del 2 en el Turn: P(Completo) ≈ Outs * 2.1.",
+    "methodology_en": "Flop Rule of 4: P(Complete) ≈ Outs * 4 - (Outs > 8 ? Outs - 8 : 0). Turn Rule of 2: P(Complete) ≈ Outs * 2.1."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Estrategia y Probabilidad de Póker Texas Hold'em",
+    "role_en": "Texas Hold'em Poker Strategy & Odds Specialist Assistant",
+    "includeData": ["pokerHandProbPercentResult", "pokerOddsRatioResult"],
+    "instructions": [
+      "Interpreta la probabilidad de completar la mano de póker calculada a partir de los outs.",
+      "Explica el concepto de Pot Odds (apuestas relativas al bote) para decidir si igualar una apuesta (Call) o retirarse (Fold).",
+      "Muestra la tabla común de outs (9 outs para Color, 8 para Escalera abierta, 4 para Gutshot)."
+    ],
+    "instructions_en": [
+      "Interpret calculated hand completion probability from outs.",
+      "Explain Pot Odds concept (pot size relative to call amount) to decide calling vs folding.",
+      "Show common outs reference table (9 outs Flush draw, 8 outs Open-ended straight, 4 outs Gutshot)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "php-guide",
+      "icon": "♠️",
+      "title": "Common Poker Outs & Draw Odds",
+      "title_es": "Outs Comunes y Probabilidades de Proyecto",
+      "content_html_en": "<p><b>Flush Draw (9 Outs):</b> ~35% on Flop, ~19% on Turn.</p><p><b>Open-Ended Straight (8 Outs):</b> ~31.5% on Flop, ~17% on Turn.</p><p><b>Set to Full House (7 Outs):</b> ~28% on Flop, ~15% on Turn.</p>",
+      "content_html": "<p><b>Proyecto de Color (9 Outs):</b> ~35% en el Flop, ~19% en el Turn.</p><p><b>Escalera Abierta (8 Outs):</b> ~31.5% en el Flop, ~17% en el Turn.</p><p><b>Tercia a Full House (7 Outs):</b> ~28% en el Flop, ~15% en el Turn.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "pokerOutsCount",
+      "label": "Número de Cartas Favorables / Salidas (Outs)",
+      "label_en": "Number of Winning Out Cards (Outs)",
+      "type": "number",
+      "default": 9,
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "pokerGameRoundStage",
+      "label": "Etapa / Ronda del Juego",
+      "label_en": "Game Round Stage",
+      "type": "select",
+      "default": "flop",
+      "options": [
+        { "value": "flop", "label": "Flop (Faltan 2 cartas: Turn y River)", "label_en": "Flop (2 cards to come: Turn & River)" },
+        { "value": "turn", "label": "Turn (Falta 1 carta: solo River)", "label_en": "Turn (1 card to come: River only)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "pokerHandProbPercentResult",
+      "label": "Probabilidad de Completar la Mano (%)",
+      "label_en": "Probability of Completing Hand (%)",
+      "expression": "pokerGameRoundStage == 'flop' ? min(100, (pokerOutsCount * 4) - (pokerOutsCount > 8 ? (pokerOutsCount - 8) : 0)) : min(100, pokerOutsCount * 2.17)",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "pokerHandProbPercentResult", "op": ">=", "value": 0 }, "label": "Probabilidad Calculada", "label_en": "Probability Computed", "tone": "success", "text": "Equidad de la mano de póker cuantificada.", "text_en": "Poker hand equity quantified." }
+      ]
+    },
+    {
+      "id": "pokerOddsRatioResult",
+      "label": "Relación de Probabilidad de Carta (Odds de la Mano)",
+      "label_en": "Hand Odds Ratio (X to 1 Against)",
+      "expression": "pokerHandProbPercentResult > 0 ? ((100 - pokerHandProbPercentResult) / pokerHandProbPercentResult) : 0",
+      "unit": ":1",
+      "unit_en": ":1",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

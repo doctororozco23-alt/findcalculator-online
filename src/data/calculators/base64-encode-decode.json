@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "base64-encode-decode",
+    "title": "Calculadora de Tamaño de Codificación Base64",
+    "title_en": "Base64 Encoding Overhead & Size Calculator",
+    "slug": "calculadora-de-tamano-codificacion-base64-bytes",
+    "category": "technology",
+    "subcategory": "internet",
+    "tags": ["base64", "codificacion", "overhead", "bytes", "desarrollo-web", "programacion", "datos"],
+    "tags_en": ["base64", "encoding", "overhead", "bytes", "web-dev", "programming", "data"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el incremento de tamaño en bytes ($+33\\%$) al codificar archivos o texto binario en formato Base64.",
+    "shortDescription_en": "Compute size overhead (+33%) when encoding binary files or text data into Base64 format.",
+    "longDescription": "Herramienta de desarrollo web y APIs. Determina el peso final de payloads codificados en Base64 (Data URIs, firmas JWT, adjuntos de correo MIME).",
+    "longDescription_en": "Web development and API tool. Computes final size of Base64 encoded payloads (Data URIs, JWT signatures, MIME email attachments).",
+    "howToUse": [
+      "Ingresa el Tamaño Original de los Datos (en Kilobytes - KB).",
+      "Consulta el Tamaño Codificado resultante en Base64 (KB) y el Overhead porcentual (+33%)."
+    ],
+    "howToUse_en": [
+      "Enter Original Data Size (in Kilobytes - KB).",
+      "View Resulting Encoded Base64 Size (KB) and percentage overhead (+33%)."
+    ],
+    "methodology": "Tamaño Base64 (bytes) = ceil(TamañoOriginal / 3) * 4. Overhead ≈ 33.33%.",
+    "methodology_en": "Base64 Size (bytes) = ceil(OriginalSize / 3) * 4. Overhead ≈ 33.33%."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Arquitectura Web y Protocolos HTTP",
+    "role_en": "Web Architecture & HTTP Protocols Specialist Assistant",
+    "includeData": ["base64SizeKbResult", "sizeOverheadPercent"],
+    "instructions": [
+      "Interpreta el incremento de tamaño del 33% al representar binarios en Base64.",
+      "Explica los casos de uso ideales (Data URIs pequeñas en CSS/HTML, JSON payloads) vs inconvenientes en archivos grandes.",
+      "Muestra la conversión de 3 bytes binarios (24 bits) en 4 caracteres ASCII de 6 bits."
+    ],
+    "instructions_en": [
+      "Interpret 33% size increase representing binary data in Base64.",
+      "Explain ideal use cases (small Data URIs in CSS/HTML, JSON payloads) vs drawbacks for large files.",
+      "Show 3 binary bytes (24 bits) conversion into 4 6-bit ASCII characters."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "b64-guide",
+      "icon": "📦",
+      "title": "Base64 Encoding Overhead Math",
+      "title_es": "Matemática del Overhead de Codificación Base64",
+      "content_html_en": "<p><b>The 3-to-4 Ratio:</b> Every 3 bytes of raw binary data are converted into 4 ASCII printable characters (33.3% size increase).</p><p><b>Data URIs:</b> Embedding images as Base64 in HTML avoids HTTP requests but increases file payload size.</p>",
+      "content_html": "<p><b>Relación 3 a 4:</b> Cada 3 bytes de datos binarios se convierten en 4 caracteres ASCII imprimibles (+33.3% de aumento de peso).</p><p><b>Data URIs:</b> Incrustar imágenes como Base64 en HTML evita peticiones HTTP pero incrementa el tamaño del archivo.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "originalDataSizeKb",
+      "label": "Tamaño de Datos Originales (Kilobytes - KB)",
+      "label_en": "Original Data Size (Kilobytes - KB)",
+      "type": "number",
+      "default": 150,
+      "min": 0.1,
+      "max": 1000000,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "base64SizeKbResult",
+      "label": "Tamaño Estimado Codificado en Base64 (KB)",
+      "label_en": "Estimated Base64 Encoded Size (KB)",
+      "expression": "ceil(originalDataSizeKb / 3) * 4",
+      "unit": "KB",
+      "unit_en": "KB",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "base64SizeKbResult", "op": ">=", "value": 0 }, "label": "Tamaño Base64 Calculado", "label_en": "Base64 Size Computed", "tone": "success", "text": "Overhead de representación de datos cuantificado.", "text_en": "Data representation overhead quantified." }
+      ]
+    },
+    {
+      "id": "sizeOverheadPercent",
+      "label": "Incremento de Tamaño (Overhead %)",
+      "label_en": "Size Overhead Percentage (%)",
+      "expression": "originalDataSizeKb > 0 ? (((base64SizeKbResult - originalDataSizeKb) / originalDataSizeKb) * 100) : 0",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

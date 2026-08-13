@@ -1,0 +1,176 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "calories-burned-calculator",
+    "title": "Calculadora de Calorías Quemadas por Actividad (METs Oficiales)",
+    "title_en": "Calories Burned by Activity Calculator (Official METs)",
+    "slug": "calorias-quemadas-actividad-mets",
+    "category": "fitness",
+    "subcategory": "training",
+    "tags": ["calorias-quemadas", "mets", "ejercicio", "deporte"],
+    "tags_en": ["calories-burned", "mets", "workout", "sports"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Flame"
+  },
+  "content": {
+    "shortDescription": "Calcula con precisión el gasto calórico de tus sesiones de ejercicio mediante los equivalentes metabólicos oficiales (METs) del Compendio de Actividades Físicas.",
+    "shortDescription_en": "Accurately calculate calories burned during workout sessions using official Metabolic Equivalents (METs) from the Compendium of Physical Activities.",
+    "longDescription": "Auditoría de gasto calórico deportivo. Determina las calorías netas consumidas en más de 12 disciplinas (correr, pesas, natación, ciclismo, pádel, HIIT) en función de tu peso corporal y la duración exacta del entrenamiento.",
+    "longDescription_en": "Sports energy expenditure audit measuring net calories burned across 12+ physical activities (running, weightlifting, swimming, cycling, padel, HIIT) based on body weight and workout duration.",
+    "howToUse": [
+      "Selecciona la disciplina deportiva o actividad física realizada.",
+      "Ingresa tu peso corporal actual.",
+      "Ingresa la duración del entrenamiento en minutos.",
+      "Consulta el total de calorías quemadas, la tasa calórica por minuto y el equivalente estimado en grasa corporal."
+    ],
+    "howToUse_en": [
+      "Select physical activity or sport type.",
+      "Enter current body weight.",
+      "Enter workout duration in minutes.",
+      "View total calories burned, per-minute burn rate, and estimated body fat loss equivalent."
+    ],
+    "methodology": "Compendio Internacional de Actividades Físicas (Ainsworth et al.): Calorías Quemadas = (MET × 3.5 × Peso_kg / 200) × Duración_minutos. 1 MET = 3.5 ml O₂/kg/min.",
+    "methodology_en": "Compendium of Physical Activities (Ainsworth et al.): Calories Burned = (MET × 3.5 × Weight_kg / 200) × Duration_minutes. 1 MET = 3.5 ml O₂/kg/min."
+  },
+  "guideSections": [
+    {
+      "id": "mets-guide-table",
+      "icon": "⚡",
+      "title": "MET Values of Common Sports",
+      "title_es": "Valores METs de Deportes Comunes",
+      "content_html_en": "<p><b>Moderate Walking (4 km/h):</b> 3.0 METs.</p><p><b>Weightlifting (Heavy Resistance):</b> 6.0 METs.</p><p><b>Padel / Tennis:</b> 7.3 METs.</p><p><b>Cycling (20 km/h):</b> 8.0 METs.</p><p><b>Running (10 km/h):</b> 9.8 METs.</p><p><b>HIIT / Cross Training:</b> 10.0 METs.</p><p><b>Fast Running (12 km/h):</b> 11.5 METs.</p>",
+      "content_html": "<p><b>Caminar Moderado (4 km/h):</b> 3.0 METs.</p><p><b>Pesas / Entrenamiento de Fuerza:</b> 6.0 METs.</p><p><b>Pádel / Tenis:</b> 7.3 METs.</p><p><b>Ciclismo (20 km/h):</b> 8.0 METs.</p><p><b>Correr (10 km/h):</b> 9.8 METs.</p><p><b>HIIT / Entrenamiento Funcional:</b> 10.0 METs.</p><p><b>Correr Rápido (12 km/h):</b> 11.5 METs.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "activityMet",
+      "label": "Disciplina deportiva o actividad realizada",
+      "label_en": "Physical Activity / Sport Discipline",
+      "type": "select",
+      "default": "9.8",
+      "options": [
+        { "value": "3.0", "label": "Caminar moderado (4 km/h) — 3.0 METs", "label_en": "Moderate Walking (4 km/h) — 3.0 METs" },
+        { "value": "4.3", "label": "Caminata a ritmo ligero (6 km/h) — 4.3 METs", "label_en": "Brisk Walking (6 km/h) — 4.3 METs" },
+        { "value": "6.0", "label": "Pesas / Entrenamiento de Fuerza — 6.0 METs", "label_en": "Weightlifting / Strength Training — 6.0 METs" },
+        { "value": "7.3", "label": "Pádel / Tenis Individual — 7.3 METs", "label_en": "Padel / Singles Tennis — 7.3 METs" },
+        { "value": "8.0", "label": "Ciclismo a ritmo moderado (20 km/h) — 8.0 METs", "label_en": "Moderate Cycling (20 km/h) — 8.0 METs" },
+        { "value": "8.0", "label": "Natación Crol Moderado — 8.0 METs", "label_en": "Moderate Freestyle Swimming — 8.0 METs" },
+        { "value": "8.8", "label": "Correr a ritmo suave (9 km/h) — 8.8 METs", "label_en": "Light Jogging (9 km/h) — 8.8 METs" },
+        { "value": "9.8", "label": "Correr a ritmo continuo (10 km/h) — 9.8 METs", "label_en": "Continuous Running (10 km/h) — 9.8 METs" },
+        { "value": "10.0", "label": "HIIT / Entrenamiento Funcional — 10.0 METs", "label_en": "HIIT / Functional Cross Training — 10.0 METs" },
+        { "value": "11.5", "label": "Correr a ritmo rápido (12 km/h) — 11.5 METs", "label_en": "Fast Running (12 km/h) — 11.5 METs" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "weightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 30,
+      "max": 250,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "durationMinutes",
+      "label": "Duración de la sesión",
+      "label_en": "Workout Duration",
+      "type": "slider",
+      "default": 45,
+      "min": 5,
+      "max": 360,
+      "step": 5,
+      "unit": "minutos",
+      "unit_en": "minutes",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "caloriesBurnedTotal",
+      "label": "Total de Calorías Quemadas en la Sesión",
+      "label_en": "Total Session Calories Burned",
+      "expression": "(activityMet * 3.5 * weightKg / 200) * durationMinutes",
+      "unit": "kcal",
+      "unit_en": "kcal",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "caloriesBurnedTotal", "op": ">", "value": 0 }, "label": "Gasto Calórico Ejercicio", "label_en": "Workout Energy Expenditure", "tone": "success", "text": "Calorías netas consumidas durante la sesión de entrenamiento.", "text_en": "Net calories burned during physical workout session." }
+      ]
+    },
+    {
+      "id": "caloriesBurnedPerMinute",
+      "label": "Gasto Calórico Medio por Minuto",
+      "label_en": "Average Calorie Burn Rate Per Minute",
+      "expression": "caloriesBurnedTotal / durationMinutes",
+      "unit": "kcal/min",
+      "unit_en": "kcal/min",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "equivalentFatLossGrams",
+      "label": "Equivalente Estimado de Grasa Corporal Quemada",
+      "label_en": "Estimated Body Fat Burned Equivalent",
+      "expression": "caloriesBurnedTotal / 7.7",
+      "unit": "g",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "calorie-calculator", "type": "static", "message": "Calcula tus calorías diarias totales", "message_en": "Calculate total daily calorie budget", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Fisiólogo del Ejercicio y Rendimiento Deportivo",
+    "role_en": "Exercise Physiologist & Athletic Performance Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "entusiasta y motivador",
+    "includeData": ["caloriesBurnedTotal", "caloriesBurnedPerMinute", "equivalentFatLossGrams", "durationMinutes", "weightKg"],
+    "instructions": [
+      "Sintetiza las calorías quemadas totales, la tasa por minuto y el equivalente estimado en grasa quemada en 2 frases concisas.",
+      "Destaca que acumular sesiones de entrenamiento regulares es el pilar para la salud metabólica."
+    ],
+    "instructions_en": [
+      "Summarize total calories burned, per-minute burn rate, and fat loss equivalent in 2 concise sentences.",
+      "Highlight that consistent workout sessions build long-term metabolic health."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Calorías Quemadas por Actividad (METs) | CalculadoraHub",
+    "metaTitle_en": "Calories Burned by Activity Calculator (Official METs) | CalculadoraHub",
+    "metaDescription": "Calcula las calorías quemadas corriendo, nadando, en bici o pesas con los METs oficiales. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate calories burned during workouts using official Compendium of Physical Activity METs. Free, instant results.",
+    "keywords": ["calories burned calculator", "calorias quemadas", "mets ejercicio", "gasto calorico deporte"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

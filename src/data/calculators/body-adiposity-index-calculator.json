@@ -1,0 +1,152 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "body-adiposity-index-calculator",
+    "title": "Calculadora de Índice de Adiposidad Corporal (BAI Bergman)",
+    "title_en": "Body Adiposity Index Calculator (BAI Bergman Formula)",
+    "slug": "indice-adiposidad-corporal-bai",
+    "category": "fitness",
+    "subcategory": "body-composition",
+    "tags": ["bai", "adiposidad", "bergman", "grasa-cadera"],
+    "tags_en": ["bai", "adiposity", "bergman", "hip-fat"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula tu Porcentaje de Adiposidad Corporal (BAI) mediante la fórmula de Bergman basada en la estatura y el perímetro de la cadera, ¡sin necesitar báscula!",
+    "shortDescription_en": "Calculate your Body Adiposity Index (BAI) using Dr. Bergman's formula based on height and hip circumference—no scale required!",
+    "longDescription": "Auditoría de adiposidad corporal sin pesaje. El Índice BAI (desarrollado por el Dr. Richard Bergman en 2011) estima el porcentaje de grasa corporal basándose directamente en la relación entre el perímetro de la cadera y la estatura.",
+    "longDescription_en": "Scaleless body fat audit. The Body Adiposity Index (BAI), developed by Dr. Richard Bergman in 2011, estimates body fat percentage directly from hip circumference and height ratio.",
+    "howToUse": [
+      "Selecciona tu sexo biológico.",
+      "Ingresa tu estatura exacta.",
+      "Ingresa el perímetro máximo de tu cadera.",
+      "Consulta tu porcentaje de grasa corporal estimado por BAI y la clasificación de adiposidad."
+    ],
+    "howToUse_en": [
+      "Select biological sex.",
+      "Enter exact height.",
+      "Enter maximum hip circumference.",
+      "View estimated Body Adiposity Index (BAI %) and adiposity category."
+    ],
+    "methodology": "Ecuación del Dr. Richard Bergman (2011): BAI % = (Cadera_cm / (Estatura_m ^ 1.5)) - 18. Método de estimación clínica que no requiere báscula.",
+    "methodology_en": "Dr. Richard Bergman Formula (2011): BAI % = (Hip_cm / (Height_m ^ 1.5)) - 18. Clinical scale-free body fat estimator."
+  },
+  "guideSections": [
+    {
+      "id": "bai-ranges-table",
+      "icon": "📏",
+      "title": "Bergman BAI Clinical Categories by Sex",
+      "title_es": "Categorías Clínicas de BAI Bergman por Sexo",
+      "content_html_en": "<p><b>Men BAI %:</b> Underweight (< 8%), Healthy (8 - 21%), Overweight (21 - 26%), Obese (> 26%).</p><p><b>Women BAI %:</b> Underweight (< 21%), Healthy (21 - 33%), Overweight (33 - 39%), Obese (> 39%).</p>",
+      "content_html": "<p><b>BAI Hombres %:</b> Bajo Peso (< 8%), Saludable (8 - 21%), Sobrepeso (21 - 26%), Obesidad (> 26%).</p><p><b>BAI Mujeres %:</b> Bajo Peso (< 21%), Saludable (21 - 33%), Sobrepeso (33 - 39%), Obesidad (> 39%).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "gender",
+      "label": "Sexo biológico",
+      "label_en": "Biological Sex",
+      "type": "select",
+      "default": "male",
+      "options": [
+        { "value": "male", "label": "Hombre", "label_en": "Male" },
+        { "value": "female", "label": "Mujer", "label_en": "Female" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "heightCm",
+      "label": "Estatura",
+      "label_en": "Height",
+      "type": "number",
+      "default": 175,
+      "min": 100,
+      "max": 230,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [100, 230], "message": "Estatura entre 100 y 230 cm", "message_en": "Height between 100 and 230 cm" }]
+    },
+    {
+      "id": "hipCm",
+      "label": "Perímetro de la cadera",
+      "label_en": "Hip Circumference",
+      "type": "number",
+      "default": 96,
+      "min": 50,
+      "max": 200,
+      "step": 0.5,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "in", "label": "in", "toBase": 2.54 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [50, 200], "message": "Cadera entre 50 y 200 cm", "message_en": "Hip between 50 and 200 cm" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "baiPercentVal",
+      "label": "Porcentaje de Adiposidad Corporal (BAI)",
+      "label_en": "Body Adiposity Index (BAI %)",
+      "expression": "(hipCm / ((heightCm / 100) ^ 1.5)) - 18",
+      "unit": "%",
+      "precision": 1,
+      "format": "percent",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "baiPercentVal", "op": "<", "value": 8 }, "label": "Bajo Peso / Adiposidad Muy Baja", "label_en": "Underweight / Very Low Adiposity", "tone": "warning", "text": "Adiposidad por debajo del nivel saludable.", "text_en": "Adiposity is below healthy reference range." },
+        { "when": { "field": "baiPercentVal", "op": "between", "value": [8, 21] }, "label": "Adiposidad Saludable Normal", "label_en": "Normal Healthy Adiposity", "tone": "success", "text": "Porcentaje de adiposidad corporal en rango saludable.", "text_en": "Body adiposity ratio is within healthy reference range." },
+        { "when": { "field": "baiPercentVal", "op": "between", "value": [21.1, 26] }, "label": "Adiposidad Elevada / Sobrepeso", "label_en": "Overweight / Elevated Adiposity", "tone": "warning", "text": "Adiposidad moderadamente elevada respecto a la estatura.", "text_en": "Adiposity is moderately elevated for height." },
+        { "when": { "field": "baiPercentVal", "op": ">", "value": 26 }, "label": "Adiposidad Alta / Obesidad", "label_en": "Obese Tier / High Adiposity", "tone": "warning", "text": "Porcentaje de adiposidad en categoría de riesgo de obesidad.", "text_en": "Adiposity falls into high risk obesity tier." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "body-fat-calculator", "type": "static", "message": "Compara con el método de la Marina de EE. UU.", "message_en": "Compare with U.S. Navy Method", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Especialista en Antropometría y Composición Corporal",
+    "role_en": "Anthropometrist & Body Composition Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y analítico",
+    "includeData": ["baiPercentVal", "hipCm", "heightCm", "gender"],
+    "instructions": [
+      "Sintetiza el Índice de Adiposidad Corporal BAI %, el perímetro de cadera e interpretación de salud en 2 frases concisas.",
+      "Destaca que el BAI es una métrica útil en entornos clínicos donde no se dispone de báscula de impedancia o pesaje."
+    ],
+    "instructions_en": [
+      "Summarize Body Adiposity Index (BAI %), hip measurement, and health classification in 2 concise sentences.",
+      "Highlight that BAI is a useful metric in clinical settings where weighing scales are unavailable."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Índice de Adiposidad Corporal (BAI Bergman) | CalculadoraHub",
+    "metaTitle_en": "Body Adiposity Index Calculator (BAI Bergman) | CalculadoraHub",
+    "metaDescription": "Calcula tu porcentaje de adiposidad corporal sin pesarte con la fórmula BAI de Bergman. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your Body Adiposity Index (BAI %) from height and hip size without a scale. Free, instant results.",
+    "keywords": ["bai calculator", "indice de adiposidad corporal", "bergman bai", "grasa sin bascula"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

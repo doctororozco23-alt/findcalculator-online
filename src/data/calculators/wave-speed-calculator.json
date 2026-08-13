@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "wave-speed-calculator",
+    "title": "Calculadora de Velocidad, Longitud de Onda y Frecuencia (v = f λ)",
+    "title_en": "Wave Speed, Wavelength & Frequency Calculator (v = f λ)",
+    "slug": "calculadora-de-velocidad-de-onda-longitud-de-onda-frecuencia",
+    "category": "physics",
+    "subcategory": "waves",
+    "tags": ["velocidad-de-onda", "longitud-de-onda", "frecuencia", "herTZ", "ondas-sonoras", "ondas-electromagneticas", "fisica"],
+    "tags_en": ["wave-speed", "wavelength", "frequency", "hertz", "sound-waves", "electromagnetic-waves", "physics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la velocidad de propagación ($v = f \\cdot \\lambda$), frecuencia ($f$) o longitud de onda ($\\lambda$) de ondas electromagnéticas o sonoras.",
+    "shortDescription_en": "Calculate wave propagation speed ($v = f \\cdot \\lambda$), frequency ($f$), or wavelength ($\\lambda$) for sound and EM waves.",
+    "longDescription": "Herramienta de física de ondas y acústica. Relaciona la velocidad espacial de avance de una onda con el número de oscilaciones por segundo y la distancia entre crestas consecutivas.",
+    "longDescription_en": "Wave physics and acoustics tool. Relates wave spatial advance speed with oscillations per second and distance between consecutive peaks.",
+    "howToUse": [
+      "Ingresa la Frecuencia de la Onda ($f$ en Hertz - Hz o kHz/MHz).",
+      "Ingresa la Longitud de Onda ($\\lambda$ en metros).",
+      "Consulta la Velocidad de Propagación Calculada ($v$ en m/s) y el Período ($T$ en segundos)."
+    ],
+    "howToUse_en": [
+      "Enter Wave Frequency ($f$ in Hertz - Hz).",
+      "Enter Wavelength ($\\lambda$ in meters).",
+      "View Calculated Propagation Speed ($v$ in m/s) and Period ($T$ in seconds)."
+    ],
+    "methodology": "Velocidad v = f * λ. Período T = 1 / f. Velocidad del Sonido en aire ≈ 343 m/s. Velocidad Luz c ≈ 299,792,458 m/s.",
+    "methodology_en": "Speed v = f * λ. Period T = 1 / f. Speed of Sound in air ≈ 343 m/s. Speed of Light c ≈ 299,792,458 m/s."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Física de Ondas, Acústica y Electromagnetismo",
+    "role_en": "Wave Physics, Acoustics & Electromagnetism Specialist Assistant",
+    "includeData": ["waveSpeedMpsResult", "wavePeriodSecondsResult"],
+    "instructions": [
+      "Interpreta la velocidad y el período de la onda física evaluada.",
+      "Compara la velocidad con referencias estándar (velocidad del sonido a 20°C = 343 m/s, luz en el vacío = $3 \\times 10^8$ m/s).",
+      "Muestra la clasificación en el espectro electromagnético o espectro audible humano (20 Hz a 20 kHz)."
+    ],
+    "instructions_en": [
+      "Interpret wave speed and oscillation period.",
+      "Compare speed against standard benchmarks (speed of sound at 20°C = 343 m/s, light in vacuum = $3 \\times 10^8$ m/s).",
+      "Show classification in EM spectrum or human audible range (20 Hz to 20 kHz)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "wav-guide",
+      "icon": "🌊",
+      "title": "Wave Motion Fundamental Equation",
+      "title_es": "Ecuación Fundamental del Movimiento Ondulatorio",
+      "content_html_en": "<p><b>Formula:</b> v = f × λ</p><p><b>Period:</b> T = 1 / f</p><p><b>Speed of Light (c):</b> 299,792,458 m/s</p><p><b>Speed of Sound in Air:</b> ~343 m/s at 20°C</p>",
+      "content_html": "<p><b>Fórmula:</b> v = f × λ</p><p><b>Período:</b> T = 1 / f</p><p><b>Velocidad de la Luz (c):</b> 299,792,458 m/s</p><p><b>Velocidad del Sonido en Aire:</b> ~343 m/s a 20°C</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "waveFrequencyHertz",
+      "label": "Frecuencia de la Onda (f en Hertz - Hz)",
+      "label_en": "Wave Frequency (f in Hertz - Hz)",
+      "type": "number",
+      "default": 440,
+      "min": 0.001,
+      "max": 1000000000000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "wavelengthMeters",
+      "label": "Longitud de Onda (λ en metros)",
+      "label_en": "Wavelength (λ in meters)",
+      "type": "number",
+      "default": 0.78,
+      "min": 0.000000001,
+      "max": 100000,
+      "step": 0.01,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "waveSpeedMpsResult",
+      "label": "Velocidad de Propagación (v en m/s)",
+      "label_en": "Propagation Speed (v in m/s)",
+      "expression": "waveFrequencyHertz * wavelengthMeters",
+      "unit": "m/s",
+      "unit_en": "m/s",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "waveSpeedMpsResult", "op": ">=", "value": 0 }, "label": "Velocidad Calculada", "label_en": "Speed Computed", "tone": "success", "text": "Velocidad de propagación de onda evaluada.", "text_en": "Wave propagation speed evaluated." }
+      ]
+    },
+    {
+      "id": "wavePeriodSecondsResult",
+      "label": "Período de Oscilación (T en segundos)",
+      "label_en": "Oscillation Period (T in seconds)",
+      "expression": "waveFrequencyHertz > 0 ? (1 / waveFrequencyHertz) : 0",
+      "unit": "s",
+      "unit_en": "s",
+      "precision": 6,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

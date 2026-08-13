@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "budget-50-30-20-calculator",
+    "title": "Calculadora de Presupuesto 50/30/20 y Fondo de Emergencia",
+    "title_en": "50/30/20 Budget & Emergency Fund Calculator",
+    "slug": "presupuesto-50-30-20",
+    "category": "finance",
+    "subcategory": "business",
+    "tags": ["presupuesto", "finanzas-personales", "ahorro"],
+    "tags_en": ["budget", "personal-finance", "savings"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "PieChart"
+  },
+  "content": {
+    "shortDescription": "Divide tu salario neto mensual según la popular regla 50/30/20 (Necesidades 50%, Deseos 30%, Ahorro 20%) y calcula tu fondo de emergencia.",
+    "shortDescription_en": "Divide your net monthly salary following the popular 50/30/20 budgeting rule (Needs 50%, Wants 30%, Savings 20%) and calculate your emergency fund.",
+    "longDescription": "Optimiza la distribución de tus ingresos mensuales dividiéndolos automáticamente en tres categorías fundamentales: 50% para Necesidades Básicas, 30% para Deseos / Ocio y 20% para Ahorro o Inversión.",
+    "longDescription_en": "Optimize your monthly income distribution by splitting it automatically into 3 core categories: 50% for Needs, 30% for Wants, and 20% for Savings / Debt payoff.",
+    "howToUse": [
+      "Ingresa tu salario o ingreso neto mensual disponible.",
+      "Revisa el desglose recomendado para Necesidades (50%), Deseos (30%) y Ahorro (20%).",
+      "Consulta el fondo de emergencia ideal recomendado (3 a 6 meses de necesidades)."
+    ],
+    "howToUse_en": [
+      "Enter your net monthly income salary.",
+      "Review the recommended 50% Needs, 30% Wants, and 20% Savings split breakdown.",
+      "View your ideal recommended emergency cushion fund (3 to 6 months of essential needs)."
+    ],
+    "methodology": "Regla 50/30/20: Necesidades = Ingreso × 0.50 | Deseos = Ingreso × 0.30 | Ahorro = Ingreso × 0.20.",
+    "methodology_en": "50/30/20 Rule: Needs = Income × 0.50 | Wants = Income × 0.30 | Savings = Income × 0.20."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "📊",
+      "title": "The 50/30/20 Budgeting Rule Explained",
+      "title_es": "Explicación de la Regla de Presupuesto 50/30/20",
+      "content_html_en": "<p>Popularized by Senator Elizabeth Warren in her book <i>All Your Worth</i>, the 50/30/20 rule is an intuitive budgeting method dividing after-tax income into 3 buckets:</p><ul><li><b>50% Needs:</b> Housing, groceries, utilities, basic transportation, minimum debt payments.</li><li><b>30% Wants:</b> Dining out, hobbies, travel, entertainment, subscriptions.</li><li><b>20% Savings & Financial Goals:</b> Emergency fund, retirement accounts, extra debt payoff.</li></ul>",
+      "content_html": "<p>La regla 50/30/20 divide tu salario neto en 3 bloques:</p><ul><li><b>50% Necesidades Básicas:</b> Vivienda, comida, luz/agua, transporte y deudas obligatorias.</li><li><b>30% Deseos / Estilo de vida:</b> Ocio, restaurantes, viajes y aficiones.</li><li><b>20% Ahorro e Inversión:</b> Fondo de emergencia, jubiliación y cancelación acelerada de deudas.</li></ul>"
+    },
+    {
+      "id": "emergency_fund",
+      "icon": "🛡️",
+      "title": "Emergency Fund Cushion",
+      "title_es": "Fondo de Emergencia Recomendado",
+      "content_html_en": "<p>An emergency fund should cover between 3 and 6 months of essential living expenses (Needs). It protects you from unexpected job loss, medical expenses, or emergency home repairs without taking on high-interest debt.</p>",
+      "content_html": "<p>Un fondo de emergencia debe cubrir entre 3 y 6 meses de tus necesidades esenciales para protegerte ante desempleo imprevisto o gastos médicos.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "netMonthlyIncome",
+      "label": "Ingreso neto mensual del hogar",
+      "label_en": "Net Monthly Household Income",
+      "type": "currency",
+      "default": 3500,
+      "min": 500,
+      "max": 100000,
+      "step": 100,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [500, 100000], "message": "Ingreso entre 500 y 100.000", "message_en": "Income between 500 and 100,000" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "needsAmount",
+      "label": "Necesidades Básicas (50%)",
+      "label_en": "Essential Needs (50%)",
+      "expression": "netMonthlyIncome * 0.50",
+      "unit": { "follows": "netMonthlyIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "needsAmount", "op": ">", "value": 0 }, "label": "Límite Máximo de Necesidades", "label_en": "Essential Needs Limit", "tone": "info", "text": "Asigna este importe a alquiler/hipoteca, alimentación, facturas de luz/agua y transporte.", "text_en": "Allocate this budget limit to housing, groceries, utilities, and essential transport." }
+      ]
+    },
+    {
+      "id": "wantsAmount",
+      "label": "Deseos y Ocio (30%)",
+      "label_en": "Discretionary Wants (30%)",
+      "expression": "netMonthlyIncome * 0.30",
+      "unit": { "follows": "netMonthlyIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "savingsAmount",
+      "label": "Ahorro e Inversión (20%)",
+      "label_en": "Savings & Financial Goals (20%)",
+      "expression": "netMonthlyIncome * 0.20",
+      "unit": { "follows": "netMonthlyIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "emergencyFund3Months",
+      "label": "Fondo de Emergencia (3 Meses de Necesidades)",
+      "label_en": "Emergency Fund (3 Months of Needs)",
+      "expression": "needsAmount * 3",
+      "unit": { "follows": "netMonthlyIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "emergencyFund6Months",
+      "label": "Fondo de Emergencia (6 Meses de Necesidades)",
+      "label_en": "Emergency Fund (6 Months of Needs)",
+      "expression": "needsAmount * 6",
+      "unit": { "follows": "netMonthlyIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "salary-take-home-calculator", "type": "static", "message": "Calcula tu salario neto real", "message_en": "Calculate your net take-home salary", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Presupuesto Personal",
+    "role_en": "Personal Budget Assistant",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "motivador y práctico",
+    "includeData": ["needsAmount", "wantsAmount", "savingsAmount", "emergencyFund3Months"],
+    "instructions": [
+      "Sintetiza la división 50/30/20 en 2 frases sencillas.",
+      "Destaca la importancia de priorizar el fondo de emergencia de 3 meses antes de aumentar gastos en ocio."
+    ],
+    "instructions_en": [
+      "Summarize 50/30/20 budget breakdown in 2 concise sentences.",
+      "Emphasize prioritizing 3-month emergency fund cushion before expanding discretionary lifestyle wants."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Presupuesto 50/30/20 y Fondo de Emergencia | CalculadoraHub",
+    "metaTitle_en": "50/30/20 Budget & Emergency Fund Calculator | CalculadoraHub",
+    "metaDescription": "Divide tu salario neto con la regla de presupuesto 50/30/20 y calcula tu fondo de emergencia. Gratis e instantáneo.",
+    "metaDescription_en": "Split your salary following the 50/30/20 budget rule and calculate your emergency fund cushion.",
+    "keywords": ["regla 50 30 20", "50 30 20 budget calculator", "presupuesto personal", "fondo de emergencia"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

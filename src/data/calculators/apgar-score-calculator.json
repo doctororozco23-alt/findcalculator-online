@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "apgar-score-calculator",
+    "title": "Calculadora del Test de APGAR Neonatal (1 y 5 Minutos)",
+    "title_en": "APGAR Score Newborn Calculator (1 & 5 Minutes)",
+    "slug": "apgar-score-test-neonatal-recien-nacido",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["apgar", "neonatal", "recien-nacido", "paritorio", "pediatria", "reanimacion"],
+    "tags_en": ["apgar", "newborn", "neonatal", "delivery-room", "pediatric", "resuscitation"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula el Test de APGAR neonatal al minuto y a los 5 minutos para evaluar rápidamente la condición clínica del recién nacido tras el parto.",
+    "shortDescription_en": "Calculate newborn APGAR score at 1 and 5 minutes to rapidly evaluate physical condition after birth.",
+    "longDescription": "Evaluación estándar neonatal (Virginia Apgar 1953 / Guías AAP & ACOG). Puntuación de 0 a 10 evaluando Apariencia, Pulso, Gesto, Actividad y Respiración.",
+    "longDescription_en": "Standard neonatal assessment tool. Scores 0 to 10 evaluating Appearance, Pulse, Grimace, Activity, and Respiration.",
+    "howToUse": [
+      "Selecciona la puntuación de Apariencia (Color de piel).",
+      "Selecciona la puntuación de Pulso (Frecuencia cardíaca).",
+      "Selecciona la puntuación de Gesto (Irritabilidad refleja).",
+      "Selecciona la puntuación de Actividad (Tono muscular).",
+      "Selecciona la puntuación de Respiración (Esfuerzo respiratorio)."
+    ],
+    "howToUse_en": [
+      "Select Appearance score (Skin color).",
+      "Select Pulse score (Heart rate).",
+      "Select Grimace score (Reflex irritability).",
+      "Select Activity score (Muscle tone).",
+      "Select Respiration score (Breathing effort)."
+    ],
+    "methodology": "Test de APGAR: 5 parámetros puntuados con 0, 1 ó 2 puntos. Total 0 a 10 puntos. 7-10 Normal; 4-6 Depresión Moderada; 0-3 Depresión Severa.",
+    "methodology_en": "APGAR Score: 5 parameters scored 0, 1, or 2 points. Total range 0-10. 7-10 Reassuring; 4-6 Moderately Depressed; 0-3 Severely Depressed."
+  },
+  "guideSections": [
+    {
+      "id": "apgar-guide",
+      "icon": "👶",
+      "title": "NRP Neonatal Resuscitation Guidance",
+      "title_es": "Orientación de Reanimación Neonatal NRP",
+      "content_html_en": "<p><b>Score 7 - 10:</b> Normal/Reassuring. Routine newborn care (warmth, dry, skin-to-skin).</p><p><b>Score 4 - 6:</b> Moderately Depressed. Tactile stimulation, oxygen/PPV evaluation if HR &lt; 100.</p><p><b>Score 0 - 3:</b> Severely Depressed. ⚠️ Immediate NRP protocol: Positive Pressure Ventilation (PPV). Start chest compressions if HR &lt; 60 after 30s effective PPV.</p>",
+      "content_html": "<p><b>Score 7 - 10:</b> Normal/Satisfactorio. Cuidados de rutina (calor, secado, contacto piel con piel).</p><p><b>Score 4 - 6:</b> Depresión Moderada. Estimulación táctil, evaluar VPP / oxígeno si FC &lt; 100 lpm.</p><p><b>Score 0 - 3:</b> Depresión Severa. ⚠️ Activar protocolo NRP inmediato: Ventilación a Presión Positiva (VPP). Compresiones torácicas si FC &lt; 60 lpm tras 30s de VPP efectiva.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "appearance_pts",
+      "label": "Apariencia (Color de la piel)",
+      "label_en": "Appearance (Skin Color)",
+      "type": "select",
+      "default": 2,
+      "options": [
+        { "value": 0, "label": "0 — Azulado / Pálido completo", "label_en": "0 — Blue / Pale all over" },
+        { "value": 1, "label": "1 — Cuerpo rosado, extremidades cianóticas (Acrocianosis)", "label_en": "1 — Pink body, blue extremities" },
+        { "value": 2, "label": "2 — Completamente rosado", "label_en": "2 — Completely pink" }
+      ]
+    },
+    {
+      "id": "pulse_pts",
+      "label": "Pulso (Frecuencia Cardíaca)",
+      "label_en": "Pulse (Heart Rate)",
+      "type": "select",
+      "default": 2,
+      "options": [
+        { "value": 0, "label": "0 — Ausente (Sin latidos)", "label_en": "0 — Absent" },
+        { "value": 1, "label": "1 — Menor de 100 lpm", "label_en": "1 — Under 100 bpm" },
+        { "value": 2, "label": "2 — 100 lpm o más", "label_en": "2 — 100 bpm or greater" }
+      ]
+    },
+    {
+      "id": "grimace_pts",
+      "label": "Gesto (Irritabilidad refleja a la estimulación)",
+      "label_en": "Grimace (Reflex Irritability)",
+      "type": "select",
+      "default": 2,
+      "options": [
+        { "value": 0, "label": "0 — Sin respuesta", "label_en": "0 — No response" },
+        { "value": 1, "label": "1 — Muecas / Llanto débil", "label_en": "1 — Grimace / Weak cry" },
+        { "value": 2, "label": "2 — Llanto fuerte / Tos / Estornudo", "label_en": "2 — Vigorous cry / Cough / Sneeze" }
+      ]
+    },
+    {
+      "id": "activity_pts",
+      "label": "Actividad (Tono muscular)",
+      "label_en": "Activity (Muscle Tone)",
+      "type": "select",
+      "default": 2,
+      "options": [
+        { "value": 0, "label": "0 — Flácido / Sin tono muscular", "label_en": "0 — Limp / Flaccid" },
+        { "value": 1, "label": "1 — Cierta flexión de extremidades", "label_en": "1 — Some flexion of extremities" },
+        { "value": 2, "label": "2 — Movimiento activo vigoroso", "label_en": "2 — Active motion" }
+      ]
+    },
+    {
+      "id": "respiration_pts",
+      "label": "Respiración (Esfuerzo respiratorio)",
+      "label_en": "Respiration (Breathing Effort)",
+      "type": "select",
+      "default": 2,
+      "options": [
+        { "value": 0, "label": "0 — Ausente (Apnea)", "label_en": "0 — Absent (Apnea)" },
+        { "value": 1, "label": "1 — Lenta / Irregular / Hipoventilación", "label_en": "1 — Slow / Irregular" },
+        { "value": 2, "label": "2 — Buena / Llanto fuerte", "label_en": "2 — Good / Strong cry" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "apgarTotal",
+      "label": "Puntuación APGAR Total",
+      "label_en": "Total APGAR Score",
+      "expression": "appearance_pts + pulse_pts + grimace_pts + activity_pts + respiration_pts",
+      "unit": "puntos",
+      "unit_en": "points",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "apgarTotal", "op": ">=", "value": 7 }, "label": "APGAR 7-10: Condición Neonatal Normal", "label_en": "APGAR 7-10: Normal Newborn Condition", "tone": "success", "text": "Recién nacido estable. Cuidados de rutina en paritorio.", "text_en": "Stable newborn. Routine delivery room care." },
+        { "when": { "field": "apgarTotal", "op": "between", "value": [4, 6] }, "label": "APGAR 4-6: Depresión Moderada", "label_en": "APGAR 4-6: Moderately Depressed", "tone": "info", "text": "Estimulación táctil y soporte ventilatorio si requiere.", "text_en": "Tactile stimulation & ventilatory support as needed." },
+        { "when": { "field": "apgarTotal", "op": "<=", "value": 3 }, "label": "APGAR 0-3: Depresión Severa", "label_en": "APGAR 0-3: Severely Depressed", "tone": "warning", "text": "⚠️ Activar protocolo de reanimación neonatal NRP inmediata.", "text_en": "⚠️ Activate immediate NRP neonatal resuscitation protocol." }
+      ]
+    }
+  ]
+}

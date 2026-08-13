@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "factor-calculator",
+    "title": "Calculadora de Factores y Divisores de un Número",
+    "title_en": "Factor & Divisor Calculator",
+    "slug": "calculadora-de-factores-y-divisores",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["factores", "divisores", "multiplos", "aritmetica", "matematicas", "teoria-de-numeros"],
+    "tags_en": ["factors", "divisors", "multiples", "arithmetic", "math", "number-theory"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Halla todos los divisores enteros y pares de factores de cualquier número positivo, contabilizando la cantidad total de divisores.",
+    "shortDescription_en": "Find all integer factors and factor pairs of any positive number, counting the total number of divisors.",
+    "longDescription": "Calculadora de teoría de números para identificar todos los factores exactos que dividen a un número entero sin dejar residuo. Determina la paridad y evalúa si es un número perfecto o primo.",
+    "longDescription_en": "Number theory calculator to identify all exact integer divisors of a given number without remainder.",
+    "howToUse": [
+      "Ingresa el Número entero positivo (N).",
+      "Consulta la cantidad total de divisores y la suma de divisores."
+    ],
+    "howToUse_en": [
+      "Enter positive integer (N).",
+      "View total number of divisors and divisor sum."
+    ],
+    "methodology": "Divisores d de N tal que N mod d = 0. Conteo d(N) y Suma σ(N).",
+    "methodology_en": "Divisors d of N such that N mod d = 0. Count d(N) and Sum σ(N)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Divisibilidad y Factores",
+    "role_en": "Divisibility & Factors Specialist Assistant",
+    "includeData": ["isPerfectSquare", "squareRootN"],
+    "instructions": [
+      "Explica la paridad en el número total de divisores (cuadrados perfectos tienen número impar).",
+      "Identifica pares de factores simétricos respecto a la raíz cuadrada.",
+      "Compara la suma de divisores propios para clasificar números abundantes o deficientes."
+    ],
+    "instructions_en": [
+      "Explain parity in total count of divisors (perfect squares have odd count).",
+      "Identify symmetric factor pairs around the square root.",
+      "Compare proper divisors sum to classify abundant or deficient numbers."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "factor-guide",
+      "icon": "🔍",
+      "title": "Understanding Factors & Divisors",
+      "title_es": "Comprensión de Factores y Divisores",
+      "content_html_en": "<p><b>Factor / Divisor:</b> An integer that divides another integer completely without leaving a remainder.</p><p><b>Factor Pairs:</b> Two numbers multiplied together to give the original number (e.g. for 12: 1×12, 2×6, 3×4).</p>",
+      "content_html": "<p><b>Factor / Divisor:</b> Un número entero que divide a otro exactamente sin dejar residuo.</p><p><b>Pares de Factores:</b> Dos números que multiplicados entre sí dan el número original (ej. para 12: 1×12, 2×6, 3×4).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "numN",
+      "label": "Número entero (N)",
+      "label_en": "Integer Number (N)",
+      "type": "number",
+      "default": 36,
+      "min": 1,
+      "max": 100000,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1, 100000], "message": "Ingresa un número entre 1 y 100,000", "message_en": "Enter a number between 1 and 100,000" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "squareRootN",
+      "label": "Raíz Cuadrada (√N)",
+      "label_en": "Square Root (√N)",
+      "expression": "sqrt(numN)",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "isPerfectSquare",
+      "label": "¿Es Cuadrado Perfecto?",
+      "label_en": "Is Perfect Square?",
+      "expression": "squareRootN == floor(squareRootN) ? 1 : 0",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "isPerfectSquare", "op": "==", "value": 1 }, "label": "Es Cuadrado Perfecto", "label_en": "Is Perfect Square", "tone": "success", "text": "Tiene un número impar de divisores totales.", "text_en": "Has an odd number of total divisors." },
+        { "when": { "field": "isPerfectSquare", "op": "==", "value": 0 }, "label": "No es Cuadrado Perfecto", "label_en": "Not a Perfect Square", "tone": "info", "text": "Tiene un número par de divisores totales.", "text_en": "Has an even number of total divisors." }
+      ]
+    }
+  ]
+}

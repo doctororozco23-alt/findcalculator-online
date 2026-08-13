@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "height-calculator",
+    "title": "Calculadora de Predicción de Altura Infantil y Estatura Adulta",
+    "title_en": "Child Height Predictor & Adult Stature Calculator",
+    "slug": "calculadora-de-prediccion-de-altura-infantil-padres",
+    "category": "health",
+    "subcategory": "child-growth",
+    "tags": ["altura", "prediccion-de-altura", "estatura-infantil", "pediatria", "talla-medio-parental", "crecimiento"],
+    "tags_en": ["height", "height-predictor", "child-stature", "pediatrics", "mid-parental-height", "growth"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "User"
+  },
+  "content": {
+    "shortDescription": "Estima la altura potencial adulta de un niño o niña en cm/ft utilizando el método estándar de la Talla Medio-Parental (OMS / Tanner).",
+    "shortDescription_en": "Estimate predicted adult height for a boy or girl in cm/ft using the standard Mid-Parental Height method (WHO / Tanner).",
+    "longDescription": "Herramienta pediátrica basada en genética médica. Aplica la fórmula de Tanner (Talla Medio-Parental ajustada por sexo) para predecir el rango de estatura adulta esperada con un intervalo de confianza genético de ± 8.5 cm.",
+    "longDescription_en": "Pediatric medical genetics tool. Applies Tanner's Mid-Parental Height formula adjusted by sex to predict adult height with ±8.5 cm confidence interval.",
+    "howToUse": [
+      "Selecciona el Sexo del Niño / Niña.",
+      "Ingresa la Altura de la Madre en cm.",
+      "Ingresa la Altura del Padre en cm.",
+      "Consulta la Estatura Adulta Predicha y el Rango Target Genético."
+    ],
+    "howToUse_en": [
+      "Select Child's Sex (Boy or Girl).",
+      "Enter Mother's Height in cm.",
+      "Enter Father's Height in cm.",
+      "View Predicted Adult Height and Target Genetic Range."
+    ],
+    "methodology": "Niños (Varones): (Madre + Padre + 13 cm) / 2. Niñas (Mujeres): (Madre + Padre - 13 cm) / 2. Rango target: ± 8.5 cm.",
+    "methodology_en": "Boys: (Mother + Father + 13 cm) / 2. Girls: (Mother + Father - 13 cm) / 2. Target Range: ± 8.5 cm."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Endocrinología Pediátrica y Crecimiento",
+    "role_en": "Pediatric Endocrinology & Growth Specialist Assistant",
+    "includeData": ["predictedHeightCm", "rangeMinCm", "rangeMaxCm"],
+    "instructions": [
+      "Interpreta la estatura adulta objetivo estimada a partir de la genética de los padres.",
+      "Explica el rango objetivo biológico (± 8.5 cm) por factores de nutrición y salud.",
+      "Aclara que la gráfica de curvas de crecimiento de la OMS supervisa el ritmo real."
+    ],
+    "instructions_en": [
+      "Interpret predicted adult target height based on parental genetics.",
+      "Explain biological target range (± 8.5 cm) influenced by nutrition and health.",
+      "Clarify that WHO growth chart curves track actual growth pace."
+    ],
+    "disclaimer": true
+  },
+  "guideSections": [
+    {
+      "id": "ht-guide",
+      "icon": "📏",
+      "title": "Tanner Mid-Parental Height Method",
+      "title_es": "Método de Talla Medio-Parental de Tanner",
+      "content_html_en": "<p><b>Boys Formula:</b> (Father's Height + Mother's Height + 13 cm) / 2.</p><p><b>Girls Formula:</b> (Father's Height + Mother's Height - 13 cm) / 2.</p><p><b>Genetic Variance:</b> ~80% of stature is inherited, with 20% influenced by nutrition, sleep, and physical activity.</p>",
+      "content_html": "<p><b>Fórmula Varones:</b> (Estatura Padre + Estatura Madre + 13 cm) / 2.</p><p><b>Fórmula Mujeres:</b> (Estatura Padre + Estatura Madre - 13 cm) / 2.</p><p><b>Varianza Genética:</b> El ~80% de la estatura se hereda, y el 20% depende de la nutrición, sueño y actividad física.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "childSex",
+      "label": "Sexo del Hijo/Hija",
+      "label_en": "Child's Sex",
+      "type": "select",
+      "default": "boy",
+      "options": [
+        { "value": "boy", "label": "Niño (Varón)", "label_en": "Boy" },
+        { "value": "girl", "label": "Niña (Mujer)", "label_en": "Girl" }
+      ]
+    },
+    {
+      "id": "motherHeightCm",
+      "label": "Altura de la Madre (cm)",
+      "label_en": "Mother's Height (cm)",
+      "type": "number",
+      "default": 165,
+      "min": 100,
+      "max": 230,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "fatherHeightCm",
+      "label": "Altura del Padre (cm)",
+      "label_en": "Father's Height (cm)",
+      "type": "number",
+      "default": 178,
+      "min": 100,
+      "max": 230,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "predictedHeightCm",
+      "label": "Estatura Adulta Estimada (cm)",
+      "label_en": "Predicted Adult Height (cm)",
+      "expression": "childSex == 'boy' ? ((motherHeightCm + fatherHeightCm + 13) / 2) : ((motherHeightCm + fatherHeightCm - 13) / 2)",
+      "unit": "cm",
+      "unit_en": "cm",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "predictedHeightCm", "op": ">=", "value": 100 }, "label": "Predicción Medio-Parental", "label_en": "Mid-Parental Prediction", "tone": "success", "text": "Estatura genética proyectada.", "text_en": "Projected genetic stature." }
+      ]
+    },
+    {
+      "id": "rangeMinCm",
+      "label": "Límite Inferior Rango Target (-8.5 cm)",
+      "label_en": "Lower Target Range (-8.5 cm)",
+      "expression": "predictedHeightCm - 8.5",
+      "unit": "cm",
+      "unit_en": "cm",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "rangeMaxCm",
+      "label": "Límite Superior Rango Target (+8.5 cm)",
+      "label_en": "Upper Target Range (+8.5 cm)",
+      "expression": "predictedHeightCm + 8.5",
+      "unit": "cm",
+      "unit_en": "cm",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

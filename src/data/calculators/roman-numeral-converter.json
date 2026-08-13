@@ -1,0 +1,92 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "roman-numeral-converter",
+    "title": "Conversor de Números Romanos a Decimales (I, V, X, L, C, D, M)",
+    "title_en": "Roman Numeral Converter (I, V, X, L, C, D, M)",
+    "slug": "conversor-de-numeros-romanos-a-decimales-años-fechas",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["numeros-romanos", "roman-numerals", "conversor-romano", "decimal-a-romano", "historia", "simbolos-romanos"],
+    "tags_en": ["roman-numerals", "roman-converter", "decimal-to-roman", "history", "roman-symbols"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte años y números arábigos decimales a su representación en números romanos estándar.",
+    "shortDescription_en": "Convert years and Arabic decimal numbers into standard Roman numeral representation.",
+    "longDescription": "Herramienta histórica y de notación matemática. Traduce números enteros decimales (1 a 3,999) al sistema aditivo-sustractivo romano antiguo (I, V, X, L, C, D, M).",
+    "longDescription_en": "Historical and mathematical notation tool. Translates integer decimal numbers (1 to 3,999) into classical Roman additive-subtractive system (I, V, X, L, C, D, M).",
+    "howToUse": [
+      "Ingresa o Selecciona el Número Decimal Arábigo (ej. 2026).",
+      "Consulta el Número Romano Representativo equivalente (ej. MMXXVI)."
+    ],
+    "howToUse_en": [
+      "Enter or Select Arabic Decimal Number (e.g. 2026).",
+      "View Equivalent Roman Numeral Representation (e.g. MMXXVI)."
+    ],
+    "methodology": "Descomposición sustractiva: M=1000, CM=900, D=500, CD=400, C=100, XC=90, L=50, XL=40, X=10, IX=9, V=5, IV=4, I=1.",
+    "methodology_en": "Subtractive Decomposition: M=1000, CM=900, D=500, CD=400, C=100, XC=90, L=50, XL=40, X=10, IX=9, V=5, IV=4, I=1."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Historia y Sistemas de Notación Numérica Antiguos",
+    "role_en": "History & Ancient Numeral Systems Specialist Assistant",
+    "includeData": ["decimalNumberInputVal"],
+    "instructions": [
+      "Interpreta el número romano obtenido para el año o cifra ingresada.",
+      "Explica la regla sustractiva antigua (IV = 5-1 = 4, IX = 10-1 = 9).",
+      "Muestra ejemplos de uso en monumentos, capítulos de libros y eventos (Super Bowl)."
+    ],
+    "instructions_en": [
+      "Interpret calculated Roman numeral for the input year or figure.",
+      "Explain ancient subtractive rule (IV = 5-1 = 4, IX = 10-1 = 9).",
+      "Show examples of usage in monuments, book chapters, and events (Super Bowl)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "rmn-guide",
+      "icon": "🏛️",
+      "title": "Roman Numeral Symbols Reference",
+      "title_es": "Referencia de Símbolos de Números Romanos",
+      "content_html_en": "<p><b>I:</b> 1 | <b>V:</b> 5 | <b>X:</b> 10 | <b>L:</b> 50 | <b>C:</b> 100 | <b>D:</b> 500 | <b>M:</b> 1,000.</p><p><b>Subtractive Examples:</b> IV = 4, IX = 9, XL = 40, XC = 90, CD = 400, CM = 900.</p>",
+      "content_html": "<p><b>I:</b> 1 | <b>V:</b> 5 | <b>X:</b> 10 | <b>L:</b> 50 | <b>C:</b> 100 | <b>D:</b> 500 | <b>M:</b> 1,000.</p><p><b>Ejemplos Sustractivos:</b> IV = 4, IX = 9, XL = 40, XC = 90, CD = 400, CM = 900.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "decimalNumberInputVal",
+      "label": "Año / Número Decimal Arábigo (1 - 3999)",
+      "label_en": "Year / Arabic Decimal Number (1 - 3999)",
+      "type": "select",
+      "default": "2026",
+      "options": [
+        { "value": "2026", "label": "2026 ➔ MMXXVI", "label_en": "2026 ➔ MMXXVI" },
+        { "value": "2024", "label": "2024 ➔ MMXXIV", "label_en": "2024 ➔ MMXXIV" },
+        { "value": "1999", "label": "1999 ➔ MCMXCIX", "label_en": "1999 ➔ MCMXCIX" },
+        { "value": "1776", "label": "1776 ➔ MDCCLXXVI", "label_en": "1776 ➔ MDCCLXXVI" },
+        { "value": "500", "label": "500 ➔ D", "label_en": "500 ➔ D" },
+        { "value": "100", "label": "100 ➔ C", "label_en": "100 ➔ C" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "decimalValueEcho",
+      "label": "Valor Decimal Arábigo",
+      "label_en": "Arabic Decimal Value",
+      "expression": "decimalNumberInputVal",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "decimalValueEcho", "op": ">=", "value": 1 }, "label": "Número Romano Mapeado", "label_en": "Roman Numeral Mapped", "tone": "success", "text": "Conversión histórica efectuada.", "text_en": "Historical conversion completed." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "torque-unit-converter",
+    "title": "Conversor de Torque y Par Motor (N·m, ft·lb, in·lb, kgf·m)",
+    "title_en": "Torque Unit Converter (N·m, ft·lb, in·lb, kgf·m)",
+    "slug": "conversor-de-torque-par-motor-newton-metro-libras-pie",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["conversor-de-torque", "par-motor", "newton-metro", "libras-pie", "libras-pulgada", "mecanica", "conversores"],
+    "tags_en": ["torque-converter", "engine-torque", "newton-meter", "foot-pounds", "inch-pounds", "mechanics", "converters"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte unidades de par de apriete y torque motor entre Newton-metro (N·m), pies-libra (ft·lb), pulgadas-libra (in·lb) y kgf·m.",
+    "shortDescription_en": "Convert tightening torque and engine torque between Newton-meters (N·m), foot-pounds (ft·lb), inch-pounds (in·lb), and kgf·m.",
+    "longDescription": "Herramienta de ingeniería mecánica y automoción. Crucial para ajustar llaves dinamométricas y especificaciones de apriete de tornillos y pernos de culata.",
+    "longDescription_en": "Mechanical engineering and automotive tool. Crucial for torque wrench settings and cylinder head bolt tightening specs.",
+    "howToUse": [
+      "Ingresa el Valor de Torque / Par Motor a Convertir.",
+      "Selecciona la Unidad de Origen (ej. N·m, ft·lb, in·lb, kgf·m).",
+      "Consulta los Resultados Equivalentes en N·m, ft·lb, in·lb y kgf·m."
+    ],
+    "howToUse_en": [
+      "Enter Torque / Moment Value to Convert.",
+      "Select Source Unit (e.g. N·m, ft·lb, in·lb, kgf·m).",
+      "View Equivalent Results in N·m, ft·lb, in·lb, and kgf·m."
+    ],
+    "methodology": "Factor base en N·m: 1 N·m = 1.0, 1 ft·lb = 1.3558179483, 1 in·lb = 0.112984829, 1 kgf·m = 9.80665.",
+    "methodology_en": "Base factor in N·m: 1 N·m = 1.0, 1 ft·lb = 1.3558179483, 1 in·lb = 0.112984829, 1 kgf·m = 9.80665."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Mecánica de Automoción y Par de Apriete",
+    "role_en": "Automotive Mechanics & Tightening Torque Specialist Assistant",
+    "includeData": ["torqueInNmResult", "torqueInFtLbResult"],
+    "instructions": [
+      "Interpreta la conversión de par motor / torque de apriete realizada.",
+      "Muestra equivalencias automotrices clave (1 ft·lb ≈ 1.3558 N·m, 1 N·m ≈ 0.7375 ft·lb).",
+      "Advierte sobre la importancia de usar la escala correcta en llaves dinamométricas para evitar cortar pernos de acero."
+    ],
+    "instructions_en": [
+      "Interpret performed engine torque / tightening torque conversion.",
+      "Show key automotive equivalences (1 ft·lb ≈ 1.3558 N·m, 1 N·m ≈ 0.7375 ft·lb).",
+      "Warn on torque wrench scale calibration to prevent snapping steel bolts."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "tqu-guide",
+      "icon": "🔧",
+      "title": "Torque Conversion Constants Reference",
+      "title_es": "Constantes de Conversión de Torque",
+      "content_html_en": "<p><b>1 N·m:</b> 0.73756 ft·lb = 8.85075 in·lb = 0.10197 kgf·m</p><p><b>1 ft·lb:</b> 1.35582 N·m = 12 in·lb</p><p><b>1 kgf·m:</b> 9.80665 N·m = 7.23301 ft·lb</p>",
+      "content_html": "<p><b>1 N·m:</b> 0.73756 ft·lb = 8.85075 in·lb = 0.10197 kgf·m</p><p><b>1 ft·lb:</b> 1.35582 N·m = 12 in·lb</p><p><b>1 kgf·m:</b> 9.80665 N·m = 7.23301 ft·lb</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputValueTorque",
+      "label": "Valor de Torque a Convertir",
+      "label_en": "Torque Value to Convert",
+      "type": "number",
+      "default": 50,
+      "min": 0,
+      "max": 100000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "inputTorqueUnitFactor",
+      "label": "Unidad de Origen",
+      "label_en": "Source Unit",
+      "type": "select",
+      "default": "1.3558179483",
+      "options": [
+        { "value": "1.3558179483", "label": "Pies-Libra (ft·lb)", "label_en": "Foot-Pounds (ft·lb)" },
+        { "value": "1.0", "label": "Newton-Metro (N·m)", "label_en": "Newton-Meters (N·m)" },
+        { "value": "0.112984829", "label": "Pulgadas-Libra (in·lb)", "label_en": "Inch-Pounds (in·lb)" },
+        { "value": "9.80665", "label": "Kilogramo-Fuerza Metro (kgf·m)", "label_en": "Kilogram-Force Meter (kgf·m)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "torqueInNmResult",
+      "label": "Equivalente en Newton-Metro (N·m)",
+      "label_en": "Equivalent in Newton-Meters (N·m)",
+      "expression": "inputValueTorque * inputTorqueUnitFactor",
+      "unit": "N·m",
+      "unit_en": "N·m",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "torqueInNmResult", "op": ">=", "value": 0 }, "label": "Torque Calculado", "label_en": "Torque Computed", "tone": "success", "text": "Par de apriete equivalente en N·m cuantificado.", "text_en": "Equivalent tightening torque in N·m quantified." }
+      ]
+    },
+    {
+      "id": "torqueInFtLbResult",
+      "label": "Equivalente en Pies-Libra (ft·lb)",
+      "label_en": "Equivalent in Foot-Pounds (ft·lb)",
+      "expression": "torqueInNmResult / 1.3558179483",
+      "unit": "ft·lb",
+      "unit_en": "ft·lb",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "torqueInInLbResult",
+      "label": "Equivalente en Pulgadas-Libra (in·lb)",
+      "label_en": "Equivalent in Inch-Pounds (in·lb)",
+      "expression": "torqueInNmResult / 0.112984829",
+      "unit": "in·lb",
+      "unit_en": "in·lb",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "torqueInKgfmResult",
+      "label": "Equivalente en kgf·m",
+      "label_en": "Equivalent in kgf·m",
+      "expression": "torqueInNmResult / 9.80665",
+      "unit": "kgf·m",
+      "unit_en": "kgf·m",
+      "precision": 3,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

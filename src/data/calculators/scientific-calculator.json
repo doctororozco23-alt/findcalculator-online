@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "scientific-calculator",
+    "title": "Calculadora Científica Avanzada (Trigonometría, Factorial y Constantes)",
+    "title_en": "Scientific Calculator (Trigonometry, Factorial & Constants)",
+    "slug": "calculadora-cientifica-avanzada-trigonometria-factorial",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["cientifica", "trigonometria", "factorial", "pi", "constantes", "matematicas", "funciones"],
+    "tags_en": ["scientific", "trigonometry", "factorial", "pi", "constants", "math", "functions"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calculadora científica multifunción: trigonometría ( $\\sin, \\cos, \\tan$ en grados o radianes), factorial ( $n!$ ), exponenciales ( $e^x$ ) y potencias.",
+    "shortDescription_en": "Multi-function scientific calculator: trigonometry ( $\\sin, \\cos, \\tan$ in deg/rad), factorial ( $n!$ ), exponential ( $e^x$ ), and powers.",
+    "longDescription": "Calculadora de alta precisión para estudiantes e ingenieros. Realiza evaluaciones de funciones trigonométricas directas e inversas, cálculo de factorial $n!$, potencia de $e^x$ y constantes numéricas.",
+    "longDescription_en": "High precision scientific tool for students and engineers. Evaluates trig functions, factorials $n!$, exponentials $e^x$, and constants.",
+    "howToUse": [
+      "Ingresa el valor numérico principal x.",
+      "Selecciona la Función Científica deseada (seno, coseno, tangente, factorial, exp, etc.).",
+      "Consulta el valor evaluado con alta precisión decimal."
+    ],
+    "howToUse_en": [
+      "Enter main numerical value x.",
+      "Select desired Scientific Function (sin, cos, tan, factorial, exp, etc.).",
+      "View evaluated high-precision decimal result."
+    ],
+    "methodology": "Seno: sin(x * π/180). Coseno: cos(x * π/180). Tangente: tan(x * π/180). Factorial: x!.",
+    "methodology_en": "Sine: sin(x * π/180). Cosine: cos(x * π/180). Tangent: tan(x * π/180). Factorial: x!."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Científico Matemático",
+    "role_en": "Scientific Math Assistant",
+    "includeData": ["scientificEvalResult"],
+    "instructions": [
+      "Explica el dominio y rango de la función científica evaluada.",
+      "Muestra la conversión de unidades (grados a radianes).",
+      "Analiza la tasa de crecimiento (lineal, trigonométrica o factorial)."
+    ],
+    "instructions_en": [
+      "Explain domain and range of evaluated scientific function.",
+      "Show unit conversion (degrees to radians).",
+      "Analyze growth rate (linear, trigonometric, or factorial)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "sci-guide",
+      "icon": "🔬",
+      "title": "Scientific Functions & Angle Units",
+      "title_es": "Funciones Científicas y Unidades de Ángulo",
+      "content_html_en": "<p><b>Degrees vs Radians:</b> Trignometric functions use degrees input converted to radians (rad = deg × π / 180).</p><p><b>Factorial (n!):</b> Product of all positive integers less than or equal to n (e.g. 5! = 120).</p>",
+      "content_html": "<p><b>Grados vs Radianes:</b> Las funciones trigonométricas reciben grados convertidos a radianes (rad = deg × π / 180).</p><p><b>Factorial (n!):</b> Producto de todos los enteros positivos menores o iguales a n (ej. 5! = 120).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "valueX",
+      "label": "Valor numérico (x)",
+      "label_en": "Numeric Value (x)",
+      "type": "number",
+      "default": 45,
+      "step": 0.01,
+      "required": true
+    },
+    {
+      "id": "funcMode",
+      "label": "Función Científica a Aplicar",
+      "label_en": "Scientific Function to Apply",
+      "type": "select",
+      "default": "sin_deg",
+      "options": [
+        { "value": "sin_deg", "label": "Seno en grados (sin(x°))", "label_en": "Sine in degrees (sin(x°))" },
+        { "value": "cos_deg", "label": "Coseno en grados (cos(x°))", "label_en": "Cosine in degrees (cos(x°))" },
+        { "value": "tan_deg", "label": "Tangente en grados (tan(x°))", "label_en": "Tangent in degrees (tan(x°))" },
+        { "value": "factorial", "label": "Factorial (x!)", "label_en": "Factorial (x!)" },
+        { "value": "exp_e", "label": "Exponencial base e (e^x)", "label_en": "Exponential base e (e^x)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "scientificEvalResult",
+      "label": "Resultado de la Función Científica",
+      "label_en": "Scientific Function Result",
+      "expression": "funcMode == 'sin_deg' ? sin(valueX * pi / 180) : (funcMode == 'cos_deg' ? cos(valueX * pi / 180) : (funcMode == 'tan_deg' ? tan(valueX * pi / 180) : (funcMode == 'factorial' ? factorial(abs(floor(valueX))) : (e^valueX))))",
+      "unit": "",
+      "precision": 6,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "scientificEvalResult", "op": ">=", "value": 0 }, "label": "Función Científica Evaluada", "label_en": "Scientific Function Evaluated", "tone": "success", "text": "Evaluación de alta precisión completada.", "text_en": "High precision evaluation completed." }
+      ]
+    }
+  ]
+}

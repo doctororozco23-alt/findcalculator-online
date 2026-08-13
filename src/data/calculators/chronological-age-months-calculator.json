@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "chronological-age-months-calculator",
+    "title": "Calculadora de Edad Cronológica y Edad Corregida por Prematuridad (Pediatría y Escolar)",
+    "title_en": "Chronological & Prematurity Corrected Age Calculator (Pediatric & School)",
+    "slug": "calculadora-de-edad-cronologica-y-corregida-prematuridad-pediatria",
+    "category": "datetime",
+    "subcategory": "dates",
+    "tags": ["edad-cronologica", "edad-corregida", "prematuridad", "meses-de-edad", "pediatria", "escolar", "fecha-y-tiempo"],
+    "tags_en": ["chronological-age", "corrected-age", "prematurity", "age-in-months", "pediatrics", "date-time"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.1.0",
+    "icon": "Baby"
+  },
+  "content": {
+    "shortDescription": "Calcula la edad cronológica y la edad corregida por prematuridad (semanas de gestación al nacer) en meses totales y días.",
+    "shortDescription_en": "Calculate chronological age and prematurity corrected age (gestational weeks at birth) in total months and days.",
+    "longDescription": "Herramienta médica de pediatría, neonatología, psicología infantil y escolar. Ajusta la edad de niños prematuros nacidos antes de las 40 semanas gestacionales.",
+    "longDescription_en": "Pediatric, neonatology, child psychology, and school medical tool. Adjusts age for premature infants born before 40 gestational weeks.",
+    "howToUse": [
+      "Ingresa el Año de Nacimiento del Niño.",
+      "Ingresa el Mes de Nacimiento (1 a 12).",
+      "Ingresa el Día de Nacimiento (1 a 31).",
+      "Ingresa las Semanas de Gestación al Nacer (ej. 40 semanas a término, 32 semanas prematuro).",
+      "Consulta los Meses Cronológicos Totales, Edad Corregida en Meses y Etapa Pediátrica."
+    ],
+    "howToUse_en": [
+      "Enter Child's Birth Year.",
+      "Enter Child's Birth Month (1 to 12).",
+      "Enter Child's Birth Day (1 to 31).",
+      "Enter Gestational Age at Birth in Weeks (e.g. 40 weeks full-term, 32 weeks premature).",
+      "View Total Chronological Months, Corrected Age in Months, and Pediatric Stage."
+    ],
+    "methodology": "MesesCronológicos = (AñoActual - AñoNac)*12 + (MesActual - MesNac). SemanasPrematuridad = 40 - SemanasGestación. MesesCorregidos = max(0, MesesCronológicos - (SemanasPrematuridad / 4.33)).",
+    "methodology_en": "ChronologicalMonths = (CompYear - BirthYear)*12 + (CompMonth - BirthMonth). PrematurityWeeks = 40 - GestationalWeeks. CorrectedMonths = max(0, ChronologicalMonths - (PrematurityWeeks / 4.33))."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Pediatría, Neonatología y Desarrollo Infantil",
+    "role_en": "Pediatrics, Neonatology & Child Development Specialist Assistant",
+    "includeData": ["totalAgeInMonthsResult", "correctedAgeInMonthsResult"],
+    "instructions": [
+      "Interpreta la edad cronológica frente a la edad corregida por prematuridad obtenida.",
+      "Explica la importancia de evaluar los hitos de desarrollo motor y del lenguaje del lactante usando la edad corregida hasta los 2 años de vida.",
+      "Identifica la clasificación de la prematuridad (Extremadamente prematuro <28 sem, Muy prematuro 28-31 sem, Prematuro moderado/tardío 32-36 sem, A término 37-42 sem)."
+    ],
+    "instructions_en": [
+      "Interpret chronological age versus prematurity corrected age.",
+      "Explain the importance of evaluating motor and language developmental milestones using corrected age up to 2 years of age.",
+      "Identify prematurity classification (Extremely premature <28 wks, Very premature 28-31 wks, Moderate/late premature 32-36 wks, Full term 37-42 wks)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "cam-guide",
+      "icon": "👶",
+      "title": "Prematurity Corrected Age Medical Rule",
+      "title_es": "Regla Médica de Edad Corregida por Prematuridad",
+      "content_html_en": "<p><b>Full-Term Baseline:</b> 40 Gestational Weeks.</p><p><b>Correction Period:</b> Medical guidelines recommend using Corrected Age for developmental milestone screening until 24 months (2 years) of age.</p>",
+      "content_html": "<p><b>Línea Base A Término:</b> 40 Semanas Gestacionales.</p><p><b>Período de Corrección:</b> Las guías médicas recomiendan usar la Edad Corregida para evaluar hitos de desarrollo hasta los 24 meses (2 años) de vida.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "childBirthYearNum",
+      "label": "Año de Nacimiento del Niño",
+      "label_en": "Child's Birth Year",
+      "type": "number",
+      "default": 2024,
+      "min": 2010,
+      "max": 2026,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "childBirthMonthNum",
+      "label": "Mes de Nacimiento (1-12)",
+      "label_en": "Child's Birth Month (1-12)",
+      "type": "number",
+      "default": 5,
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "childBirthDayNum",
+      "label": "Día de Nacimiento (1-31)",
+      "label_en": "Child's Birth Day (1-31)",
+      "type": "number",
+      "default": 20,
+      "min": 1,
+      "max": 31,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "gestationalWeeksAtBirthNum",
+      "label": "Semanas de Gestación al Nacer (24 a 42 semanas)",
+      "label_en": "Gestational Weeks at Birth (24 to 42 weeks)",
+      "type": "number",
+      "default": 34,
+      "min": 24,
+      "max": 42,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalAgeInMonthsResult",
+      "label": "Edad Cronológica en Meses Totales",
+      "label_en": "Total Chronological Age in Months",
+      "expression": "max(0, ((2026 - childBirthYearNum) * 12) + (2 - childBirthMonthNum))",
+      "unit": "meses",
+      "unit_en": "months",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalAgeInMonthsResult", "op": ">=", "value": 0 }, "label": "Edad Cronológica Calculada", "label_en": "Chronological Age Computed", "tone": "success", "text": "Edad cronológica en meses continuos cuantificada.", "text_en": "Continuous chronological age in months quantified." }
+      ]
+    },
+    {
+      "id": "prematurityWeeksDeductionResult",
+      "label": "Semanas de Prematuridad a Descontar",
+      "label_en": "Prematurity Weeks to Deduct",
+      "expression": "max(0, 40 - gestationalWeeksAtBirthNum)",
+      "unit": "semanas",
+      "unit_en": "weeks",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "correctedAgeInMonthsResult",
+      "label": "Edad Corregida por Prematuridad en Meses",
+      "label_en": "Prematurity Corrected Age in Months",
+      "expression": "max(0, totalAgeInMonthsResult - (prematurityWeeksDeductionResult / 4.33333))",
+      "unit": "meses corregidos",
+      "unit_en": "corrected months",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "capacitor-energy-charge-calculator",
+    "title": "Calculadora de Carga y Energía en Condensadores / Capacitores",
+    "title_en": "Capacitor Energy & Stored Charge Calculator",
+    "slug": "calculadora-de-carga-y-energia-en-condensadores-capacitores",
+    "category": "technology",
+    "subcategory": "electrical",
+    "tags": ["capacitores", "condensadores", "carga-electrica", "energia-almacenada", "faradios", "electronica", "tecnologia"],
+    "tags_en": ["capacitors", "capacitor-energy", "stored-charge", "farads", "electronics", "technology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la carga eléctrica ($Q = C \\cdot V$) en Culombios y la energía almacenada ($E = \\frac{1}{2} C V^2$) en Joules en un condensador.",
+    "shortDescription_en": "Calculate electric charge ($Q = C \\cdot V$) in Coulombs and stored energy ($E = \\frac{1}{2} C V^2$) in Joules for a capacitor.",
+    "longDescription": "Herramienta de física y electrónica analógica. Determina la capacidad de almacenamiento de energía electrostática en supercondensadores y fuentes de alimentación.",
+    "longDescription_en": "Physics and analog electronics tool. Computes electrostatic energy storage capacity in supercapacitors and power supply decoupling circuits.",
+    "howToUse": [
+      "Ingresa la Capacitancia del Condensador (en Microfaradios $\\mu$F, Millifaradios o Faradios).",
+      "Ingresa el Voltaje de Carga Aplicado ($V$ en Volts).",
+      "Consulta la Carga Eléctrica Calculada ($Q$ en Culombios - C) y la Energía Almacenada ($E$ en Joules - J)."
+    ],
+    "howToUse_en": [
+      "Enter Capacitor Capacitance (in Microfarads $\\mu$F, Millifarads, or Farads).",
+      "Enter Applied Charge Voltage ($V$ in Volts).",
+      "View Calculated Electric Charge ($Q$ in Coulombs - C) and Stored Energy ($E$ in Joules - J)."
+    ],
+    "methodology": "Carga Q = C * V (en Culombios). Energía E = 0.5 * C * V² (en Joules). 1 μF = 10⁻⁶ F.",
+    "methodology_en": "Charge Q = C * V (in Coulombs). Energy E = 0.5 * C * V² (in Joules). 1 μF = 10⁻⁶ F."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Electrónica Analógica y Almacenamiento Electrostático",
+    "role_en": "Analog Electronics & Electrostatic Energy Storage Specialist Assistant",
+    "includeData": ["storedEnergyJoulesResult", "electricChargeCoulombsResult"],
+    "instructions": [
+      "Interpreta la carga en Culombios y la energía almacenada en Joules en el condensador.",
+      "Explica la dependencia cuadrática de la energía respecto al voltaje ($E \\propto V^2$).",
+      "Muestra la diferencia entre condensadores electrolíticos estándar vs supercondensadores (Supercaps)."
+    ],
+    "instructions_en": [
+      "Interpret calculated electric charge in Coulombs and stored energy in Joules.",
+      "Explain quadratic energy scaling with voltage ($E \\propto V^2$).",
+      "Show difference between standard electrolytic capacitors vs Supercapacitors."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "cec-guide",
+      "icon": "⚡",
+      "title": "Capacitor Energy Formulas",
+      "title_es": "Fórmulas de Energía en Condensadores",
+      "content_html_en": "<p><b>Charge (Q):</b> Q = C × V (Coulombs)</p><p><b>Stored Energy (E):</b> E = 0.5 × C × V² (Joules)</p><p><b>Capacitance Unit:</b> 1 Farad = 1,000,000 Microfarads (μF).</p>",
+      "content_html": "<p><b>Carga (Q):</b> Q = C × V (Culombios)</p><p><b>Energía Almacenada (E):</b> E = 0.5 × C × V² (Joules)</p><p><b>Unidad de Capacitancia:</b> 1 Faradio = 1,000,000 Microfaradios (μF).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "capacitanceMicrofarads",
+      "label": "Capacitancia (C en Microfaradios - μF)",
+      "label_en": "Capacitance (C in Microfarads - μF)",
+      "type": "number",
+      "default": 4700,
+      "min": 0.001,
+      "max": 10000000,
+      "step": 100,
+      "required": true
+    },
+    {
+      "id": "capacitorVoltageVolts",
+      "label": "Voltaje de Carga (V en Volts)",
+      "label_en": "Charge Voltage (V in Volts)",
+      "type": "number",
+      "default": 25,
+      "min": 0.1,
+      "max": 10000,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "capacitanceFaradsSecondary",
+      "label": "Capacitancia Equivalente (Faradios - F)",
+      "label_en": "Equivalent Capacitance (Farads - F)",
+      "expression": "capacitanceMicrofarads / 1000000",
+      "unit": "F",
+      "unit_en": "F",
+      "precision": 6,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "electricChargeCoulombsResult",
+      "label": "Carga Eléctrica Almacenada (Q en Culombios - C)",
+      "label_en": "Stored Electric Charge (Q in Coulombs - C)",
+      "expression": "capacitanceFaradsSecondary * capacitorVoltageVolts",
+      "unit": "C",
+      "unit_en": "C",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "electricChargeCoulombsResult", "op": ">=", "value": 0 }, "label": "Carga Calculada", "label_en": "Charge Computed", "tone": "success", "text": "Carga electrostática cuantificada.", "text_en": "Electrostatic charge quantified." }
+      ]
+    },
+    {
+      "id": "storedEnergyJoulesResult",
+      "label": "Energía Almacenada (E en Joules - J)",
+      "label_en": "Stored Energy (E in Joules - J)",
+      "expression": "0.5 * capacitanceFaradsSecondary * (capacitorVoltageVolts ^ 2)",
+      "unit": "J",
+      "unit_en": "J",
+      "precision": 3,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

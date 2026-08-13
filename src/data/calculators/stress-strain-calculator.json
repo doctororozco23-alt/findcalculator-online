@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "stress-strain-calculator",
+    "title": "Calculadora de Esfuerzo Mecánico y Deformación (Ley de Hooke σ = E ε)",
+    "title_en": "Mechanical Stress & Strain Calculator (Hooke's Law σ = E ε)",
+    "slug": "calculadora-de-esfuerzo-mecanico-deformacion-ley-de-hooke",
+    "category": "engineering",
+    "subcategory": "materials",
+    "tags": ["esfuerzo-mecanico", "deformacion", "ley-de-hooke", "modulo-de-young", "traccion", "compresion", "ingenieria"],
+    "tags_en": ["mechanical-stress", "strain", "hookes-law", "youngs-modulus", "tension", "compression", "engineering"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el esfuerzo axil ($\u03c3 = F / A$), deformación unitaria ($\\epsilon = \\Delta L / L_0$) y alargamiento según la Ley de Hooke ($\u03c3 = E \\cdot \\epsilon$).",
+    "shortDescription_en": "Calculate axial stress ($\u03c3 = F / A$), unit strain ($\\epsilon = \\Delta L / L_0$), and elongation using Hooke's Law ($\u03c3 = E \\cdot \\epsilon$).",
+    "longDescription": "Herramienta de resistencia de materiales e ingeniería mecánica. Evalúa la respuesta elástica de componentes estructurales sometidos a fuerzas de tracción o compresión axil.",
+    "longDescription_en": "Strength of materials and mechanical engineering tool. Evaluates elastic response of structural members subject to axial tension or compression forces.",
+    "howToUse": [
+      "Ingresa la Fuerza Axial Aplicada ($F$ en Newtons - N o kN).",
+      "Ingresa el Área Transversal del Elemento ($A$ en mm²).",
+      "Ingresa la Longitud Inicial del Elemento ($L_0$ en metros).",
+      "Selecciona el Módulo de Elasticidad / Young ($E$, ej. Acero = 200 GPa).",
+      "Consulta el Esfuerzo Axial ($\u03c3$ en MPa) y la Elongación Total ($\u03b4$ en mm)."
+    ],
+    "howToUse_en": [
+      "Enter Applied Axial Force ($F$ in Newtons - N).",
+      "Enter Member Cross-Sectional Area ($A$ in mm²).",
+      "Enter Member Initial Length ($L_0$ in meters).",
+      "Select Elastic / Young's Modulus ($E$, e.g. Steel = 200 GPa).",
+      "View Axial Stress ($\u03c3$ in MPa) and Total Elongation ($\u03b8$ in mm)."
+    ],
+    "methodology": "Esfuerzo σ = F / A (en MPa si F en N y A en mm²). Elongación δ = (F * L0) / (A * E).",
+    "methodology_en": "Stress σ = F / A (in MPa if F in N and A in mm²). Elongation δ = (F * L0) / (A * E)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Resistencia de Materiales y Ensayo de Tracción",
+    "role_en": "Strength of Materials & Tensile Testing Specialist Assistant",
+    "includeData": ["axialStressMpaResult", "totalElongationMmResult"],
+    "instructions": [
+      "Interpreta el esfuerzo axil en MPa y compáralo con el límite elástico del material (ej. Acero A36 $\u03c3_y = 250$ MPa).",
+      "Explica la región elástica lineal regida por la Ley de Hooke vs la región plástica.",
+      "Muestra el cálculo del Factor de Seguridad ($FS = \\sigma_y / \\sigma$)."
+    ],
+    "instructions_en": [
+      "Interpret axial stress in MPa and compare against material yield strength (e.g. A36 Steel $\u03c3_y = 250$ MPa).",
+      "Explain Hooke's Law linear elastic regime vs plastic yielding regime.",
+      "Show Factor of Safety ($FS = \\sigma_y / \\sigma$) calculation."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "str-guide",
+      "icon": "🔩",
+      "title": "Hooke's Law & Stress-Strain Formula",
+      "title_es": "Ley de Hooke y Fórmulas de Esfuerzo-Deformación",
+      "content_html_en": "<p><b>Stress (σ):</b> σ = F / A (1 N/mm² = 1 MPa)</p><p><b>Strain (ε):</b> ε = ΔL / L₀</p><p><b>Hooke's Law:</b> σ = E × ε ➔ ΔL = (F × L₀) / (A × E)</p>",
+      "content_html": "<p><b>Esfuerzo (σ):</b> σ = F / A (1 N/mm² = 1 MPa)</p><p><b>Deformación (ε):</b> ε = ΔL / L₀</p><p><b>Ley de Hooke:</b> σ = E × ε ➔ ΔL = (F × L₀) / (A × E)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "appliedAxialForceN",
+      "label": "Fuerza Axial Aplicada (F en Newtons - N)",
+      "label_en": "Applied Axial Force (F in Newtons - N)",
+      "type": "number",
+      "default": 50000,
+      "min": 1,
+      "max": 10000000,
+      "step": 1000,
+      "required": true
+    },
+    {
+      "id": "crossAreaMm2",
+      "label": "Área Transversal del Elemento (A en mm²)",
+      "label_en": "Member Cross Area (A in mm²)",
+      "type": "number",
+      "default": 500,
+      "min": 0.1,
+      "max": 100000,
+      "step": 10,
+      "required": true
+    },
+    {
+      "id": "initialLengthMeters",
+      "label": "Longitud Inicial del Elemento (L₀ en metros)",
+      "label_en": "Initial Member Length (L₀ in meters)",
+      "type": "number",
+      "default": 2.0,
+      "min": 0.01,
+      "max": 100,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "youngModulusGpaStr",
+      "label": "Módulo de Elasticidad / Young (E en GPa)",
+      "label_en": "Elastic / Young's Modulus (E in GPa)",
+      "type": "select",
+      "default": "200",
+      "options": [
+        { "value": "200", "label": "Acero Estructural (E = 200 GPa)", "label_en": "Structural Steel (E = 200 GPa)" },
+        { "value": "70", "label": "Aluminio (E = 70 GPa)", "label_en": "Aluminum (E = 70 GPa)" },
+        { "value": "110", "label": "Bronce / Latón (E = 110 GPa)", "label_en": "Bronze / Brass (E = 110 GPa)" },
+        { "value": "12", "label": "Madera (E = 12 GPa)", "label_en": "Timber (E = 12 GPa)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "axialStressMpaResult",
+      "label": "Esfuerzo Axial Calculado (σ en MPa)",
+      "label_en": "Calculated Axial Stress (σ in MPa)",
+      "expression": "crossAreaMm2 > 0 ? (appliedAxialForceN / crossAreaMm2) : 0",
+      "unit": "MPa",
+      "unit_en": "MPa",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "axialStressMpaResult", "op": ">=", "value": 0 }, "label": "Esfuerzo Calculado", "label_en": "Stress Computed", "tone": "success", "text": "Intensidad de fuerza interna por unidad de área cuantificada.", "text_en": "Internal force intensity per unit area quantified." }
+      ]
+    },
+    {
+      "id": "totalElongationMmResult",
+      "label": "Elongación Total / Deformación (δ en mm)",
+      "label_en": "Total Elongation / Deformation (δ in mm)",
+      "expression": "(crossAreaMm2 > 0 && youngModulusGpaStr > 0) ? (((appliedAxialForceN * initialLengthMeters) / (crossAreaMm2 * youngModulusGpaStr)) * 1) : 0",
+      "unit": "mm",
+      "unit_en": "mm",
+      "precision": 3,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

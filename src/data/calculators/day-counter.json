@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "day-counter",
+    "title": "Contador de Días (Días Naturales y Días Laborables / Hábiles)",
+    "title_en": "Day Counter (Calendar Days & Business Days)",
+    "slug": "contador-de-dias-naturales-laborables-habiles",
+    "category": "datetime",
+    "subcategory": "dates",
+    "tags": ["contador-de-dias", "dias-habiles", "dias-laborables", "fin-de-semana", "calendario", "plazos"],
+    "tags_en": ["day-counter", "business-days", "working-days", "weekend", "calendar", "deadlines"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calendar"
+  },
+  "content": {
+    "shortDescription": "Cuenta los días totales entre dos fechas, estimando los Días Laborables / Hábiles (excluyendo fines de semana).",
+    "shortDescription_en": "Count total days between two dates, estimating Business / Working Days (excluding weekends).",
+    "longDescription": "Herramienta legal, comercial y de planificación de plazos. Calcula los días naturales y estima los días hábiles/laborables entre dos fechas.",
+    "longDescription_en": "Legal, commercial, and deadline planning tool. Computes calendar days and estimates working business days between two dates.",
+    "howToUse": [
+      "Selecciona la Fecha Inicial del plazo.",
+      "Selecciona la Fecha Final del plazo.",
+      "Consulta el Total de Días Naturales, la estimación de Días Laborables (5/7) y las Semanas Completas."
+    ],
+    "howToUse_en": [
+      "Select Period Initial Date.",
+      "Select Period Final Date.",
+      "View Total Calendar Days, estimated Business Days (5/7 ratio), and Full Weeks."
+    ],
+    "methodology": "Días Naturales = daysBetween(startDate, endDate). Días Laborables Aprox. = floor(Días Naturales * 5 / 7).",
+    "methodology_en": "Calendar Days = daysBetween(startDate, endDate). Approx Business Days = floor(Calendar Days * 5 / 7)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Plazos y Días Hábiles",
+    "role_en": "Deadlines & Business Days Specialist Assistant",
+    "includeData": ["calendarDaysCount", "businessDaysApprox", "fullWeeksCount"],
+    "instructions": [
+      "Interpreta el total de días naturales transcurridos.",
+      "Explica la estimación de días laborables / hábiles excluyendo sábados y domingos.",
+      "Analiza el cumplimiento de plazos comerciales o legales."
+    ],
+    "instructions_en": [
+      "Interpret total elapsed calendar days.",
+      "Explain business days estimate excluding Saturdays and Sundays.",
+      "Analyze commercial or legal deadline compliance."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "dc-guide",
+      "icon": "📆",
+      "title": "Business Days vs Calendar Days Definition",
+      "title_es": "Definición de Días Hábiles vs Días Naturales",
+      "content_html_en": "<p><b>Calendar Days:</b> Every consecutive day on the calendar (365/366 per year).</p><p><b>Business / Working Days:</b> Standard Monday-to-Friday workdays excluding weekends (approx 5/7 of total days) and official holidays.</p>",
+      "content_html": "<p><b>Días Naturales / Corridos:</b> Cada día consecutivo en el calendario (365/366 por año).</p><p><b>Días Hábiles / Laborables:</b> Días de trabajo estándar de lunes a viernes excluyendo fines de semana (aprox 5/7 del total) y feriados oficiales.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "startDate",
+      "label": "Fecha Inicial",
+      "label_en": "Initial Date",
+      "type": "date",
+      "default": "2026-09-01",
+      "required": true
+    },
+    {
+      "id": "endDate",
+      "label": "Fecha Final",
+      "label_en": "Final Date",
+      "type": "date",
+      "default": "2026-10-15",
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "calendarDaysCount",
+      "label": "Total de Días Naturales / Corridos",
+      "label_en": "Total Calendar Days",
+      "expression": "daysBetween(startDate, endDate)",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "calendarDaysCount", "op": ">=", "value": 0 }, "label": "Plazo Calculado", "label_en": "Period Computed", "tone": "success", "text": "Días naturales contados con éxito.", "text_en": "Calendar days counted successfully." }
+      ]
+    },
+    {
+      "id": "businessDaysApprox",
+      "label": "Días Laborables / Hábiles Estimados (Mon-Fri)",
+      "label_en": "Estimated Business Days (Mon-Fri)",
+      "expression": "floor(calendarDaysCount * 5 / 7)",
+      "unit": "días hábiles",
+      "unit_en": "business days",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "fullWeeksCount",
+      "label": "Semanas Completas",
+      "label_en": "Full Weeks",
+      "expression": "floor(calendarDaysCount / 7)",
+      "unit": "semanas",
+      "unit_en": "weeks",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

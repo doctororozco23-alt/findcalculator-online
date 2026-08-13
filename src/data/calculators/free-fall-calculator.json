@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "free-fall-calculator",
+    "title": "Calculadora de Caída Libre y Velocidad de Impacto",
+    "title_en": "Free Fall & Impact Velocity Calculator",
+    "slug": "calculadora-de-caida-libre-velocidad-impacto-tiempo-altura",
+    "category": "physics",
+    "subcategory": "mechanics",
+    "tags": ["caida-libre", "velocidad-de-impacto", "gravedad", "altura", "tiempo-de-caida", "fisica", "cinematica"],
+    "tags_en": ["free-fall", "impact-velocity", "gravity", "height", "fall-time", "physics", "kinematics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la velocidad final de impacto ($v = \\sqrt{2 g h}$) y el tiempo de caída libre desde una altura inicial.",
+    "shortDescription_en": "Calculate final impact velocity ($v = \\sqrt{2 g h}$) and free fall time from an initial height.",
+    "longDescription": "Herramienta de cinemática unidimensional en el vacío. Evalúa la aceleración constante causada por la fuerza gravitatoria ($g = 9.81\\text{ m/s}^2$).",
+    "longDescription_en": "1D vacuum kinematics tool. Evaluates constant acceleration caused by gravitational force ($g = 9.81\\text{ m/s}^2$).",
+    "howToUse": [
+      "Ingresa la Altura de Caída ($h$ en metros).",
+      "Selecciona la Aceleración de la Gravedad ($g$, Estándar Tierra = 9.81 m/s²).",
+      "Consulta la Velocidad Final de Impacto en m/s y km/h, y el Tiempo Total de Caída (s)."
+    ],
+    "howToUse_en": [
+      "Enter Fall Height ($h$ in meters).",
+      "Select Gravitational Acceleration ($g$, Standard Earth = 9.81 m/s²).",
+      "View Final Impact Velocity in m/s and km/h, and Total Fall Time (s)."
+    ],
+    "methodology": "Tiempo t = sqrt((2 * h) / g). Velocidad v = sqrt(2 * g * h) = g * t.",
+    "methodology_en": "Time t = sqrt((2 * h) / g). Velocity v = sqrt(2 * g * h) = g * t."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Cinemática Unidimensional y Gravedad",
+    "role_en": "1D Kinematics & Gravity Specialist Assistant",
+    "includeData": ["impactVelocityMpsResult", "fallTimeSecondsResult"],
+    "instructions": [
+      "Interpreta la velocidad de impacto y el tiempo de caída calculados.",
+      "Explica la independencia de la masa en la caída libre ideal (Experimento de Galileo en la Torre de Pisa).",
+      "Advierte que en la atmósfera real la resistencia del aire limita la velocidad (velocidad terminal)."
+    ],
+    "instructions_en": [
+      "Interpret calculated impact velocity and fall time.",
+      "Explain independence of mass in ideal free fall (Galileo's Leaning Tower of Pisa experiment).",
+      "Warn that real atmospheric drag caps speed at terminal velocity."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ff-guide",
+      "icon": "🍎",
+      "title": "Free Fall Kinematic Equations",
+      "title_es": "Ecuaciones Cinemáticas de Caída Libre",
+      "content_html_en": "<p><b>Impact Velocity:</b> v = √(2 × g × h)</p><p><b>Fall Time:</b> t = √((2 × h) / g)</p>",
+      "content_html": "<p><b>Velocidad de Impacto:</b> v = √(2 × g × h)</p><p><b>Tiempo de Caída:</b> t = √((2 × h) / g)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "dropHeightMeters",
+      "label": "Altura de Caída (h en metros)",
+      "label_en": "Fall Height (h in meters)",
+      "type": "number",
+      "default": 45,
+      "min": 0.1,
+      "max": 10000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "gravityChoiceMps2",
+      "label": "Gravedad Local (g)",
+      "label_en": "Local Gravity (g)",
+      "type": "select",
+      "default": "9.80665",
+      "options": [
+        { "value": "9.80665", "label": "Tierra (g = 9.81 m/s²)", "label_en": "Earth (g = 9.81 m/s²)" },
+        { "value": "1.62", "label": "Luna (g = 1.62 m/s²)", "label_en": "Moon (g = 1.62 m/s²)" },
+        { "value": "3.71", "label": "Marte (g = 3.71 m/s²)", "label_en": "Mars (g = 3.71 m/s²)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "fallTimeSecondsResult",
+      "label": "Tiempo Total de Caída (t)",
+      "label_en": "Total Fall Time (t)",
+      "expression": "sqrt((2 * dropHeightMeters) / gravityChoiceMps2)",
+      "unit": "s",
+      "unit_en": "s",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "impactVelocityMpsResult",
+      "label": "Velocidad Final de Impacto (m/s)",
+      "label_en": "Final Impact Velocity (m/s)",
+      "expression": "sqrt(2 * gravityChoiceMps2 * dropHeightMeters)",
+      "unit": "m/s",
+      "unit_en": "m/s",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "impactVelocityMpsResult", "op": ">=", "value": 0 }, "label": "Velocidad Calculada", "label_en": "Velocity Computed", "tone": "success", "text": "Velocidad terminal gravitatoria cuantificada.", "text_en": "Gravitational terminal velocity quantified." }
+      ]
+    },
+    {
+      "id": "impactVelocityKmhResult",
+      "label": "Velocidad de Impacto en km/h",
+      "label_en": "Impact Velocity in km/h",
+      "expression": "impactVelocityMpsResult * 3.6",
+      "unit": "km/h",
+      "unit_en": "km/h",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

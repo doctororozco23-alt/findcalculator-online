@@ -1,0 +1,194 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "roth-ira-calculator",
+    "title": "Calculadora de Cuenta de Jubilación Roth IRA",
+    "title_en": "Roth IRA Retirement Calculator",
+    "slug": "cuenta-jubilacion-roth-ira",
+    "category": "finance",
+    "subcategory": "retirement",
+    "tags": ["roth-ira", "jubilacion", "impuestos-0"],
+    "tags_en": ["roth-ira", "retirement", "tax-free"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Shield"
+  },
+  "content": {
+    "shortDescription": "Calcula el saldo futuro acumulado y los ahorros fiscales libres de impuestos en el retiro con una cuenta Roth IRA.",
+    "shortDescription_en": "Calculate projected tax-free retirement balance growth and tax savings using a Roth IRA account.",
+    "longDescription": "Proyecta el crecimiento acumulado de las aportaciones anuales a una cuenta de jubilación Roth IRA, donde todos los retiros en la jubilación (capital y ganancias) están 100% exentos de impuestos.",
+    "longDescription_en": "Project compound growth of annual contributions into a Roth IRA account where all qualified withdrawals in retirement are 100% tax-free.",
+    "howToUse": [
+      "Ingresa tu edad actual y la edad prevista de retiro.",
+      "Ingresa la aportación anual a tu Roth IRA (máximo legal ~7,000 USD/año).",
+      "Establece la tasa de rendimiento anual estimada (%).",
+      "Consulta el saldo futuro 100% libre de impuestos en tu jubilación."
+    ],
+    "howToUse_en": [
+      "Enter your current age and planned retirement age.",
+      "Enter annual Roth IRA contribution amount (up to annual limit).",
+      "Set estimated annual return rate (%).",
+      "View 100% tax-free projected balance at retirement."
+    ],
+    "methodology": "Fórmula Roth IRA: Acumulación compuesta sobre aportaciones anuales. Retiros libres de impuestos al retiro.",
+    "methodology_en": "Roth IRA Formula: Compound accumulation on annual contributions. 100% tax-free withdrawals at retirement."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🛡️",
+      "title": "The Power of Tax-Free Growth in Roth IRA",
+      "title_es": "El Poder del Crecimiento Libre de Impuestos en Roth IRA",
+      "content_html_en": "<p>With a Roth IRA, you contribute after-tax dollars today, allowing all investment gains to grow and be withdrawn completely tax-free in retirement.</p>",
+      "content_html": "<p>En una cuenta Roth IRA aportas dinero tras impuestos hoy, permitiendo que todas las ganancias crezcan y se retiren 100% libres de impuestos en el retiro.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "currentAge",
+      "label": "Tu edad actual",
+      "label_en": "Your Current Age",
+      "type": "number",
+      "default": 30,
+      "min": 18,
+      "max": 70,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "retirementAge",
+      "label": "Edad prevista de jubilación",
+      "label_en": "Planned Retirement Age",
+      "type": "number",
+      "default": 65,
+      "min": 50,
+      "max": 80,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "annualContribution",
+      "label": "Aportación anual a la cuenta Roth IRA",
+      "label_en": "Annual Roth IRA Contribution",
+      "type": "currency",
+      "default": 7000,
+      "min": 500,
+      "max": 8000,
+      "step": 250,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "annualReturnRate",
+      "label": "Tasa de rendimiento anual estimada (%)",
+      "label_en": "Estimated Annual Return Rate (%)",
+      "type": "number",
+      "default": 7.5,
+      "min": 0.1,
+      "max": 20,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "yearsToRetirement",
+      "label": "Años hasta el retiro",
+      "label_en": "Years Until Retirement",
+      "expression": "max(retirementAge - currentAge, 1)",
+      "unit": "años",
+      "unit_en": "years",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalContributed",
+      "label": "Total dinero aportado de tu bolsillo",
+      "label_en": "Total Cash Contributed",
+      "expression": "annualContribution * yearsToRetirement",
+      "unit": { "follows": "annualContribution" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "taxFreeBalance",
+      "label": "Saldo Acumulado 100% Libre de Impuestos",
+      "label_en": "Projected 100% Tax-Free Balance",
+      "expression": "annualContribution * ((((1 + annualReturnRate / 100) ^ yearsToRetirement) - 1) / (annualReturnRate / 100))",
+      "unit": { "follows": "annualContribution" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "taxFreeBalance", "op": ">", "value": 0 }, "label": "Saldo Libre de Impuestos", "label_en": "Tax-Free Growth Balance", "tone": "success", "text": "Capital acumulado sin retención fiscal en el retiro.", "text_en": "Total accumulated balance with zero income tax owed upon withdrawal." }
+      ]
+    },
+    {
+      "id": "taxFreeEarnings",
+      "label": "Ganancias netas libres de impuestos",
+      "label_en": "Net Tax-Free Investment Earnings",
+      "expression": "max(taxFreeBalance - totalContributed, 0)",
+      "unit": { "follows": "annualContribution" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "ira-calculator", "type": "static", "message": "Compara con una cuenta IRA Tradicional", "message_en": "Compare with Traditional IRA account", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Cuentas Roth IRA",
+    "role_en": "Roth IRA Retirement Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y motivador",
+    "includeData": ["taxFreeBalance", "taxFreeEarnings", "totalContributed", "yearsToRetirement"],
+    "instructions": [
+      "Sintetiza el saldo acumulado 100% libre de impuestos y las ganancias generadas en 2 frases concisas.",
+      "Destaca que la gran ventaja del Roth IRA es la exención total de impuestos en la jubilación."
+    ],
+    "instructions_en": [
+      "Summarize 100% tax-free ending balance and net investment earnings in 2 concise sentences.",
+      "Emphasize the primary benefit of zero income tax owed on qualified retirement withdrawals."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Cuenta de Jubilación Roth IRA | CalculadoraHub",
+    "metaTitle_en": "Roth IRA Retirement Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el saldo acumulado libre de impuestos en una cuenta Roth IRA para el retiro. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate tax-free retirement balance growth using a Roth IRA account. Free, instant results.",
+    "keywords": ["roth ira calculator", "cuenta roth ira", "jubilacion libre de impuestos"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

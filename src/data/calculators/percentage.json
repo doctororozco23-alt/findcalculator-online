@@ -1,0 +1,188 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "percentage-calculator",
+    "title": "Calculadora de Porcentaje",
+    "title_en": "Percentage Calculator",
+    "slug": "porcentaje",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["estudiantes", "porcentaje"],
+    "tags_en": ["students", "percentage"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Percent"
+  },
+  "content": {
+    "shortDescription": "Calcula porcentajes al instante: cuánto es el X%, qué porcentaje representa un número y la variación porcentual entre dos valores.",
+    "shortDescription_en": "Calculate percentages instantly: find X%, calculate what percent a number is, and percentage variations between two values.",
+    "longDescription": "Esta calculadora resuelve los tres casos de porcentaje más habituales: cuánto es un porcentaje de una cantidad, qué porcentaje representa un número respecto a otro y la variación porcentual entre dos valores.",
+    "longDescription_en": "This calculator solves the three most common percentage cases: finding a percentage of a number, finding what percentage one number is of another, and percentage variation.",
+    "howToUse": [
+      "Elige el tipo de cálculo que necesitas en el selector.",
+      "Introduce los dos valores numéricos.",
+      "Lee el resultado principal que se actualiza automáticamente."
+    ],
+    "howToUse_en": [
+      "Select the calculation type you need in the dropdown.",
+      "Enter the two numeric values.",
+      "Read the main result which updates automatically."
+    ],
+    "methodology": "Se aplican las fórmulas estándar: Parte = (Porcentaje / 100) × Total; Porcentaje = (Parte / Total) × 100; Variación = ((Final − Inicial) / |Inicial|) × 100.",
+    "methodology_en": "Standard formulas are applied: Part = (Percentage / 100) × Total; Percentage = (Part / Total) × 100; Variation = ((Final − Initial) / |Initial|) × 100."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "📘",
+      "title": "Percentage Concepts & Overview",
+      "title_es": "Conceptos de Porcentaje y Visión General",
+      "content_html_en": "<p>A percentage represents a fraction or ratio expressed as a fraction of 100. It is denoted using the percent sign (%). Percentages are fundamentally used to compare relative quantities.</p>",
+      "content_html": "<p>Un porcentaje representa una fracción o razón expresada como parte de 100 (%). Permite comparar magnitudes relativas de forma sencilla.</p>"
+    },
+    {
+      "id": "real_world",
+      "icon": "🛒",
+      "title": "Real-World Applications",
+      "title_es": "Aplicaciones en la Vida Real",
+      "content_html_en": "<ul><li><b>Discounts & Sales:</b> Calculating 20% off an original price.</li><li><b>Taxes & Tips:</b> Adding 15% tip or sales tax to a bill.</li><li><b>Interest Rates:</b> Annual interest growth on savings or credit cards.</li></ul>",
+      "content_html": "<ul><li><b>Descuentos:</b> Calcular el 20% de rebaja sobre un precio inicial.</li><li><b>Propinas e Impuestos:</b> Añadir el IVA o propina a una factura.</li><li><b>Tipos de Interés:</b> Rendimiento o recargo porcentual.</li></ul>"
+    },
+    {
+      "id": "common_pitfalls",
+      "icon": "⚠️",
+      "title": "Common Mistakes & Pitfalls",
+      "title_es": "Errores Comunes",
+      "content_html_en": "<p><b>Adding percentages directly:</b> A 10% increase followed by a 10% decrease does NOT return you to the original number. For example, 100 + 10% = 110; 110 - 10% = 99.</p>",
+      "content_html": "<p><b>Sumar porcentajes directamente:</b> Un aumento del 10% seguido de un descuento del 10% NO devuelve la cifra original. Ejemplo: 100 + 10% = 110; 110 - 10% = 99.</p>"
+    },
+    {
+      "id": "formulas",
+      "icon": "🧮",
+      "title": "Mathematical Formulas",
+      "title_es": "Fórmulas Matemáticas",
+      "content_html_en": "<p><b>Percentage of Total:</b> Result = (Percent / 100) × Total<br/><b>What Percent:</b> Percent = (Part / Total) × 100<br/><b>Percentage Change:</b> Variation = [(Final - Initial) / |Initial|] × 100</p>",
+      "content_html": "<p><b>Porcentaje de un total:</b> Resultado = (Porcentaje / 100) × Total<br/><b>Qué porcentaje representa:</b> Porcentaje = (Parte / Total) × 100<br/><b>Variación porcentual:</b> Variación = [(Final - Inicial) / |Inicial|] × 100</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "mode",
+      "label": "Tipo de cálculo",
+      "label_en": "Calculation Type",
+      "type": "select",
+      "default": "percentOf",
+      "options": [
+        { "value": "percentOf", "label": "¿Cuánto es el X% de Y?", "label_en": "What is X% of Y?" },
+        { "value": "whatPercent", "label": "X es ¿qué porcentaje? de Y", "label_en": "X is what percentage of Y?" },
+        { "value": "percentChange", "label": "Variación porcentual de X a Y", "label_en": "Percentage variation from X to Y" }
+      ],
+      "required": true,
+      "validation": [{ "rule": "required", "message": "Selecciona un tipo de cálculo", "message_en": "Select a calculation type" }]
+    },
+    {
+      "id": "valueA",
+      "label": "Valor A",
+      "label_en": "Value A",
+      "type": "number",
+      "default": 15,
+      "min": -1000000,
+      "max": 1000000,
+      "help": "Porcentaje (%), parte o valor inicial según el modo seleccionado.",
+      "help_en": "Percentage (%), part, or initial value depending on selected mode.",
+      "required": true,
+      "validation": [{ "rule": "required", "message": "Introduce el primer valor", "message_en": "Enter first value" }]
+    },
+    {
+      "id": "valueB",
+      "label": "Valor B",
+      "label_en": "Value B",
+      "type": "number",
+      "default": 200,
+      "min": -1000000,
+      "max": 1000000,
+      "help": "Total o valor final según el modo seleccionado.",
+      "help_en": "Total or final value depending on selected mode.",
+      "required": true,
+      "validation": [{ "rule": "required", "message": "Introduce el segundo valor", "message_en": "Enter second value" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "percentOf",
+      "label": "Resultado",
+      "label_en": "Result",
+      "expression": "(valueA / 100) * valueB",
+      "unit": null,
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "visibleWhen": { "field": "mode", "op": "==", "value": "percentOf" }
+    },
+    {
+      "id": "whatPercent",
+      "label": "Porcentaje resultante",
+      "label_en": "Resulting Percentage",
+      "expression": "(valueA / valueB) * 100",
+      "unit": "%",
+      "precision": 2,
+      "format": "percent",
+      "type": "primary",
+      "visibleWhen": { "field": "mode", "op": "==", "value": "whatPercent" }
+    },
+    {
+      "id": "percentChange",
+      "label": "Variación relativa",
+      "label_en": "Relative Variation",
+      "expression": "((valueB - valueA) / abs(valueA)) * 100",
+      "unit": "%",
+      "precision": 2,
+      "format": "percent",
+      "type": "primary",
+      "visibleWhen": { "field": "mode", "op": "==", "value": "percentChange" },
+      "interpretation": [
+        { "when": { "field": "percentChange", "op": ">", "value": 0 }, "label": "Incremento", "label_en": "Increase", "tone": "success", "text": "Representa un aumento porcentual.", "text_en": "Represents a percentage increase." },
+        { "when": { "field": "percentChange", "op": "<", "value": 0 }, "label": "Disminución", "label_en": "Decrease", "tone": "warning", "text": "Representa un descuento o reducción porcentual.", "text_en": "Represents a percentage decrease." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "bmi-calculator", "type": "static", "message": "Calcula tu Índice de Masa Corporal (IMC)", "message_en": "Calculate your Body Mass Index (BMI)", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Matemático",
+    "role_en": "Math Assistant",
+    "analysisType": "interpretation",
+    "detailLevel": "brief",
+    "tone": "didáctico y conciso",
+    "includeData": ["percentOf", "whatPercent", "percentChange", "valueA", "valueB", "mode"],
+    "instructions": [
+      "Explica el resultado porcentual de forma clara.",
+      "Proporciona una equivalencia en fracción cotidiana si aplica (ej. 25% es 1/4)."
+    ],
+    "instructions_en": [
+      "Explain the percentage result clearly.",
+      "Provide common fraction equivalence if applicable (e.g. 25% is 1/4)."
+    ],
+    "maxLengthWords": 60,
+    "showAutoSuggestions": true,
+    "disclaimer": false
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Porcentaje — Rápida y Precisa | CalculadoraHub",
+    "metaTitle_en": "Percentage Calculator — Fast & Precise | CalculadoraHub",
+    "metaDescription": "Calcula porcentajes online gratis: tanto por ciento, variaciones porcentuales y proporciones. Resultados inmediatos.",
+    "metaDescription_en": "Calculate percentages online free: find X%, percentage changes and proportions. Instant results.",
+    "keywords": ["porcentaje", "calcular porcentaje", "regla de tres", "porcentajes"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

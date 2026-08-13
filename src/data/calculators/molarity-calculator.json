@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "molarity-calculator",
+    "title": "Calculadora de Molaridad y Concentración Química",
+    "title_en": "Molarity & Solution Concentration Calculator",
+    "slug": "calculadora-de-molaridad-concentracion-quimica-moles",
+    "category": "chemistry",
+    "subcategory": "stoichiometry",
+    "tags": ["molaridad", "concentracion", "moles", "masa-molar", "solucion-quimica", "quimica", "estequiometria"],
+    "tags_en": ["molarity", "concentration", "moles", "molar-mass", "chemical-solution", "chemistry", "stoichiometry"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la concentración Molar ($M = \\text{moles}/L$) de una solución acuosa a partir de la masa de soluto, masa molar y volumen.",
+    "shortDescription_en": "Calculate Molar concentration ($M = \\text{moles}/L$) of an aqueous solution from solute mass, molar mass, and volume.",
+    "longDescription": "Herramienta de química analítica y laboratorio. Determina los moles de soluto disueltos por litro de solución ($M = mol / L$).",
+    "longDescription_en": "Analytical chemistry and laboratory tool. Determines solute moles dissolved per liter of solution ($M = mol / L$).",
+    "howToUse": [
+      "Ingresa la Masa de Soluto disuelto (gramos - g).",
+      "Ingresa la Masa Molecular / Molar del Soluto (g/mol, ej. NaCl = 58.44 g/mol).",
+      "Ingresa el Volumen de la Solución (Litros - L o mililitros).",
+      "Consulta la Molaridad Calculada (M o mol/L) y el total de Moles disueltos."
+    ],
+    "howToUse_en": [
+      "Enter Dissolved Solute Mass (grams - g).",
+      "Enter Solute Molecular Weight (g/mol, e.g. NaCl = 58.44 g/mol).",
+      "Enter Solution Volume (Liters - L).",
+      "View Calculated Molarity (M or mol/L) and Total Moles."
+    ],
+    "methodology": "Moles = Masa(g) / MasaMolar(g/mol). Molaridad M = Moles / Volumen(L).",
+    "methodology_en": "Moles = Mass(g) / MolarMass(g/mol). Molarity M = Moles / Volume(L)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Química Analítica y Estequiometría",
+    "role_en": "Analytical Chemistry & Stoichiometry Specialist Assistant",
+    "includeData": ["molarityResultM", "soluteMolesResult"],
+    "instructions": [
+      "Interpreta la molaridad de la solución química obtenida.",
+      "Explica la diferencia entre Molaridad (mol/L de solución) y Molalidad (mol/kg de solvente).",
+      "Muestra instrucciones de preparación práctica de laboratorio (enrasado en matraz aforado)."
+    ],
+    "instructions_en": [
+      "Interpret calculated chemical solution molarity.",
+      "Explain difference between Molarity (mol/L of solution) vs Molality (mol/kg of solvent).",
+      "Show practical lab preparation guidance (volumetric flask dilution)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "mol-guide",
+      "icon": "🧪",
+      "title": "Molarity Formula & Solution Preparation",
+      "title_es": "Fórmula de Molaridad y Preparación de Soluciones",
+      "content_html_en": "<p><b>Molarity Formula:</b> M = Moles of Solute / Liters of Solution.</p><p><b>Moles Formula:</b> Moles = Mass (g) / Molar Mass (g/mol).</p>",
+      "content_html": "<p><b>Fórmula de Molaridad:</b> M = Moles de Soluto / Litros de Solución.</p><p><b>Fórmula de Moles:</b> Moles = Masa (g) / Masa Molar (g/mol).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "soluteMassGrams",
+      "label": "Masa de Soluto (gramos - g)",
+      "label_en": "Solute Mass (grams - g)",
+      "type": "number",
+      "default": 58.44,
+      "min": 0.001,
+      "max": 10000,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "molarMassGperMol",
+      "label": "Masa Molar del Soluto (g/mol)",
+      "label_en": "Solute Molar Mass (g/mol)",
+      "type": "number",
+      "default": 58.44,
+      "min": 1,
+      "max": 1000,
+      "step": 0.01,
+      "required": true
+    },
+    {
+      "id": "solutionVolumeLiters",
+      "label": "Volumen Total de Solución (Litros - L)",
+      "label_en": "Total Solution Volume (Liters - L)",
+      "type": "number",
+      "default": 1.0,
+      "min": 0.001,
+      "max": 1000,
+      "step": 0.05,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "soluteMolesResult",
+      "label": "Cantidad de Sustancia en Moles (mol)",
+      "label_en": "Substance Amount in Moles (mol)",
+      "expression": "molarMassGperMol > 0 ? (soluteMassGrams / molarMassGperMol) : 0",
+      "unit": "mol",
+      "unit_en": "mol",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "molarityResultM",
+      "label": "Molaridad de la Solución (M = mol/L)",
+      "label_en": "Solution Molarity (M = mol/L)",
+      "expression": "solutionVolumeLiters > 0 ? (soluteMolesResult / solutionVolumeLiters) : 0",
+      "unit": "M",
+      "unit_en": "M",
+      "precision": 3,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "molarityResultM", "op": ">=", "value": 0 }, "label": "Molaridad Calculada", "label_en": "Molarity Computed", "tone": "success", "text": "Concentración molar de la solución cuantificada.", "text_en": "Solution molar concentration quantified." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "quadratic-formula-calculator",
+    "title": "Calculadora de Ecuación Cuadrática (Fórmula General)",
+    "title_en": "Quadratic Formula Calculator",
+    "slug": "calculadora-de-ecuaciones-cuadraticas-segundo-grado",
+    "category": "math",
+    "subcategory": "algebra",
+    "tags": ["ecuacion-cuadratica", "formula-general", "discriminante", "raices", "algebra", "parabola"],
+    "tags_en": ["quadratic-equation", "quadratic-formula", "discriminant", "roots", "algebra", "parabola"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Resuelve cualquier ecuación de segundo grado ($ax^2 + bx + c = 0$), obteniendo las raíces reales o complejas, el discriminante ($\\Delta$) y el vértice.",
+    "shortDescription_en": "Solve quadratic equations ($ax^2 + bx + c = 0$) for real or complex roots, discriminant ($\\Delta$), and parabola vertex.",
+    "longDescription": "Herramienta algebraica para hallar las soluciones exactas de una ecuación cuadrática mediante la Fórmula General $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$. Analiza la naturaleza de las raíces a partir del Discriminante $\\Delta = b^2 - 4ac$ y calcula las coordenadas del vértice $(h, k)$.",
+    "longDescription_en": "Algebraic tool for solving quadratic equations via the Quadratic Formula $x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$. Analyzes root nature via discriminant $\\Delta = b^2 - 4ac$ and computes the vertex $(h, k)$.",
+    "howToUse": [
+      "Ingresa el coeficiente $a$ (distinto de cero).",
+      "Ingresa el coeficiente $b$.",
+      "Ingresa la constante $c$.",
+      "Consulta el discriminante $\\Delta$, las raíces $x_1$ y $x_2$, y las coordenadas del vértice."
+    ],
+    "howToUse_en": [
+      "Enter coefficient $a$ (non-zero).",
+      "Enter coefficient $b$.",
+      "Enter constant $c$.",
+      "View discriminant $\\Delta$, roots $x_1$ and $x_2$, and vertex coordinates."
+    ],
+    "methodology": "Fórmula General: x = (-b ± √(b² - 4ac)) / (2a). Discriminante Δ = b² - 4ac. Vértice: h = -b / (2a), k = c - (b² / (4a)).",
+    "methodology_en": "Quadratic Formula: x = (-b ± √(b² - 4ac)) / (2a). Discriminant Δ = b² - 4ac. Vertex: h = -b / (2a), k = c - (b² / (4a))."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Experto en Álgebra y Ecuaciones Cuadráticas",
+    "role_en": "Algebra & Quadratic Equations Specialist Assistant",
+    "includeData": ["rootX1", "rootX2", "discriminantVal", "vertexH", "vertexK"],
+    "instructions": [
+      "Interpreta el Discriminante Δ = b² - 4ac (raíces reales distintas vs complejas).",
+      "Explica la geometría de la parábola a través del vértice V(h, k).",
+      "Muestra la factorización o forma canónica a(x - h)² + k."
+    ],
+    "instructions_en": [
+      "Interpret Discriminant Δ = b² - 4ac (distinct real vs complex roots).",
+      "Explain parabola geometry through vertex V(h, k).",
+      "Show factoring or vertex form a(x - h)² + k."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "quad-guide",
+      "icon": "📐",
+      "title": "Discriminant & Root Classification",
+      "title_es": "El Discriminante y Clasificación de Raíces",
+      "content_html_en": "<p><b>Δ > 0:</b> Two distinct real roots. Parabola intersects x-axis twice.</p><p><b>Δ = 0:</b> One repeated real root (x = -b / 2a). Parabola touches x-axis at vertex.</p><p><b>Δ < 0:</b> Two complex conjugate roots (x = u ± vi). Parabola does not intersect x-axis.</p>",
+      "content_html": "<p><b>Δ > 0:</b> Dos raíces reales distintas. La parábola corta el eje x en dos puntos.</p><p><b>Δ = 0:</b> Una raíz real doble (x = -b / 2a). La parábola toca el eje x en el vértice.</p><p><b>Δ < 0:</b> Dos raíces complejas conjugadas (x = u ± vi). La parábola no corta el eje x.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "coefA",
+      "label": "Coeficiente a (x²)",
+      "label_en": "Coefficient a (x²)",
+      "type": "number",
+      "default": 1,
+      "step": 0.1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [-10000, 10000], "message": "El coeficiente 'a' no puede ser cero", "message_en": "Coefficient 'a' cannot be zero" }]
+    },
+    {
+      "id": "coefB",
+      "label": "Coeficiente b (x)",
+      "label_en": "Coefficient b (x)",
+      "type": "number",
+      "default": -5,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "coefC",
+      "label": "Término independiente c",
+      "label_en": "Constant c",
+      "type": "number",
+      "default": 6,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "discriminantVal",
+      "label": "Discriminante (Δ = b² - 4ac)",
+      "label_en": "Discriminant (Δ = b² - 4ac)",
+      "expression": "coefB^2 - 4 * coefA * coefC",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "rootX1",
+      "label": "Primera Raíz (x₁)",
+      "label_en": "First Root (x₁)",
+      "expression": "discriminantVal >= 0 ? ((-coefB + sqrt(discriminantVal)) / (2 * coefA)) : ((-coefB) / (2 * coefA))",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "discriminantVal", "op": ">", "value": 0 }, "label": "Dos Raíces Reales Distintas (Δ > 0)", "label_en": "Two Real Roots (Δ > 0)", "tone": "success", "text": "La parábola corta el eje x en dos puntos reales.", "text_en": "Parabola intersects x-axis at two real points." },
+        { "when": { "field": "discriminantVal", "op": "==", "value": 0 }, "label": "Raíz Real Doble (Δ = 0)", "label_en": "Single Repeated Real Root (Δ = 0)", "tone": "info", "text": "La parábola es tangente al eje x en su vértice.", "text_en": "Parabola is tangent to x-axis at vertex." },
+        { "when": { "field": "discriminantVal", "op": "<", "value": 0 }, "label": "Raíces Complejas Conjugadas (Δ < 0)", "label_en": "Complex Conjugate Roots (Δ < 0)", "tone": "warning", "text": "Parte real mostrada. Parte imaginaria = √(|Δ|) / 2a.", "text_en": "Real part shown. Imaginary part = √(|Δ|) / 2a." }
+      ]
+    },
+    {
+      "id": "rootX2",
+      "label": "Segunda Raíz (x₂)",
+      "label_en": "Second Root (x₂)",
+      "expression": "discriminantVal >= 0 ? ((-coefB - sqrt(discriminantVal)) / (2 * coefA)) : ((-coefB) / (2 * coefA))",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "vertexH",
+      "label": "Vértice V(h) — Coordenada x",
+      "label_en": "Vertex V(h) — x coordinate",
+      "expression": "-coefB / (2 * coefA)",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "vertexK",
+      "label": "Vértice V(k) — Coordenada y",
+      "label_en": "Vertex V(k) — y coordinate",
+      "expression": "coefC - (coefB^2 / (4 * coefA))",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

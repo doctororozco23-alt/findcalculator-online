@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "rent-vs-buy-calculator",
+    "title": "Calculadora de Alquilar vs Comprar Vivienda",
+    "title_en": "Rent vs. Buy Calculator",
+    "slug": "alquilar-vs-comprar-vivienda",
+    "category": "finance",
+    "subcategory": "mortgages",
+    "tags": ["alquiler", "compra", "vivienda"],
+    "tags_en": ["rent", "buy", "housing"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Scale"
+  },
+  "content": {
+    "shortDescription": "Compara el costo financiero total acumulado entre alquilar una vivienda o comprarla con hipoteca.",
+    "shortDescription_en": "Compare total cumulative financial cost between renting a home vs buying with a mortgage.",
+    "longDescription": "Compara el costo neto financiero a lo largo de los años entre pagar un alquiler mensual vs comprar una vivienda (incluyendo cuota hipotecaria, impuestos, mantenimiento y revalorización del inmueble).",
+    "longDescription_en": "Compare net financial outcome over time between paying monthly rent vs buying a home (factoring mortgage payments, property appreciation, equity build, taxes, and maintenance).",
+    "howToUse": [
+      "Ingresa el precio de la vivienda que te interesa comprar.",
+      "Ingresa el alquiler mensual equivalente de una vivienda similar.",
+      "Establece los años previstos de estancia en la propiedad.",
+      "Consulta cuál opción te genera mayor patrimonio acumulado neto."
+    ],
+    "howToUse_en": [
+      "Enter target home purchase price and active currency.",
+      "Enter equivalent monthly rent for a comparable home.",
+      "Set planned years living in property.",
+      "View net wealth comparison between renting vs buying."
+    ],
+    "methodology": "Comparativa Financiera Alquiler vs Compra: Costo Alquiler = Renta × Meses. Costo Compra = Hipoteca + Gastos - Plusvalía Revalorización.",
+    "methodology_en": "Rent vs Buy Analysis: Total Rent = Rent × Months. Total Buying Cost = Mortgage + Maintenance - Home Equity Appreciation."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "⚖️",
+      "title": "Rent vs Buy Decision Factors",
+      "title_es": "Factores Clave para Alquilar vs Comprar",
+      "content_html_en": "<p>Buying builds equity and protects against rent inflation, but requires high upfront costs. Renting offers flexibility and zero maintenance burden.</p>",
+      "content_html": "<p>Comprar crea patrimonio a largo plazo y protege de la inflación de alquileres; alquilar ofrece movilidad y ausencia de gastos de mantenimiento.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "homePrice",
+      "label": "Precio de compra de la vivienda",
+      "label_en": "Target Home Purchase Price",
+      "type": "currency",
+      "default": 280000,
+      "min": 10000,
+      "max": 5000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "monthlyRent",
+      "label": "Alquiler mensual equivalente de una casa similar",
+      "label_en": "Equivalent Monthly Rent for Comparable Home",
+      "type": "currency",
+      "default": 1400,
+      "min": 100,
+      "max": 50000,
+      "step": 50,
+      "unit": { "follows": "homePrice" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "yearsInHome",
+      "label": "Años previstos de estancia en la propiedad",
+      "label_en": "Planned Years Living in Home",
+      "type": "slider",
+      "default": 10,
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalRentCost",
+      "label": "Gasto Total Acumulado en Alquiler",
+      "label_en": "Total Cumulative Rent Spent",
+      "expression": "monthlyRent * 12 * yearsInHome",
+      "unit": { "follows": "homePrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "estimatedHomeAppreciation",
+      "label": "Plusvalía Estimada de la Vivienda (3% Anual)",
+      "label_en": "Estimated Property Appreciation (3% yr)",
+      "expression": "homePrice * (((1.03) ^ yearsInHome) - 1)",
+      "unit": { "follows": "homePrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "netEquityCreated",
+      "label": "Patrimonio Acumulado Neto al Comprar",
+      "label_en": "Net Equity Accumulated Buying",
+      "expression": "homePrice + estimatedHomeAppreciation - totalRentCost * 0.4",
+      "unit": { "follows": "homePrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "yearsInHome", "op": ">=", "value": 7 }, "label": "Comprar es Financieramente Favorable", "label_en": "Buying Financed Favorable", "tone": "success", "text": "A partir de 7 años de estancia, la compra acumula mayor patrimonio.", "text_en": "Living 7+ years in the home strongly favors buying over renting." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "mortgage-calculator", "type": "static", "message": "Calcula tu cuota hipotecaria", "message_en": "Calculate exact mortgage payment", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista Inmobiliario Alquilar vs Comprar",
+    "role_en": "Rent vs Buy Financial Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y comparativo",
+    "includeData": ["netEquityCreated", "totalRentCost", "estimatedHomeAppreciation", "yearsInHome"],
+    "instructions": [
+      "Sintetiza la comparativa entre el gasto de alquiler acumulado y el patrimonio generado al comprar en 2 frases concisas.",
+      "Resalta la duración de la estancia como el factor determinante."
+    ],
+    "instructions_en": [
+      "Summarize comparison between total cumulative rent vs net equity built buying in 2 concise sentences.",
+      "Emphasize length of stay as the single most critical deciding factor."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Alquilar vs Comprar Vivienda | CalculadoraHub",
+    "metaTitle_en": "Rent vs. Buy Calculator | CalculadoraHub",
+    "metaDescription": "Compara el costo acumulado y patrimonio neto entre alquilar o comprar vivienda. Gratis e instantáneo.",
+    "metaDescription_en": "Compare total cumulative costs and net wealth creation between renting vs buying. Free, instant results.",
+    "keywords": ["rent vs buy calculator", "alquilar o comprar", "vivienda", "inversion"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "common-factor-calculator",
+    "title": "Calculadora de Factores Comunes y Divisores Múltiples",
+    "title_en": "Common Factors & Multiple Divisors Calculator",
+    "slug": "calculadora-de-factores-comunes-y-divisores-multiples",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["factores-comunes", "divisores", "mcd", "mcm", "multiples-numeros", "aritmetica"],
+    "tags_en": ["common-factors", "divisors", "gcd", "lcm", "multiple-numbers", "arithmetic"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Halla los factores comunes, el MCD y MCM para 3 números enteros positivos ($a, b, c$).",
+    "shortDescription_en": "Find common factors, GCD, and LCM for 3 positive integers ($a, b, c$).",
+    "longDescription": "Herramienta de teoría de números para análisis de divisibilidad en conjuntos de 3 enteros positivos.",
+    "longDescription_en": "Number theory tool for 3 integer divisibility analysis.",
+    "howToUse": [
+      "Ingresa el primer número entero (a).",
+      "Ingresa el segundo número entero (b).",
+      "Ingresa el tercer número entero (c).",
+      "Consulta el MCD tripartito y el MCM correspondiente."
+    ],
+    "howToUse_en": [
+      "Enter first integer (a).",
+      "Enter second integer (b).",
+      "Enter third integer (c).",
+      "View tripartite GCD and corresponding LCM."
+    ],
+    "methodology": "MCD(a, b, c) = MCD(MCD(a, b), c). MCM(a, b, c) = MCM(MCM(a, b), c).",
+    "methodology_en": "GCD(a, b, c) = GCD(GCD(a, b), c). LCM(a, b, c) = LCM(LCM(a, b), c)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Factores Comunes y Divisibilidad",
+    "role_en": "Common Factors & Divisibility Specialist Assistant",
+    "includeData": ["gcd3Result", "lcm3Result"],
+    "instructions": [
+      "Explica el cálculo asociativo del MCD(a, b, c).",
+      "Identifica si los tres números son mutuamente coprimos.",
+      "Demuestra la factorización compartida entre los tres enteros."
+    ],
+    "instructions_en": [
+      "Explain associative computation GCD(a, b, c).",
+      "Identify if all 3 numbers are mutually coprime.",
+      "Demonstrate shared prime factorization among the three integers."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "cf-guide",
+      "icon": "🔍",
+      "title": "Multiple Integer Divisibility",
+      "title_es": "Divisibilidad de Múltiples Enteros",
+      "content_html_en": "<p><b>Associative Property:</b> GCD(a, b, c) = GCD(GCD(a, b), c).</p><p><b>Pairwise vs Mutual Coprimality:</b> Mutual coprimality means GCD(a, b, c) = 1.</p>",
+      "content_html": "<p><b>Propiedad Asociativa:</b> MCD(a, b, c) = MCD(MCD(a, b), c).</p><p><b>Coprimalidad Mutua:</b> Significa que el MCD de los 3 números es igual a 1.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "numX",
+      "label": "Número a",
+      "label_en": "Number a",
+      "type": "number",
+      "default": 12,
+      "min": 1,
+      "max": 1000000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "numY",
+      "label": "Número b",
+      "label_en": "Number b",
+      "type": "number",
+      "default": 18,
+      "min": 1,
+      "max": 1000000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "numZ",
+      "label": "Número c",
+      "label_en": "Number c",
+      "type": "number",
+      "default": 24,
+      "min": 1,
+      "max": 1000000,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "gcd3Result",
+      "label": "MCD Tripartito (MCD(a, b, c))",
+      "label_en": "Tripartite GCD (GCD(a, b, c))",
+      "expression": "gcd(gcd(numX, numY), numZ)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "gcd3Result", "op": ">=", "value": 1 }, "label": "MCD Tripartito Calculado", "label_en": "Tripartite GCD Computed", "tone": "success", "text": "Mayor divisor común entre los 3 números obtenido.", "text_en": "Greatest common divisor among 3 numbers evaluated." }
+      ]
+    },
+    {
+      "id": "lcm3Result",
+      "label": "MCM Tripartito (MCM(a, b, c))",
+      "label_en": "Tripartite LCM (LCM(a, b, c))",
+      "expression": "lcm(lcm(numX, numY), numZ)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "statistics-calculator",
+    "title": "Calculadora de Resumen Estadístico Completo y Coeficiente de Variación",
+    "title_en": "Comprehensive Statistics Summary & Coefficient of Variation Calculator",
+    "slug": "calculadora-de-resumen-estadistico-completo",
+    "category": "statistics",
+    "subcategory": "descriptive",
+    "tags": ["resumen-estadistico", "coeficiente-de-variacion", "desviacion-estandar", "media", "estadistica"],
+    "tags_en": ["statistics-summary", "coefficient-of-variation", "standard-deviation", "mean", "statistics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "BarChart3"
+  },
+  "content": {
+    "shortDescription": "Calcula el Coeficiente de Variación ( $CV = \\frac{s}{\\bar{x}} \\times 100\\%$ ), Error Estándar de la Media ($SEM$) y el Resumen Estadístico completo de dispersión.",
+    "shortDescription_en": "Compute Coefficient of Variation ( $CV = \\frac{s}{\\bar{x}} \\times 100\\%$ ), Standard Error of Mean ($SEM$), and full summary.",
+    "longDescription": "Herramienta estadística avanzada para análisis de variabilidad relativa. El Coeficiente de Variación ($CV$) permite comparar la variabilidad relativa entre diferentes conjuntos de datos con distintas unidades de medida.",
+    "longDescription_en": "Advanced statistical relative variability tool. Coefficient of Variation ($CV$) allows comparing relative dispersion across datasets with different units.",
+    "howToUse": [
+      "Ingresa hasta 4 datos numéricos muestrales.",
+      "Consulta el Coeficiente de Variación ($CV \\%$), el Error Estándar de la Media ($SEM$) y la Desviación Estándar Muestral."
+    ],
+    "howToUse_en": [
+      "Enter up to 4 sample numeric values.",
+      "View Coefficient of Variation ($CV \\%$), Standard Error of Mean ($SEM$), and Sample Standard Deviation."
+    ],
+    "methodology": "CV = (s / x̄) * 100%. Error Estándar SEM = s / √n.",
+    "methodology_en": "CV = (s / x̄) * 100%. Standard Error SEM = s / √n."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Variabilidad Relativa y Resumen Estadístico",
+    "role_en": "Relative Variability & Statistical Summary Specialist Assistant",
+    "includeData": ["cvResultPercent", "semVal", "sampleSDVal", "sampleMean"],
+    "instructions": [
+      "Interpreta el Coeficiente de Variación (CV %) para clasificar homogeneidad (CV <= 15% homogéneo).",
+      "Explica la utilidad del Error Estándar de la Media (SEM).",
+      "Proporciona una síntesis técnica de variabilidad muestral."
+    ],
+    "instructions_en": [
+      "Interpret Coefficient of Variation (CV %) to classify homogeneity (CV <= 15% homogeneous).",
+      "Explain utility of Standard Error of Mean (SEM).",
+      "Provide technical sample variability summary."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "stat-guide",
+      "icon": "📋",
+      "title": "Coefficient of Variation & SEM Explained",
+      "title_es": "Coeficiente de Variación y SEM Explicados",
+      "content_html_en": "<p><b>Coefficient of Variation (CV %):</b> Relative dispersion measure expressed as a percentage of the mean (s / x̄ × 100%). Enables comparing data with different units.</p><p><b>Standard Error of Mean (SEM):</b> Measures the precision of the sample mean estimate of the true population mean (s / √n).</p>",
+      "content_html": "<p><b>Coeficiente de Variación (CV %):</b> Medida de dispersión relativa expresada como porcentaje de la media (s / x̄ × 100%). Permite comparar datos con distintas unidades.</p><p><b>Error Estándar de la Media (SEM):</b> Mide la precisión con que la media muestral estima a la media poblacional real (s / √n).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "sample1",
+      "label": "Muestra 1",
+      "label_en": "Sample 1",
+      "type": "number",
+      "default": 12,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "sample2",
+      "label": "Muestra 2",
+      "label_en": "Sample 2",
+      "type": "number",
+      "default": 15,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "sample3",
+      "label": "Muestra 3",
+      "label_en": "Sample 3",
+      "type": "number",
+      "default": 18,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "sample4",
+      "label": "Muestra 4",
+      "label_en": "Sample 4",
+      "type": "number",
+      "default": 21,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "sampleMean",
+      "label": "Media Muestral (x̄)",
+      "label_en": "Sample Mean (x̄)",
+      "expression": "(sample1 + sample2 + sample3 + sample4) / 4",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "sampleVarianceVal",
+      "label": "Varianza Muestral (s²)",
+      "label_en": "Sample Variance (s²)",
+      "expression": "((sample1 - sampleMean)^2 + (sample2 - sampleMean)^2 + (sample3 - sampleMean)^2 + (sample4 - sampleMean)^2) / 3",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "sampleSDVal",
+      "label": "Desviación Estándar Muestral (s)",
+      "label_en": "Sample Standard Deviation (s)",
+      "expression": "sqrt(sampleVarianceVal)",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "cvResultPercent",
+      "label": "Coeficiente de Variación (CV %)",
+      "label_en": "Coefficient of Variation (CV %)",
+      "expression": "sampleMean != 0 ? ((sampleSDVal / abs(sampleMean)) * 100) : 0",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "cvResultPercent", "op": "<=", "value": 15 }, "label": "Baja Variabilidad Relativa (CV ≤ 15%)", "label_en": "Low Relative Variability (CV ≤ 15%)", "tone": "success", "text": "Conjunto de datos highly homogéneo.", "text_en": "Highly homogeneous dataset." },
+        { "when": { "field": "cvResultPercent", "op": "between", "value": [15.1, 30] }, "label": "Variabilidad Moderada (15% - 30%)", "label_en": "Moderate Variability (15% - 30%)", "tone": "info", "text": "Heterogeneidad moderada en la distribución de la muestra.", "text_en": "Moderate heterogeneity in sample distribution." },
+        { "when": { "field": "cvResultPercent", "op": ">", "value": 30 }, "label": "Alta Variabilidad Relativa (> 30%)", "label_en": "High Relative Variability (> 30%)", "tone": "warning", "text": "Conjunto heterogéneo con alta dispersión relativa.", "text_en": "Heterogeneous dataset with high relative dispersion." }
+      ]
+    },
+    {
+      "id": "semVal",
+      "label": "Error Estándar de la Media (SEM = s / √n)",
+      "label_en": "Standard Error of Mean (SEM = s / √n)",
+      "expression": "sampleSDVal / sqrt(4)",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "binary-hex-converter-calculator",
+    "title": "Calculadora y Conversor de Sistemas Numéricos (Decimal, Binario, Hex)",
+    "title_en": "Base Converter Calculator (Decimal, Binary, Hexadecimal, Octal)",
+    "slug": "calculadora-conversor-sistemas-numericos-decimal-binario-hexadecimal",
+    "category": "technology",
+    "subcategory": "internet",
+    "tags": ["binario", "hexadecimal", "decimal", "conversor-de-base", "sistemas-numericos", "programacion", "tecnologia"],
+    "tags_en": ["binary", "hexadecimal", "decimal", "base-converter", "number-systems", "programming", "technology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte números enteros entre bases numéricas (Decimal Base 10, Binario Base 2, Hexadecimal Base 16 u Octal Base 8).",
+    "shortDescription_en": "Convert integer numbers between positional bases (Decimal Base 10, Binary Base 2, Hexadecimal Base 16, Octal Base 8).",
+    "longDescription": "Herramienta de informática, programación de bajo nivel y arquitectura de ordenadores. Traduce formatos de datos de memoria, direcciones IP y códigos de color HTML/CSS.",
+    "longDescription_en": "Computer science, low-level programming, and computer architecture tool. Translates memory formats, IP addresses, and HTML/CSS color codes.",
+    "howToUse": [
+      "Ingresa el Valor Número Entero Decimal (Base 10, ej. 255).",
+      "Consulta el Equivalente en Binario (Base 2, ej. 11111111), Hexadecimal (Base 16, ej. FF) e Identificador en Bytes."
+    ],
+    "howToUse_en": [
+      "Enter Decimal Integer Value (Base 10, e.g. 255).",
+      "View Equivalent Binary (Base 2, e.g. 11111111), Hexadecimal (Base 16, e.g. FF), and Byte count."
+    ],
+    "methodology": "Conversión polinómica de base b: N = d_k*b^k + ... + d_0*b^0. Binario = 8/16 bits sin signo.",
+    "methodology_en": "Positional base conversion b: N = d_k*b^k + ... + d_0*b^0. Binary = 8/16 bits unsigned."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Arquitectura de Computadores y Sistemas Numéricos",
+    "role_en": "Computer Architecture & Positional Number Systems Specialist Assistant",
+    "includeData": ["decimalInputValue"],
+    "instructions": [
+      "Interpreta la conversión del número decimal ingresado a sus representaciones en Binario y Hexadecimal.",
+      "Explica la agrupar de bits: 4 bits binarios equivalen a 1 dígito hexadecimal (nibble).",
+      "Muestra aplicaciones prácticas (direcciones MAC, máscaras de subred IP, colores RGB Hex)."
+    ],
+    "instructions_en": [
+      "Interpret conversion of entered decimal number into Binary and Hexadecimal representations.",
+      "Explain bit grouping: 4 binary bits equal 1 hexadecimal digit (nibble).",
+      "Show practical applications (MAC addresses, IP subnet masks, RGB Hex colors)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "bhc-guide",
+      "icon": "🔢",
+      "title": "Number Systems Reference",
+      "title_es": "Referencia de Sistemas Numéricos",
+      "content_html_en": "<p><b>Decimal (Base 10):</b> Digits 0 to 9.</p><p><b>Binary (Base 2):</b> Digits 0 and 1.</p><p><b>Hexadecimal (Base 16):</b> Digits 0 to 9 and letters A to F (A=10, F=15).</p>",
+      "content_html": "<p><b>Decimal (Base 10):</b> Dígitos del 0 al 9.</p><p><b>Binario (Base 2):</b> Dígitos 0 y 1.</p><p><b>Hexadecimal (Base 16):</b> Dígitos del 0 al 9 y letras de A a F (A=10, F=15).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "decimalInputValue",
+      "label": "Número Entero Decimal (Base 10)",
+      "label_en": "Decimal Integer Number (Base 10)",
+      "type": "number",
+      "default": 255,
+      "min": 0,
+      "max": 4294967295,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "bitsRequiredVal",
+      "label": "Mínimo de Bits Requeridos",
+      "label_en": "Minimum Bits Required",
+      "expression": "decimalInputValue > 0 ? ceil(log2(decimalInputValue + 1)) : 1",
+      "unit": "bits",
+      "unit_en": "bits",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "bytesRequiredVal",
+      "label": "Bytes en Memoria Requeridos (8 bits/byte)",
+      "label_en": "Memory Bytes Required (8 bits/byte)",
+      "expression": "ceil(bitsRequiredVal / 8)",
+      "unit": "bytes",
+      "unit_en": "bytes",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "bytesRequiredVal", "op": ">=", "value": 0 }, "label": "Bytes Calculados", "label_en": "Bytes Computed", "tone": "success", "text": "Espacio de almacenamiento de memoria en bytes cuantificado.", "text_en": "Memory storage space in bytes quantified." }
+      ]
+    }
+  ]
+}

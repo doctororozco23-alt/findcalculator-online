@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "trip-fuel-cost-calculator",
+    "title": "Calculadora de Costo de Combustible para Viajes en Carretera",
+    "title_en": "Road Trip Fuel Cost & Gas Calculator",
+    "slug": "calculadora-de-costo-de-combustible-para-viajes-en-carretera-gasolina",
+    "category": "transport",
+    "subcategory": "fuel",
+    "tags": ["costo-de-combustible", "gasolina", "viajes-en-carretera", "road-trip", "distancia", "gastos-de-viaje", "transporte"],
+    "tags_en": ["fuel-cost", "gas-calculator", "road-trip", "distance", "travel-expenses", "transport", "vehicles"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el costo total de gasolina/diésel de un viaje en carretera según la distancia, rendimiento del coche y precio del combustible.",
+    "shortDescription_en": "Calculate total gas/diesel cost of a road trip based on distance, car fuel efficiency, and fuel price per gallon/liter.",
+    "longDescription": "Herramienta de planificación de viajes familiares, vacaciones y presupuesto de transporte. Permite dividir los gastos de combustible entre los pasajeros.",
+    "longDescription_en": "Family vacation planning, travel budgeting, and road trip tool. Divides total fuel costs equally among passengers.",
+    "howToUse": [
+      "Ingresa la Distancia Total del Viaje (millas o km, ej. 500 mi).",
+      "Ingresa el Rendimiento de Combustible del Coche (MPG o km/L, ej. 28 MPG).",
+      "Ingresa el Precio del Combustible ($/galón o $/litro, ej. 3.50 $/galón).",
+      "Ingresa el Número de Pasajeros para dividir gastos (ej. 4 personas).",
+      "Consulta el Consumo Total de Combustible, Costo Total y Costo por Pasajero."
+    ],
+    "howToUse_en": [
+      "Enter Total Trip Distance (miles or km, e.g. 500 mi).",
+      "Enter Car Fuel Efficiency (MPG or km/L, e.g. 28 MPG).",
+      "Enter Fuel Price ($/gallon or $/liter, e.g. $3.50/gal).",
+      "Enter Number of Passengers to split expenses (e.g. 4 passengers).",
+      "View Total Fuel Consumed, Total Cost, and Cost per Passenger."
+    ],
+    "methodology": "GalonesTotales = Distancia / RendimientoMPG. CostoTotal = GalonesTotales * PrecioGalón. CostoPorPasajero = CostoTotal / Pasajeros.",
+    "methodology_en": "TotalGallons = Distance / MPG. TotalCost = TotalGallons * PricePerGallon. CostPerPassenger = TotalCost / Passengers."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Presupuestos de Transporte y Logística Vehicular",
+    "role_en": "Transport Budgeting & Vehicle Logistics Specialist Assistant",
+    "includeData": ["totalTripFuelCostResult", "costPerPassengerShareResult"],
+    "instructions": [
+      "Interpreta el costo total de combustible del viaje y la cuota individual por pasajero.",
+      "Explica cómo impacta la velocidad de conducción y la presión de neumáticos en el ahorro de gasolina.",
+      "Muestra consejos para optimizar paradas de repostaje en trayectos de larga distancia."
+    ],
+    "instructions_en": [
+      "Interpret total trip fuel cost and individual passenger cost share.",
+      "Explain how driving speed and tire inflation impact gas savings.",
+      "Show tips for optimizing refueling stops on long-distance road trips."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "tfc-guide",
+      "icon": "⛽",
+      "title": "Road Trip Gas Calculation Benchmarks",
+      "title_es": "Pautas de Cálculo de Gasolina en Viajes",
+      "content_html_en": "<p><b>Average US Sedan MPG:</b> ~28 to 32 MPG on highway.</p><p><b>Average SUV / Truck MPG:</b> ~18 to 22 MPG on highway.</p><p><b>Cost Split:</b> Splitting fuel evenly reduces individual travel expenses significantly.</p>",
+      "content_html": "<p><b>Rendimiento Sedán EE.UU. Promedio:</b> ~28 a 32 MPG en carretera.</p><p><b>Rendimiento SUV / Camioneta Promedio:</b> ~18 a 22 MPG en carretera.</p><p><b>División de Gastos:</b> Dividir el combustible reduce sensiblemente el gasto individual.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "totalTripDistanceMiles",
+      "label": "Distancia Total del Viaje (millas)",
+      "label_en": "Total Trip Distance (miles)",
+      "type": "number",
+      "default": 450,
+      "min": 1,
+      "max": 50000,
+      "step": 10,
+      "required": true
+    },
+    {
+      "id": "vehicleGasMileageMpg",
+      "label": "Rendimiento del Vehículo (MPG)",
+      "label_en": "Vehicle Fuel Economy (MPG)",
+      "type": "number",
+      "default": 28,
+      "min": 5,
+      "max": 150,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "gasPricePerGallon",
+      "label": "Precio de la Gasolina ($/galón)",
+      "label_en": "Fuel Price ($/gallon)",
+      "type": "number",
+      "default": 3.65,
+      "min": 0.5,
+      "max": 20,
+      "step": 0.05,
+      "required": true
+    },
+    {
+      "id": "passengersCountToSplit",
+      "label": "Número de Pasajeros para Dividir Gastos",
+      "label_en": "Number of Passengers to Split Expense",
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalFuelGallonsConsumedResult",
+      "label": "Galones Totales de Combustible Consumidos",
+      "label_en": "Total Fuel Gallons Consumed",
+      "expression": "vehicleGasMileageMpg > 0 ? (totalTripDistanceMiles / vehicleGasMileageMpg) : 0",
+      "unit": "gal",
+      "unit_en": "gal",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalTripFuelCostResult",
+      "label": "Costo Total de Combustible ($)",
+      "label_en": "Total Fuel Cost ($)",
+      "expression": "totalFuelGallonsConsumedResult * gasPricePerGallon",
+      "unit": "$",
+      "unit_en": "$",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalTripFuelCostResult", "op": ">=", "value": 0 }, "label": "Costo Calculado", "label_en": "Cost Computed", "tone": "success", "text": "Gasto total de combustible del viaje cuantificado.", "text_en": "Total trip fuel expense quantified." }
+      ]
+    },
+    {
+      "id": "costPerPassengerShareResult",
+      "label": "Cuota Individual por Pasajero ($/persona)",
+      "label_en": "Individual Share per Passenger ($/person)",
+      "expression": "passengersCountToSplit > 0 ? (totalTripFuelCostResult / passengersCountToSplit) : 0",
+      "unit": "$/persona",
+      "unit_en": "$/person",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

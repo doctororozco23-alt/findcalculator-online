@@ -1,0 +1,181 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "financial-ratios-calculator",
+    "title": "Calculadora de Ratios Financieros (ROE, ROA y Solvencia)",
+    "title_en": "Financial Ratios (ROE, ROA & Solvency) Calculator",
+    "slug": "ratios-financieros-roe-roa-solvencia",
+    "category": "finance",
+    "subcategory": "business",
+    "tags": ["ratios-financieros", "roe", "roa"],
+    "tags_en": ["financial-ratios", "roe", "roa"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "BarChart2"
+  },
+  "content": {
+    "shortDescription": "Calcula los principales ratios financieros de rentabilidad (ROE %, ROA %) y endeudamiento de la empresa.",
+    "shortDescription_en": "Calculate key financial profitability ratios (ROE %, ROA %) and corporate leverage metrics.",
+    "longDescription": "Mide la rentabilidad del patrimonio neto (ROE), el retorno sobre activos totales (ROA) y el ratio de endeudamiento financiero de un balance empresarial.",
+    "longDescription_en": "Measure Return on Equity (ROE), Return on Assets (ROA), and Debt-to-Equity solvency ratio for corporate balance sheet analysis.",
+    "howToUse": [
+      "Ingresa el beneficio neto anual de la empresa.",
+      "Ingresa los activos totales y el patrimonio neto de los socios.",
+      "Ingresa la deuda total acumulada de la empresa.",
+      "Consulta las tasas ROE %, ROA % y el Ratio de Endeudamiento."
+    ],
+    "howToUse_en": [
+      "Enter annual Net Income and active currency.",
+      "Enter Total Assets and Shareholders' Equity balance.",
+      "Enter Total Debt balance.",
+      "View calculated ROE %, ROA %, and Debt-to-Equity Ratio."
+    ],
+    "methodology": "Fórmulas Ratios: ROE (%) = (Beneficio Neto / Patrimonio) × 100. ROA (%) = (Beneficio Neto / Activos) × 100. Deuda/Patrimonio = Deuda / Patrimonio.",
+    "methodology_en": "Ratio Formulas: ROE (%) = (Net Income / Equity) × 100. ROA (%) = (Net Income / Assets) × 100. Debt-to-Equity = Debt / Equity."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "📈",
+      "title": "Understanding ROE vs ROA Metrics",
+      "title_es": "Diferencia entre ROE y ROA",
+      "content_html_en": "<p>ROE measures how effectively management generates profit from shareholder equity capital, while ROA measures profitability generated from total assets deployed.</p>",
+      "content_html": "<p>El ROE mide la rentabilidad generada sobre el capital propio de los socios, mientras el ROA mide la eficiencia sobre la totalidad de activos.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "netIncome",
+      "label": "Beneficio neto anual de la empresa",
+      "label_en": "Annual Net Income Amount",
+      "type": "currency",
+      "default": 150000,
+      "min": 1000,
+      "max": 50000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "shareholdersEquity",
+      "label": "Patrimonio neto de los socios (Shareholders' Equity)",
+      "label_en": "Total Shareholders' Equity",
+      "type": "currency",
+      "default": 750000,
+      "min": 1000,
+      "max": 100000000,
+      "step": 10000,
+      "unit": { "follows": "netIncome" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "totalAssets",
+      "label": "Activos totales de la empresa",
+      "label_en": "Total Corporate Assets Value",
+      "type": "currency",
+      "default": 1200000,
+      "min": 1000,
+      "max": 100000000,
+      "step": 10000,
+      "unit": { "follows": "netIncome" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "totalDebt",
+      "label": "Deuda total de la empresa",
+      "label_en": "Total Corporate Debt Balance",
+      "type": "currency",
+      "default": 450000,
+      "min": 0,
+      "max": 50000000,
+      "step": 10000,
+      "unit": { "follows": "netIncome" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "roePercent",
+      "label": "Retorno sobre Patrimonio Neto (ROE %)",
+      "label_en": "Return on Equity (ROE %)",
+      "expression": "(netIncome / shareholdersEquity) * 100",
+      "unit": "%",
+      "precision": 1,
+      "format": "percent",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "roePercent", "op": ">=", "value": 15 }, "label": "ROE Excelente", "label_en": "Strong ROE Yield", "tone": "success", "text": "Alta eficiencia en la generación de valor sobre el capital de los socios.", "text_en": "Strong equity capital returns generated for business shareholders." }
+      ]
+    },
+    {
+      "id": "roaPercent",
+      "label": "Retorno sobre Activos Totales (ROA %)",
+      "label_en": "Return on Total Assets (ROA %)",
+      "expression": "(netIncome / totalAssets) * 100",
+      "unit": "%",
+      "precision": 1,
+      "format": "percent",
+      "type": "secondary"
+    },
+    {
+      "id": "debtToEquityRatio",
+      "label": "Ratio de Endeudamiento (Debt-to-Equity)",
+      "label_en": "Debt-to-Equity Solvency Ratio",
+      "expression": "totalDebt / shareholdersEquity",
+      "unit": "ratio",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "ebitda-calculator", "type": "static", "message": "Calcula el EBITDA y valoración de la empresa", "message_en": "Calculate EBITDA and business valuation", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Ratios Financieros de Empresas",
+    "role_en": "Corporate Financial Ratio Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["roePercent", "roaPercent", "debtToEquityRatio", "netIncome"],
+    "instructions": [
+      "Sintetiza la tasa ROE %, el ROA % y la solvencia del ratio Deuda/Patrimonio en 2 frases concisas.",
+      "Destaca que un ROE significativamente superior al ROA refleja el uso eficiente del apalancamiento financiero."
+    ],
+    "instructions_en": [
+      "Summarize ROE %, ROA %, and Debt-to-Equity ratio solvency in 2 concise sentences.",
+      "Highlight that a higher ROE compared to ROA reflects effective financial leverage."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Ratios Financieros (ROE, ROA y Solvencia) | CalculadoraHub",
+    "metaTitle_en": "Financial Ratios (ROE, ROA & Solvency) Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el ROE %, ROA % y el Ratio de Endeudamiento de tu empresa. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate Return on Equity (ROE %), Return on Assets (ROA %), and Debt-to-Equity ratios. Free, instant results.",
+    "keywords": ["financial ratios calculator", "roe calculator", "roa calculator", "ratios financieros"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

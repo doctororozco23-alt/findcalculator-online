@@ -1,0 +1,273 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "mortgage-calculator",
+    "title": "Calculadora Hipotecaria",
+    "title_en": "Mortgage Calculator",
+    "slug": "hipoteca",
+    "category": "finance",
+    "subcategory": "mortgages",
+    "tags": ["hipoteca", "deuda", "vivienda"],
+    "tags_en": ["mortgage", "debt", "housing"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "DollarSign"
+  },
+  "content": {
+    "shortDescription": "Calcula la cuota mensual de tu hipoteca, los intereses totales acumulados y la tabla de amortización completa (sistema francés).",
+    "shortDescription_en": "Calculate your monthly mortgage payment, total accumulated interest, and complete amortization schedule (French system).",
+    "longDescription": "Estima la cuota mensual de una hipoteca bajo el sistema de amortización francés de cuotas constantes. Visualiza la evolución del saldo pendiente y el desglose de intereses año a año.",
+    "longDescription_en": "Estimate monthly mortgage payments under the French fixed installment amortization system. Visualize remaining balance evolution and yearly interest breakdown.",
+    "howToUse": [
+      "Introduce el valor total de la propiedad y el porcentaje de entrada inicial.",
+      "Ingresa el tipo de interés anual (TIN) y el plazo en años.",
+      "Consulta la cuota mensual, el gráfico de saldo y la tabla completa de cuotas."
+    ],
+    "howToUse_en": [
+      "Enter the total property value and initial down payment percentage.",
+      "Enter the annual interest rate (TIN) and loan term in years.",
+      "View monthly payment, balance chart, and complete installment table."
+    ],
+    "methodology": "Fórmula de cuota fija (Sistema Francés): C = P × [ i / (1 - (1 + i)^-n) ], donde P es el capital solicitado, i es la tasa de interés mensual (TIN / 12) y n es el total de meses (años × 12).",
+    "methodology_en": "Fixed payment formula (French System): C = P × [ i / (1 - (1 + i)^-n) ], where P is principal, i is monthly interest rate, and n is total months."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "📘",
+      "title": "Mortgage Terms & Overview",
+      "title_es": "Términos Hipotecarios y Visión General",
+      "content_html_en": "<p>A mortgage loan is a long-term financial commitment used to acquire real estate. The lender provides capital upfront, which is repaid along with interest over a fixed period of years.</p>",
+      "content_html": "<p>Una hipoteca es un contrato financiero a largo plazo para adquirir inmuebles. El prestamista aporta capital inicial que se devuelve con intereses en un plazo acordado.</p>"
+    },
+    {
+      "id": "amortization_method",
+      "icon": "📊",
+      "title": "French Amortization System",
+      "title_es": "Sistema de Amortización Francés",
+      "content_html_en": "<p>The French system maintains equal, fixed monthly installment payments. In the early years, the majority of your monthly payment goes toward interest, while principal repayment increases progressively in later years.</p>",
+      "content_html": "<p>El sistema francés mantiene cuotas mensuales fijas. En los primeros años la mayor parte de la cuota corresponde a intereses, incrementándose la amortización de capital progresivamente.</p>"
+    },
+    {
+      "id": "financial_risks",
+      "icon": "⚠️",
+      "title": "Interest Rates & Debt Risks",
+      "title_es": "Riesgos de Interés y Sobreendeudamiento",
+      "content_html_en": "<ul><li><b>Financial Effort:</b> Financial institutions recommend that mortgage payments should not exceed 30-35% of monthly net household income.</li><li><b>High Rates:</b> An interest rate above 5% significantly compounds interest burden over 25-30 year terms.</li></ul>",
+      "content_html": "<ul><li><b>Esfuerzo Financiero:</b> Se aconseja que la cuota hipotecaria no supere el 30-35% del ingreso neto mensual del hogar.</li><li><b>Tasas Elevadas:</b> Intereses superiores al 5% incrementan el coste acumulado final.</li></ul>"
+    },
+    {
+      "id": "hidden_costs",
+      "icon": "🔍",
+      "title": "Hidden Closing Costs & Limitations",
+      "title_es": "Gastos Ocultos de Compraventa y Limitaciones",
+      "content_html_en": "<p>Remember to calculate an additional 10-12% above property price to cover notary fees, property registry, taxes (ITP/IVA), appraisal, and mandatory home insurance.</p>",
+      "content_html": "<p>Añade un 10-12% adicional sobre el valor del inmueble para impuestos (ITP/IVA), notaría, registro de propiedad y tasación.</p>"
+    },
+    {
+      "id": "formulas",
+      "icon": "🧮",
+      "title": "Financial Equations",
+      "title_es": "Ecuaciones Financieras",
+      "content_html_en": "<p><b>Monthly Payment:</b> C = P × [ i / (1 - (1 + i)⁻ⁿ) ]<br/><b>Total Interest:</b> Total Interest = (Monthly Payment × Months) - Principal</p>",
+      "content_html": "<p><b>Cuota Mensual:</b> C = P × [ i / (1 - (1 + i)⁻ⁿ) ]<br/><b>Intereses Totales:</b> Intereses = (Cuota × Meses) - Capital Inicial</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "homePrice",
+      "label": "Precio del inmueble",
+      "label_en": "Property Price",
+      "type": "currency",
+      "default": 250000,
+      "min": 10000,
+      "max": 5000000,
+      "step": 5000,
+      "unit": "EUR",
+      "units": [
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [10000, 5000000], "message": "Introduce un importe entre 10.000 y 5.000.000", "message_en": "Enter an amount between 10,000 and 5,000,000" }]
+    },
+    {
+      "id": "downPaymentPercent",
+      "label": "Entrada inicial (%)",
+      "label_en": "Down Payment (%)",
+      "type": "slider",
+      "default": 20,
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "%",
+      "help": "Porcentaje que aportas en efectivo inicial.",
+      "help_en": "Percentage you contribute as initial cash down payment.",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0, 80], "message": "La entrada debe estar entre 0% y 80%", "message_en": "Down payment must be between 0% and 80%" }]
+    },
+    {
+      "id": "rate",
+      "label": "Interés anual (TIN %)",
+      "label_en": "Annual Interest Rate (%)",
+      "type": "number",
+      "default": 3.2,
+      "min": 0.1,
+      "max": 15,
+      "step": 0.1,
+      "unit": "%",
+      "help": "TIN anual. Se convierte internamente a interés mensual.",
+      "help_en": "Annual rate. Converted internally to monthly interest.",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.1, 15], "message": "Tasa de interés válida entre 0.1% y 15%", "message_en": "Valid interest rate between 0.1% and 15%" }]
+    },
+    {
+      "id": "years",
+      "label": "Plazo del préstamo (años)",
+      "label_en": "Loan Term (years)",
+      "type": "slider",
+      "default": 25,
+      "min": 5,
+      "max": 40,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [5, 40], "message": "El plazo debe ser de entre 5 y 40 años", "message_en": "Term must be between 5 and 40 years" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "loanAmount",
+      "label": "Capital prestado",
+      "label_en": "Loan Principal Amount",
+      "expression": "homePrice * (1 - downPaymentPercent / 100)",
+      "unit": { "follows": "homePrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "months",
+      "label": "Meses totales",
+      "label_en": "Total Months",
+      "expression": "years * 12",
+      "unit": "meses",
+      "unit_en": "months",
+      "precision": 0,
+      "format": "number",
+      "type": "hidden"
+    },
+    {
+      "id": "monthlyPayment",
+      "label": "Cuota mensual fija",
+      "label_en": "Monthly Fixed Payment",
+      "expression": "loanAmount * (rate / 1200) / (1 - (1 + rate / 1200) ^ -months)",
+      "unit": { "follows": "homePrice" },
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "rate", "op": ">", "value": 5 }, "label": "Interés elevado", "label_en": "High Interest Rate", "tone": "warning", "text": "Un tipo de interés superior al 5% incrementa de forma marcada los costes totales de financiación.", "text_en": "An interest rate above 5% significantly increases total financing costs." },
+        { "when": { "field": "rate", "op": "<=", "value": 3.5 }, "label": "Tipo competitivo", "label_en": "Competitive Rate", "tone": "success", "text": "Tasa dentro de un rango históricamente competitivo.", "text_en": "Rate within a historically competitive range." }
+      ]
+    },
+    {
+      "id": "totalPaid",
+      "label": "Total desembolsado al final",
+      "label_en": "Total Amount Paid",
+      "expression": "monthlyPayment * months",
+      "unit": { "follows": "homePrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "totalInterest",
+      "label": "Intereses totales a pagar",
+      "label_en": "Total Interest Payable",
+      "expression": "totalPaid - loanAmount",
+      "unit": { "follows": "homePrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [
+    {
+      "id": "amortization",
+      "title": "Tabla de Amortización Francesa (Muestra Anual)",
+      "title_en": "Amortization Schedule (Yearly Sample)",
+      "iterator": { "id": "year", "from": 1, "to": "years", "step": 1 },
+      "initial": { "balance": "loanAmount" },
+      "columns": [
+        { "id": "yearNum", "label": "Año", "label_en": "Year", "expression": "year", "format": "number" },
+        { "id": "paidThisYear", "label": "Cuotas del año", "label_en": "Yearly Payments", "expression": "monthlyPayment * 12", "format": "currency" },
+        { "id": "interestYear", "label": "Intereses aprox.", "label_en": "Approx. Interest", "expression": "prev.balance * (rate / 100)", "format": "currency" },
+        { "id": "principalYear", "label": "Capital amortizado", "label_en": "Principal Repaid", "expression": "(monthlyPayment * 12) - (prev.balance * (rate / 100))", "format": "currency" },
+        { "id": "balance", "label": "Saldo al final del año", "label_en": "End of Year Balance", "expression": "max(prev.balance - ((monthlyPayment * 12) - (prev.balance * (rate / 100))), 0)", "format": "currency" }
+      ],
+      "maxRows": 40
+    }
+  ],
+  "charts": [
+    {
+      "id": "balanceEvolution",
+      "type": "area",
+      "title": "Evolución del Saldo Pendiente de la Hipoteca",
+      "title_en": "Remaining Loan Balance Evolution",
+      "data": { "source": "table:amortization" },
+      "xAxis": { "from": "yearNum", "label": "Año", "label_en": "Year" },
+      "yAxis": { "label": "Saldo", "label_en": "Balance", "format": "currency" },
+      "series": [
+        { "column": "balance", "label": "Saldo Pendiente", "label_en": "Remaining Balance", "role": "primary" }
+      ],
+      "tooltip": { "template": "Año {x}: Saldo pendiente de {balance}" },
+      "legend": { "show": true, "position": "top" },
+      "interactive": true,
+      "animate": true,
+      "responsive": { "mobileHeight": 220 },
+      "visibleWhen": { "field": "loanAmount", "op": ">", "value": 0 }
+    }
+  ],
+  "suggestions": [
+    { "target": "percentage-calculator", "type": "static", "message": "Calcula variaciones y porcentajes", "message_en": "Calculate percentage variations", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Finanzas Hipotecarias",
+    "role_en": "Mortgage Finance Assistant",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y prudente",
+    "includeData": ["monthlyPayment", "loanAmount", "totalInterest", "totalPaid", "rate", "years"],
+    "instructions": [
+      "Sintetiza la cuota mensual y el coste total en intereses en 2 frases sencillas.",
+      "Recuerda la recomendación general de que la cuota hipotecaria no supere el 30-35% de los ingresos netos familiares."
+    ],
+    "instructions_en": [
+      "Summarize the monthly payment and total interest cost in 2 concise sentences.",
+      "Remind users that mortgage payments ideally should not exceed 30-35% of household net income."
+    ],
+    "maxLengthWords": 100,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora Hipotecaria — Cuota Mensual y Cuadro de Amortización | CalculadoraHub",
+    "metaTitle_en": "Mortgage Calculator — Monthly Payment & Schedule | CalculadoraHub",
+    "metaDescription": "Calcula la cuota de tu hipoteca y consulta la tabla de amortización anual. Gratis, sin registro y con análisis inmediato.",
+    "metaDescription_en": "Calculate your mortgage payment and view annual amortization schedule. Free, zero registration.",
+    "keywords": ["hipoteca", "calculadora hipotecaria", "cuota hipoteca", "amortizacion"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

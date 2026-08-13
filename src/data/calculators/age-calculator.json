@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "age-calculator",
+    "title": "Calculadora de Edad Exacta (Años, Meses, Días y Horas)",
+    "title_en": "Exact Age Calculator (Years, Months, Days & Hours)",
+    "slug": "calculadora-de-edad-exacta-anos-meses-dias",
+    "category": "datetime",
+    "subcategory": "dates",
+    "tags": ["edad", "calculadora-de-edad", "fecha-de-nacimiento", "cumpleanos", "dias-vividos", "cronologia"],
+    "tags_en": ["age", "age-calculator", "birth-date", "birthday", "days-lived", "chronology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calendar"
+  },
+  "content": {
+    "shortDescription": "Calcula tu edad exacta en años, meses, días, horas y minutos a partir de tu fecha de nacimiento y una fecha objetivo.",
+    "shortDescription_en": "Calculate your exact age in years, months, days, hours, and minutes from your birth date and a target date.",
+    "longDescription": "Herramienta cronológica para determinar la edad exacta y el tiempo transcurrido desde el nacimiento. Calcula el total de días vividos, semanas completas y los días faltantes para el próximo cumpleaños.",
+    "longDescription_en": "Chronological tool for determining exact age and elapsed time since birth. Calculates total days lived, full weeks, and countdown to next birthday.",
+    "howToUse": [
+      "Selecciona tu Fecha de Nacimiento en el calendario.",
+      "Selecciona la Fecha Objetivo (por defecto es el día de hoy).",
+      "Consulta tu Edad en Años completos, Meses totales y Días vividos acumulados."
+    ],
+    "howToUse_en": [
+      "Select your Date of Birth on the calendar.",
+      "Select the Target Date (defaults to today).",
+      "View your Age in full Years, total Months, and accumulated Days lived."
+    ],
+    "methodology": "Años = yearsBetween(birthDate, targetDate). Meses = monthsBetween(birthDate, targetDate). Días = daysBetween(birthDate, targetDate).",
+    "methodology_en": "Years = yearsBetween(birthDate, targetDate). Months = monthsBetween(birthDate, targetDate). Days = daysBetween(birthDate, targetDate)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Cronológico y Demográfico",
+    "role_en": "Chronological & Demographic Assistant",
+    "includeData": ["yearsExact", "monthsTotal", "daysTotal"],
+    "instructions": [
+      "Interpreta la edad exacta del usuario en años, meses y días.",
+      "Muestra estadísticas curiosas sobre el total de días u horas vividas.",
+      "Calcula los días faltantes para el próximo aniversario o cumpleaños."
+    ],
+    "instructions_en": [
+      "Interpret user's exact age in years, months, and days.",
+      "Show interesting statistics about total days or hours lived.",
+      "Calculate remaining days until next birthday."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "age-guide",
+      "icon": "🎂",
+      "title": "How Age is Calculated Chronologically",
+      "title_es": "Cómo se Calcula la Edad Cronológica",
+      "content_html_en": "<p><b>Calendar Age:</b> Calculated by comparing leap years and varying month lengths (28, 30, 31 days).</p><p><b>Total Days Lived:</b> The exact number of 24-hour periods elapsed between birth date and target date.</p>",
+      "content_html": "<p><b>Edad Calendario:</b> Se calcula considerando años bisiestos y la duración exacta de cada mes (28, 30, 31 días).</p><p><b>Días Totales Vividos:</b> La cantidad exacta de periodos de 24 horas transcurridos desde el nacimiento.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "birthDate",
+      "label": "Fecha de Nacimiento",
+      "label_en": "Date of Birth",
+      "type": "date",
+      "default": "1995-05-15",
+      "required": true
+    },
+    {
+      "id": "targetDate",
+      "label": "Fecha Objetivo (Edad en Fecha)",
+      "label_en": "Target Date (Age at Date)",
+      "type": "date",
+      "default": "2026-08-12",
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "yearsExact",
+      "label": "Edad en Años Cumplidos",
+      "label_en": "Age in Completed Years",
+      "expression": "yearsBetween(birthDate, targetDate)",
+      "unit": "años",
+      "unit_en": "years",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "yearsExact", "op": ">=", "value": 0 }, "label": "Edad Calculada", "label_en": "Age Computed", "tone": "success", "text": "Edad cronológica exacta en la fecha seleccionada.", "text_en": "Exact chronological age on selected date." }
+      ]
+    },
+    {
+      "id": "monthsTotal",
+      "label": "Meses Totales Transcurridos",
+      "label_en": "Total Elapsed Months",
+      "expression": "monthsBetween(birthDate, targetDate)",
+      "unit": "meses",
+      "unit_en": "months",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "daysTotal",
+      "label": "Días Totales Vividos",
+      "label_en": "Total Days Lived",
+      "expression": "daysBetween(birthDate, targetDate)",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "hoursTotal",
+      "label": "Horas Totales Vividas (Aprox.)",
+      "label_en": "Total Hours Lived (Approx.)",
+      "expression": "daysTotal * 24",
+      "unit": "horas",
+      "unit_en": "hours",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

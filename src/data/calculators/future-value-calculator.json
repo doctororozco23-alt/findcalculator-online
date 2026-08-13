@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "future-value-calculator",
+    "title": "Calculadora de Valor Futuro (FV)",
+    "title_en": "Future Value (FV) Calculator",
+    "slug": "valor-futuro-fv",
+    "category": "finance",
+    "subcategory": "investments",
+    "tags": ["valor-futuro", "fv", "interes"],
+    "tags_en": ["future-value", "fv", "interest"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "TrendingUp"
+  },
+  "content": {
+    "shortDescription": "Calcula el valor futuro acumulado que alcanzará una inversión dada una tasa de interés y tiempo determinado.",
+    "shortDescription_en": "Calculate the future value an investment will reach given an interest rate and time horizon.",
+    "longDescription": "Proyecta el valor futuro alcanzado por una suma inicial al capitalizarse a una tasa de interés anual durante un período determinado de años.",
+    "longDescription_en": "Project ending future value reached by an initial lump sum compounding at an annual interest rate over a specified number of years.",
+    "howToUse": [
+      "Ingresa el capital invertido hoy (Present Value).",
+      "Establece la tasa de interés anual (%).",
+      "Indica los años de inversión.",
+      "Consulta el Valor Futuro acumulado al final del periodo."
+    ],
+    "howToUse_en": [
+      "Enter starting present value capital today and active currency.",
+      "Set annual interest rate (%).",
+      "Enter investment period in years.",
+      "View calculated ending Future Value."
+    ],
+    "methodology": "Fórmula Valor Futuro: FV = Valor Presente × (1 + TasaInteres)^Años.",
+    "methodology_en": "Future Value Formula: FV = Present Value × (1 + Interest Rate)^Years."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🚀",
+      "title": "Future Value Compounding Power",
+      "title_es": "El Poder de Capitalización del Valor Futuro",
+      "content_html_en": "<p>Future Value demonstrates how compound interest multiplies starting capital over time as interest earns interest year after year.</p>",
+      "content_html": "<p>El valor futuro demuestra cómo el interés compuesto multiplica el capital inicial al generar intereses sobre intereses período tras período.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "presentValue",
+      "label": "Capital inicial invertido hoy",
+      "label_en": "Initial Starting Capital Today",
+      "type": "currency",
+      "default": 20000,
+      "min": 100,
+      "max": 10000000,
+      "step": 500,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "interestRate",
+      "label": "Tasa de interés anual (%)",
+      "label_en": "Annual Interest Rate (%)",
+      "type": "number",
+      "default": 7.0,
+      "min": 0.1,
+      "max": 25,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "years",
+      "label": "Horizonte de inversión (años)",
+      "label_en": "Investment Term (years)",
+      "type": "slider",
+      "default": 10,
+      "min": 1,
+      "max": 40,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "futureValueAmount",
+      "label": "Valor Futuro Acumulado Final",
+      "label_en": "Ending Future Value Amount",
+      "expression": "presentValue * ((1 + interestRate / 100) ^ years)",
+      "unit": { "follows": "presentValue" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "futureValueAmount", "op": ">", "value": 0 }, "label": "Capital Futuro Proyectado", "label_en": "Projected Future Capital", "tone": "success", "text": "Proyección del capital con intereses acumulados.", "text_en": "Projected ending capital including compounded interest." }
+      ]
+    },
+    {
+      "id": "interestEarned",
+      "label": "Ganancia generada por intereses",
+      "label_en": "Total Interest Profit Earned",
+      "expression": "futureValueAmount - presentValue",
+      "unit": { "follows": "presentValue" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "present-value-calculator", "type": "static", "message": "Calcula el valor presente equivalente", "message_en": "Calculate present value equivalent", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Valor Futuro FV",
+    "role_en": "Future Value Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y entusiasta",
+    "includeData": ["futureValueAmount", "interestEarned", "presentValue", "interestRate"],
+    "instructions": [
+      "Sintetiza el valor futuro acumulado y los intereses ganados en 2 frases concisas.",
+      "Destaca cómo el horizonte temporal multiplica la ganancia neta."
+    ],
+    "instructions_en": [
+      "Summarize ending future value amount and total interest earned in 2 concise sentences.",
+      "Emphasize how time horizon accelerates compound interest growth."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Valor Futuro (FV) | CalculadoraHub",
+    "metaTitle_en": "Future Value (FV) Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el valor futuro de una inversión capitalizada a interés compuesto. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate ending future value of compounded capital. Free, instant results.",
+    "keywords": ["future value calculator", "valor futuro", "fv calculator", "interes acumulado"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

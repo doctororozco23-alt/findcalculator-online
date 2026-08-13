@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "dice-roller",
+    "title": "Simulador y Calculadora de Dados RPG (d4, d6, d8, d10, d12, d20)",
+    "title_en": "Dice Roller & Probability Calculator (d4 to d20)",
+    "slug": "simulador-de-dados-rpg-d4-d6-d8-d10-d12-d20",
+    "category": "home",
+    "subcategory": "entertainment",
+    "tags": ["dados", "dice-roller", "rpg", "d20", "d6", "probabilidad-de-dados", "juegos-de-mesa"],
+    "tags_en": ["dice", "dice-roller", "rpg", "d20", "d6", "dice-probability", "board-games"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el valor promedio esperado y rango min/máx para tiradas de múltiples dados poliédricos (ej. 3d6, 1d20+5).",
+    "shortDescription_en": "Compute expected average value and min/max range for polyhedral dice rolls (e.g. 3d6, 1d20+5).",
+    "longDescription": "Herramienta de juegos de rol (D&D, Pathfinder) y teoría de probabilidades. Determina la esperanza matemática de tiradas de dados poliédricos.",
+    "longDescription_en": "Role-playing games (D&D, Pathfinder) and probability theory tool. Computes expected mathematical value of polyhedral dice rolls.",
+    "howToUse": [
+      "Selecciona el Tipo de Dado Poliédrico (d4, d6, d8, d10, d12, d20).",
+      "Ingresa el Número de Dados a lanzar (ej. 3 para 3d6).",
+      "Ingresa el Modificador Fijo (ej. +5).",
+      "Consulta el Valor Promedio Esperado, Rango Mínimo y Máximo de la tirada."
+    ],
+    "howToUse_en": [
+      "Select Polyhedral Dice Type (d4, d6, d8, d10, d12, d20).",
+      "Enter Number of Dice to roll (e.g. 3 for 3d6).",
+      "Enter Fixed Modifier (e.g. +5).",
+      "View Expected Average Value, Minimum, and Maximum roll range."
+    ],
+    "methodology": "Promedio de 1 Dado (dN) = (N + 1) / 2. Promedio Total = Cantidad * PromedioDado + Modificador.",
+    "methodology_en": "1 Die Average (dN) = (N + 1) / 2. Total Average = Count * DieAvg + Modifier."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Teoría de Juegos y Probabilidad de Dados",
+    "role_en": "Game Theory & Dice Probability Specialist Assistant",
+    "includeData": ["expectedRollAverage", "maxRollResult"],
+    "instructions": [
+      "Interpreta la distribución de probabilidad de la tirada de dados seleccionada.",
+      "Explica la curva de campana (distribución gaussiana) que se genera al tirar múltiples dados (ej. 3d6 acumula valores centrales).",
+      "Compara la varianza de tirar 1d20 plano vs la consistencia de 3d6."
+    ],
+    "instructions_en": [
+      "Interpret probability distribution for the selected dice roll.",
+      "Explain the bell curve (Gaussian distribution) created when rolling multiple dice (e.g. 3d6 clusters around central values).",
+      "Compare 1d20 flat variance vs 3d6 consistency."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "dce-guide",
+      "icon": "🎲",
+      "title": "Polyhedral Dice Averages",
+      "title_es": "Promedios de Dados Poliédricos",
+      "content_html_en": "<p><b>d4 Average:</b> 2.5 | <b>d6 Average:</b> 3.5 | <b>d8 Average:</b> 4.5</p><p><b>d10 Average:</b> 5.5 | <b>d12 Average:</b> 6.5 | <b>d20 Average:</b> 10.5</p>",
+      "content_html": "<p><b>Promedio d4:</b> 2.5 | <b>Promedio d6:</b> 3.5 | <b>Promedio d8:</b> 4.5</p><p><b>Promedio d10:</b> 5.5 | <b>Promedio d12:</b> 6.5 | <b>Promedio d20:</b> 10.5</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "diceSidesN",
+      "label": "Tipo de Dado Poliédrico",
+      "label_en": "Polyhedral Dice Type",
+      "type": "select",
+      "default": "20",
+      "options": [
+        { "value": "4", "label": "d4 (Dado de 4 caras)", "label_en": "d4 (4-sided die)" },
+        { "value": "6", "label": "d6 (Dado de 6 caras)", "label_en": "d6 (6-sided die)" },
+        { "value": "8", "label": "d8 (Dado de 8 caras)", "label_en": "d8 (8-sided die)" },
+        { "value": "10", "label": "d10 (Dado de 10 caras)", "label_en": "d10 (10-sided die)" },
+        { "value": "12", "label": "d12 (Dado de 12 caras)", "label_en": "d12 (12-sided die)" },
+        { "value": "20", "label": "d20 (Dado de 20 caras)", "label_en": "d20 (20-sided die)" }
+      ]
+    },
+    {
+      "id": "diceCountNum",
+      "label": "Cantidad de Dados a Lanzar",
+      "label_en": "Number of Dice to Roll",
+      "type": "number",
+      "default": 1,
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "flatModifierVal",
+      "label": "Modificador Fijo (+ / -)",
+      "label_en": "Fixed Modifier (+ / -)",
+      "type": "number",
+      "default": 0,
+      "min": -50,
+      "max": 50,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "minRollResult",
+      "label": "Tirada Mínima Posible",
+      "label_en": "Minimum Possible Roll",
+      "expression": "(diceCountNum * 1) + flatModifierVal",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "expectedRollAverage",
+      "label": "Valor Promedio Esperado de la Tirada",
+      "label_en": "Expected Average Roll Value",
+      "expression": "(diceCountNum * ((diceSidesN + 1) / 2)) + flatModifierVal",
+      "unit": "",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "expectedRollAverage", "op": ">=", "value": 0 }, "label": "Promedio Esperado Calculado", "label_en": "Expected Average Computed", "tone": "success", "text": "Esperanza matemática de tirada cuantificada.", "text_en": "Expected mathematical value quantified." }
+      ]
+    },
+    {
+      "id": "maxRollResult",
+      "label": "Tirada Máxima Posible",
+      "label_en": "Maximum Possible Roll",
+      "expression": "(diceCountNum * diceSidesN) + flatModifierVal",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

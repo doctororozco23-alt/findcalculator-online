@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "battery-life-runtime-calculator",
+    "title": "Calculadora de Autonomía de Baterías (mAh / Ah y Horas de Uso)",
+    "title_en": "Battery Life & Runtime Calculator (mAh / Ah & Load Watts)",
+    "slug": "calculadora-de-autonomia-de-baterias-mah-ah-horas-uso",
+    "category": "technology",
+    "subcategory": "electrical",
+    "tags": ["baterias", "autonomia-bateria", "mah", "ah", "duracion-bateria", "electronica", "tecnologia"],
+    "tags_en": ["battery-life", "battery-runtime", "mah", "ah", "battery-capacity", "electronics", "technology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el tiempo estimado de funcionamiento y autonomía en horas de una batería según su capacidad ($mAh$ o $Ah$) y el consumo de carga.",
+    "shortDescription_en": "Calculate estimated runtime and battery life in hours based on capacity ($mAh$ or $Ah$) and load power consumption.",
+    "longDescription": "Herramienta de electrónica, robótica y dispositivos portátiles. Modela la descarga de baterías de Litio LiPo/LiFePO4 o Plomo considerando la regla de eficiencia de Peukert (80%).",
+    "longDescription_en": "Electronics, robotics, and portable devices tool. Models Lithium LiPo/LiFePO4 or Lead-acid discharge applying Peukert efficiency rule (80%).",
+    "howToUse": [
+      "Ingresa la Capacidad de la Batería (en miliamperios-hora mAh o Amperios-hora Ah).",
+      "Ingresa el Voltaje Nominal de la Batería (Volts - V, ej. 3.7V LiPo, 12V Plomo).",
+      "Ingresa el Consumo del Dispositivo (en Vatios - W o miliamperios - mA).",
+      "Consulta el Tiempo de Autonomía Estimado en Horas y Días."
+    ],
+    "howToUse_en": [
+      "Enter Battery Capacity (in milliamp-hours mAh or Amp-hours Ah).",
+      "Enter Battery Nominal Voltage (Volts - V, e.g. 3.7V LiPo, 12V Lead).",
+      "Enter Load Power Consumption (in Watts - W or milliamps - mA).",
+      "View Estimated Runtime in Hours and Days."
+    ],
+    "methodology": "Energía Batería (Wh) = (CapacidadmAh / 1000) * VoltajeV. Horas Teóricas = EnergíaWh / ConsumoWatts. Horas Reales (eficiencia 80%) = HorasTeóricas * 0.80.",
+    "methodology_en": "Battery Energy (Wh) = (CapacitymAh / 1000) * VoltageV. Theoretical Hours = EnergyWh / LoadWatts. Real Hours (80% eff) = TheoreticalHours * 0.80."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Sistemas de Alimentación por Batería y Electrónica Portátil",
+    "role_en": "Battery Power Systems & Portable Electronics Specialist Assistant",
+    "includeData": ["estimatedRuntimeHoursResult", "batteryEnergyWhResult"],
+    "instructions": [
+      "Interpreta la autonomía de batería estimada en horas considerando un factor de eficiencia práctica del 80%.",
+      "Explica la profundidad de descarga recomendada (DoD 80% en Litio vs DoD 50% en baterías de Plomo-Ácido para extender vida útil).",
+      "Muestra la diferencia entre el consumo medio continuo y los picos de corriente instantáneos."
+    ],
+    "instructions_en": [
+      "Interpret estimated battery runtime in hours considering 80% practical efficiency factor.",
+      "Explain recommended Depth of Discharge (80% DoD Lithium vs 50% DoD Lead-Acid to prolong cycle life).",
+      "Show difference between continuous average consumption vs peak current spikes."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "blr-guide",
+      "icon": "🔋",
+      "title": "Battery Discharge & Chemistry Rules",
+      "title_es": "Reglas de Química y Descarga de Baterías",
+      "content_html_en": "<p><b>Lithium (LiPo / Li-ion):</b> Nominal ~3.7V per cell, high efficiency (~85-90%).</p><p><b>Lead-Acid (AGM / GEL):</b> Nominal 12V, limit DoD to 50% for maximum cycle life.</p>",
+      "content_html": "<p><b>Litio (LiPo / Li-ion):</b> Nominal ~3.7V por celda, alta eficiencia (~85-90%).</p><p><b>Plomo-Ácido (AGM / GEL):</b> Nominal 12V, limitar descarga al 50% para maximizar vida útil.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "batteryCapacityMah",
+      "label": "Capacidad de la Batería (mAh)",
+      "label_en": "Battery Capacity (mAh)",
+      "type": "number",
+      "default": 10000,
+      "min": 10,
+      "max": 10000000,
+      "step": 100,
+      "required": true
+    },
+    {
+      "id": "batteryVoltageV",
+      "label": "Voltaje Nominal de Batería (Volts - V)",
+      "label_en": "Battery Nominal Voltage (Volts - V)",
+      "type": "select",
+      "default": "3.7",
+      "options": [
+        { "value": "3.7", "label": "3.7 V (Celda Litio-Ion / LiPo)", "label_en": "3.7 V (Li-ion / LiPo Single Cell)" },
+        { "value": "7.4", "label": "7.4 V (LiPo 2S)", "label_en": "7.4 V (LiPo 2S)" },
+        { "value": "11.1", "label": "11.1 V (LiPo 3S)", "label_en": "11.1 V (LiPo 3S)" },
+        { "value": "12.0", "label": "12 V (Batería Plomo-Ácido / Coche)", "label_en": "12 V (Lead-Acid / Car Battery)" },
+        { "value": "24.0", "label": "24 V (Sistema Solar / Patinete)", "label_en": "24 V (Solar / Scooter System)" }
+      ]
+    },
+    {
+      "id": "loadPowerWatts",
+      "label": "Consumo de Carga del Dispositivo (Vatios - W)",
+      "label_en": "Device Load Power (Watts - W)",
+      "type": "number",
+      "default": 15,
+      "min": 0.1,
+      "max": 5000,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "batteryEnergyWhResult",
+      "label": "Energía Total Almacenada (Watt-hora - Wh)",
+      "label_en": "Total Stored Energy (Watt-hours - Wh)",
+      "expression": "(batteryCapacityMah / 1000) * batteryVoltageV",
+      "unit": "Wh",
+      "unit_en": "Wh",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "estimatedRuntimeHoursResult",
+      "label": "Autonomía Estimada Real (Horas - 80% Eficiencia)",
+      "label_en": "Estimated Real Runtime (Hours - 80% Eff)",
+      "expression": "loadPowerWatts > 0 ? ((batteryEnergyWhResult / loadPowerWatts) * 0.80) : 0",
+      "unit": "h",
+      "unit_en": "h",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "estimatedRuntimeHoursResult", "op": ">=", "value": 0 }, "label": "Autonomía Calculada", "label_en": "Runtime Computed", "tone": "success", "text": "Tiempo estimado de funcionamiento continuo cuantificado.", "text_en": "Estimated continuous operating time quantified." }
+      ]
+    },
+    {
+      "id": "estimatedRuntimeDaysResult",
+      "label": "Autonomía Estimada en Días",
+      "label_en": "Estimated Runtime in Days",
+      "expression": "estimatedRuntimeHoursResult / 24",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

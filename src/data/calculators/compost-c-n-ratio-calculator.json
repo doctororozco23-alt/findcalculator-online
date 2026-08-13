@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "compost-c-n-ratio-calculator",
+    "title": "Calculadora de Mezcla de Compostaje y Relación C:N (Carbono-Nitrógeno)",
+    "title_en": "Compost Carbon-to-Nitrogen (C:N) Ratio & Mix Calculator",
+    "slug": "calculadora-de-mezcla-de-compostaje-relacion-carbono-nitrogeno-cn",
+    "category": "home",
+    "subcategory": "gardening",
+    "tags": ["compostaje", "relacion-cn", "carbono-nitrogeno", "compost", "residuos-organicos", "jardineria", "hogar"],
+    "tags_en": ["composting", "cn-ratio", "carbon-nitrogen", "compost-mix", "organic-waste", "gardening", "home"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la relación Carbono-Nitrógeno ($C:N$) ideal (30:1) para mezclar materiales marrones (secos) y verdes (húmedos) en composteras.",
+    "shortDescription_en": "Calculate ideal Carbon-to-Nitrogen ($C:N$) ratio (30:1) for mixing brown (dry) and green (wet) materials in compost bins.",
+    "longDescription": "Herramienta de jardinería ecológica y compostaje doméstico. Ayuda a equilibrar la masa de residuos ricos en carbono (hojas secas, paja, cartón) y nitrógeno (restos de cocina, césped fresco).",
+    "longDescription_en": "Eco-gardening and home composting tool. Helps balance mass of carbon-rich (dry leaves, straw, cardboard) and nitrogen-rich (kitchen scraps, fresh grass) waste.",
+    "howToUse": [
+      "Ingresa el Peso de Materiales Verdes / Nitrógeno (kg, ej. restos de cocina, restos de poda verdes).",
+      "Ingresa el Peso de Materiales Marrones / Carbono (kg, ej. hojas secas, cartón triturado).",
+      "Consulta la Relación C:N Resultante y la Evaluación del Equilibrio de la Mezcla."
+    ],
+    "howToUse_en": [
+      "Enter Weight of Green / Nitrogen Materials (kg, e.g. kitchen scraps, fresh green cuttings).",
+      "Enter Weight of Brown / Carbon Materials (kg, e.g. dry leaves, shredded cardboard).",
+      "View Resulting C:N Ratio and Mix Balance Assessment."
+    ],
+    "methodology": "C:N Promedio Verdes ≈ 15:1. C:N Promedio Marrones ≈ 60:1. C:N Mezcla = ((PesoVerdes * 15) + (PesoMarrones * 60)) / (PesoVerdes + PesoMarrones).",
+    "methodology_en": "Avg Greens C:N ≈ 15:1. Avg Browns C:N ≈ 60:1. Mix C:N = ((GreensWeight * 15) + (BrownsWeight * 60)) / (GreensWeight + BrownsWeight)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Compostaje Doméstico y Gestión de Residuos Orgánicos",
+    "role_en": "Home Composting & Organic Waste Management Specialist Assistant",
+    "includeData": ["resultingCnRatioResult"],
+    "instructions": [
+      "Interpreta la relación C:N obtenida para la pila de compost (rango ideal 25:1 a 35:1).",
+      "Advierte si la relación es demasiado baja (C:N < 20 causa olores desagradables a amoníaco) o demasiado alta (C:N > 40 ralentiza la descomposición).",
+      "Muestra recomendaciones para añadir más material marrón o verde según el resultado."
+    ],
+    "instructions_en": [
+      "Interpret calculated C:N ratio for compost pile (ideal range 25:1 to 35:1).",
+      "Warn if ratio is too low (C:N < 20 leads to smelly ammonia odor) or too high (C:N > 40 slows down decomposition).",
+      "Show recommendations to add more brown or green materials accordingly."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "cnr-guide",
+      "icon": "🍂",
+      "title": "Compost Materials C:N Ratios Reference",
+      "title_es": "Referencia de Relación C:N de Materiales de Compost",
+      "content_html_en": "<p><b>Greens (High Nitrogen):</b> Vegetable scraps (15:1), Fresh grass (20:1), Coffee grounds (20:1).</p><p><b>Browns (High Carbon):</b> Dry leaves (60:1), Sawdust (400:1), Cardboard (350:1).</p>",
+      "content_html": "<p><b>Verdes (Ricos en Nitrógeno):</b> Restos de verdura (15:1), Césped fresco (20:1), Poso de café (20:1).</p><p><b>Marrones (Ricos en Carbono):</b> Hojas secas (60:1), Serrín (400:1), Cartón (350:1).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "greenMaterialsWeightKg",
+      "label": "Peso de Materiales Verdes / Nitrógeno (kg)",
+      "label_en": "Green / Nitrogen Materials Weight (kg)",
+      "type": "number",
+      "default": 5.0,
+      "min": 0.5,
+      "max": 1000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "brownMaterialsWeightKg",
+      "label": "Peso de Materiales Marrones / Carbono (kg)",
+      "label_en": "Brown / Carbon Materials Weight (kg)",
+      "type": "number",
+      "default": 3.0,
+      "min": 0.5,
+      "max": 1000,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalCompostWeightKgResult",
+      "label": "Masa Total de la Mezcla de Compost (kg)",
+      "label_en": "Total Compost Mix Mass (kg)",
+      "expression": "greenMaterialsWeightKg + brownMaterialsWeightKg",
+      "unit": "kg",
+      "unit_en": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "resultingCnRatioResult",
+      "label": "Relación Carbono-Nitrógeno Calculada (C:N)",
+      "label_en": "Calculated Carbon-to-Nitrogen Ratio (C:N)",
+      "expression": "totalCompostWeightKgResult > 0 ? (((greenMaterialsWeightKg * 15) + (brownMaterialsWeightKg * 60)) / totalCompostWeightKgResult) : 0",
+      "unit": ":1",
+      "unit_en": ":1",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "resultingCnRatioResult", "op": "between", "value": [25, 35] }, "label": "Equilibrio Ideal C:N (25:1 a 35:1)", "label_en": "Ideal C:N Balance (25:1 to 35:1)", "tone": "success", "text": "Descomposición aeróbica rápida sin malos olores.", "text_en": "Fast aerobic decomposition without bad odors." },
+        { "when": { "field": "resultingCnRatioResult", "op": "<", "value": 25 }, "label": "Exceso de Nitrógeno (C:N < 25)", "label_en": "Excess Nitrogen (C:N < 25)", "tone": "warning", "text": "Añadir más materiales marrones (hojas secas, cartón).", "text_en": "Add more brown materials (dry leaves, cardboard)." },
+        { "when": { "field": "resultingCnRatioResult", "op": ">", "value": 35 }, "label": "Exceso de Carbono (C:N > 35)", "label_en": "Excess Carbon (C:N > 35)", "tone": "info", "text": "Añadir más materiales verdes (restos de cocina, césped).", "text_en": "Add more green materials (kitchen scraps, grass)." }
+      ]
+    }
+  ]
+}

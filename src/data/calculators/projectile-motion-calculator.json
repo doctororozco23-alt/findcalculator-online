@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "projectile-motion-calculator",
+    "title": "Calculadora de Movimiento Parabólico y Lanzamiento de Proyectiles",
+    "title_en": "Projectile Motion & Parabolic Launch Calculator",
+    "slug": "calculadora-de-movimiento-parabolico-lanzamiento-de-proyectiles",
+    "category": "physics",
+    "subcategory": "mechanics",
+    "tags": ["proyectil", "movimiento-parabolico", "alcance-maximo", "altura-maxima", "tiempo-de-vuelo", "fisica", "cinematica"],
+    "tags_en": ["projectile", "parabolic-motion", "max-range", "max-height", "flight-time", "physics", "kinematics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el alcance horizontal máximo, altura máxima alcanzada y tiempo de vuelo de un proyectil en ángulo.",
+    "shortDescription_en": "Compute maximum horizontal range, peak height, and total flight time for angled projectile launches.",
+    "longDescription": "Herramienta de balística y cinemática en dos dimensiones (2D). Descompone el vector de velocidad inicial en sus componentes axial $v_x = v_0 \\cos\\theta$ y vertical $v_y = v_0 \\sin\\theta$.",
+    "longDescription_en": "2D kinematics and ballistics tool. Decomposes initial velocity vector into axial $v_x = v_0 \\cos\\theta$ and vertical $v_y = v_0 \\sin\\theta$ components.",
+    "howToUse": [
+      "Ingresa la Velocidad Inicial de Lanzamiento ($v_0$ en m/s).",
+      "Ingresa el Ángulo de Inclinación ($\u03b8$ en grados sexagesimales, ej. 45°).",
+      "Consulta el Alcance Máximo ($R$), Altura Máxima ($H$) y Tiempo Total de Vuelo ($t$)."
+    ],
+    "howToUse_en": [
+      "Enter Initial Launch Velocity ($v_0$ in m/s).",
+      "Enter Launch Angle ($\u03b8$ in degrees, e.g. 45°).",
+      "View Maximum Range ($R$), Peak Height ($H$), and Total Flight Time ($t$)."
+    ],
+    "methodology": "Tiempo Vuelo t = (2*v0*sin(θ))/g. Alcance R = (v0² * sin(2θ))/g. Altura H = (v0² * sin²(θ))/(2g). Gravedad g = 9.81 m/s².",
+    "methodology_en": "Flight Time t = (2*v0*sin(θ))/g. Range R = (v0² * sin(2θ))/g. Peak Height H = (v0² * sin²(θ))/(2g). Gravity g = 9.81 m/s²."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Cinemática 2D y Balística de Proyectiles",
+    "role_en": "2D Kinematics & Projectile Ballistics Specialist Assistant",
+    "includeData": ["maxRangeResultMeters", "maxHeightResultMeters", "totalFlightTimeSeconds"],
+    "instructions": [
+      "Interpreta la trayectoria parabólica calculada.",
+      "Explica por qué 45° ofrece el alcance horizontal teórico óptimo sin resistencia del aire.",
+      "Muestra el efecto de la gravedad en la simetría de subida y bajada del móvil."
+    ],
+    "instructions_en": [
+      "Interpret the calculated parabolic launch trajectory.",
+      "Explain why 45° yields the optimal theoretical horizontal range ignoring drag.",
+      "Show gravitational effect on symmetry between ascent and descent phases."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "pm-guide",
+      "icon": "🎯",
+      "title": "Projectile Kinematics Formulas",
+      "title_es": "Fórmulas del Movimiento Parabólico",
+      "content_html_en": "<p><b>Max Range:</b> R = (v₀² × sin(2θ)) / g</p><p><b>Max Height:</b> H = (v₀² × sin²(θ)) / (2g)</p><p><b>Flight Time:</b> t = (2 × v₀ × sin(θ)) / g</p>",
+      "content_html": "<p><b>Alcance Máximo:</b> R = (v₀² × sin(2θ)) / g</p><p><b>Altura Máxima:</b> H = (v₀² × sin²(θ)) / (2g)</p><p><b>Tiempo de Vuelo:</b> t = (2 × v₀ × sin(θ)) / g</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "initialVelocityMps",
+      "label": "Velocidad Inicial (v₀ en m/s)",
+      "label_en": "Initial Velocity (v₀ in m/s)",
+      "type": "number",
+      "default": 30,
+      "min": 1,
+      "max": 5000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "launchAngleDegrees",
+      "label": "Ángulo de Lanzamiento (θ en grados °)",
+      "label_en": "Launch Angle (θ in degrees °)",
+      "type": "number",
+      "default": 45,
+      "min": 1,
+      "max": 89,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "maxRangeResultMeters",
+      "label": "Alcance Horizontal Máximo (R)",
+      "label_en": "Maximum Horizontal Range (R)",
+      "expression": "((initialVelocityMps ^ 2) * sin(2 * launchAngleDegrees * deg)) / 9.81",
+      "unit": "m",
+      "unit_en": "m",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "maxRangeResultMeters", "op": ">=", "value": 0 }, "label": "Alcance Calculado", "label_en": "Range Computed", "tone": "success", "text": "Alcance horizontal parabólico cuantificado.", "text_en": "Parabolic horizontal range quantified." }
+      ]
+    },
+    {
+      "id": "maxHeightResultMeters",
+      "label": "Altura Máxima Alcanzada (H)",
+      "label_en": "Maximum Height Reached (H)",
+      "expression": "((initialVelocityMps ^ 2) * ((sin(launchAngleDegrees * deg)) ^ 2)) / (2 * 9.81)",
+      "unit": "m",
+      "unit_en": "m",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "totalFlightTimeSeconds",
+      "label": "Tiempo Total de Vuelo (t)",
+      "label_en": "Total Flight Time (t)",
+      "expression": "(2 * initialVelocityMps * sin(launchAngleDegrees * deg)) / 9.81",
+      "unit": "s",
+      "unit_en": "s",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

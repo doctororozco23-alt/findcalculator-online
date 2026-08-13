@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "fuel-cost-calculator",
+    "title": "Calculadora de Costo de Combustible para Viajes",
+    "title_en": "Trip Fuel Cost Calculator",
+    "slug": "calculadora-de-costo-de-combustible-gasolina-viaje",
+    "category": "transport",
+    "subcategory": "fuel",
+    "tags": ["combustible", "gasolina", "costo-de-viaje", "rendimiento", "mpg", "galones", "automovil"],
+    "tags_en": ["fuel", "gasoline", "trip-cost", "gas-mileage", "mpg", "gallons", "car"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el costo total de combustible y galones/litros de gasolina necesarios para un viaje en vehículo.",
+    "shortDescription_en": "Compute total fuel cost and gasoline gallons/liters needed for a road trip or commute.",
+    "longDescription": "Herramienta de economía del transporte y viajes por carretera. Presupuesta el gasto exacto en gasolina según la distancia total, el rendimiento MPG del automóvil y el precio por galón.",
+    "longDescription_en": "Transport economics and road trip tool. Budgets exact fuel expense based on distance, car MPG rating, and gas price per gallon.",
+    "howToUse": [
+      "Ingresa la Distancia Total del Viaje (millas o km).",
+      "Ingresa el Rendimiento del Vehículo (Millas por Galón - MPG).",
+      "Ingresa el Precio de la Gasolina por Galón ($ USD/galón).",
+      "Consulta los Galones Totales Necesarios y el Costo Total del Viaje."
+    ],
+    "howToUse_en": [
+      "Enter Total Trip Distance (miles or km).",
+      "Enter Vehicle Fuel Efficiency (Miles Per Gallon - MPG).",
+      "Enter Gas Price per Gallon ($ USD/gallon).",
+      "View Total Gallons Needed and Total Trip Fuel Cost."
+    ],
+    "methodology": "Galones Necesarios = Distancia / MPG. Costo del Viaje = Galones Necesarios * Precio/Galón.",
+    "methodology_en": "Gallons Needed = Distance / MPG. Trip Fuel Cost = Gallons Needed * Price/Gallon."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Economía de Transporte y Viajes",
+    "role_en": "Trip Economics & Transport Specialist Assistant",
+    "includeData": ["totalTripFuelCost", "gallonsNeededResult"],
+    "instructions": [
+      "Interpreta el gasto total en combustible para el trayecto seleccionado.",
+      "Muestra la división de costos por pasajero si el viaje es compartido.",
+      "Proporciona recomendaciones para mejorar la eficiencia del consumo en carretera."
+    ],
+    "instructions_en": [
+      "Interpret total fuel expense for the selected trip distance.",
+      "Show cost split per passenger if carpooling.",
+      "Provide driving tips to improve highway fuel efficiency."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "flc-guide",
+      "icon": "⛽",
+      "title": "Fuel Efficiency & Trip Budgeting",
+      "title_es": "Eficiencia de Combustible y Presupuesto de Viaje",
+      "content_html_en": "<p><b>Miles Per Gallon (MPG):</b> Higher MPG rating means better fuel economy and lower trip cost.</p><p><b>Carpooling:</b> Dividing fuel cost among passengers significantly reduces individual travel expenses.</p>",
+      "content_html": "<p><b>Millas por Galón (MPG):</b> Un mayor rendimiento MPG significa mejor economía de combustible y menor costo por viaje.</p><p><b>Compartir Vehículo:</b> Dividir el gasto de gasolina entre pasajeros reduce sustancialmente el costo individual.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "tripDistanceMiles",
+      "label": "Distancia Total del Viaje (millas)",
+      "label_en": "Total Trip Distance (miles)",
+      "type": "number",
+      "default": 350,
+      "min": 1,
+      "max": 10000,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "vehicleMpg",
+      "label": "Rendimiento del Vehículo (MPG)",
+      "label_en": "Vehicle Fuel Efficiency (MPG)",
+      "type": "number",
+      "default": 28,
+      "min": 5,
+      "max": 150,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "gasPricePerGallon",
+      "label": "Precio de la Gasolina ($ USD/galón)",
+      "label_en": "Gas Price per Gallon ($ USD/gallon)",
+      "type": "currency",
+      "default": 3.45,
+      "min": 0.5,
+      "max": 20,
+      "step": 0.05,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "gallonsNeededResult",
+      "label": "Galones de Combustible Necesarios",
+      "label_en": "Gallons of Fuel Needed",
+      "expression": "vehicleMpg > 0 ? (tripDistanceMiles / vehicleMpg) : 0",
+      "unit": "gal",
+      "unit_en": "gal",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalTripFuelCost",
+      "label": "Costo Total del Combustible para el Viaje",
+      "label_en": "Total Trip Fuel Cost",
+      "expression": "gallonsNeededResult * gasPricePerGallon",
+      "unit": "USD",
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalTripFuelCost", "op": ">=", "value": 0 }, "label": "Costo de Viaje Calculado", "label_en": "Trip Fuel Cost Computed", "tone": "success", "text": "Presupuesto de gasolina para el viaje cuantificado.", "text_en": "Trip gas budget quantified." }
+      ]
+    }
+  ]
+}

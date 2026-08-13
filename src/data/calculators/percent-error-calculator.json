@@ -1,0 +1,121 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "percent-error-calculator",
+    "title": "Calculadora de Porcentaje de Error, Error Absoluto y Relativo",
+    "title_en": "Percent Error, Absolute & Relative Error Calculator",
+    "slug": "calculadora-de-porcentaje-de-error-absoluto-relativo",
+    "category": "math",
+    "subcategory": "algebra",
+    "tags": ["porcentaje-de-error", "error-absoluto", "error-relativo", "mediciones", "fisica", "quimica", "laboratorio"],
+    "tags_en": ["percent-error", "absolute-error", "relative-error", "measurements", "physics", "chemistry", "lab"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el Porcentaje de Error ( % Error ), Error Absoluto ( $|E_{abs}|$ ) y Error Relativo comparando valores experimentales con valores teóricos.",
+    "shortDescription_en": "Calculate Percent Error ( % Error ), Absolute Error, and Relative Error comparing experimental to theoretical values.",
+    "longDescription": "Herramienta esencial en física, química y laboratorios científicos. Compara una medición experimental o valor observado $v_{exp}$ con el valor real o teórico $v_{teor}$, cuantificando la discrepancia mediante la fórmula $\\text{\\% Error} = \\left| \\frac{v_{exp} - v_{teor}}{v_{teor}} \\right| \\times 100\\%$.",
+    "longDescription_en": "Essential physics and chemistry laboratory tool. Compares experimental value $v_{exp}$ to accepted theoretical value $v_{teor}$, calculating $\\text{\\% Error} = \\left| \\frac{v_{exp} - v_{teor}}{v_{teor}} \\right| \\times 100\\%$.",
+    "howToUse": [
+      "Ingresa el Valor Experimental u Observado ($v_{exp}$).",
+      "Ingresa el Valor Teórico, Aceptado o Real ($v_{teor}$).",
+      "Consulta el Porcentaje de Error calculado, el Error Absoluto y el Error Relativo."
+    ],
+    "howToUse_en": [
+      "Enter Experimental / Observed Value ($v_{exp}$).",
+      "Enter Theoretical / Accepted Value ($v_{teor}$).",
+      "View calculated Percent Error, Absolute Error, and Relative Error."
+    ],
+    "methodology": "Error Absoluto = |v_exp - v_teor|. Error Relativo = |v_exp - v_teor| / |v_teor|. Porcentaje de Error = Error Relativo * 100%.",
+    "methodology_en": "Absolute Error = |v_exp - v_teor|. Relative Error = |v_exp - v_teor| / |v_teor|. Percent Error = Relative Error * 100%."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Análisis de Error Experimental y Laboratorio",
+    "role_en": "Experimental Error & Lab Analysis Assistant",
+    "includeData": ["percentErrorVal", "absError", "relError"],
+    "instructions": [
+      "Evalúa el Porcentaje de Error frente a tolerancia estándar de laboratorio (< 5%).",
+      "Distingue entre errores sistemáticos y errores aleatorios.",
+      "Explica la diferencia entre Error Absoluto y Error Relativo."
+    ],
+    "instructions_en": [
+      "Evaluate Percent Error against standard lab tolerance (< 5%).",
+      "Distinguish systematic vs random errors.",
+      "Explain difference between Absolute Error and Relative Error."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "error-guide",
+      "icon": "🎯",
+      "title": "Experimental Accuracy & Precision",
+      "title_es": "Exactitud Experimental y Precisión",
+      "content_html_en": "<p><b>Experimental Value:</b> Result obtained from lab measurement.</p><p><b>Theoretical Value:</b> Established accepted value from scientific literature.</p><p><b>Percent Error &lt; 5%:</b> High experimental accuracy.</p><p><b>Percent Error &gt; 10%:</b> Significant experimental bias or systematic error.</p>",
+      "content_html": "<p><b>Valor Experimental:</b> Resultado obtenido en la medición de laboratorio.</p><p><b>Valor Teórico:</b> Valor de referencia aceptado en la literatura científica.</p><p><b>Porcentaje de Error &lt; 5%:</b> Alta exactitud experimental.</p><p><b>Porcentaje de Error &gt; 10%:</b> Sesgo experimental o error sistemático significativo.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "expVal",
+      "label": "Valor Experimental / Medido (v_exp)",
+      "label_en": "Experimental / Measured Value (v_exp)",
+      "type": "number",
+      "default": 9.65,
+      "step": 0.01,
+      "required": true
+    },
+    {
+      "id": "theorVal",
+      "label": "Valor Teórico / Aceptado (v_teor)",
+      "label_en": "Theoretical / Accepted Value (v_teor)",
+      "type": "number",
+      "default": 9.81,
+      "step": 0.01,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [-1000000, 1000000], "message": "El valor teórico no puede ser cero", "message_en": "Theoretical value cannot be zero" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "absError",
+      "label": "Error Absoluto (|v_exp - v_teor|)",
+      "label_en": "Absolute Error (|v_exp - v_teor|)",
+      "expression": "abs(expVal - theorVal)",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "relError",
+      "label": "Error Relativo",
+      "label_en": "Relative Error",
+      "expression": "theorVal != 0 ? (abs(expVal - theorVal) / abs(theorVal)) : 0",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "percentErrorVal",
+      "label": "Porcentaje de Error (% Error)",
+      "label_en": "Percent Error (% Error)",
+      "expression": "relError * 100",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "percentErrorVal", "op": "<=", "value": 5 }, "label": "Alta Exactitud (% Error ≤ 5%)", "label_en": "High Accuracy (% Error ≤ 5%)", "tone": "success", "text": "Excelente precisión experimental en la medición.", "text_en": "Excellent experimental measurement precision." },
+        { "when": { "field": "percentErrorVal", "op": "between", "value": [5.1, 10] }, "label": "Exactitud Aceptable (5% - 10%)", "label_en": "Acceptable Accuracy (5% - 10%)", "tone": "info", "text": "Margen de error común en experimentos de laboratorio.", "text_en": "Standard error margin in laboratory experiments." },
+        { "when": { "field": "percentErrorVal", "op": ">", "value": 10 }, "label": "Error Significativo (> 10%)", "label_en": "Significant Error (> 10%)", "tone": "warning", "text": "Posible presencia de errores sistemáticos o fallos de calibración.", "text_en": "Possible systematic error or calibration issues." }
+      ]
+    }
+  ]
+}

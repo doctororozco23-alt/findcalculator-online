@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "mass-percent-calculator",
+    "title": "Calculadora de Concentración en Porcentaje en Masa (% m/m)",
+    "title_en": "Mass Percent Concentration Calculator (% w/w)",
+    "slug": "calculadora-de-porcentaje-en-masa-concentracion-soluto",
+    "category": "chemistry",
+    "subcategory": "solutions",
+    "tags": ["porcentaje-en-masa", "concentracion-massa", "soluto", "solvente", "solucion-quimica", "quimica"],
+    "tags_en": ["mass-percent", "weight-percent", "solute", "solvent", "chemical-solution", "chemistry"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la concentración porcentual en masa ($\\frac{m}{m} \\% = \\frac{\\text{Masa Soluto}}{\\text{Masa Total Solución}} \\times 100$) de mezclas y soluciones.",
+    "shortDescription_en": "Calculate mass percentage concentration ($\\frac{m}{m} \\% = \\frac{\\text{Solute Mass}}{\\text{Total Solution Mass}} \\times 100$) of mixtures and solutions.",
+    "longDescription": "Herramienta de química cuantitativa y formulación farmacéutica/alimentaria. Mapea la proporción en gramos de soluto respecto a la masa combinada con el solvente.",
+    "longDescription_en": "Quantitative chemistry and pharmaceutical/food formulation tool. Maps gram ratio of solute relative to combined mass with solvent.",
+    "howToUse": [
+      "Ingresa la Masa de Soluto (gramos - g, ej. sal NaCl).",
+      "Ingresa la Masa de Solvente (gramos - g, ej. agua H₂O).",
+      "Consulta la Masa Total de la Solución (g) y la Concentración Porcentual (% m/m)."
+    ],
+    "howToUse_en": [
+      "Enter Solute Mass (grams - g, e.g. NaCl salt).",
+      "Enter Solvent Mass (grams - g, e.g. H₂O water).",
+      "View Total Solution Mass (g) and Percentage Mass Concentration (% w/w)."
+    ],
+    "methodology": "Masa Solución = Masa Soluto + Masa Solvente. % m/m = (Masa Soluto / Masa Solución) * 100.",
+    "methodology_en": "Solution Mass = Solute Mass + Solvent Mass. % w/w = (Solute Mass / Solution Mass) * 100."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Formulación Química y Soluciones",
+    "role_en": "Chemical Formulation & Solutions Specialist Assistant",
+    "includeData": ["massPercentResult", "totalSolutionMassGrams"],
+    "instructions": [
+      "Interpreta la concentración porcentual en masa calculada.",
+      "Explica la diferencia entre Porcentaje en Masa (% m/m) y Porcentaje en Volumen (% v/v).",
+      "Muestra la conversión práctica a Partes por Millón (ppm) para soluciones diluidas."
+    ],
+    "instructions_en": [
+      "Interpret calculated mass percentage concentration.",
+      "Explain difference between Mass Percent (% w/w) vs Volume Percent (% v/v).",
+      "Show practical conversion to Parts Per Million (ppm) for dilute solutions."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "mpc-guide",
+      "icon": "🧪",
+      "title": "Mass Percent Composition Formula",
+      "title_es": "Fórmula de Composición en Porcentaje en Masa",
+      "content_html_en": "<p><b>Formula:</b> % (m/m) = (Mass of Solute / Total Solution Mass) × 100</p><p><b>Parts Per Million (ppm):</b> 1% (m/m) = 10,000 ppm.</p>",
+      "content_html": "<p><b>Fórmula:</b> % (m/m) = (Masa del Soluto / Masa Total Solución) × 100</p><p><b>Partes por Millón (ppm):</b> 1% (m/m) = 10,000 ppm.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "soluteMassGramsVal",
+      "label": "Masa de Soluto (gramos - g)",
+      "label_en": "Solute Mass (grams - g)",
+      "type": "number",
+      "default": 15.0,
+      "min": 0.001,
+      "max": 100000,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "solventMassGramsVal",
+      "label": "Masa de Solvente (gramos - g)",
+      "label_en": "Solvent Mass (grams - g)",
+      "type": "number",
+      "default": 185.0,
+      "min": 0.001,
+      "max": 100000,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalSolutionMassGrams",
+      "label": "Masa Total de la Solución (gramos - g)",
+      "label_en": "Total Solution Mass (grams - g)",
+      "expression": "soluteMassGramsVal + solventMassGramsVal",
+      "unit": "g",
+      "unit_en": "g",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "massPercentResult",
+      "label": "Concentración Porcentual en Masa (% m/m)",
+      "label_en": "Mass Percent Concentration (% w/w)",
+      "expression": "totalSolutionMassGrams > 0 ? ((soluteMassGramsVal / totalSolutionMassGrams) * 100) : 0",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "massPercentResult", "op": ">=", "value": 0 }, "label": "Concentración Calculada", "label_en": "Concentration Computed", "tone": "success", "text": "Proporción en masa de soluto cuantificada.", "text_en": "Solute mass ratio quantified." }
+      ]
+    }
+  ]
+}

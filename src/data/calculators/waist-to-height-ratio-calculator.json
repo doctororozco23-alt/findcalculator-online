@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "waist-to-height-ratio-calculator",
+    "title": "Calculadora de Índice Cintura-Estatura (WHtR Riesgo Cardiovascular)",
+    "title_en": "Waist-to-Height Ratio Calculator (WHtR Cardiovascular Risk)",
+    "slug": "indice-cintura-estatura-whtr",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["whtr", "cintura-estatura", "riesgo-cardiovascular", "grasa-visceral"],
+    "tags_en": ["whtr", "waist-to-height", "cardiovascular-risk", "visceral-fat"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Heart"
+  },
+  "content": {
+    "shortDescription": "Calcula tu Índice Cintura-Estatura (WHtR) y evalúa tu riesgo de grasa visceral y eventos cardiometabólicos con la regla clínica del 50%.",
+    "shortDescription_en": "Calculate your Waist-to-Height Ratio (WHtR) and evaluate visceral fat and cardiometabolic risk using the 50% rule.",
+    "longDescription": "Auditoría de riesgo metabólico y grasa visceral. El Índice Cintura-Estatura es reconocido por la OMS y la NICE como una herramienta clínica superior al IMC para predecir diabetes tipo 2, hipertensión y enfermedad coronaria.",
+    "longDescription_en": "Metabolic risk and visceral fat audit. The Waist-to-Height Ratio (WHtR) is recognized by WHO and NICE as superior to BMI for predicting Type 2 diabetes and coronary heart disease.",
+    "howToUse": [
+      "Ingresa tu estatura exacta.",
+      "Ingresa el perímetro de tu cintura (medido horizontalmente al ombligo).",
+      "Consulta tu ratio WHtR y el perímetro máximo de cintura recomendado (50% de tu estatura).",
+      "Revisa la evaluación clínica de riesgo cardiovascular."
+    ],
+    "howToUse_en": [
+      "Enter exact height.",
+      "Enter waist circumference (measured horizontally at the umbilicus).",
+      "View WHtR ratio and maximum recommended waist size (50% of height).",
+      "Review clinical cardiovascular risk assessment."
+    ],
+    "methodology": "Regla Médica del 50%: Mantén la cintura por debajo de la mitad de tu estatura (WHtR < 0.50). Categorías: Saludable (0.35-0.49), Sobrepeso/Riesgo Aumentado (0.50-0.57), Alto Riesgo (≥ 0.58).",
+    "methodology_en": "Clinical 50% Rule: Keep your waist under half your height (WHtR < 0.50). Categories: Healthy (0.35-0.49), Increased Risk (0.50-0.57), High Risk (≥ 0.58)."
+  },
+  "guideSections": [
+    {
+      "id": "whtr-clinical-guide",
+      "icon": "🫀",
+      "title": "Why WHtR is Superior to Traditional BMI",
+      "title_es": "Por Qué el WHtR es Superior al IMC Tradicional",
+      "content_html_en": "<p><b>Visceral Fat Indicator:</b> Waist circumference directly reflects intra-abdominal visceral adipose tissue surrounding vital organs.</p><p><b>Universal Threshold:</b> The 0.50 ratio applies equally across all ethnicities, sexes, and age groups.</p>",
+      "content_html": "<p><b>Indicador de Grasa Visceral:</b> La cintura mide directamente el tejido adiposo visceral intraabdominal que rodea los órganos vitales.</p><p><b>Umbral Universal:</b> El ratio 0.50 aplica por igual a todas las etnias, sexos y edades.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "heightCm",
+      "label": "Estatura",
+      "label_en": "Height",
+      "type": "number",
+      "default": 175,
+      "min": 100,
+      "max": 230,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [100, 230], "message": "Estatura entre 100 y 230 cm", "message_en": "Height between 100 and 230 cm" }]
+    },
+    {
+      "id": "waistCm",
+      "label": "Perímetro de la cintura (al ombligo)",
+      "label_en": "Waist Circumference (at umbilicus)",
+      "type": "number",
+      "default": 84,
+      "min": 40,
+      "max": 200,
+      "step": 0.5,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "in", "label": "in", "toBase": 2.54 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [40, 200], "message": "Cintura entre 40 y 200 cm", "message_en": "Waist between 40 and 200 cm" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "whtrVal",
+      "label": "Índice Cintura-Estatura (WHtR Ratio)",
+      "label_en": "Waist-to-Height Ratio (WHtR)",
+      "expression": "waistCm / heightCm",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "whtrVal", "op": "<", "value": 0.35 }, "label": "Delgadez Severa (< 0.35)", "label_en": "Abnormally Low (< 0.35)", "tone": "warning", "text": "Perímetro de cintura anormalmente bajo para la estatura.", "text_en": "Waist size is abnormally low relative to height." },
+        { "when": { "field": "whtrVal", "op": "between", "value": [0.35, 0.49] }, "label": "Bajo Riesgo / Saludable (0.35 - 0.49)", "label_en": "Healthy / Low Risk (0.35 - 0.49)", "tone": "success", "text": "Cintura inferior al 50% de la estatura. Perfil cardiometabólico óptimo.", "text_en": "Waist is below 50% of height. Optimal cardiometabolic profile." },
+        { "when": { "field": "whtrVal", "op": "between", "value": [0.50, 0.57] }, "label": "Riesgo Aumentado / Adiposidad (0.50 - 0.57)", "label_en": "Increased Risk (0.50 - 0.57)", "tone": "warning", "text": "La cintura supera el 50% de la estatura. Riesgo moderado de grasa visceral.", "text_en": "Waist exceeds 50% of height. Moderate visceral adiposity risk." },
+        { "when": { "field": "whtrVal", "op": ">=", "value": 0.58 }, "label": "Alto Riesgo Cardiovascular (≥ 0.58)", "label_en": "High Cardiovascular Risk (≥ 0.58)", "tone": "warning", "text": "Acumulación elevada de grasa intraabdominal. Riesgo cardiovascular alto.", "text_en": "High intra-abdominal visceral fat accumulation. High cardiovascular risk." }
+      ]
+    },
+    {
+      "id": "maxHealthyWaistCm",
+      "label": "Cintura Máxima Recomendada (50% de Estatura)",
+      "label_en": "Maximum Recommended Healthy Waist (50% of Height)",
+      "expression": "heightCm * 0.50",
+      "unit": "cm",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "waistExcessCm",
+      "label": "Exceso de Cintura sobre el Límite Saludable",
+      "label_en": "Waist Excess Over Healthy Limit",
+      "expression": "max(waistCm - maxHealthyWaistCm, 0)",
+      "unit": "cm",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "waist-to-hip-ratio-calculator", "type": "static", "message": "Calcula tu distribución de grasa androide/ginoide", "message_en": "Calculate android vs gynoid fat distribution", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Cardiólogo Preventivo y Especialista en Grasa Visceral",
+    "role_en": "Preventive Cardiologist & Visceral Fat Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y analítico",
+    "includeData": ["whtrVal", "maxHealthyWaistCm", "waistExcessCm", "waistCm", "heightCm"],
+    "instructions": [
+      "Sintetiza el valor de WHtR, la cintura máxima recomendada (50% de estatura) y el estado de riesgo en 2 frases concisas.",
+      "Destaca que reducir el perímetro de cintura es la medida no farmacológica más efectiva para prevenir diabetes e hipertensión."
+    ],
+    "instructions_en": [
+      "Summarize WHtR ratio, maximum recommended waist (50% of height), and risk status in 2 concise sentences.",
+      "Highlight that reducing waist circumference is the most effective lifestyle intervention for diabetes and hypertension prevention."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Índice Cintura-Estatura (WHtR Riesgo) | CalculadoraHub",
+    "metaTitle_en": "Waist-to-Height Ratio Calculator (WHtR Risk) | CalculadoraHub",
+    "metaDescription": "Calcula tu Índice Cintura-Estatura (WHtR) y evalúa tu grasa visceral y riesgo cardiovascular. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your Waist-to-Height Ratio (WHtR) to assess visceral fat and cardiovascular risk. Free, instant results.",
+    "keywords": ["whtr calculator", "indice cintura estatura", "grasa visceral cintura", "regla 50 cintura"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

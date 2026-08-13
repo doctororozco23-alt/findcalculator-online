@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "car-depreciation-value-calculator",
+    "title": "Calculadora de Depreciación y Valor Venal Residual del Vehículo",
+    "title_en": "Car Depreciation & Future Residual Value Calculator",
+    "slug": "calculadora-de-depreciacion-y-valor-venal-residual-del-vehiculo",
+    "category": "transport",
+    "subcategory": "fuel",
+    "tags": ["depreciacion-de-autos", "valor-venal", "valor-residual", "compraventa-de-coches", "vehiculos", "transporte"],
+    "tags_en": ["car-depreciation", "residual-value", "used-car-value", "auto-trade-in", "vehicles", "transport"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Estima la pérdida de valor (depreciación) de un coche nuevo o usado y su valor venal residual tras varios años de uso.",
+    "shortDescription_en": "Estimate car value loss (depreciation) for new or used vehicles and project residual market resale value over time.",
+    "longDescription": "Herramienta de tasación automotriz y finanzas personales. Aplica curvas de depreciación anual estándar (20% primer año, 15% años posteriores).",
+    "longDescription_en": "Automotive valuation and personal finance tool. Applies standard annual depreciation curves (20% first year, 15% subsequent years).",
+    "howToUse": [
+      "Ingresa el Precio de Compra Original del Coche ($/€, ej. $35,000).",
+      "Ingresa los Años de Antigüedad / Posesión (ej. 5 años).",
+      "Ingresa la Tasa de Depreciación Anual Estimada (%, ej. 15% por año).",
+      "Consulta el Valor Venal Residual Estimado y la Pérdida Total por Depreciación."
+    ],
+    "howToUse_en": [
+      "Enter Original Car Purchase Price ($/€, e.g. $35,000).",
+      "Enter Vehicle Age / Years Owned (e.g. 5 years).",
+      "Enter Estimated Annual Depreciation Rate (%, e.g. 15% per year).",
+      "View Estimated Residual Resale Value and Total Value Lost to Depreciation."
+    ],
+    "methodology": "ValorResidual = PrecioOriginal * ((1 - TasaAnual/100) ^ Años). PérdidaDepreciación = PrecioOriginal - ValorResidual.",
+    "methodology_en": "ResidualValue = OriginalPrice * ((1 - AnnualRate/100) ^ Years). DepreciationLoss = OriginalPrice - ResidualValue."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Tasación Automotriz y Mercados de Ocasión",
+    "role_en": "Automotive Valuation & Used Car Markets Specialist Assistant",
+    "includeData": ["estimatedResidualCarValueResult", "totalDepreciationLossResult"],
+    "instructions": [
+      "Interpreta el valor de reventa residual estimado del coche y el monto perdido por depreciación.",
+      "Explica la regla de oro de la depreciación de coches nuevos (pierden ~20% nada más salir del concesionario y ~60% a los 5 años).",
+      "Señala marcas y modelos con menor tasa de depreciación histórica (Toyota, Honda, Porsche)."
+    ],
+    "instructions_en": [
+      "Interpret estimated residual resale car value and dollar amount lost to depreciation.",
+      "Explain new car depreciation rule of thumb (cars lose ~20% driving off the dealership lot and ~60% by year 5).",
+      "Point out brands and models historically retaining higher resale value (Toyota, Honda, Porsche)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "cdv-guide",
+      "icon": "🚗",
+      "title": "Car Depreciation Curve Milestones",
+      "title_es": "Curva de Depreciación Automotriz",
+      "content_html_en": "<p><b>Year 1:</b> 20% to 30% value drop immediately after drive-off.</p><p><b>Year 3:</b> ~40% total cumulative value loss.</p><p><b>Year 5:</b> ~60% total cumulative value loss (retains ~40% of original MSRP).</p>",
+      "content_html": "<p><b>Año 1:</b> Caída del 20% al 30% de valor tras salir del concesionario.</p><p><b>Año 3:</b> ~40% de pérdida acumulada de valor.</p><p><b>Año 5:</b> ~60% de pérdida acumulada de valor (conserva el ~40% del precio original).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "originalCarPurchasePrice",
+      "label": "Precio de Compra Original del Coche ($)",
+      "label_en": "Original Car Purchase Price ($)",
+      "type": "number",
+      "default": 35000,
+      "min": 1000,
+      "max": 500000,
+      "step": 500,
+      "required": true
+    },
+    {
+      "id": "yearsOwnedVehicleAge",
+      "label": "Años de Posesión / Antigüedad",
+      "label_en": "Years Owned / Vehicle Age",
+      "type": "number",
+      "default": 5,
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "annualDepreciationPercentRate",
+      "label": "Tasa de Depreciación Anual Promedio (%)",
+      "label_en": "Average Annual Depreciation Rate (%)",
+      "type": "number",
+      "default": 15,
+      "min": 5,
+      "max": 40,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "estimatedResidualCarValueResult",
+      "label": "Valor Venal Residual Estimado del Vehículo ($)",
+      "label_en": "Estimated Residual Vehicle Resale Value ($)",
+      "expression": "originalCarPurchasePrice * ((1 - (annualDepreciationPercentRate / 100)) ^ yearsOwnedVehicleAge)",
+      "unit": "$",
+      "unit_en": "$",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "estimatedResidualCarValueResult", "op": ">=", "value": 0 }, "label": "Valor Residual Calculado", "label_en": "Residual Value Computed", "tone": "success", "text": "Valor venal estimado de mercado cuantificado.", "text_en": "Estimated market residual value quantified." }
+      ]
+    },
+    {
+      "id": "totalDepreciationLossResult",
+      "label": "Pérdida Total Acumulada por Depreciación ($)",
+      "label_en": "Total Cumulative Value Lost to Depreciation ($)",
+      "expression": "originalCarPurchasePrice - estimatedResidualCarValueResult",
+      "unit": "$",
+      "unit_en": "$",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "retainedValuePercentageResult",
+      "label": "Porcentaje de Valor Retenido (%)",
+      "label_en": "Retained Value Percentage (%)",
+      "expression": "originalCarPurchasePrice > 0 ? ((estimatedResidualCarValueResult / originalCarPurchasePrice) * 100) : 0",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "test-score-percentage-calculator",
+    "title": "Calculadora de Porcentaje de Aciertos y Nota de Examen",
+    "title_en": "Test Score Percentage & Letter Grade Calculator",
+    "slug": "calculadora-de-porcentaje-de-aciertos-nota-de-examen",
+    "category": "education",
+    "subcategory": "grades",
+    "tags": ["porcentaje-de-aciertos", "nota-de-examen", "preguntas-correctas", "calificaciones", "evaluacion", "educacion"],
+    "tags_en": ["test-score", "percentage-correct", "correct-questions", "exam-grade", "assessment", "education"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el porcentaje exacto de aciertos en un examen en función del número de preguntas correctas sobre el total de preguntas.",
+    "shortDescription_en": "Calculate exact percentage test score based on correct questions count out of total test questions.",
+    "longDescription": "Herramienta docente y estudiantil de calificación de pruebas y quizes. Genera la nota porcentual y la cantidad de fallos cometiendo.",
+    "longDescription_en": "Teacher and student test grading tool. Computes test percentage score and wrong answers count.",
+    "howToUse": [
+      "Ingresa el Número Total de Preguntas del Examen (ej. 50 preguntas).",
+      "Ingresa el Número de Preguntas Respondidas Correctamente (ej. 42 aciertos).",
+      "Consulta el Porcentaje de Aciertos (%) y el Número de Preguntas Incorrectas."
+    ],
+    "howToUse_en": [
+      "Enter Total Number of Test Questions (e.g. 50 questions).",
+      "Enter Number of Correctly Answered Questions (e.g. 42 correct).",
+      "View Test Percentage Score (%) and Incorrect Questions Count."
+    ],
+    "methodology": "PorcentajeAciertos = (PreguntasCorrectas / TotalPreguntas) * 100. PreguntasIncorrectas = TotalPreguntas - PreguntasCorrectas.",
+    "methodology_en": "TestPercentage = (CorrectQuestions / TotalQuestions) * 100. IncorrectQuestions = TotalQuestions - CorrectQuestions."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Evaluación Educativa y Calificación de Exámenes",
+    "role_en": "Educational Evaluation & Test Grading Specialist Assistant",
+    "includeData": ["testScorePercentResult", "incorrectQuestionsCountResult"],
+    "instructions": [
+      "Interpreta la nota porcentual obtenida en el examen.",
+      "Asigna la letra de calificación correspondiente (A para >=90%, B para >=80%, C para >=70%, D para >=60%, F para <60%).",
+      "Explica la proporción de errores sobre la nota total."
+    ],
+    "instructions_en": [
+      "Interpret calculated percentage test score.",
+      "Assign corresponding letter grade (A for >=90%, B for >=80%, C for >=70%, D for >=60%, F for <60%).",
+      "Explain error ratio impact on final grade."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "tsp-guide",
+      "icon": "📝",
+      "title": "Quick Test Grading Chart Example",
+      "title_es": "Ejemplo de Tabla Rápida de Notas",
+      "content_html_en": "<p><b>45/50 Correct:</b> 90% (A)</p><p><b>40/50 Correct:</b> 80% (B)</p><p><b>35/50 Correct:</b> 70% (C)</p><p><b>30/50 Correct:</b> 60% (D)</p>",
+      "content_html": "<p><b>45/50 Correctas:</b> 90% (A)</p><p><b>40/50 Correctas:</b> 80% (B)</p><p><b>35/50 Correctas:</b> 70% (C)</p><p><b>30/50 Correctas:</b> 60% (D)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "totalTestQuestionsCount",
+      "label": "Número Total de Preguntas del Examen",
+      "label_en": "Total Number of Test Questions",
+      "type": "number",
+      "default": 50,
+      "min": 1,
+      "max": 1000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "correctlyAnsweredQuestionsCount",
+      "label": "Preguntas Respondidas Correctamente",
+      "label_en": "Correctly Answered Questions",
+      "type": "number",
+      "default": 42,
+      "min": 0,
+      "max": 1000,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "incorrectQuestionsCountResult",
+      "label": "Preguntas Incorrectas / Fallos",
+      "label_en": "Incorrect Questions Count",
+      "expression": "max(0, totalTestQuestionsCount - correctlyAnsweredQuestionsCount)",
+      "unit": "preguntas",
+      "unit_en": "questions",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "testScorePercentResult",
+      "label": "Porcentaje de Calificación Obtenido (%)",
+      "label_en": "Achieved Test Percentage Score (%)",
+      "expression": "totalTestQuestionsCount > 0 ? (min(100, (correctlyAnsweredQuestionsCount / totalTestQuestionsCount) * 100)) : 0",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "testScorePercentResult", "op": ">=", "value": 70 }, "label": "Examen Aprobado", "label_en": "Test Passed", "tone": "success", "text": "Porcentaje por encima del umbral mínimo de aprobación.", "text_en": "Percentage score above passing threshold." }
+      ]
+    }
+  ]
+}

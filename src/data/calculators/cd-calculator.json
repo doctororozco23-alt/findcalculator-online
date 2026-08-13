@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "cd-calculator",
+    "title": "Calculadora de Depósito a Plazo Fijo (CD)",
+    "title_en": "CD Calculator (Certificate of Deposit)",
+    "slug": "deposito-plazo-fijo-cd",
+    "category": "finance",
+    "subcategory": "investments",
+    "tags": ["cd", "plazo-fijo", "ahorro-seguro"],
+    "tags_en": ["cd", "certificate-of-deposit", "guaranteed-savings"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Lock"
+  },
+  "content": {
+    "shortDescription": "Calcula los intereses garantizados acumulados y el rendimiento anual efectivo (APY) de un depósito a plazo fijo.",
+    "shortDescription_en": "Calculate guaranteed interest earned and Annual Percentage Yield (APY) on a Certificate of Deposit (CD).",
+    "longDescription": "Estima la ganancia exacta garantizada al vencimiento de un depósito bancario a plazo fijo (CD) según el importe invertido, la tasa de rendimiento APY (%) y la duración en meses.",
+    "longDescription_en": "Estimate exact guaranteed return at maturity on a bank Certificate of Deposit (CD) given deposit amount, APY rate (%), and term months.",
+    "howToUse": [
+      "Ingresa el depósito inicial al plazo fijo.",
+      "Establece la tasa de rendimiento APY (%).",
+      "Indica la duración del certificado en meses (ej. 12, 24, 36).",
+      "Consulta la ganancia total en intereses garantizados al vencimiento."
+    ],
+    "howToUse_en": [
+      "Enter starting deposit amount and active currency.",
+      "Set APY annual return rate (%).",
+      "Enter CD term length in months (e.g. 12, 24, 36).",
+      "View total guaranteed interest earned at maturity."
+    ],
+    "methodology": "Fórmula CD: Balance al Vencimiento = Depósito × (1 + APY / 100)^(Meses / 12).",
+    "methodology_en": "CD Formula: Ending Balance = Deposit × (1 + APY / 100)^(Months / 12)."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🔒",
+      "title": "Guaranteed Returns with CDs",
+      "title_es": "Rendimientos Garantizados en Plazos Fijos",
+      "content_html_en": "<p>A Certificate of Deposit (CD) locks in a fixed interest rate for a specific timeframe in exchange for keeping the funds untouched until maturity.</p>",
+      "content_html": "<p>Un depósito a plazo fijo (CD) congela una tasa de interés garantizada durante el plazo acordado a cambio de mantener los fondos intactos.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "depositAmount",
+      "label": "Monto depositado inicial",
+      "label_en": "Initial Deposit Amount",
+      "type": "currency",
+      "default": 10000,
+      "min": 500,
+      "max": 10000000,
+      "step": 500,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "apyRate",
+      "label": "Tasa de rendimiento anual (APY %)",
+      "label_en": "Annual Percentage Yield (APY %)",
+      "type": "number",
+      "default": 5.0,
+      "min": 0.1,
+      "max": 20,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "cdMonths",
+      "label": "Duración del plazo (meses)",
+      "label_en": "CD Term Length (months)",
+      "type": "slider",
+      "default": 12,
+      "min": 3,
+      "max": 60,
+      "step": 3,
+      "unit": "meses",
+      "unit_en": "months",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "interestEarned",
+      "label": "Interés Garantizado Ganado al Vencimiento",
+      "label_en": "Guaranteed Total Interest Earned",
+      "expression": "depositAmount * (((1 + apyRate / 100) ^ (cdMonths / 12)) - 1)",
+      "unit": { "follows": "depositAmount" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "interestEarned", "op": ">", "value": 0 }, "label": "Rendimiento Garantizado", "label_en": "Guaranteed Return Rate", "tone": "success", "text": "Rendimiento sin riesgo de mercado respaldado por seguro bancario.", "text_en": "Risk-free return backed by bank deposit insurance." }
+      ]
+    },
+    {
+      "id": "maturityBalance",
+      "label": "Balance Total al Vencimiento",
+      "label_en": "Total Balance at Maturity",
+      "expression": "depositAmount + interestEarned",
+      "unit": { "follows": "depositAmount" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "simple-interest-calculator", "type": "static", "message": "Calcula intereses simples en préstamos", "message_en": "Calculate simple loan interest", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Depósitos a Plazo Fijo CD",
+    "role_en": "CD Deposit Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y prudente",
+    "includeData": ["interestEarned", "maturityBalance", "depositAmount", "apyRate"],
+    "instructions": [
+      "Sintetiza la ganancia garantizada en intereses al vencimiento en 2 frases concisas.",
+      "Destaca la ventaja de congelar una tasa fija sin volatilidad de mercado."
+    ],
+    "instructions_en": [
+      "Summarize total guaranteed interest earned at maturity in 2 concise sentences.",
+      "Highlight advantage of locking guaranteed return free from market volatility."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Depósito a Plazo Fijo (CD) | CalculadoraHub",
+    "metaTitle_en": "CD Calculator (Certificate of Deposit) | CalculadoraHub",
+    "metaDescription": "Calcula la ganancia garantizada de un depósito a plazo fijo (CD). Gratis e instantáneo.",
+    "metaDescription_en": "Calculate guaranteed interest earned on bank Certificates of Deposit (CD). Free, instant results.",
+    "keywords": ["cd calculator", "deposito plazo fijo", "apy calculator", "interes garantizado"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

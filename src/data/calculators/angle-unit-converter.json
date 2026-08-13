@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "angle-unit-converter",
+    "title": "Conversor de Ángulos (Grados °, Radianes rad, Gradianes grad)",
+    "title_en": "Angle Unit Converter (Degrees °, Radians rad, Gradians grad)",
+    "slug": "conversor-de-angulos-grados-radianes-gradianes-minutos-segundos",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["conversor-de-angulos", "grados", "radianes", "gradianes", "trigonometria", "matematicas", "conversores"],
+    "tags_en": ["angle-converter", "degrees", "radians", "gradians", "trigonometry", "math", "converters"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte instantáneamente ángulos entre Grados Sexagesimales (°), Radianes (rad), Gradianes (grad) y Revolución Completa.",
+    "shortDescription_en": "Instantly convert angular measures between Sexagesimal Degrees (°), Radians (rad), Gradians (grad), and Turns.",
+    "longDescription": "Herramienta de geometría, trigonometría, astronomía y topografía. Facilita la conversión entre unidades angulares.",
+    "longDescription_en": "Geometry, trigonometry, astronomy, and land surveying tool. Facilitates conversion across angular units.",
+    "howToUse": [
+      "Ingresa el Valor de Ángulo a Convertir.",
+      "Selecciona la Unidad de Origen (ej. Grados °, Radianes rad, Gradianes).",
+      "Consulta los Resultados Equivalentes en Grados (°), Radianes (rad), múltiplos de $\\pi$ y Gradianes."
+    ],
+    "howToUse_en": [
+      "Enter Angle Value to Convert.",
+      "Select Source Unit (e.g. Degrees °, Radians rad, Gradians).",
+      "View Equivalent Results in Degrees (°), Radians (rad), multiples of $\\pi$, and Gradians."
+    ],
+    "methodology": "Factor base en Grados (°): 1° = 1.0, 1 rad = 57.295779513°, 1 grad = 0.9°, 1 Turn = 360°.",
+    "methodology_en": "Base factor in Degrees (°): 1° = 1.0, 1 rad = 57.295779513°, 1 grad = 0.9°, 1 Turn = 360°."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Geometría, Trigonometría y Ángulos",
+    "role_en": "Geometry, Trigonometry & Angles Specialist Assistant",
+    "includeData": ["angleInDegreesResult", "angleInRadiansResult"],
+    "instructions": [
+      "Interpreta la conversión de ángulo realizada.",
+      "Muestra equivalencias trigonométricas fundamentales ($180^\\circ = \\pi \\text{ rad}$, $90^\\circ = \\frac{\\pi}{2} \\text{ rad} \\approx 1.5708 \\text{ rad}$).",
+      "Explica la aplicación práctica de los radianes en cálculo infinitesimal vs grados en navegación."
+    ],
+    "instructions_en": [
+      "Interpret performed angular unit conversion.",
+      "Show fundamental trigonometric equivalences ($180^\\circ = \\pi \\text{ rad}$, $90^\\circ = \\frac{\\pi}{2} \\text{ rad} \\approx 1.5708 \\text{ rad}$).",
+      "Explain practical usage of radians in calculus vs degrees in navigation."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "auc-guide",
+      "icon": "📐",
+      "title": "Angle Unit Conversion Formulas",
+      "title_es": "Fórmulas de Conversión de Ángulos",
+      "content_html_en": "<p><b>Degrees to Radians:</b> rad = ° × (π / 180)</p><p><b>Radians to Degrees:</b> ° = rad × (180 / π)</p><p><b>Full Circle:</b> 360° = 2π rad = 400 grad</p>",
+      "content_html": "<p><b>Grados a Radianes:</b> rad = ° × (π / 180)</p><p><b>Radianes a Grados:</b> ° = rad × (180 / π)</p><p><b>Círculo Completo:</b> 360° = 2π rad = 400 grad</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputValueAngle",
+      "label": "Ángulo a Convertir",
+      "label_en": "Angle to Convert",
+      "type": "number",
+      "default": 90,
+      "min": -36000,
+      "max": 36000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "inputAngleUnitFactor",
+      "label": "Unidad de Origen",
+      "label_en": "Source Unit",
+      "type": "select",
+      "default": "1.0",
+      "options": [
+        { "value": "1.0", "label": "Grados Sexagesimales (°)", "label_en": "Degrees (°)" },
+        { "value": "57.295779513", "label": "Radianes (rad)", "label_en": "Radians (rad)" },
+        { "value": "0.9", "label": "Gradianes (grad)", "label_en": "Gradians (grad)" },
+        { "value": "360.0", "label": "Revoluciones Completa / Vueltas", "label_en": "Full Turns / Rotations" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "angleInDegreesResult",
+      "label": "Equivalente en Grados Sexagesimales (°)",
+      "label_en": "Equivalent in Degrees (°)",
+      "expression": "inputValueAngle * inputAngleUnitFactor",
+      "unit": "°",
+      "unit_en": "°",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "angleInDegreesResult", "op": ">=", "value": 0 }, "label": "Ángulo Calculado", "label_en": "Angle Computed", "tone": "success", "text": "Magnitud angular en grados cuantificada.", "text_en": "Angular magnitude in degrees quantified." }
+      ]
+    },
+    {
+      "id": "angleInRadiansResult",
+      "label": "Equivalente en Radianes (rad)",
+      "label_en": "Equivalent in Radians (rad)",
+      "expression": "angleInDegreesResult / 57.295779513",
+      "unit": "rad",
+      "unit_en": "rad",
+      "precision": 4,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "angleInPiMultiplesResult",
+      "label": "Múltiplo de π Radianes (π rad)",
+      "label_en": "Multiple of π Radians (π rad)",
+      "expression": "angleInDegreesResult / 180",
+      "unit": "π rad",
+      "unit_en": "π rad",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "angleInGradiansResult",
+      "label": "Equivalente en Gradianes (grad)",
+      "label_en": "Equivalent in Gradians (grad)",
+      "expression": "angleInDegreesResult / 0.9",
+      "unit": "grad",
+      "unit_en": "grad",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

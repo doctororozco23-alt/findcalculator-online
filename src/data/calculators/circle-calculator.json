@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "circle-calculator",
+    "title": "Calculadora de Círculo (Radio, Diámetro, Área y Circunferencia)",
+    "title_en": "Circle Calculator (Radius, Diameter, Area & Circumference)",
+    "slug": "calculadora-de-circulo-area-perimetro-radio",
+    "category": "math",
+    "subcategory": "geometry",
+    "tags": ["circulo", "area-circulo", "circunferencia", "radio", "diametro", "pi", "geometria"],
+    "tags_en": ["circle", "circle-area", "circumference", "radius", "diameter", "pi", "geometry"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el Área ($A = \\pi r^2$), Circunferencia / Perímetro ($C = 2\\pi r$) y Diámetro ($d = 2r$) de cualquier círculo a partir de su radio o parámetro conocido.",
+    "shortDescription_en": "Compute Area ($A = \\pi r^2$), Circumference ($C = 2\\pi r$), and Diameter ($d = 2r$) of any circle.",
+    "longDescription": "Herramienta geométrica completa para círculos. Dado un parámetro de entrada (Radio $r$, Diámetro $d$, Área $A$ o Circunferencia $C$), deriva automáticamente el resto de dimensiones utilizando la constante matemática $\\pi \\approx 3.14159$.",
+    "longDescription_en": "Comprehensive circle geometry tool. Given any input parameter (Radius $r$, Diameter $d$, Area $A$, or Circumference $C$), automatically calculates all other dimensions using $\\pi$.",
+    "howToUse": [
+      "Selecciona el Parámetro de Entrada conocido (Radio, Diámetro, Área o Circunferencia).",
+      "Ingresa el valor numérico del parámetro seleccionado.",
+      "Consulta el Radio, Diámetro, Área y Circunferencia calculados."
+    ],
+    "howToUse_en": [
+      "Select Known Input Parameter (Radius, Diameter, Area, or Circumference).",
+      "Enter numerical value for the selected parameter.",
+      "View calculated Radius, Diameter, Area, and Circumference."
+    ],
+    "methodology": "Diámetro: d = 2r. Circunferencia: C = 2 * π * r. Área: A = π * r². Radio desde Área: r = √(A / π).",
+    "methodology_en": "Diameter: d = 2r. Circumference: C = 2 * π * r. Area: A = π * r². Radius from Area: r = √(A / π)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Geometría del Círculo",
+    "role_en": "Circle Geometry Specialist Assistant",
+    "includeData": ["circleAreaResult", "derivedRadiusR", "circleDiameter", "circleCircumference"],
+    "instructions": [
+      "Relaciona el perímetro (Circunferencia C = 2πr) con la superficie (Área A = πr²).",
+      "Explica la constante π como la razón entre la circunferencia y el diámetro.",
+      "Muestra la conversión entre radio r y diámetro d = 2r."
+    ],
+    "instructions_en": [
+      "Relate perimeter (Circumference C = 2πr) with surface (Area A = πr²).",
+      "Explain constant π as ratio of circumference to diameter.",
+      "Show conversion between radius r and diameter d = 2r."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "circle-guide",
+      "icon": "⭕",
+      "title": "Circle Formulas & Properties",
+      "title_es": "Fórmulas y Propiedades del Círculo",
+      "content_html_en": "<p><b>Radius (r):</b> Distance from center to any point on the boundary.</p><p><b>Diameter (d = 2r):</b> Distance across circle passing through center.</p><p><b>Circumference (C = 2πr):</b> The perimeter or length of boundary.</p><p><b>Area (A = πr²):</b> Total surface inside the boundary.</p>",
+      "content_html": "<p><b>Radio (r):</b> Distancia desde el centro a cualquier punto del borde.</p><p><b>Diámetro (d = 2r):</b> Distancia de extremo a extremo pasando por el centro.</p><p><b>Circunferencia (C = 2πr):</b> El perímetro o longitud del borde.</p><p><b>Área (A = πr²):</b> Superficie total delimitada por el borde.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputType",
+      "label": "Parámetro de Entrada Conocido",
+      "label_en": "Known Input Parameter",
+      "type": "select",
+      "default": "radius",
+      "options": [
+        { "value": "radius", "label": "Radio (r)", "label_en": "Radius (r)" },
+        { "value": "diameter", "label": "Diámetro (d)", "label_en": "Diameter (d)" },
+        { "value": "area", "label": "Área (A)", "label_en": "Area (A)" },
+        { "value": "circumference", "label": "Circunferencia / Perímetro (C)", "label_en": "Circumference / Perimeter (C)" }
+      ]
+    },
+    {
+      "id": "inputValue",
+      "label": "Valor del Parámetro",
+      "label_en": "Parameter Value",
+      "type": "number",
+      "default": 10,
+      "min": 0.001,
+      "max": 100000,
+      "step": 0.1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.001, 100000], "message": "El valor debe ser mayor a cero", "message_en": "Value must be > 0" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "derivedRadiusR",
+      "label": "Radio Derivado (r)",
+      "label_en": "Derived Radius (r)",
+      "expression": "inputType == 'radius' ? inputValue : (inputType == 'diameter' ? (inputValue / 2) : (inputType == 'area' ? sqrt(inputValue / pi) : (inputValue / (2 * pi))))",
+      "unit": "unidades",
+      "unit_en": "units",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "circleAreaResult",
+      "label": "Área del Círculo (A = π r²)",
+      "label_en": "Circle Area (A = π r²)",
+      "expression": "pi * derivedRadiusR^2",
+      "unit": "unidades²",
+      "unit_en": "units²",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "circleAreaResult", "op": ">", "value": 0 }, "label": "Círculo Calculado Correctamente", "label_en": "Circle Computed Successfully", "tone": "success", "text": "Dimensiones del círculo obtenidas.", "text_en": "Circle dimensions evaluated." }
+      ]
+    },
+    {
+      "id": "circleDiameter",
+      "label": "Diámetro (d = 2r)",
+      "label_en": "Diameter (d = 2r)",
+      "expression": "derivedRadiusR * 2",
+      "unit": "unidades",
+      "unit_en": "units",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "circleCircumference",
+      "label": "Circunferencia / Perímetro (C = 2πr)",
+      "label_en": "Circumference / Perimeter (C = 2πr)",
+      "expression": "2 * pi * derivedRadiusR",
+      "unit": "unidades",
+      "unit_en": "units",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

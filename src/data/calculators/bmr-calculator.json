@@ -1,0 +1,221 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "bmr-calculator",
+    "title": "Calculadora de Tasa Metabólica Basal (BMR - 3 Fórmulas Clínicas)",
+    "title_en": "BMR Calculator (Basal Metabolic Rate - 3 Clinical Formulas)",
+    "slug": "tasa-metabolica-basal-bmr",
+    "category": "food",
+    "subcategory": "nutrition",
+    "tags": ["bmr", "metabolismo-basal", "mifflin-st-jeor", "katch-mcardle", "harris-benedict"],
+    "tags_en": ["bmr", "basal-metabolic-rate", "metabolism"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Heart"
+  },
+  "content": {
+    "shortDescription": "Calcula y compara tu gasto calórico mínimo en reposo (BMR) mediante las 3 ecuaciones médicas de referencia (Mifflin-St Jeor, Katch-McArdle y Harris-Benedict).",
+    "shortDescription_en": "Calculate and compare baseline resting energy expenditure (BMR) using 3 medical benchmark formulas.",
+    "longDescription": "Evaluación metabólica clínica para determinar la energía mínima que requiere tu organismo a nivel celular para sostener funciones fisiológicas vitales (respiración, circulación, síntesis proteica) en reposo absoluto de 24 horas.",
+    "longDescription_en": "Clinical metabolic evaluation measuring baseline energy required to sustain vital cellular and cardiac functions at total 24-hour rest.",
+    "howToUse": [
+      "Selecciona tu sexo biológico, edad, peso y estatura.",
+      "Ingresa tu % de grasa corporal si deseas activar la fórmula de Katch-McArdle.",
+      "Compara los valores de BMR obtenidos por los 3 métodos clínicos.",
+      "Consulta el desglose de gasto por hora y la equivalencia en kilojulios (kJ) y consumo de oxígeno (VO2)."
+    ],
+    "howToUse_en": [
+      "Select biological sex, age, weight, and height.",
+      "Enter optional Body Fat % to enable Katch-McArdle formula.",
+      "Compare BMR output across 3 clinical formulas.",
+      "View hourly burn rate, kilojoules (kJ) conversion, and resting oxygen consumption (VO2)."
+    ],
+    "methodology": "Ecuaciones Médicas: 1. Mifflin-St Jeor (1990). 2. Katch-McArdle (1996 - BMR = 370 + 21.6 × LBM_kg). 3. Harris-Benedict Revisada (1984). Conversión a Kilojulios: 1 kcal = 4.184 kJ.",
+    "methodology_en": "Medical Formulas: 1. Mifflin-St Jeor (1990). 2. Katch-McArdle (1996). 3. Revised Harris-Benedict (1984). Kilojoules: 1 kcal = 4.184 kJ."
+  },
+  "guideSections": [
+    {
+      "id": "metabolic-physiology",
+      "icon": "🧬",
+      "title": "Physiology of Basal Energy Expenditure",
+      "title_es": "Fisiología del Gasto Energético Basal",
+      "content_html_en": "<p>BMR represents 60-75% of daily energy burn. Brain (20%), Liver (21%), Muscle (20%), Heart (9%), and Kidneys (8%) are the main resting energy consumers.</p>",
+      "content_html": "<p>El BMR representa el 60-75% del gasto energético diario. Los principales consumidores en reposo son: Hígado (21%), Cerebro (20%), Músculo (20%), Corazón (9%) y Riñones (8%).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "gender",
+      "label": "Sexo biológico",
+      "label_en": "Biological Sex",
+      "type": "select",
+      "default": "male",
+      "options": [
+        { "value": "male", "label": "Hombre", "label_en": "Male" },
+        { "value": "female", "label": "Mujer", "label_en": "Female" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "age",
+      "label": "Edad",
+      "label_en": "Age",
+      "type": "number",
+      "default": 30,
+      "min": 15,
+      "max": 100,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [15, 100], "message": "Edad entre 15 y 100", "message_en": "Age between 15 and 100" }]
+    },
+    {
+      "id": "weightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 30,
+      "max": 300,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "heightCm",
+      "label": "Estatura",
+      "label_en": "Height",
+      "type": "number",
+      "default": 178,
+      "min": 100,
+      "max": 230,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "bodyFatPercent",
+      "label": "Porcentaje de grasa corporal (opcional para Katch-McArdle)",
+      "label_en": "Body Fat Percentage (optional for Katch-McArdle)",
+      "type": "number",
+      "default": 15,
+      "min": 4,
+      "max": 50,
+      "step": 0.5,
+      "unit": "%",
+      "required": false,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "bmrMifflin",
+      "label": "BMR Mifflin-St Jeor (Estándar General)",
+      "label_en": "Mifflin-St Jeor BMR (General Standard)",
+      "expression": "10 * weightKg + 6.25 * heightCm - 5 * age + (gender == 'male' ? 5 : -161)",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "bmrMifflin", "op": ">", "value": 0 }, "label": "BMR de Referencia", "label_en": "BMR Reference Level", "tone": "info", "text": "Calorías mínimas consumidas por tu organismo en reposo durante 24 horas.", "text_en": "Minimum baseline calories consumed by your body at 24-hour rest." }
+      ]
+    },
+    {
+      "id": "bmrKatch",
+      "label": "BMR Katch-McArdle (Basado en Masa Magra)",
+      "label_en": "Katch-McArdle BMR (Lean Mass Based)",
+      "expression": "370 + 21.6 * (weightKg * (1 - (bodyFatPercent / 100)))",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "bmrHarris",
+      "label": "BMR Harris-Benedict Revisada (1984)",
+      "label_en": "Revised Harris-Benedict BMR (1984)",
+      "expression": "gender == 'male' ? (88.362 + 13.397 * weightKg + 4.799 * heightCm - 5.677 * age) : (447.593 + 9.247 * weightKg + 3.098 * heightCm - 4.330 * age)",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "bmrHourly",
+      "label": "Gasto metabólico por hora en reposo",
+      "label_en": "Hourly Resting Metabolic Burn",
+      "expression": "bmrMifflin / 24",
+      "unit": "kcal/hora",
+      "unit_en": "kcal/hour",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "bmrKilojoules",
+      "label": "BMR en Kilojulios (kJ/día)",
+      "label_en": "BMR in Kilojoules (kJ/day)",
+      "expression": "bmrMifflin * 4.184",
+      "unit": "kJ/día",
+      "unit_en": "kJ/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "calorie-calculator", "type": "static", "message": "Calcula el gasto total incluyendo actividad (TDEE)", "message_en": "Calculate TDEE including physical activity", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Metabolismo Clínico",
+    "role_en": "Clinical Metabolism Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["bmrMifflin", "bmrKatch", "bmrHarris", "bmrHourly", "bmrKilojoules"],
+    "instructions": [
+      "Sintetiza la Tasa Metabólica Basal BMR por las 3 ecuaciones clínicas en 2 frases concisas.",
+      "Destaca que el BMR es el límite inferior absoluto de consumo calórico seguro."
+    ],
+    "instructions_en": [
+      "Summarize Basal Metabolic Rate across 3 clinical formulas in 2 concise sentences.",
+      "Highlight that BMR is the absolute floor limit for safe caloric consumption."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Tasa Metabólica Basal (BMR - 3 Fórmulas) | CalculadoraHub",
+    "metaTitle_en": "BMR Calculator (Basal Metabolic Rate - 3 Formulas) | CalculadoraHub",
+    "metaDescription": "Calcula tu BMR con Mifflin-St Jeor, Katch-McArdle y Harris-Benedict. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your BMR using Mifflin-St Jeor, Katch-McArdle, and Harris-Benedict. Free, instant results.",
+    "keywords": ["bmr calculator", "tasa metabolica basal", "metabolismo basal", "mifflin st jeor"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

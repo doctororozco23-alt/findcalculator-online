@@ -1,0 +1,186 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "pediatric-bmi-calculator",
+    "title": "Calculadora de IMC Infantil y Percentiles (OMS & CDC 2-19 años)",
+    "title_en": "Pediatric BMI & Growth Percentiles Calculator (WHO & CDC)",
+    "slug": "imc-infantil-percentiles-ninos",
+    "category": "health",
+    "subcategory": "child-growth",
+    "tags": ["imc-infantil", "percentiles", "ninos", "pediatria", "cdc", "oms"],
+    "tags_en": ["pediatric-bmi", "growth-percentiles", "children", "pediatrics", "cdc", "who"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Baby"
+  },
+  "content": {
+    "shortDescription": "Calcula el IMC infantil y los percentiles de crecimiento para niños y adolescentes (de 2 a 19 años) según los patrones de la OMS y CDC.",
+    "shortDescription_en": "Calculate pediatric BMI and growth percentiles for children and teens (ages 2 to 19) based on WHO and CDC standards.",
+    "longDescription": "Auditoría clínica de desarrollo y crecimiento pediátrico. A diferencia de los adultos, el IMC en niños y adolescentes se evalúa mediante percentiles específicos para su edad exacta y sexo biológico según las curvas oficiales de la OMS y CDC.",
+    "longDescription_en": "Pediatric clinical growth audit. Unlike adults, Body Mass Index in children and teenagers is evaluated using age- and sex-specific growth percentiles under official WHO and CDC growth charts.",
+    "howToUse": [
+      "Selecciona el sexo biológico del niño o adolescente.",
+      "Ingresa la edad exacta en años.",
+      "Ingresa la estatura y el peso corporal actual del menor.",
+      "Consulta el IMC infantil calculado, la categoría de percentil de la OMS/CDC y el rango de peso saludable."
+    ],
+    "howToUse_en": [
+      "Select child or teen biological sex.",
+      "Enter exact age in years.",
+      "Enter height and current body weight.",
+      "View calculated pediatric BMI, WHO/CDC percentile growth tier, and healthy weight range."
+    ],
+    "methodology": "Patrones Pediátricos OMS / CDC: Bajo Peso (< Percentil 5), Peso Saludable (Percentil 5 a 85), Sobrepeso (Percentil 85 a 95), Obesidad (≥ Percentil 95).",
+    "methodology_en": "WHO / CDC Pediatric Growth Charts: Underweight (< 5th Percentile), Healthy Weight (5th to 85th Percentile), Overweight (85th to 95th Percentile), Obese (≥ 95th Percentile)."
+  },
+  "guideSections": [
+    {
+      "id": "pediatric-percentiles-guide",
+      "icon": "📈",
+      "title": "Understanding Pediatric Growth Percentiles",
+      "title_es": "Interpretación de los Percentiles de Crecimiento Pediátrico",
+      "content_html_en": "<p><b>50th Percentile:</b> The median average height and weight for children of the exact same age and sex.</p><p><b>Healthy Growth Corridor (5th to 85th Percentiles):</b> Most healthy children grow along a consistent percentile curve over time.</p>",
+      "content_html": "<p><b>Percentil 50:</b> El valor promedio mediano de peso y estatura para niños de la misma edad exacta y sexo.</p><p><b>Canal de Crecimiento Saludable (Percentil 5 al 85):</b> La mayoría de los niños sanos crecen siguiendo una curva de percentiles constante.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "childGender",
+      "label": "Sexo biológico del menor",
+      "label_en": "Child Biological Sex",
+      "type": "select",
+      "default": "boy",
+      "options": [
+        { "value": "boy", "label": "Niño / Varón", "label_en": "Boy / Male" },
+        { "value": "girl", "label": "Niña / Mujer", "label_en": "Girl / Female" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "childAgeYears",
+      "label": "Edad del menor (de 2 a 19 años)",
+      "label_en": "Child Age (2 to 19 years old)",
+      "type": "number",
+      "default": 10,
+      "min": 2,
+      "max": 19,
+      "step": 0.5,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [2, 19], "message": "Edad entre 2 y 19 años", "message_en": "Age between 2 and 19 years" }]
+    },
+    {
+      "id": "heightCm",
+      "label": "Estatura",
+      "label_en": "Height",
+      "type": "number",
+      "default": 138,
+      "min": 70,
+      "max": 210,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [70, 210], "message": "Estatura entre 70 y 210 cm", "message_en": "Height between 70 and 210 cm" }]
+    },
+    {
+      "id": "weightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 32,
+      "min": 8,
+      "max": 150,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [8, 150], "message": "Peso entre 8 y 150 kg", "message_en": "Weight between 8 and 150 kg" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "childBmiVal",
+      "label": "IMC Infantil Calculado",
+      "label_en": "Calculated Pediatric BMI",
+      "expression": "weightKg / ((heightCm / 100) ^ 2)",
+      "unit": "kg/m²",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "childBmiVal", "op": "<", "value": 14.5 }, "label": "Bajo Peso (< Percentil 5)", "label_en": "Underweight (< 5th Percentile)", "tone": "warning", "text": "IMC por debajo del percentil 5 de crecimiento pediátrico.", "text_en": "BMI below 5th percentile on pediatric growth charts." },
+        { "when": { "field": "childBmiVal", "op": "between", "value": [14.5, 19.5] }, "label": "Peso Saludable (Percentil 5 a 85)", "label_en": "Healthy Weight (5th to 85th Percentile)", "tone": "success", "text": "Crecimiento y desarrollo ponderal dentro del rango saludable OMS/CDC.", "text_en": "Growth and body weight are within WHO/CDC healthy percentile corridor." },
+        { "when": { "field": "childBmiVal", "op": "between", "value": [19.6, 22.5] }, "label": "Sobrepeso (Percentil 85 a 95)", "label_en": "Overweight (85th to 95th Percentile)", "tone": "warning", "text": "IMC por encima del percentil 85 de la tabla poblacional.", "text_en": "BMI exceeds 85th percentile on growth charts." },
+        { "when": { "field": "childBmiVal", "op": ">=", "value": 22.6 }, "label": "Obesidad Pediátrica (≥ Percentil 95)", "label_en": "Pediatric Obesity (≥ 95th Percentile)", "tone": "warning", "text": "IMC por encima del percentil 95 de la tabla de referencia.", "text_en": "BMI exceeds 95th percentile threshold." }
+      ]
+    },
+    {
+      "id": "healthyWeightMinChild",
+      "label": "Peso Saludable Mínimo Estimado (Percentil 5)",
+      "label_en": "Minimum Healthy Weight (5th Percentile)",
+      "expression": "14.5 * ((heightCm / 100) ^ 2)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "healthyWeightMaxChild",
+      "label": "Peso Saludable Máximo Estimado (Percentil 85)",
+      "label_en": "Maximum Healthy Weight (85th Percentile)",
+      "expression": "19.5 * ((heightCm / 100) ^ 2)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "healthy-weight-calculator", "type": "static", "message": "Calculadora de peso saludable para adultos", "message_en": "Adult healthy weight calculator", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Pediatra y Especialista en Crecimiento Infantil",
+    "role_en": "Pediatrician & Child Development Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "cálido y tranquilizador",
+    "includeData": ["childBmiVal", "healthyWeightMinChild", "healthyWeightMaxChild", "childAgeYears", "childGender"],
+    "instructions": [
+      "Sintetiza el IMC infantil, la clasificación por percentiles OMS/CDC y la horquilla de peso saludable en 2 frases concisas.",
+      "Destaca que las evaluaciones pediátricas deben considerar la curva de crecimiento longitudinal y no solo un dato aislado."
+    ],
+    "instructions_en": [
+      "Summarize pediatric BMI, WHO/CDC percentile growth classification, and healthy weight corridor in 2 concise sentences.",
+      "Highlight that pediatric assessments should focus on consistent longitudinal growth trends."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de IMC Infantil y Percentiles (OMS & CDC) | CalculadoraHub",
+    "metaTitle_en": "Pediatric BMI & Growth Percentiles Calculator (WHO & CDC) | CalculadoraHub",
+    "metaDescription": "Calcula el IMC infantil y los percentiles de crecimiento para niños y adolescentes de 2 a 19 años. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate pediatric BMI and growth percentiles for kids and teens ages 2 to 19. Free, instant results.",
+    "keywords": ["pediatric bmi calculator", "imc infantil", "percentiles ninos", "crecimiento cdc oms"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "boyles-law-calculator",
+    "title": "Calculadora de Ley de Boyle-Mariotte (P₁ V₁ = P₂ V₂)",
+    "title_en": "Boyle's Law Calculator (P₁ V₁ = P₂ V₂)",
+    "slug": "calculadora-de-ley-de-boyle-mariotte-presion-volumen",
+    "category": "chemistry",
+    "subcategory": "gas-laws",
+    "tags": ["ley-de-boyle", "presion", "volumen", "compresion-de-gases", "termodinamica", "gases", "quimica"],
+    "tags_en": ["boyles-law", "pressure", "volume", "gas-compression", "thermodynamics", "gases", "chemistry"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la relación inversamente proporcional entre la presión ($P$) y el volumen ($V$) de un gas a temperatura constante ($P_1 \\cdot V_1 = P_2 \\cdot V_2$).",
+    "shortDescription_en": "Calculate inverse relationship between pressure ($P$) and volume ($V$) of a gas at constant temperature ($P_1 \\cdot V_1 = P_2 \\cdot V_2$).",
+    "longDescription": "Herramienta de termodinámica de gases ideales. Demuestra cómo el volumen se reduce a la mitad al duplicar la presión ejercida sobre el recipiente.",
+    "longDescription_en": "Ideal gas thermodynamics tool. Demonstrates volume halving when pressure exerted on container doubles.",
+    "howToUse": [
+      "Ingresa la Presión Inicial ($P_1$ en atm).",
+      "Ingresa el Volumen Inicial ($V_1$ en Litros).",
+      "Ingresa la Presión Final ($P_2$ en atm).",
+      "Consulta el Volumen Final Resultante ($V_2$ en Litros) a temperatura constante."
+    ],
+    "howToUse_en": [
+      "Enter Initial Pressure ($P_1$ in atm).",
+      "Enter Initial Volume ($V_1$ in Liters).",
+      "Enter Final Pressure ($P_2$ in atm).",
+      "View Resulting Final Volume ($V_2$ in Liters) at constant temperature."
+    ],
+    "methodology": "Ley de Boyle: P1 * V1 = P2 * V2  ⇒  V2 = (P1 * V1) / P2 (Proceso Isotérmico).",
+    "methodology_en": "Boyle's Law: P1 * V1 = P2 * V2  ⇒  V2 = (P1 * V1) / P2 (Isothermal Process)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Fisicoquímica y Procesos Isotérmicos",
+    "role_en": "Physical Chemistry & Isothermal Processes Specialist Assistant",
+    "includeData": ["finalVolumeV2Result"],
+    "instructions": [
+      "Interpreta el cambio de volumen resultante del proceso de compresión o expansión isotérmica.",
+      "Explica la proporcionalidad inversa: a mayor presión, menor espacio disponible entre moléculas.",
+      "Muestra aplicaciones en jeringas médicas, buceo (pulmones a profundidad) y pistones de aire."
+    ],
+    "instructions_en": [
+      "Interpret resulting volume shift from isothermal compression or expansion process.",
+      "Explain inverse proportionality: higher pressure reduces inter-molecular space.",
+      "Show applications in medical syringes, scuba diving (deep lungs), and pneumatic pistons."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "boy-guide",
+      "icon": "🎈",
+      "title": "Boyle's Law Isothermal Principle",
+      "title_es": "Principio Isotérmico de la Ley de Boyle",
+      "content_html_en": "<p><b>Formula:</b> P₁ × V₁ = P₂ × V₂</p><p><b>Condition:</b> Temperature (T) and moles (n) remain strictly constant.</p>",
+      "content_html": "<p><b>Fórmula:</b> P₁ × V₁ = P₂ × V₂</p><p><b>Condición:</b> La Temperatura (T) y los moles (n) se mantienen estrictamente constantes.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "initialPressureP1",
+      "label": "Presión Inicial (P₁ en atm)",
+      "label_en": "Initial Pressure (P₁ in atm)",
+      "type": "number",
+      "default": 1.0,
+      "min": 0.01,
+      "max": 1000,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "initialVolumeV1",
+      "label": "Volumen Inicial (V₁ en Litros)",
+      "label_en": "Initial Volume (V₁ in Liters)",
+      "type": "number",
+      "default": 12.0,
+      "min": 0.01,
+      "max": 10000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "finalPressureP2",
+      "label": "Presión Final (P₂ en atm)",
+      "label_en": "Final Pressure (P₂ in atm)",
+      "type": "number",
+      "default": 3.0,
+      "min": 0.01,
+      "max": 1000,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "finalVolumeV2Result",
+      "label": "Volumen Final Resultante (V₂ en Litros)",
+      "label_en": "Resulting Final Volume (V₂ in Liters)",
+      "expression": "finalPressureP2 > 0 ? ((initialPressureP1 * initialVolumeV1) / finalPressureP2) : 0",
+      "unit": "L",
+      "unit_en": "L",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "finalVolumeV2Result", "op": ">=", "value": 0 }, "label": "Volumen Calculado", "label_en": "Volume Computed", "tone": "success", "text": "Volumen por compresión/expansión isotérmica evaluado.", "text_en": "Isothermal compression/expansion volume evaluated." }
+      ]
+    }
+  ]
+}

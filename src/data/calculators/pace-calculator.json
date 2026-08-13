@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "pace-calculator",
+    "title": "Calculadora de Ritmo de Carrera (Pace Calculator)",
+    "title_en": "Running Pace Calculator",
+    "slug": "ritmo-carrera-pace",
+    "category": "fitness",
+    "subcategory": "running",
+    "tags": ["running", "pace", "ritmo-carrera", "carrera"],
+    "tags_en": ["running", "pace", "race-time", "cardio"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Timer"
+  },
+  "content": {
+    "shortDescription": "Calcula tu ritmo medio de carrera (min/km o min/milla), tiempo final o distancia recorrida para entrenamientos y maratón.",
+    "shortDescription_en": "Calculate running pace (min/km or min/mile), total time, or distance for workouts and marathons.",
+    "longDescription": "Determina el ritmo de carrera exacto necesario para completar distancias objetivo (5K, 10K, Media Maratón o Maratón 42K) en tu tiempo meta deseado.",
+    "longDescription_en": "Determine exact required running pace to complete target race distances (5K, 10K, Half Marathon, or Full Marathon) within your goal finish time.",
+    "howToUse": [
+      "Ingresa la distancia recorrida (en kilómetros o millas).",
+      "Ingresa el tiempo total empleado (horas y minutos).",
+      "Consulta tu ritmo medio de carrera por kilómetro y por milla.",
+      "Revisa la velocidad media equivalente en km/h."
+    ],
+    "howToUse_en": [
+      "Enter total distance covered (in km or miles).",
+      "Enter total elapsed time (hours and minutes).",
+      "View average running pace per kilometer and per mile.",
+      "Check equivalent average speed in km/h."
+    ],
+    "methodology": "Fórmula Ritmo Carrera: Ritmo (min/km) = Tiempo Total (minutos) / Distancia (km). Velocidad (km/h) = 60 / Ritmo.",
+    "methodology_en": "Pace Formula: Pace (min/km) = Total Time (minutes) / Distance (km). Speed (km/h) = 60 / Pace."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🏃",
+      "title": "Standard Race Benchmark Distances",
+      "title_es": "Distancias Estándar de Carrera",
+      "content_html_en": "<p>Common race benchmarks: 5K (5 km / 3.1 mi), 10K (10 km / 6.2 mi), Half Marathon (21.097 km / 13.1 mi), Full Marathon (42.195 km / 26.2 mi).</p>",
+      "content_html": "<p>Distancias estándar de competición: 5K (5 km), 10K (10 km), Media Maratón (21.097 km) y Maratón Completo (42.195 km).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "distanceKm",
+      "label": "Distancia recorrida",
+      "label_en": "Distance Covered",
+      "type": "number",
+      "default": 10,
+      "min": 0.5,
+      "max": 200,
+      "step": 0.1,
+      "unit": "km",
+      "units": [
+        { "id": "km", "label": "km", "toBase": 1 },
+        { "id": "miles", "label": "millas / miles", "toBase": 1.60934 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.5, 200], "message": "Distancia entre 0.5 y 200", "message_en": "Distance between 0.5 and 200" }]
+    },
+    {
+      "id": "timeMinutes",
+      "label": "Tiempo total empleado (en minutos)",
+      "label_en": "Total Time Elapsed (in minutes)",
+      "type": "number",
+      "default": 50,
+      "min": 1,
+      "max": 1440,
+      "step": 1,
+      "unit": "min",
+      "unit_en": "min",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "paceMinPerKm",
+      "label": "Ritmo Medio de Carrera por Kilómetro",
+      "label_en": "Average Pace per Kilometer",
+      "expression": "timeMinutes / distanceKm",
+      "unit": "min/km",
+      "unit_en": "min/km",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "paceMinPerKm", "op": "<=", "value": 5 }, "label": "Ritmo Rápido", "label_en": "Fast Pace Rate", "tone": "success", "text": "Excelente ritmo de carrera por debajo de 5:00 min/km.", "text_en": "Excellent running pace below 5:00 min/km." }
+      ]
+    },
+    {
+      "id": "paceMinPerMile",
+      "label": "Ritmo Medio por Milla",
+      "label_en": "Average Pace per Mile",
+      "expression": "paceMinPerKm * 1.60934",
+      "unit": "min/milla",
+      "unit_en": "min/mile",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "speedKmPerHour",
+      "label": "Velocidad Media Equivalente",
+      "label_en": "Equivalent Average Speed",
+      "expression": "60 / paceMinPerKm",
+      "unit": "km/h",
+      "unit_en": "km/h",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "calories-burned-calculator", "type": "static", "message": "Calcula las calorías quemadas corriendo", "message_en": "Calculate calories burned running", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Entrenador de Atletismo y Running",
+    "role_en": "Running & Athletics Coach",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "entusiasta y motivador",
+    "includeData": ["paceMinPerKm", "paceMinPerMile", "speedKmPerHour", "distanceKm"],
+    "instructions": [
+      "Sintetiza el ritmo por km/milla y la velocidad media en 2 frases concisas.",
+      "Destaca cómo mantener un ritmo constante optimiza el rendimiento en carreras de fondo."
+    ],
+    "instructions_en": [
+      "Summarize pace per km/mile and average speed in 2 concise sentences.",
+      "Highlight how maintaining steady pacing optimizes endurance race performance."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Ritmo de Carrera (Pace Calculator) | CalculadoraHub",
+    "metaTitle_en": "Running Pace Calculator | CalculadoraHub",
+    "metaDescription": "Calcula tu ritmo de carrera (min/km), tiempo y velocidad media para running y maratón. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate running pace (min/km, min/mile), time, and speed for 5K, 10K, marathons. Free, instant results.",
+    "keywords": ["pace calculator", "ritmo de carrera", "calculadora running", "maraton"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "final-grade-required-calculator",
+    "title": "Calculadora de Nota Necesaria en Examen Final para Aprobar",
+    "title_en": "Required Final Exam Grade Calculator",
+    "slug": "calculadora-de-nota-necesaria-en-examen-final-para-aprobar",
+    "category": "education",
+    "subcategory": "grades",
+    "tags": ["nota-examen-final", "nota-necesaria", "aprobar-curso", "calificaciones", "universidad", "educacion"],
+    "tags_en": ["final-exam-grade", "required-grade", "pass-course", "grades", "college", "education"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la calificación mínima que necesitas sacar en el examen final para alcanzar la nota objetivo deseada para aprobar el curso.",
+    "shortDescription_en": "Calculate minimum score needed on your final exam to reach target overall course grade.",
+    "longDescription": "Herramienta de estrategia académica para estudiantes de secundaria y universidad. Determina la exigencia del examen final según el peso del valor de la prueba.",
+    "longDescription_en": "Academic strategy tool for high school and college students. Determines required final exam score based on exam weight percentage.",
+    "howToUse": [
+      "Ingresa tu Nota Promedio Actual del Curso (0 a 100%).",
+      "Ingresa la Nota Objetivo Deseada para Aprobar o Sacar una A/B (0 a 100%).",
+      "Ingresa el Ponderado / Peso del Examen Final en la Nota (% de la nota total, ej. 30%).",
+      "Consulta la Calificación Mínima Requerida en el Examen Final."
+    ],
+    "howToUse_en": [
+      "Enter Current Course Average Grade (0 to 100%).",
+      "Enter Target Overall Desired Passing Grade (0 to 100%).",
+      "Enter Final Exam Weight Percentage (% of total grade, e.g. 30%).",
+      "View Minimum Required Grade on Final Exam."
+    ],
+    "methodology": "NotaFinalNecesaria = (NotaObjetivo - (NotaActual * (1 - PesoFinal/100))) / (PesoFinal/100).",
+    "methodology_en": "RequiredFinalScore = (TargetGrade - (CurrentGrade * (1 - ExamWeight/100))) / (ExamWeight/100)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Estrategia de Exámenes y Rendimiento Académico",
+    "role_en": "Exam Strategy & Academic Performance Specialist Assistant",
+    "includeData": ["requiredFinalExamScoreResult"],
+    "instructions": [
+      "Interpreta la nota mínima requerida en el examen final.",
+      "Advierte si la nota necesaria supera el 100% (matemáticamente imposible alcanzar la nota objetivo deseada).",
+      "Proporciona ánimos y estrategias de estudio ponderadas según la exigencia del examen final."
+    ],
+    "instructions_en": [
+      "Interpret calculated minimum required final exam score.",
+      "Warn if required score exceeds 100% (mathematically impossible to reach target overall grade).",
+      "Provide encouragement and study strategy recommendations calibrated to final exam difficulty."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "fgr-guide",
+      "icon": "📝",
+      "title": "Final Exam Weighting Dynamics",
+      "title_es": "Dinámica de Ponderación de Examen Final",
+      "content_html_en": "<p><b>Low Weight (10-20%):</b> Current grade dominates course outcome.</p><p><b>High Weight (30-50%):</b> Final exam can dramatically swing your overall letter grade.</p>",
+      "content_html": "<p><b>Ponderación Baja (10-20%):</b> La nota actual domina el resultado del curso.</p><p><b>Ponderación Alta (30-50%):</b> El examen final puede modificar drásticamente la letra final.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "currentCourseAverageGrade",
+      "label": "Nota Promedio Actual (0 a 100%)",
+      "label_en": "Current Course Average Grade (0 to 100%)",
+      "type": "number",
+      "default": 78,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "desiredTargetOverallGrade",
+      "label": "Nota Objetivo Deseada para el Curso (0 a 100%)",
+      "label_en": "Desired Target Overall Course Grade (0 to 100%)",
+      "type": "number",
+      "default": 85,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "finalExamWeightPercent",
+      "label": "Peso / Ponderado del Examen Final (% de la nota)",
+      "label_en": "Final Exam Weight (% of total grade)",
+      "type": "number",
+      "default": 30,
+      "min": 5,
+      "max": 100,
+      "step": 5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "requiredFinalExamScoreResult",
+      "label": "Calificación Mínima Requerida en el Examen Final (%)",
+      "label_en": "Minimum Required Final Exam Grade (%)",
+      "expression": "(desiredTargetOverallGrade - (currentCourseAverageGrade * (1 - (finalExamWeightPercent / 100)))) / (finalExamWeightPercent / 100)",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "requiredFinalExamScoreResult", "op": "<=", "value": 100 }, "label": "Meta Alcanzable", "label_en": "Achievable Target", "tone": "success", "text": "Calificación requerida dentro del rango máximo de 100%.", "text_en": "Required score within achievable 100% bounds." },
+        { "when": { "field": "requiredFinalExamScoreResult", "op": ">", "value": 100 }, "label": "Meta Imposible", "label_en": "Unreachable Target", "tone": "danger", "text": "La nota deseada requiere sacar más de 100% en el examen.", "text_en": "Target overall grade requires over 100% on final exam." }
+      ]
+    }
+  ]
+}

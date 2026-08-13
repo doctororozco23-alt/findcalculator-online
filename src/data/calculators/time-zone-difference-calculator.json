@@ -1,0 +1,191 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "time-zone-difference-calculator",
+    "title": "Calculadora de Conversión de Zonas Horarias (24 Husos Horarios Mundiales y Capitales)",
+    "title_en": "Time Zone Converter & Difference Calculator (All 24 Global UTC / GMT Zones & World Capitals)",
+    "slug": "calculadora-de-diferencia-de-horario-entre-ciudades-zonas-horarias-mundiales",
+    "category": "datetime",
+    "subcategory": "time",
+    "tags": ["zonas-horarias", "24-husos-horarios", "capitales-del-mundo", "utc", "gmt", "conversor-de-hora", "diferencia-horaria", "viajes", "fecha-y-tiempo"],
+    "tags_en": ["time-zone", "24-time-zones", "world-capitals", "utc", "gmt", "time-difference", "travel", "international", "date-time"],
+    "priority": "P1",
+    "status": "published",
+    "version": "3.0.0",
+    "icon": "Globe"
+  },
+  "content": {
+    "shortDescription": "Calcula la diferencia exacta de horas entre las 24 zonas horarias globales (UTC-12 a UTC+14) y capitales del mundo (Punto A a Punto B).",
+    "shortDescription_en": "Calculate exact hour difference across all 24 global UTC time zones (UTC-12 to UTC+14) and world capital cities (Point A to Point B).",
+    "longDescription": "Herramienta completa de coordinación de reuniones internacionales, vuelos y trabajo distribuido. Incluye todos los husos horarios del mundo y capitales globales.",
+    "longDescription_en": "Comprehensive international meeting planner, global flight tool, and distributed team coordinator. Covers all 24 global time zone meridians and capital cities.",
+    "howToUse": [
+      "Ingresa la Hora Local de Origen (0 a 23h, ej. 14 para las 2:00 PM).",
+      "Selecciona la Ciudad o Zona Horaria de Origen en el Buscador (Punto A, desde UTC-12 hasta UTC+14).",
+      "Selecciona la Ciudad o Zona Horaria de Destino en el Buscador (Punto B).",
+      "Ingresa opcionalmente el Ajuste de Horario de Verano (DST).",
+      "Consulta la Diferencia de Horas y la Hora Local Convertida en el Destino."
+    ],
+    "howToUse_en": [
+      "Enter Origin Local Hour (0 to 23h, e.g. 14 for 2:00 PM).",
+      "Select Origin City or Time Zone from Selector (Point A, from UTC-12 to UTC+14).",
+      "Select Destination City or Time Zone from Selector (Point B).",
+      "Optionally select Daylight Saving Time Adjustment (DST).",
+      "View Hour Difference and Converted Destination Local Time."
+    ],
+    "methodology": "Diferencia de Horas = (OffsetDestino + DstDestino) - (OffsetOrigen + DstOrigen). Hora Destino = (HoraOrigen + Diferencia + 48) mod 24.",
+    "methodology_en": "Hour Difference = (DestinationOffset + DstDest) - (OriginOffset + DstOrig). Destination Time = (OriginTime + Difference + 48) mod 24."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Husos Horarios Mundiales y Coordinación Internacional",
+    "role_en": "Global Time Zones & International Coordination Specialist Assistant",
+    "includeData": ["timeZoneHourDiffResult", "convertedDestinationHour"],
+    "instructions": [
+      "Interpreta la diferencia de horas entre la ciudad de origen (Punto A) y la ciudad de destino (Punto B).",
+      "Indica si el destino se encuentra en el mismo día calendario, en el día siguiente o en el día anterior.",
+      "Evalúa si la hora local en el destino cae dentro del horario laboral bancario/corporativo (09:00 a 18:00h)."
+    ],
+    "instructions_en": [
+      "Interpret calculated hour difference between origin city (Point A) and target city (Point B).",
+      "Indicate if destination falls on the same calendar day, next day, or previous day.",
+      "Evaluate whether local destination time falls within corporate business working hours (09:00 to 18:00h)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "tz-guide",
+      "icon": "🌍",
+      "title": "Complete 24 UTC Time Zones Reference Table",
+      "title_es": "Tabla Completa de 24 Husos Horarios Mundiales",
+      "content_html_en": "<p><b>UTC-8 (PST):</b> Los Angeles, Vancouver, Tijuana.</p><p><b>UTC-5 (EST):</b> New York, Toronto, Bogota, Lima, Quito.</p><p><b>UTC-3 (ART/BRT):</b> Buenos Aires, Brasilia, Montevideo, Sao Paulo.</p><p><b>UTC+0 (GMT/WET):</b> London, Lisbon, Dublin, Casablanca.</p><p><b>UTC+1 (CET):</b> Madrid, Paris, Rome, Berlin, Amsterdam, Warsaw.</p><p><b>UTC+2 (EET/CAT):</b> Cairo, Athens, Helsinki, Johannesburg.</p><p><b>UTC+3 (MSK/EAT):</b> Moscow, Istanbul, Riyadh, Doha, Nairobi.</p><p><b>UTC+4 (GST):</b> Dubai, Abu Dhabi, Baku, Muscat.</p><p><b>UTC+8 (CST/SGT):</b> Beijing, Singapore, Hong Kong, Manila, Taipei.</p><p><b>UTC+9 (JST/KST):</b> Tokyo, Seoul, Pyongyang.</p><p><b>UTC+10 (AEST):</b> Sydney, Melbourne, Brisbane.</p><p><b>UTC+12 (NZST):</b> Auckland, Wellington, Suva.</p>",
+      "content_html": "<p><b>UTC-8 (PST):</b> Los Ángeles, Vancouver, Tijuana.</p><p><b>UTC-5 (EST):</b> Nueva York, Toronto, Bogotá, Lima, Quito.</p><p><b>UTC-3 (ART/BRT):</b> Buenos Aires, Brasilia, Montevideo, São Paulo.</p><p><b>UTC+0 (GMT/WET):</b> Londres, Lisboa, Dublín, Casablanca.</p><p><b>UTC+1 (CET):</b> Madrid, París, Roma, Berlín, Ámsterdam, Varsovia.</p><p><b>UTC+2 (EET/CAT):</b> El Cairo, Atenas, Helsinki, Johannesburgo.</p><p><b>UTC+3 (MSK/EAT):</b> Moscú, Estambul, Riad, Doha, Nairobi.</p><p><b>UTC+4 (GST):</b> Dubái, Abu Dabi, Bakú, Mascate.</p><p><b>UTC+8 (CST/SGT):</b> Pekín, Singapur, Hong Kong, Manila, Taipéi.</p><p><b>UTC+9 (JST/KST):</b> Tokio, Seúl, Pionyang.</p><p><b>UTC+10 (AEST):</b> Sídney, Melbourne, Brisbane.</p><p><b>UTC+12 (NZST):</b> Auckland, Wellington, Suva.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "originLocalHour",
+      "label": "Hora Local de Origen (0 a 23 horas)",
+      "label_en": "Origin Local Hour (0 to 23 hours)",
+      "type": "number",
+      "default": 14,
+      "min": 0,
+      "max": 23,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "originUtcOffset",
+      "label": "Ciudad o Zona Horaria de Origen (Punto A - Husos UTC-12 a UTC+14)",
+      "label_en": "Origin City or Time Zone (Point A - UTC-12 to UTC+14)",
+      "type": "select",
+      "default": "-5",
+      "options": [
+        { "value": "-12", "label": "🌊 UTC-12: Baker / Howland (Línea de Cambio de Fecha)", "label_en": "UTC-12: Baker / Howland Island" },
+        { "value": "-11", "label": "🇼🇸 UTC-11: Pago Pago / Samoa Americana / Niue", "label_en": "UTC-11: Pago Pago / American Samoa" },
+        { "value": "-10", "label": "🇺🇸 UTC-10: Honolulu / Hawái / Tahití", "label_en": "UTC-10: Honolulu / Hawaii / Tahiti" },
+        { "value": "-9", "label": "🇺🇸 UTC-9: Anchorage / Juneau / Alaska", "label_en": "UTC-9: Anchorage / Alaska" },
+        { "value": "-8", "label": "🇺🇸 UTC-8: Los Ángeles / San Francisco / Vancouver / Tijuana (PST)", "label_en": "UTC-8: Los Angeles / San Francisco / Vancouver (PST)" },
+        { "value": "-7", "label": "🇺🇸 UTC-7: Denver / Phoenix / Calgary / Hermosillo (MST)", "label_en": "UTC-7: Denver / Phoenix / Calgary (MST)" },
+        { "value": "-6", "label": "🇲🇽 UTC-6: Ciudad de México / Chicago / Guatemala / San José / Tegucigalpa (CST)", "label_en": "UTC-6: Mexico City / Chicago / Guatemala (CST)" },
+        { "value": "-5", "label": "🇺🇸 UTC-5: Nueva York / Washington D.C. / Toronto / Bogotá / Lima / Quito / La Habana (EST)", "label_en": "UTC-5: New York / Washington / Toronto / Bogota / Lima (EST)" },
+        { "value": "-4", "label": "🇻🇪 UTC-4: Caracas / La Paz / Santo Domingo / San Juan / Asunción / Santiago / Halifax (AST)", "label_en": "UTC-4: Caracas / La Paz / San Juan / Santiago (AST)" },
+        { "value": "-3", "label": "🇦🇷 UTC-3: Buenos Aires / Brasilia / São Paulo / Montevideo / Cayena (ART/BRT)", "label_en": "UTC-3: Buenos Aires / Brasilia / Sao Paulo / Montevideo (ART/BRT)" },
+        { "value": "-2", "label": "🇧🇷 UTC-2: Fernando de Noronha / Islas Sándwich del Sur", "label_en": "UTC-2: Fernando de Noronha / South Georgia" },
+        { "value": "-1", "label": "🇨🇻 UTC-1: Praia (Cabo Verde) / Azores", "label_en": "UTC-1: Praia (Cape Verde) / Azores" },
+        { "value": "0", "label": "🇬🇧 UTC+0: Londres / Dublín / Lisboa / Casablanca / Acra / Reikiavik (GMT/WET)", "label_en": "UTC+0: London / Dublin / Lisbon / Casablanca / Reykjavik (GMT/WET)" },
+        { "value": "1", "label": "🇪🇸 UTC+1: Madrid / París / Berlín / Roma / Ámsterdam / Bruselas / Viena / Varsovia / Túnez / Lagos (CET/WAT)", "label_en": "UTC+1: Madrid / Paris / Berlin / Rome / Amsterdam / Warsaw (CET)" },
+        { "value": "2", "label": "🇪🇬 UTC+2: El Cairo / Atenas / Helsinki / Bucarest / Kiev / Johannesburgo / Jerusalén / Beirut (EET/CAT)", "label_en": "UTC+2: Cairo / Athens / Helsinki / Bucharest / Kiev / Johannesburg (EET)" },
+        { "value": "3", "label": "🇷🇺 UTC+3: Moscú / Estambul / Riad / Doha / Bagdad / Nairobi / Kampala / Addis Abeba (MSK/EAT)", "label_en": "UTC+3: Moscow / Istanbul / Riyadh / Doha / Baghdad / Nairobi (MSK/EAT)" },
+        { "value": "4", "label": "🇦🇪 UTC+4: Dubái / Abu Dabi / Mascate / Bakú / Ereván / Tiflis (GST)", "label_en": "UTC+4: Dubai / Abu Dhabi / Muscat / Baku / Tbilisi (GST)" },
+        { "value": "5", "label": "🇺🇿 UTC+5: Taskent / Islamabad / Karachi / Ascabad (PKT/UZT)", "label_en": "UTC+5: Tashkent / Islamabad / Karachi (PKT/UZT)" },
+        { "value": "6", "label": "🇧🇩 UTC+6: Daca (Bangladés) / Astaná / Almatý (BST)", "label_en": "UTC+6: Dhaka / Astana / Almaty (BST)" },
+        { "value": "7", "label": "🇹🇭 UTC+7: Bangkok / Yakarta / Hanói / Phnom Penh / Vientián (ICT)", "label_en": "UTC+7: Bangkok / Jakarta / Hanoi (ICT)" },
+        { "value": "8", "label": "🇨🇳 UTC+8: Pekín / Singapur / Hong Kong / Kuala Lumpur / Manila / Taipéi / Perth (CST/SGT)", "label_en": "UTC+8: Beijing / Singapore / Hong Kong / Kuala Lumpur / Manila (CST/SGT)" },
+        { "value": "9", "label": "🇯🇵 UTC+9: Tokio / Seúl / Pionyang (JST/KST)", "label_en": "UTC+9: Tokyo / Seoul / Pyongyang (JST/KST)" },
+        { "value": "10", "label": "🇦🇺 UTC+10: Sídney / Canberra / Melbourne / Brisbane / Puerto Moresby (AEST)", "label_en": "UTC+10: Sydney / Canberra / Melbourne / Brisbane (AEST)" },
+        { "value": "11", "label": "🇳🇨 UTC+11: Nouméa (Nueva Caledonia) / Honiara (Islas Salomón)", "label_en": "UTC+11: Noumea / Honiara (Solomon Islands)" },
+        { "value": "12", "label": "🇳🇿 UTC+12: Auckland / Wellington / Suva (Fiyi)", "label_en": "UTC+12: Auckland / Wellington / Suva (Fiji)" },
+        { "value": "13", "label": "🇹🇴 UTC+13: Nuku'alofa (Tonga) / Apia (Samoa)", "label_en": "UTC+13: Nuku'alofa (Tonga) / Apia (Samoa)" },
+        { "value": "14", "label": "🇰🇮 UTC+14: Kiritimati (Islas de la Línea / Kiribati)", "label_en": "UTC+14: Kiritimati (Line Islands)" }
+      ]
+    },
+    {
+      "id": "destinationUtcOffset",
+      "label": "Ciudad o Zona Horaria de Destino (Punto B - Husos UTC-12 a UTC+14)",
+      "label_en": "Destination City or Time Zone (Point B - UTC-12 to UTC+14)",
+      "type": "select",
+      "default": "1",
+      "options": [
+        { "value": "-12", "label": "🌊 UTC-12: Baker / Howland (Línea de Cambio de Fecha)", "label_en": "UTC-12: Baker / Howland Island" },
+        { "value": "-11", "label": "🇼🇸 UTC-11: Pago Pago / Samoa Americana / Niue", "label_en": "UTC-11: Pago Pago / American Samoa" },
+        { "value": "-10", "label": "🇺🇸 UTC-10: Honolulu / Hawái / Tahití", "label_en": "UTC-10: Honolulu / Hawaii / Tahiti" },
+        { "value": "-9", "label": "🇺🇸 UTC-9: Anchorage / Juneau / Alaska", "label_en": "UTC-9: Anchorage / Alaska" },
+        { "value": "-8", "label": "🇺🇸 UTC-8: Los Ángeles / San Francisco / Vancouver / Tijuana (PST)", "label_en": "UTC-8: Los Angeles / San Francisco / Vancouver (PST)" },
+        { "value": "-7", "label": "🇺🇸 UTC-7: Denver / Phoenix / Calgary / Hermosillo (MST)", "label_en": "UTC-7: Denver / Phoenix / Calgary (MST)" },
+        { "value": "-6", "label": "🇲🇽 UTC-6: Ciudad de México / Chicago / Guatemala / San José / Tegucigalpa (CST)", "label_en": "UTC-6: Mexico City / Chicago / Guatemala (CST)" },
+        { "value": "-5", "label": "🇺🇸 UTC-5: Nueva York / Washington D.C. / Toronto / Bogotá / Lima / Quito / La Habana (EST)", "label_en": "UTC-5: New York / Washington / Toronto / Bogota / Lima (EST)" },
+        { "value": "-4", "label": "🇻🇪 UTC-4: Caracas / La Paz / Santo Domingo / San Juan / Asunción / Santiago / Halifax (AST)", "label_en": "UTC-4: Caracas / La Paz / San Juan / Santiago (AST)" },
+        { "value": "-3", "label": "🇦🇷 UTC-3: Buenos Aires / Brasilia / São Paulo / Montevideo / Cayena (ART/BRT)", "label_en": "UTC-3: Buenos Aires / Brasilia / Sao Paulo / Montevideo (ART/BRT)" },
+        { "value": "-2", "label": "🇧🇷 UTC-2: Fernando de Noronha / Islas Sándwich del Sur", "label_en": "UTC-2: Fernando de Noronha / South Georgia" },
+        { "value": "-1", "label": "🇨🇻 UTC-1: Praia (Cabo Verde) / Azores", "label_en": "UTC-1: Praia (Cape Verde) / Azores" },
+        { "value": "0", "label": "🇬🇧 UTC+0: Londres / Dublín / Lisboa / Casablanca / Acra / Reikiavik (GMT/WET)", "label_en": "UTC+0: London / Dublin / Lisbon / Casablanca / Reykjavik (GMT/WET)" },
+        { "value": "1", "label": "🇪🇸 UTC+1: Madrid / París / Berlín / Roma / Ámsterdam / Bruselas / Viena / Varsovia / Túnez / Lagos (CET/WAT)", "label_en": "UTC+1: Madrid / Paris / Berlin / Rome / Amsterdam / Warsaw (CET)" },
+        { "value": "2", "label": "🇪🇬 UTC+2: El Cairo / Atenas / Helsinki / Bucarest / Kiev / Johannesburgo / Jerusalén / Beirut (EET/CAT)", "label_en": "UTC+2: Cairo / Athens / Helsinki / Bucharest / Kiev / Johannesburg (EET)" },
+        { "value": "3", "label": "🇷🇺 UTC+3: Moscú / Estambul / Riad / Doha / Bagdad / Nairobi / Kampala / Addis Abeba (MSK/EAT)", "label_en": "UTC+3: Moscow / Istanbul / Riyadh / Doha / Baghdad / Nairobi (MSK/EAT)" },
+        { "value": "4", "label": "🇦🇪 UTC+4: Dubái / Abu Dabi / Mascate / Bakú / Ereván / Tiflis (GST)", "label_en": "UTC+4: Dubai / Abu Dhabi / Muscat / Baku / Tbilisi (GST)" },
+        { "value": "5", "label": "🇺🇿 UTC+5: Taskent / Islamabad / Karachi / Ascabad (PKT/UZT)", "label_en": "UTC+5: Tashkent / Islamabad / Karachi (PKT/UZT)" },
+        { "value": "6", "label": "🇧🇩 UTC+6: Daca (Bangladés) / Astaná / Almatý (BST)", "label_en": "UTC+6: Dhaka / Astana / Almaty (BST)" },
+        { "value": "7", "label": "🇹🇭 UTC+7: Bangkok / Yakarta / Hanói / Phnom Penh / Vientián (ICT)", "label_en": "UTC+7: Bangkok / Jakarta / Hanoi (ICT)" },
+        { "value": "8", "label": "🇨🇳 UTC+8: Pekín / Singapur / Hong Kong / Kuala Lumpur / Manila / Taipéi / Perth (CST/SGT)", "label_en": "UTC+8: Beijing / Singapore / Hong Kong / Kuala Lumpur / Manila (CST/SGT)" },
+        { "value": "9", "label": "🇯🇵 UTC+9: Tokio / Seúl / Pionyang (JST/KST)", "label_en": "UTC+9: Tokyo / Seoul / Pyongyang (JST/KST)" },
+        { "value": "10", "label": "🇦🇺 UTC+10: Sídney / Canberra / Melbourne / Brisbane / Puerto Moresby (AEST)", "label_en": "UTC+10: Sydney / Canberra / Melbourne / Brisbane (AEST)" },
+        { "value": "11", "label": "🇳🇨 UTC+11: Nouméa (Nueva Caledonia) / Honiara (Islas Salomón)", "label_en": "UTC+11: Noumea / Honiara (Solomon Islands)" },
+        { "value": "12", "label": "🇳🇿 UTC+12: Auckland / Wellington / Suva (Fiyi)", "label_en": "UTC+12: Auckland / Wellington / Suva (Fiji)" },
+        { "value": "13", "label": "🇹🇴 UTC+13: Nuku'alofa (Tonga) / Apia (Samoa)", "label_en": "UTC+13: Nuku'alofa (Tonga) / Apia (Samoa)" },
+        { "value": "14", "label": "🇰🇮 UTC+14: Kiritimati (Islas de la Línea / Kiribati)", "label_en": "UTC+14: Kiritimati (Line Islands)" }
+      ]
+    },
+    {
+      "id": "daylightSavingAdjustmentHours",
+      "label": "Ajuste por Horario de Verano (DST)",
+      "label_en": "Daylight Saving Time Adjustment (DST)",
+      "type": "select",
+      "default": "0",
+      "options": [
+        { "value": "0", "label": "Sin horario de verano (Estándar 0h)", "label_en": "Standard Time (0h adjustment)" },
+        { "value": "1", "label": "Destino en Horario de Verano (+1h)", "label_en": "Target in Daylight Saving (+1h)" },
+        { "value": "-1", "label": "Origen en Horario de Verano (-1h de diferencia relativa)", "label_en": "Source in Daylight Saving (-1h relative)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "timeZoneHourDiffResult",
+      "label": "Diferencia de Horas entre Destino y Origen",
+      "label_en": "Hour Difference between Destination & Origin",
+      "expression": "(destinationUtcOffset - originUtcOffset) + daylightSavingAdjustmentHours",
+      "unit": "horas",
+      "unit_en": "hours",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "convertedDestinationHour",
+      "label": "Hora Equivalente en el Destino (0-23h)",
+      "label_en": "Equivalent Destination Hour (0-23h)",
+      "expression": "(originLocalHour + timeZoneHourDiffResult + 48) % 24",
+      "unit": ":00 h",
+      "unit_en": ":00 h",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "convertedDestinationHour", "op": ">=", "value": 9 }, "label": "Horario Laboral Corporativo", "label_en": "Business Hours", "tone": "success", "text": "Hora adecuada para llamadas y reuniones de trabajo (09:00 a 18:00h).", "text_en": "Suitable time for calls and business meetings (09:00 to 18:00h)." },
+        { "when": { "field": "convertedDestinationHour", "op": "<", "value": 8 }, "label": "Horario Nocturno / Descanso", "label_en": "Night / Sleeping Hours", "tone": "danger", "text": "Hora fuera de oficina / madrugada en la ciudad de destino.", "text_en": "Off-office / early morning sleeping hours at target city." }
+      ]
+    }
+  ]
+}

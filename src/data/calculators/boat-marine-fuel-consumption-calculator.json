@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "boat-marine-fuel-consumption-calculator",
+    "title": "Calculadora de Consumo de Combustible Náutico para Embarcaciones y Yates (GPH)",
+    "title_en": "Boat & Yacht Marine Fuel Consumption Calculator (GPH & Fuel Range)",
+    "slug": "calculadora-de-consumo-de-combustible-nautico-embarcaciones-yates-gph",
+    "category": "transport",
+    "subcategory": "fuel",
+    "tags": ["consumo-nautico", "combustible-de-barco", "gph", "galones-por-hora", "embarcaciones", "yates", "motores-fueraborda", "transporte"],
+    "tags_en": ["marine-fuel", "boat-fuel", "gph", "gallons-per-hour", "yachts", "outboard-motors", "transport"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el consumo de combustible de barcos y lanchas en Galones por Hora (GPH), costo del viaje de navegación y autonomía restante.",
+    "shortDescription_en": "Calculate boat and yacht fuel consumption in Gallons per Hour (GPH), marine trip fuel cost, and remaining fuel range.",
+    "longDescription": "Herramienta de ingeniería náutica y navegación de recreo o pesquera. Aplica la regla estándar de consumo marino al 10% del caballaje HP a máximo régimen.",
+    "longDescription_en": "Marine engineering and recreational/charter boating tool. Applies standard marine fuel consumption rule (10% of engine HP at wide open throttle WOT).",
+    "howToUse": [
+      "Ingresa la Potencia Total del Motor Marítimo (HP caballos de fuerza, ej. 250 HP fueraborda o intraborda).",
+      "Ingresa el Porcentaje de Régimen de Motor / Acelerador (% WOT, ej. 75% velocidad crucero).",
+      "Ingresa la Duración de la Travesía Náutica (horas, ej. 4 horas).",
+      "Ingresa el Precio del Combustible Marino ($/galón, ej. 4.50 $/galón).",
+      "Consulta el Consumo Estimado en Galones por Hora (GPH), Galones Totales Consumidos y Costo Marítimo."
+    ],
+    "howToUse_en": [
+      "Enter Total Marine Engine Horsepower (HP, e.g. 250 HP outboard or inboard).",
+      "Enter Cruise Throttle Setting (% WOT, e.g. 75% cruising speed).",
+      "Enter Marine Trip Duration (hours, e.g. 4 hours).",
+      "Enter Marine Fuel Price ($/gallon, e.g. $4.50/gallon).",
+      "View Estimated Gallons Per Hour (GPH), Total Gallons Consumed, and Marine Trip Cost."
+    ],
+    "methodology": "GPH_WOT = HP / 10. GPH_Crucero = GPH_WOT * (PorcentajeRégimen / 100). GalonesTotales = GPH_Crucero * Horas. CostoTotal = GalonesTotales * PrecioGalón.",
+    "methodology_en": "WOT_GPH = HP / 10. Cruise_GPH = WOT_GPH * (ThrottlePercent / 100). TotalGallons = Cruise_GPH * Hours. TotalCost = TotalGallons * FuelPrice."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Arquitectura Naval y Combustible Náutico",
+    "role_en": "Naval Architecture & Marine Fuel Systems Specialist Assistant",
+    "includeData": ["estimatedGphBurnRateResult", "totalMarineTripFuelCostResult"],
+    "instructions": [
+      "Interpreta el consumo de combustible náutico calculado en Galones por Hora (GPH) y el gasto del viaje.",
+      "Explica la regla náutica de reserva de combustible (Regla de los tercios: 1/3 para ida, 1/3 para vuelta, 1/3 para reserva de seguridad).",
+      "Muestra la diferencia de eficiencia entre motores marinos diésel intraborda vs gasolina fueraborda."
+    ],
+    "instructions_en": [
+      "Interpret calculated marine fuel burn rate in Gallons per Hour (GPH) and total trip fuel cost.",
+      "Explain the marine fuel rule of thirds (1/3 for outbound trip, 1/3 for return, 1/3 safety reserve).",
+      "Show efficiency difference between inboard diesel engines versus outboard gasoline motors."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "bmf-guide",
+      "icon": "⚓",
+      "title": "Marine Fuel Consumption Rule of Thumb",
+      "title_es": "Regla Práctica de Consumo de Combustible Náutico",
+      "content_html_en": "<p><b>Gasoline Engines:</b> Burn approx 1 Gallon per Hour (GPH) for every 10 HP at Wide Open Throttle (WOT).</p><p><b>Diesel Engines:</b> Burn approx 1 Gallon per Hour (GPH) for every 20 HP at WOT (roughly twice as fuel efficient).</p><p><b>Rule of Thirds:</b> 1/3 out, 1/3 back, 1/3 reserve.</p>",
+      "content_html": "<p><b>Motores de Gasolina:</b> Queman aprox 1 Galón por Hora (GPH) por cada 10 HP a aceleración máxima.</p><p><b>Motores Diésel:</b> Queman aprox 1 Galón por Hora (GPH) por cada 20 HP a aceleración máxima (el doble de eficientes).</p><p><b>Regla de Tercios:</b> 1/3 para ir, 1/3 para volver, 1/3 de reserva.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "marineEngineHorsepowerHp",
+      "label": "Potencia del Motor Marítimo (HP)",
+      "label_en": "Marine Engine Horsepower (HP)",
+      "type": "number",
+      "default": 250,
+      "min": 10,
+      "max": 3000,
+      "step": 10,
+      "required": true
+    },
+    {
+      "id": "cruiseThrottlePercentage",
+      "label": "Régimen del Acelerador en Crucero (% WOT)",
+      "label_en": "Cruise Throttle Setting (% WOT)",
+      "type": "number",
+      "default": 70,
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "marineTripDurationHours",
+      "label": "Duración de la Travesía (horas)",
+      "label_en": "Marine Trip Duration (hours)",
+      "type": "number",
+      "default": 4,
+      "min": 0.5,
+      "max": 100,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "marineFuelPricePerGallon",
+      "label": "Precio del Combustible Marino ($/galón)",
+      "label_en": "Marine Fuel Price ($/gallon)",
+      "type": "number",
+      "default": 4.5,
+      "min": 1.0,
+      "max": 20.0,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "estimatedGphBurnRateResult",
+      "label": "Tasa de Consumo Estimada en Galones/Hora (GPH)",
+      "label_en": "Estimated Burn Rate in Gallons/Hour (GPH)",
+      "expression": "(marineEngineHorsepowerHp / 10) * (cruiseThrottlePercentage / 100)",
+      "unit": "GPH",
+      "unit_en": "GPH",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "estimatedGphBurnRateResult", "op": ">=", "value": 0 }, "label": "Tasa GPH Calculada", "label_en": "GPH Rate Computed", "tone": "success", "text": "Tasa de consumo de combustible náutico en GPH cuantificada.", "text_en": "Marine fuel burn rate in GPH quantified." }
+      ]
+    },
+    {
+      "id": "totalMarineGallonsConsumedResult",
+      "label": "Galones Totales de Combustible Consumidos",
+      "label_en": "Total Marine Fuel Gallons Consumed",
+      "expression": "estimatedGphBurnRateResult * marineTripDurationHours",
+      "unit": "gal",
+      "unit_en": "gal",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "totalMarineTripFuelCostResult",
+      "label": "Costo Total del Combustible del Viaje Náutico ($)",
+      "label_en": "Total Marine Trip Fuel Cost ($)",
+      "expression": "totalMarineGallonsConsumedResult * marineFuelPricePerGallon",
+      "unit": "$",
+      "unit_en": "$",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

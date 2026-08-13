@@ -1,0 +1,185 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "mutual-fund-calculator",
+    "title": "Calculadora de Fondos Mutuos e Indexados",
+    "title_en": "Mutual Fund & ETF Calculator",
+    "slug": "fondos-mutuos-indexados",
+    "category": "finance",
+    "subcategory": "investments",
+    "tags": ["fondos-mutuos", "etf", "inversion"],
+    "tags_en": ["mutual-funds", "etf", "investing"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Layers"
+  },
+  "content": {
+    "shortDescription": "Calcula el retorno futuro estimado de un fondo mutuo o ETF descontando el ratio de gastos de gestión (Expense Ratio).",
+    "shortDescription_en": "Calculate estimated future mutual fund or ETF returns net of expense ratio management fees.",
+    "longDescription": "Proyecta el crecimiento acumulado de tu inversión en fondos de inversión o ETFs considerando el impacto de las comisiones de gestión anuales (Expense Ratio %) en la rentabilidad neta final.",
+    "longDescription_en": "Project total investment accumulation in mutual funds or index ETFs accounting for annual expense ratio management fees (%) impact on net wealth.",
+    "howToUse": [
+      "Ingresa el capital inicial invertido.",
+      "Añade la aportación mensual al fondo.",
+      "Establece el retorno anual estimado (%) y el ratio de gastos (Expense Ratio %).",
+      "Consulta el saldo neto acumulado descontando las comisiones."
+    ],
+    "howToUse_en": [
+      "Enter starting investment balance and active currency.",
+      "Add monthly recurring fund deposit.",
+      "Set gross annual return rate (%) and annual expense ratio fee (%).",
+      "View net future balance after management fee deductions."
+    ],
+    "methodology": "Fórmula Fondos Mutuos: Tasa Neta = Retorno Bruto - Expense Ratio. Capitalización sobre Tasa Neta.",
+    "methodology_en": "Mutual Fund Formula: Net Rate = Gross Return - Expense Ratio. Compounded on Net Rate."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "📊",
+      "title": "Impact of Expense Ratio on Fund Returns",
+      "title_es": "Impacto de las Comisiones en los Fondos de Inversión",
+      "content_html_en": "<p>A high expense ratio (e.g. 1.5% vs 0.05% for index ETFs) significantly reduces your long-term wealth compounding over 20-30 years.</p>",
+      "content_html": "<p>Un ratio de gastos elevado (ej. 1.5% frente al 0.05% de un ETF indexado) erosiona considerablemente el interés compuesto acumulado a largo plazo.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "initialInvestment",
+      "label": "Inversión inicial en el fondo",
+      "label_en": "Initial Fund Investment Amount",
+      "type": "currency",
+      "default": 10000,
+      "min": 100,
+      "max": 10000000,
+      "step": 500,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "monthlyContribution",
+      "label": "Aportación mensual al fondo",
+      "label_en": "Monthly Fund Contribution",
+      "type": "currency",
+      "default": 400,
+      "min": 0,
+      "max": 50000,
+      "step": 50,
+      "unit": { "follows": "initialInvestment" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "grossReturn",
+      "label": "Retorno bruto anual estimado del fondo (%)",
+      "label_en": "Gross Annual Expected Fund Return (%)",
+      "type": "number",
+      "default": 8.0,
+      "min": 0.1,
+      "max": 30,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "expenseRatio",
+      "label": "Comisión de gestión anual (Expense Ratio %)",
+      "label_en": "Annual Expense Ratio Fee (%)",
+      "type": "number",
+      "default": 0.2,
+      "min": 0,
+      "max": 5,
+      "step": 0.05,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "years",
+      "label": "Horizonte temporal de inversión (años)",
+      "label_en": "Investment Horizon (years)",
+      "type": "slider",
+      "default": 20,
+      "min": 1,
+      "max": 40,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "netReturnRate",
+      "label": "Rentabilidad neta anual (tras comisiones)",
+      "label_en": "Net Annual Effective Return (After Fees)",
+      "expression": "max(grossReturn - expenseRatio, 0.1)",
+      "unit": "%",
+      "precision": 2,
+      "format": "percent",
+      "type": "secondary"
+    },
+    {
+      "id": "netFundValue",
+      "label": "Valor Futuro Neto del Fondo",
+      "label_en": "Net Future Mutual Fund Value",
+      "expression": "initialInvestment * ((1 + netReturnRate / 100) ^ years) + (monthlyContribution * 12) * ((((1 + netReturnRate / 100) ^ years) - 1) / (netReturnRate / 100))",
+      "unit": { "follows": "initialInvestment" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "netFundValue", "op": ">", "value": 0 }, "label": "Crecimiento Neto Acumulado", "label_en": "Net Fund Wealth Accumulated", "tone": "success", "text": "Proyección limpia descontando comisiones de gestión anuales.", "text_en": "Clean projection net of management expense ratio fees." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "investment-calculator", "type": "static", "message": "Calcula crecimiento de inversión estándar", "message_en": "Calculate general investment growth", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Fondos de Inversión y ETFs",
+    "role_en": "Mutual Fund & ETF Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["netFundValue", "netReturnRate", "grossReturn", "expenseRatio"],
+    "instructions": [
+      "Sintetiza el valor futuro neto del fondo y la tasa neta tras comisiones en 2 frases concisas.",
+      "Destaca cómo mantener comisiones de gestión bajas preserva miles en capital acumulado."
+    ],
+    "instructions_en": [
+      "Summarize net future fund value and effective net return rate in 2 concise sentences.",
+      "Emphasize that low expense ratios preserve thousands in long-term accumulated wealth."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Fondos Mutuos e Indexados | CalculadoraHub",
+    "metaTitle_en": "Mutual Fund & ETF Calculator | CalculadoraHub",
+    "metaDescription": "Calcula la rentabilidad neta de tus fondos mutuos y ETFs descontando comisiones. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate net future mutual fund and ETF returns accounting for expense ratios. Free, instant results.",
+    "keywords": ["mutual fund calculator", "fondos mutuos", "etf calculator", "expense ratio"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

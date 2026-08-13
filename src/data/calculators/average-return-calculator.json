@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "average-return-calculator",
+    "title": "Calculadora de Retorno Promedio Anualizado (CAGR)",
+    "title_en": "Average Return & CAGR Calculator",
+    "slug": "retorno-promedio-cagr",
+    "category": "finance",
+    "subcategory": "investments",
+    "tags": ["cagr", "retorno-promedio", "inversion"],
+    "tags_en": ["cagr", "average-return", "investing"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "BarChart3"
+  },
+  "content": {
+    "shortDescription": "Calcula la Tasa de Crecimiento Anual Compuesto (CAGR) y el retorno promedio aritmético de cualquier inversión.",
+    "shortDescription_en": "Calculate Compound Annual Growth Rate (CAGR) and mean average return on any multi-year investment.",
+    "longDescription": "Mide el ritmo medio geométrico constante de crecimiento anual (CAGR %) de un capital entre el valor de partida inicial y el valor final alcanzado.",
+    "longDescription_en": "Measure smooth geometric annual compound growth rate (CAGR %) of capital from starting value to final value over specified years.",
+    "howToUse": [
+      "Ingresa el valor inicial de la inversión.",
+      "Ingresa el valor final acumulado alcanzado.",
+      "Establece el número de años transcurridos.",
+      "Consulta la Tasa CAGR % anualizada y la ganancia total."
+    ],
+    "howToUse_en": [
+      "Enter initial starting investment value and active currency.",
+      "Enter ending final accumulated value.",
+      "Set number of years elapsed.",
+      "View annual Compound Annual Growth Rate (CAGR %) and total gain."
+    ],
+    "methodology": "Fórmula CAGR: CAGR (%) = [ (Valor Final / Valor Inicial) ^ (1 / Años) - 1 ] × 100.",
+    "methodology_en": "CAGR Formula: CAGR (%) = [ (Final Value / Initial Value) ^ (1 / Years) - 1 ] × 100."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "📐",
+      "title": "Why CAGR Matters for Investors",
+      "title_es": "Por qué el CAGR es Crucial para Inversores",
+      "content_html_en": "<p>CAGR provides a smooth geometric annual return metric that eliminates short-term market volatility noise to show true annual compounding velocity.</p>",
+      "content_html": "<p>El CAGR ofrece una medición geométrica precisa del crecimiento suavizando la volatilidad de los mercados año tras año.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "initialValue",
+      "label": "Valor inicial de la inversión",
+      "label_en": "Initial Starting Investment Value",
+      "type": "currency",
+      "default": 10000,
+      "min": 100,
+      "max": 10000000,
+      "step": 500,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [100, 10000000], "message": "Valor entre 100 y 10.000.000", "message_en": "Value between 100 and 10,000,000" }]
+    },
+    {
+      "id": "finalValue",
+      "label": "Valor final acumulado",
+      "label_en": "Ending Final Accumulated Value",
+      "type": "currency",
+      "default": 25000,
+      "min": 0,
+      "max": 50000000,
+      "step": 500,
+      "unit": { "follows": "initialValue" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "yearsElapsed",
+      "label": "Años transcurridos",
+      "label_en": "Number of Years Elapsed",
+      "type": "number",
+      "default": 5,
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1, 50], "message": "Años entre 1 y 50", "message_en": "Years between 1 and 50" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalGain",
+      "label": "Ganancia Neta Acumulada Total",
+      "label_en": "Total Cumulative Net Gain",
+      "expression": "finalValue - initialValue",
+      "unit": { "follows": "initialValue" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "cagrPercent",
+      "label": "Tasa de Crecimiento Anual Compuesto (CAGR %)",
+      "label_en": "Compound Annual Growth Rate (CAGR %)",
+      "expression": "(((finalValue / initialValue) ^ (1 / yearsElapsed)) - 1) * 100",
+      "unit": "%",
+      "precision": 2,
+      "format": "percent",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "cagrPercent", "op": ">=", "value": 10 }, "label": "Excelente Retorno Anualizado", "label_en": "High Annualized Return", "tone": "success", "text": "Rendimiento anualizado superior a la media de mercado.", "text_en": "Annualized compounding return rate exceeding market averages." }
+      ]
+    },
+    {
+      "id": "totalPercentageGain",
+      "label": "Ganancia Porcentual Total Acumulada",
+      "label_en": "Total Cumulative Percentage Gain",
+      "expression": "((finalValue - initialValue) / initialValue) * 100",
+      "unit": "%",
+      "precision": 1,
+      "format": "percent",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "roi-calculator", "type": "static", "message": "Calcula el retorno de inversión ROI", "message_en": "Calculate Return on Investment ROI", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Rentabilidad CAGR",
+    "role_en": "CAGR Performance Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["cagrPercent", "totalGain", "totalPercentageGain", "yearsElapsed"],
+    "instructions": [
+      "Sintetiza la tasa CAGR % anualizada y la ganancia total acumulada en 2 frases concisas.",
+      "Destaca que el CAGR promedia geométricamente la rentabilidad eliminando distorsiones anuales."
+    ],
+    "instructions_en": [
+      "Summarize annual CAGR % rate and total cumulative net gain in 2 concise sentences.",
+      "Highlight that CAGR smooths out annual return fluctuations into a single geometric rate."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Retorno Promedio Anualizado (CAGR) | CalculadoraHub",
+    "metaTitle_en": "Average Return & CAGR Calculator | CalculadoraHub",
+    "metaDescription": "Calcula la Tasa de Crecimiento Anual Compuesto (CAGR %) de tu inversión. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate Compound Annual Growth Rate (CAGR %) for investments. Free, instant results.",
+    "keywords": ["cagr calculator", "retorno promedio", "cagr %", "rentabilidad anualizada"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

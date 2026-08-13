@@ -1,0 +1,192 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "va-mortgage-calculator",
+    "title": "Calculadora de Hipoteca VA para Veteranos",
+    "title_en": "VA Mortgage Calculator",
+    "slug": "hipoteca-va-veteranos",
+    "category": "finance",
+    "subcategory": "mortgages",
+    "tags": ["va-loan", "hipoteca", "veteranos"],
+    "tags_en": ["va-loan", "mortgage", "veterans"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Award"
+  },
+  "content": {
+    "shortDescription": "Calcula el pago mensual de tu hipoteca VA con 0% de enganche inicial e incorpora la tarifa de financiación (VA Funding Fee).",
+    "shortDescription_en": "Calculate your VA mortgage payment with 0% down payment options and VA Funding Fee calculation.",
+    "longDescription": "Estima el costo mensual de financiar una vivienda bajo el programa VA respaldado por el Departamento de Asuntos de Veteranos. Destaca la financiación del 100% sin seguro hipotecario mensual.",
+    "longDescription_en": "Estimate monthly payment of financing a home under Department of Veterans Affairs (VA) loan program featuring 0% down payment and zero monthly PMI.",
+    "howToUse": [
+      "Ingresa el precio de compra del inmueble.",
+      "Indica si es tu primer uso del beneficio VA (Tarifa de financiación ~2.15%).",
+      "Establece la tasa de interés anual (%) y el plazo en años.",
+      "Consulta la cuota mensual fija sin seguro PMI."
+    ],
+    "howToUse_en": [
+      "Enter home purchase price and active currency.",
+      "Select first-time or subsequent VA loan use (Funding Fee ~2.15%).",
+      "Set interest rate (%) and loan term in years.",
+      "View monthly payment with zero monthly PMI insurance."
+    ],
+    "methodology": "Cálculo VA: Financiación Total = Precio + VA Funding Fee (2.15%). Sin seguro hipotecario privado mensual (0% PMI).",
+    "methodology_en": "VA Calculation: Total Financed = Price + VA Funding Fee (2.15%). Zero monthly mortgage insurance (0% PMI)."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🎖️",
+      "title": "VA Loan Key Benefits",
+      "title_es": "Beneficios Clave del Préstamo Hipotecario VA",
+      "content_html_en": "<p>VA loans offer military veterans and active service members 0% down payment requirements, competitive interest rates, and no monthly mortgage insurance (PMI).</p>",
+      "content_html": "<p>Los préstamos VA ofrecen a veteranos y militares un 0% de entrada inicial, tasas muy competitivas y exención de seguro hipotecario mensual.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "homePrice",
+      "label": "Precio de compra de la propiedad",
+      "label_en": "Home Purchase Price",
+      "type": "currency",
+      "default": 300000,
+      "min": 10000,
+      "max": 3000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [10000, 3000000], "message": "Precio entre 10.000 y 3.000.000", "message_en": "Price between 10,000 and 3,000,000" }]
+    },
+    {
+      "id": "downPaymentPercent",
+      "label": "Porcentaje de enganche inicial (%)",
+      "label_en": "Down Payment Percentage (%)",
+      "type": "slider",
+      "default": 0,
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "interestRate",
+      "label": "Tasa de interés anual (%)",
+      "label_en": "Annual Interest Rate (%)",
+      "type": "number",
+      "default": 4.25,
+      "min": 0.1,
+      "max": 15,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "loanYears",
+      "label": "Plazo del préstamo (años)",
+      "label_en": "Loan Term (years)",
+      "type": "slider",
+      "default": 30,
+      "min": 15,
+      "max": 30,
+      "step": 15,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "baseLoanAmount",
+      "label": "Monto inicial del préstamo",
+      "label_en": "Base Loan Amount",
+      "expression": "homePrice * (1 - downPaymentPercent / 100)",
+      "unit": { "follows": "homePrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "fundingFee",
+      "label": "Tarifa de financiación VA (Funding Fee ~2.15%)",
+      "label_en": "VA Funding Fee (~2.15%)",
+      "expression": "baseLoanAmount * 0.0215",
+      "unit": { "follows": "homePrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "totalVaLoan",
+      "label": "Monto Total Financiado VA",
+      "label_en": "Total Financed VA Loan Amount",
+      "expression": "baseLoanAmount + fundingFee",
+      "unit": { "follows": "homePrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "monthlyPayment",
+      "label": "Cuota Mensual Fija (Sin PMI)",
+      "label_en": "Monthly Payment (Zero PMI)",
+      "expression": "totalVaLoan * (interestRate / 1200) / (1 - (1 + interestRate / 1200) ^ -(loanYears * 12))",
+      "unit": { "follows": "homePrice" },
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "monthlyPayment", "op": ">", "value": 0 }, "label": "Ventaja 0% PMI", "label_en": "Zero PMI Benefit", "tone": "success", "text": "Sin recargo de seguro hipotecario mensual.", "text_en": "No monthly private mortgage insurance fee added." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "fha-loan-calculator", "type": "static", "message": "Compara con una hipoteca FHA", "message_en": "Compare with FHA loan option", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Especialista en Hipotecas VA",
+    "role_en": "VA Mortgage Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y de reconocimiento",
+    "includeData": ["monthlyPayment", "totalVaLoan", "fundingFee", "baseLoanAmount"],
+    "instructions": [
+      "Sintetiza el pago mensual VA y la tarifa de financiación en 2 frases concisas.",
+      "Destaca el beneficio de la financiación al 100% con 0% de enganche inicial."
+    ],
+    "instructions_en": [
+      "Summarize monthly VA loan payment and Funding Fee cost in 2 concise sentences.",
+      "Highlight benefit of 100% financing with 0% down payment requirement."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Hipoteca VA para Veteranos | CalculadoraHub",
+    "metaTitle_en": "VA Mortgage Calculator | CalculadoraHub",
+    "metaDescription": "Calcula tu cuota mensual de hipoteca VA con 0% de enganche inicial. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate monthly VA loan payment with 0% down payment options. Free, instant results.",
+    "keywords": ["va mortgage calculator", "hipoteca va", "prestamo veteranos", "0 down payment"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

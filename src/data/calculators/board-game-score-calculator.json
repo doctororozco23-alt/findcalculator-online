@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "board-game-score-calculator",
+    "title": "Calculadora de Puntuación Ponderada para Juegos de Mesa",
+    "title_en": "Board Game Weighted Score & Victory Points Calculator",
+    "slug": "calculadora-de-puntuacion-ponderada-para-juegos-de-mesa",
+    "category": "home",
+    "subcategory": "entertainment",
+    "tags": ["juegos-de-mesa", "puntos-de-victoria", "puntuacion", "eurogames", "marcador", "entretenimiento", "hogar"],
+    "tags_en": ["board-games", "victory-points", "scoring", "eurogames", "score-tracker", "entertainment", "home"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la puntuación total y ponderada de puntos de victoria (VP) para juegos de mesa (recursos, territorios, cartas y objetivos).",
+    "shortDescription_en": "Calculate total weighted victory points (VP) score for board games (resources, territory, cards, and objective bonuses).",
+    "longDescription": "Herramienta de entretenimiento y ocio casero. Permite sumar y ponderar categorías de puntuación finales en Eurogames y juegos de estrategia estilo Catan, Carcassonne o Ticket to Ride.",
+    "longDescription_en": "Home entertainment and leisure tool. Enables summing and weighting final scoring categories in Eurogames and strategy board games.",
+    "howToUse": [
+      "Ingresa los Puntos Obtenidos por Territorios / Ciudades Construidas.",
+      "Ingresa los Puntos Obtenidos por Recursos / Monedas Restantes.",
+      "Ingresa los Puntos Obtenidos por Cartas de Objetivo / Misiones.",
+      "Ingresa los Puntos de Bonificación por Mayoría o Logros Finales.",
+      "Consulta el Total de Puntos de Victoria (VP) y el Promedio Ponderado."
+    ],
+    "howToUse_en": [
+      "Enter Points Earned from Territories / Built Structures.",
+      "Enter Points Earned from Remaining Resources / Coins.",
+      "Enter Points Earned from Objective Cards / Secret Missions.",
+      "Enter Bonus Points from Majority End-Game Achievements.",
+      "View Total Victory Points (VP) and Weighted Category Breakdown."
+    ],
+    "methodology": "Total VP = PuntosTerritorio + PuntosRecursos + PuntosObjetivo + PuntosBonificacion.",
+    "methodology_en": "Total VP = TerritoryPoints + ResourcePoints + ObjectivePoints + BonusPoints."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Diseño y Puntuación de Juegos de Mesa Eurogames",
+    "role_en": "Board Game Design & Eurogame Scoring Specialist Assistant",
+    "includeData": ["totalVictoryPointsResult"],
+    "instructions": [
+      "Interpreta la puntuación total de victoria calculada para la partida.",
+      "Explica la distribución porcentual de los puntos por cada categoría (territorios vs economía vs objetivos).",
+      "Sugiere análisis de eficiencia de VP por turno para mejorar estrategias futuras."
+    ],
+    "instructions_en": [
+      "Interpret total victory score computed for the game match.",
+      "Explain category point percentage distribution (territories vs economy vs objectives).",
+      "Suggest VP efficiency analysis per turn for improving future strategies."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "bgs-guide",
+      "icon": "🎲",
+      "title": "Board Game Victory Point Categories",
+      "title_es": "Categorías de Puntos de Victoria en Juegos de Mesa",
+      "content_html_en": "<p><b>Board Control:</b> Settlements, cities, roads, tile placement.</p><p><b>Card Objectives:</b> Secret routes, hidden victory cards.</p><p><b>Resource Conversion:</b> 3 to 5 leftover coins/goods = 1 VP.</p>",
+      "content_html": "<p><b>Control de Tablero:</b> Poblados, ciudades, caminos y losetas.</p><p><b>Objetivos de Cartas:</b> Rutas secretas y cartas de victoria.</p><p><b>Conversión de Recursos:</b> 3 a 5 monedas/bienes restantes = 1 VP.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "territoryBoardPoints",
+      "label": "Puntos por Construcciones y Tablero",
+      "label_en": "Points from Board & Buildings",
+      "type": "number",
+      "default": 35,
+      "min": 0,
+      "max": 1000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "resourceCoinPoints",
+      "label": "Puntos por Recursos y Monedas Restantes",
+      "label_en": "Points from Resources & Remaining Coins",
+      "type": "number",
+      "default": 12,
+      "min": 0,
+      "max": 1000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "objectiveCardPoints",
+      "label": "Puntos por Cartas de Objetivo y Misiones",
+      "label_en": "Points from Objective Cards & Quests",
+      "type": "number",
+      "default": 24,
+      "min": 0,
+      "max": 1000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "endgameBonusPoints",
+      "label": "Bonificaciones por Mayorías o Logros Finales",
+      "label_en": "End-Game Majority & Achievement Bonuses",
+      "type": "number",
+      "default": 10,
+      "min": 0,
+      "max": 1000,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalVictoryPointsResult",
+      "label": "Total de Puntos de Victoria (VP) Calculados",
+      "label_en": "Calculated Total Victory Points (VP)",
+      "expression": "territoryBoardPoints + resourceCoinPoints + objectiveCardPoints + endgameBonusPoints",
+      "unit": "VP",
+      "unit_en": "VP",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalVictoryPointsResult", "op": ">=", "value": 0 }, "label": "Puntuación Calculada", "label_en": "Score Computed", "tone": "success", "text": "Puntuación total de victoria de la partida cuantificada.", "text_en": "Total match victory score quantified." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,170 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "pregnancy-weight-gain-calculator",
+    "title": "Calculadora de Ganancia de Peso en el Embarazo",
+    "title_en": "Pregnancy Weight Gain Calculator",
+    "slug": "ganancia-peso-embarazo",
+    "category": "health",
+    "subcategory": "pregnancy",
+    "tags": ["embarazo", "peso", "salud-maternal"],
+    "tags_en": ["pregnancy", "weight-gain", "maternal-health"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Scale"
+  },
+  "content": {
+    "shortDescription": "Calcula el rango de aumento de peso saludable recomendado durante tu embarazo según las guías del Institute of Medicine (IOM).",
+    "shortDescription_en": "Calculate recommended healthy pregnancy weight gain ranges based on Institute of Medicine (IOM) guidelines.",
+    "longDescription": "Estima el aumento de peso óptimo y seguro recomendados para cada trimestre de embarazo basándote en tu índice de masa corporal (IMC) previo al embarazo.",
+    "longDescription_en": "Estimate optimal, healthy total pregnancy weight gain recommended for each trimester based on pre-pregnancy Body Mass Index (BMI).",
+    "howToUse": [
+      "Ingresa tu peso anterior al embarazo y tu estatura.",
+      "Indica las semanas actuales de gestación.",
+      "Indica si se trata de un embarazo único o de gemelos/mellizos.",
+      "Consulta el rango de ganancia de peso recomendado al término."
+    ],
+    "howToUse_en": [
+      "Enter your pre-pregnancy weight and height.",
+      "Enter current pregnancy week.",
+      "Select single or twin pregnancy.",
+      "View recommended target weight gain range at full term."
+    ],
+    "methodology": "Directrices del Institute of Medicine (IOM): IMC Normal (11.5 - 16 kg), Bajo Peso (12.5 - 18 kg), Sobrepeso (7 - 11.5 kg), Obesidad (5 - 9 kg).",
+    "methodology_en": "Institute of Medicine (IOM) Pregnancy Weight Guidelines based on pre-pregnancy BMI."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "⚖️",
+      "title": "IOM Pregnancy Weight Gain Guidelines",
+      "title_es": "Guías del IOM para Aumento de Peso en Gestación",
+      "content_html_en": "<p>Weight gain during pregnancy supports placenta, amniotic fluid, blood volume expansion, and healthy fetal growth. Gradual gain is recommended.</p>",
+      "content_html": "<p>El aumento de peso gestacional sostiene la placenta, líquido amniótico, volumen sanguíneo y desarrollo del bebé. Se recomienda un progreso gradual.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "prePregnancyWeightKg",
+      "label": "Peso corporal previo al embarazo",
+      "label_en": "Pre-Pregnancy Body Weight",
+      "type": "number",
+      "default": 62,
+      "min": 35,
+      "max": 200,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "heightCm",
+      "label": "Estatura",
+      "label_en": "Height",
+      "type": "number",
+      "default": 165,
+      "min": 120,
+      "max": 220,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "pregnancyWeek",
+      "label": "Semana actual de embarazo",
+      "label_en": "Current Pregnancy Week",
+      "type": "slider",
+      "default": 20,
+      "min": 1,
+      "max": 40,
+      "step": 1,
+      "unit": "semanas",
+      "unit_en": "weeks",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "prePregnancyBmi",
+      "label": "IMC Previo al Embarazo",
+      "label_en": "Pre-Pregnancy BMI",
+      "expression": "prePregnancyWeightKg / ((heightCm / 100) ^ 2)",
+      "unit": "kg/m²",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "recommendedMinGainKg",
+      "label": "Ganancia Mínima Recomendada a Término",
+      "label_en": "Recommended Min Total Weight Gain",
+      "expression": "prePregnancyBmi < 18.5 ? 12.5 : (prePregnancyBmi <= 24.9 ? 11.5 : (prePregnancyBmi <= 29.9 ? 7.0 : 5.0))",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "recommendedMinGainKg", "op": ">", "value": 0 }, "label": "Guía Recomendada IOM", "label_en": "IOM Guideline Range", "tone": "info", "text": "Aumento total progresivo recomendado al llegar a la semana 40.", "text_en": "Recommended target total weight gain at full term (40 weeks)." }
+      ]
+    },
+    {
+      "id": "recommendedMaxGainKg",
+      "label": "Ganancia Máxima Recomendada a Término",
+      "label_en": "Recommended Max Total Weight Gain",
+      "expression": "prePregnancyBmi < 18.5 ? 18.0 : (prePregnancyBmi <= 24.9 ? 16.0 : (prePregnancyBmi <= 29.9 ? 11.5 : 9.0))",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "pregnancy-calculator", "type": "static", "message": "Revisa tus semanas de gestación", "message_en": "Check current gestational weeks", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Especialista en Nutrición y Peso Gestacional",
+    "role_en": "Gestational Nutrition & Weight Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "cálido y profesional",
+    "includeData": ["recommendedMinGainKg", "recommendedMaxGainKg", "prePregnancyBmi", "pregnancyWeek"],
+    "instructions": [
+      "Sintetiza el rango de peso recomendado a término según el IMC previo en 2 frases concisas.",
+      "Destaca que el aumento de peso debe ser progresivo y supervisado por el obstetra."
+    ],
+    "instructions_en": [
+      "Summarize recommended term weight gain range based on pre-pregnancy BMI in 2 concise sentences.",
+      "Emphasize that weight gain should be gradual and monitored by an obstetrician."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Ganancia de Peso en el Embarazo | CalculadoraHub",
+    "metaTitle_en": "Pregnancy Weight Gain Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el rango de peso saludable recomendado durante tu embarazo según el IOM. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate recommended healthy weight gain range during pregnancy. Free, instant results.",
+    "keywords": ["pregnancy weight gain calculator", "peso en embarazo", "ganancia peso gestacional", "iom pregnancy"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

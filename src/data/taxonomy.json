@@ -1,0 +1,219 @@
+{
+  "site": "CalculadoraHub",
+  "version": "1.0",
+  "locale": "es",
+  "categories": [
+    {
+      "id": "finance",
+      "name": "Finanzas",
+      "name_en": "Finance",
+      "slug": "finanzas",
+      "icon": "DollarSign",
+      "description": "Dinero personal y de negocios: hipotecas, préstamos, inversiones, jubilación, impuestos y presupuesto.",
+      "description_en": "Personal & business money: mortgages, loans, investments, retirement, taxes, and budget.",
+      "subcategories": [
+        { "id": "mortgages", "name": "Hipotecas y Bienes Raíces", "name_en": "Mortgages & Real Estate", "slug": "hipotecas", "description": "Cuotas, amortización, refinanciación, alquiler vs compra e intereses hipotecarios.", "description_en": "Mortgage payments, amortization, refinance, rent vs buy, and real estate loans." },
+        { "id": "loans", "name": "Préstamos, Autos y Crédito", "name_en": "Loans, Auto & Credit", "slug": "prestamos", "description": "Préstamos de auto, personales, estudiantiles, tarjetas de crédito y refinanciación.", "description_en": "Auto loans, personal loans, student loans, credit card payoffs, and leases." },
+        { "id": "investments", "name": "Inversiones y Ahorro", "name_en": "Investments & Savings", "slug": "inversiones", "description": "Interés compuesto, ROI, valor presente, depósitos a plazo e inflación.", "description_en": "Compound interest, ROI, present value, CDs, savings growth, and inflation." },
+        { "id": "retirement", "name": "Jubilación y Retiro", "name_en": "Retirement & Pension", "slug": "jubilacion", "description": "Planes 401(k), Roth IRA, pensiones, seguridad social y libertad financiera FIRE.", "description_en": "401(k) plans, Roth IRAs, pensions, social security, and FIRE calculators." },
+        { "id": "taxes", "name": "Impuestos y Salarios", "name_en": "Taxes & Salary", "slug": "impuestos", "description": "Salario neto, cheque de pago, impuesto sobre la renta, IVA y retenciones.", "description_en": "Income tax, take-home paycheck, sales tax, VAT, and self-employment tax." },
+        { "id": "business", "name": "Negocios y Presupuesto", "name_en": "Business & Budget", "slug": "negocios", "description": "Márgenes, descuentos, punto de equilibrio, préstamos de negocios y regla 50/30/20.", "description_en": "Profit margins, discounts, break-even point, business loans, and 50/30/20 budget." }
+      ]
+    },
+    {
+      "id": "health",
+      "name": "Salud",
+      "name_en": "Health",
+      "slug": "salud",
+      "icon": "Heart",
+      "description": "Seguimiento y comprensión de la salud personal.",
+      "description_en": "Personal health tracking and clinical indicators explained.",
+      "subcategories": [
+        { "id": "pregnancy", "name": "Embarazo y fertilidad", "name_en": "Pregnancy & Fertility", "slug": "embarazo", "description": "Fecha probable de parto y semanas de gestación.", "description_en": "Estimated due date, ovulation, and pregnancy weeks." },
+        { "id": "child-growth", "name": "Crecimiento infantil", "name_en": "Child Growth", "slug": "crecimiento-infantil", "description": "Percentiles y desarrollo infantil.", "description_en": "Percentiles and child development tracking." },
+        { "id": "sleep", "name": "Sueño y descanso", "name_en": "Sleep & Rest", "slug": "sueno", "description": "Ciclos de sueño y hora ideal de dormir.", "description_en": "Sleep cycles and optimal bedtime calculator." },
+        { "id": "health-indicators", "name": "Indicadores de salud", "name_en": "Health Indicators", "slug": "indicadores", "description": "Presión arterial y función renal.", "description_en": "Blood pressure, kidney function, and health metrics." }
+      ]
+    },
+    {
+      "id": "fitness",
+      "name": "Fitness y Deporte",
+      "name_en": "Fitness & Sports",
+      "slug": "fitness",
+      "icon": "Activity",
+      "description": "Composición corporal, entrenamiento y rendimiento deportivo.",
+      "description_en": "Body composition, workouts, running, and athletic performance.",
+      "subcategories": [
+        { "id": "body-composition", "name": "Composición corporal", "name_en": "Body Composition", "slug": "composicion-corporal", "description": "IMC, porcentaje de grasa y peso ideal.", "description_en": "BMI, body fat percentage, and ideal weight." },
+        { "id": "training", "name": "Entrenamiento y fuerza", "name_en": "Training & Strength", "slug": "entrenamiento", "description": "Frecuencia cardíaca, 1RM y calorías quemadas.", "description_en": "Heart rate zones, 1RM, and burned calories." },
+        { "id": "running", "name": "Running y cardio", "name_en": "Running & Cardio", "slug": "running", "description": "Ritmos de carrera, tiempos y VO2max.", "description_en": "Pace calculation, race times, and VO2max." }
+      ]
+    },
+    {
+      "id": "food",
+      "name": "Alimentación y Cocina",
+      "name_en": "Food & Cooking",
+      "slug": "alimentacion",
+      "icon": "Utensils",
+      "description": "Nutrición, dietas, macros y equivalencias de cocina.",
+      "description_en": "Nutrition, diets, macros, and cooking conversions.",
+      "subcategories": [
+        { "id": "nutrition", "name": "Nutrición y calorías", "name_en": "Nutrition & Calories", "slug": "nutricion", "description": "BMR, TDEE e hidratación diaria.", "description_en": "BMR, TDEE, and daily hydration." },
+        { "id": "diets", "name": "Dietas y objetivos", "name_en": "Diets & Goals", "slug": "dietas", "description": "Macros para keto, masa muscular y definición.", "description_en": "Keto, high protein, and muscle gain macros." },
+        { "id": "cooking", "name": "Cocina y recetas", "name_en": "Cooking & Recipes", "slug": "cocina", "description": "Escalado de recetas y conversiones de ingredientes.", "description_en": "Recipe scaling and ingredient conversions." }
+      ]
+    },
+    {
+      "id": "math",
+      "name": "Matemáticas",
+      "name_en": "Mathematics",
+      "slug": "matematicas",
+      "icon": "Calculator",
+      "description": "Aritmética, álgebra, geometría y cálculo para estudiantes.",
+      "description_en": "Arithmetic, algebra, geometry, and calculus for students.",
+      "subcategories": [
+        { "id": "arithmetic", "name": "Aritmética y números", "name_en": "Arithmetic & Numbers", "slug": "aritmetica", "description": "Porcentajes, regla de tres, fracciones y científico.", "description_en": "Percentages, proportions, fractions, and scientific." },
+        { "id": "algebra", "name": "Álgebra", "name_en": "Algebra", "slug": "algebra", "description": "Ecuaciones, sistemas y funciones.", "description_en": "Equations, systems, and functions." },
+        { "id": "geometry", "name": "Geometría y trigonometría", "name_en": "Geometry & Trigonometry", "slug": "geometria", "description": "Áreas, volúmenes y triángulos.", "description_en": "Areas, volumes, and triangles." }
+      ]
+    },
+    {
+      "id": "statistics",
+      "name": "Estadística y Probabilidad",
+      "name_en": "Statistics & Probability",
+      "slug": "estadistica",
+      "icon": "BarChart3",
+      "description": "Análisis descriptivo, probabilidad y muestreo de datos.",
+      "description_en": "Descriptive analytics, probability, and data sampling.",
+      "subcategories": [
+        { "id": "descriptive", "name": "Estadística descriptiva", "name_en": "Descriptive Statistics", "slug": "descriptiva", "description": "Media, mediana, desviación estándar y moda.", "description_en": "Mean, median, standard deviation, and mode." },
+        { "id": "probability", "name": "Probabilidad", "name_en": "Probability", "slug": "probabilidad", "description": "Combinaciones, permutaciones y distribuciones.", "description_en": "Combinations, permutations, and distributions." }
+      ]
+    },
+    {
+      "id": "physics",
+      "name": "Física",
+      "name_en": "Physics",
+      "slug": "fisica",
+      "icon": "Zap",
+      "description": "Mecánica, energía, ondas y atmósfera.",
+      "description_en": "Mechanics, energy, waves, and atmosphere.",
+      "subcategories": [
+        { "id": "mechanics", "name": "Mecánica", "name_en": "Mechanics", "slug": "mecanica", "description": "Velocidad, fuerzas y gravedad.", "description_en": "Velocity, forces, and gravity." },
+        { "id": "atmosphere", "name": "Atmósfera y clima", "name_en": "Atmosphere & Climate", "slug": "atmosfera", "description": "Sensación térmica, punto de rocío e índice de calor.", "description_en": "Wind chill, dew point, and heat index." }
+      ]
+    },
+    {
+      "id": "chemistry",
+      "name": "Química",
+      "name_en": "Chemistry",
+      "slug": "quimica",
+      "icon": "FlaskConical",
+      "description": "Estequiometría, soluciones y gases.",
+      "description_en": "Stoichiometry, solutions, and gas laws.",
+      "subcategories": [
+        { "id": "stoichiometry", "name": "Estequiometría y moles", "name_en": "Stoichiometry & Moles", "slug": "estequiometria", "description": "Masa molar y moles.", "description_en": "Molar mass and mole calculations." }
+      ]
+    },
+    {
+      "id": "engineering",
+      "name": "Ingeniería",
+      "name_en": "Engineering",
+      "slug": "ingenieria",
+      "icon": "Cpu",
+      "description": "Cálculos técnicos aplicados a estructuras, electricidad e instalaciones.",
+      "description_en": "Applied technical calculations: structures and practical electricity.",
+      "subcategories": [
+        { "id": "electrical", "name": "Electricidad práctica", "name_en": "Practical Electricity", "slug": "electricidad", "description": "Ley de Ohm, caída de tensión y sección de cable.", "description_en": "Ohm's law, voltage drop, and cable sizing." }
+      ]
+    },
+    {
+      "id": "construction",
+      "name": "Construcción y Reformas",
+      "name_en": "Construction & Remodeling",
+      "slug": "construccion",
+      "icon": "Hammer",
+      "description": "Materiales, concreto, pintura, pisos, techos y costes de obra.",
+      "description_en": "Materials, concrete, paint, flooring, roofing, and renovation costs.",
+      "subcategories": [
+        { "id": "materials", "name": "Materiales, Hormigón y Techos", "name_en": "Materials, Concrete & Roofing", "slug": "materiales", "description": "Hormigón, mortero, grava, techos y escaleras.", "description_en": "Concrete, mortar, gravel, roofing, and stairs." },
+        { "id": "remodeling", "name": "Reformas, Azulejos y Superficie", "name_en": "Remodeling, Tiles & Area", "slug": "reformas", "description": "Pies cuadrados, azulejos y mantillo.", "description_en": "Square footage, tiles, and mulch." }
+      ]
+    },
+    {
+      "id": "home",
+      "name": "Hogar y Vida Diaria",
+      "name_en": "Home & Daily Life",
+      "slug": "hogar",
+      "icon": "Home",
+      "description": "Consumo energético, jardinería, entretenimiento y organización doméstica.",
+      "description_en": "Energy consumption, gardening, entertainment, and home life.",
+      "subcategories": [
+        { "id": "energy", "name": "Consumo energético y Utilidades", "name_en": "Energy & Utilities", "slug": "consumo-energetico", "description": "Coste por electrodoméstico e iluminación.", "description_en": "Appliance energy cost and utilities." },
+        { "id": "gardening", "name": "Jardinería y Paisajismo", "name_en": "Gardening & Landscaping", "slug": "jardineria", "description": "Mantillo, grava y área de jardín.", "description_en": "Mulch, gravel, and garden bed area." },
+        { "id": "entertainment", "name": "Entretenimiento y Pareja", "name_en": "Entertainment & Lifestyle", "slug": "entretenimiento", "description": "Calculadoras divertidas, amor y estilo de vida.", "description_en": "Fun tools, love, and lifestyle." }
+      ]
+    },
+    {
+      "id": "technology",
+      "name": "Tecnología y Electrónica",
+      "name_en": "Technology & Electronics",
+      "slug": "tecnologia",
+      "icon": "Monitor",
+      "description": "Internet, redes, herramientas web y generadores.",
+      "description_en": "Internet, networks, web tools, and generators.",
+      "subcategories": [
+        { "id": "internet", "name": "Internet y redes", "name_en": "Internet & Networks", "slug": "internet", "description": "Tiempos de descarga y consumo de datos.", "description_en": "Download time and data usage." }
+      ]
+    },
+    {
+      "id": "converters",
+      "name": "Conversores",
+      "name_en": "Converters",
+      "slug": "conversores",
+      "icon": "RefreshCw",
+      "description": "Conversión rápida de unidades, divisas y sistemas numéricos.",
+      "description_en": "Fast conversion of units, currencies, and number systems.",
+      "subcategories": [
+        { "id": "units", "name": "Unidades de medida", "name_en": "Units of Measurement", "slug": "unidades", "description": "Longitud, peso, volumen y temperatura.", "description_en": "Length, weight, volume, and temperature." }
+      ]
+    },
+    {
+      "id": "datetime",
+      "name": "Fecha y Tiempo",
+      "name_en": "Date & Time",
+      "slug": "fecha-y-tiempo",
+      "icon": "Calendar",
+      "description": "Cálculo de fechas, edad exacta, horas de trabajo y contador de días.",
+      "description_en": "Date math, exact age, work hours, and day counter.",
+      "subcategories": [
+        { "id": "dates", "name": "Cálculo de fechas y edad", "name_en": "Date & Age Calculations", "slug": "fechas", "description": "Edad exacta, suma de días y contador de días.", "description_en": "Exact age, date arithmetic, and day counter." },
+        { "id": "time", "name": "Cálculo de horas y tiempo", "name_en": "Time & Work Hours", "slug": "tiempo", "description": "Suma de horas sexagesimal, tarjeta de horas y duración.", "description_en": "Sexagesimal time, work hours, and duration." }
+      ]
+    },
+    {
+      "id": "education",
+      "name": "Educación y Universidad",
+      "name_en": "Education & College",
+      "slug": "educacion",
+      "icon": "GraduationCap",
+      "description": "Notas, promedios GPA, notas de examen final y herramientas de estudio.",
+      "description_en": "Grades, weighted GPA, final exam score required, and study tools.",
+      "subcategories": [
+        { "id": "grades", "name": "Notas y calificaciones GPA", "name_en": "Grades & GPA", "slug": "notas", "description": "Promedios ponderados GPA y nota de examen final.", "description_en": "Weighted GPA averages and required final exam grade." }
+      ]
+    },
+    {
+      "id": "transport",
+      "name": "Transporte y Vehículos",
+      "name_en": "Transport & Vehicles",
+      "slug": "transporte",
+      "icon": "Car",
+      "description": "Consumo de combustible, rendimiento MPG, costo de viaje y reembolso IRS.",
+      "description_en": "Fuel consumption, MPG rating, trip cost, and IRS mileage reimbursement.",
+      "subcategories": [
+        { "id": "fuel", "name": "Combustible y consumo", "name_en": "Fuel & Consumption", "slug": "combustible", "description": "Rendimiento MPG, L/100km, costo de viaje y reembolso por milla.", "description_en": "MPG, L/100km, trip cost, and IRS mileage rate." }
+      ]
+    }
+  ]
+}

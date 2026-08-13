@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "area-calculator",
+    "title": "Calculadora de Áreas de Figuras Geométricas",
+    "title_en": "Area Calculator for Geometric Shapes",
+    "slug": "calculadora-de-areas-figuras-geometricas",
+    "category": "math",
+    "subcategory": "geometry",
+    "tags": ["area", "figuras-geometricas", "rectangulo", "trapecio", "elipse", "poligono", "geometria"],
+    "tags_en": ["area", "geometric-shapes", "rectangle", "trapezoid", "ellipse", "polygon", "geometry"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el área de Rectángulos ($A = b \\times h$), Trapecios ($A = \\frac{B+b}{2}h$), Elipses ($A = \\pi a b$) y Paralelogramos.",
+    "shortDescription_en": "Compute area of Rectangles ($A = b \\times h$), Trapezoids ($A = \\frac{B+b}{2}h$), Ellipses ($A = \\pi a b$), and Parallelograms.",
+    "longDescription": "Herramienta geométrica universal para el cálculo de superficie en plano 2D. Soporta múltiples figuras planas seleccionables mediante fórmulas geométricas exactas.",
+    "longDescription_en": "Universal 2D geometry area calculator. Supports multiple selectable plane figures using exact geometric formulas.",
+    "howToUse": [
+      "Selecciona la Figura Geométrica (Rectángulo, Trapecio, Elipse o Paralelogramo).",
+      "Ingresa las dimensiones principales (Base mayor B, base menor b, altura h, semiejes a y b).",
+      "Consulta el Área bidimensional calculada y el Perímetro correspondiente."
+    ],
+    "howToUse_en": [
+      "Select Geometric Shape (Rectangle, Trapezoid, Ellipse, or Parallelogram).",
+      "Enter main dimensions (Base, Height, Semi-axes).",
+      "View calculated 2D Area and corresponding Perimeter."
+    ],
+    "methodology": "Rectángulo: A = b*h. Trapecio: A = (B+b)*h/2. Elipse: A = π*a*b.",
+    "methodology_en": "Rectangle: A = b*h. Trapezoid: A = (B+b)*h/2. Ellipse: A = π*a*b."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Geometría Plana y Áreas",
+    "role_en": "2D Geometry & Area Specialist Assistant",
+    "includeData": ["calculated2DArea"],
+    "instructions": [
+      "Explica la fórmula específica utilizada para la figura 2D seleccionada.",
+      "Demuestra el cálculo del área en unidades cuadradas.",
+      "Compara la eficiencia de superficie frente a un cuadrado de igual perímetro."
+    ],
+    "instructions_en": [
+      "Explain the specific formula used for the selected 2D shape.",
+      "Demonstrate area computation in square units.",
+      "Compare surface efficiency against a square with equal perimeter."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "area-guide",
+      "icon": "🟩",
+      "title": "2D Area Formulas",
+      "title_es": "Fórmulas de Área 2D",
+      "content_html_en": "<p><b>Rectangle:</b> Area = Base × Height.</p><p><b>Trapezoid:</b> Area = (Base₁ + Base₂) × Height / 2.</p><p><b>Ellipse:</b> Area = π × Semi-major axis (a) × Semi-minor axis (b).</p>",
+      "content_html": "<p><b>Rectángulo:</b> Área = Base × Altura.</p><p><b>Trapecio:</b> Área = (Base Mayor + Base menor) × Altura / 2.</p><p><b>Elipse:</b> Área = π × Semieje mayor (a) × Semieje menor (b).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "shapeType",
+      "label": "Figura Geométrica 2D",
+      "label_en": "2D Geometric Shape",
+      "type": "select",
+      "default": "rectangle",
+      "options": [
+        { "value": "rectangle", "label": "Rectángulo (Base × Altura)", "label_en": "Rectangle (Base × Height)" },
+        { "value": "trapezoid", "label": "Trapecio ((B + b) × h / 2)", "label_en": "Trapezoid ((B + b) × h / 2)" },
+        { "value": "ellipse", "label": "Elipse (π × a × b)", "label_en": "Ellipse (π × a × b)" }
+      ]
+    },
+    {
+      "id": "dim1",
+      "label": "Dimensión 1: Base / Base Mayor B / Semieje a",
+      "label_en": "Dimension 1: Base / Major Base B / Semi-axis a",
+      "type": "number",
+      "default": 10,
+      "min": 0.1,
+      "max": 10000,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "dim2",
+      "label": "Dimensión 2: Altura / Base menor b / Semieje b",
+      "label_en": "Dimension 2: Height / Minor Base b / Semi-axis b",
+      "type": "number",
+      "default": 5,
+      "min": 0.1,
+      "max": 10000,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "dimHeight",
+      "label": "Dimensión 3: Altura h (solo para Trapecio)",
+      "label_en": "Dimension 3: Height h (Trapezoid only)",
+      "type": "number",
+      "default": 4,
+      "min": 0.1,
+      "max": 10000,
+      "step": 0.1,
+      "required": false
+    }
+  ],
+  "calculations": [
+    {
+      "id": "calculated2DArea",
+      "label": "Área Total Calculada",
+      "label_en": "Total Calculated Area",
+      "expression": "shapeType == 'rectangle' ? (dim1 * dim2) : (shapeType == 'trapezoid' ? ((dim1 + dim2) * dimHeight / 2) : (pi * dim1 * dim2))",
+      "unit": "unidades²",
+      "unit_en": "units²",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "calculated2DArea", "op": ">", "value": 0 }, "label": "Área Calculada Correctamente", "label_en": "Area Computed Successfully", "tone": "success", "text": "Superficie 2D obtenida.", "text_en": "2D Area evaluated successfully." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "pregnancy-calculator",
+    "title": "Calculadora de Embarazo y Semanas de Gestación (Por Fecha de Regla / LMP)",
+    "title_en": "Pregnancy & Gestational Age Calculator (By LMP Date)",
+    "slug": "embarazo-semanas-gestacion",
+    "category": "health",
+    "subcategory": "pregnancy",
+    "tags": ["embarazo", "gestacion", "semanas", "fpp"],
+    "tags_en": ["pregnancy", "gestation", "weeks", "edd"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Baby"
+  },
+  "content": {
+    "shortDescription": "Calcula tus semanas y días exactos de embarazo, la fecha estimada de parto (FPP) y el trimestre actual introduciendo la fecha de tu última regla (LMP).",
+    "shortDescription_en": "Calculate exact gestational age in weeks and days, estimated due date (EDD), and current trimester using your Last Menstrual Period (LMP) date.",
+    "longDescription": "Calculadora obstétrica clínica que aplica la Regla de Naegele ajustada por la duración del ciclo menstrual. Determina la fecha exacta del parto, las semanas gestacionales acumuladas hoy y la ventana biológica estimada de concepción.",
+    "longDescription_en": "Clinical obstetric calculator using cycle-adjusted Naegele's Rule. Calculates exact estimated delivery due date (EDD), current gestational age today, and estimated conception window.",
+    "howToUse": [
+      "Selecciona la fecha del primer día de tu última regla (LMP).",
+      "Ingresa la duración promedio de tu ciclo menstrual (ej. 28 días).",
+      "Consulta tus semanas gestacionales exactas al día de hoy.",
+      "Revisa la fecha estimada de parto (FPP) y los días de cuenta atrás."
+    ],
+    "howToUse_en": [
+      "Select the first day of your Last Menstrual Period (LMP).",
+      "Enter average menstrual cycle length (default 28 days).",
+      "View exact gestational age in weeks and days as of today.",
+      "View calculated estimated delivery due date (EDD) and remaining days."
+    ],
+    "methodology": "Regla de Naegele Ajustada: FPP = Fecha LMP + 280 días + (DuraciónCiclo - 28). Edad Gestacional = Días transcurridos entre Fecha LMP y Fecha Actual.",
+    "methodology_en": "Adjusted Naegele's Rule: EDD = LMP + 280 days + (CycleLength - 28). Gestational Age = Days between LMP and current date."
+  },
+  "guideSections": [
+    {
+      "id": "trimester-guide",
+      "icon": "👶",
+      "title": "Clinical Trimester Milestones",
+      "title_es": "Hitos del Desarrollo Gestacional por Trimestre",
+      "content_html_en": "<p><b>First Trimester (Weeks 1-13):</b> Embryonic organogenesis. Fetal heartbeat detectable by ultrasound around week 6.</p><p><b>Second Trimester (Weeks 14-27):</b> Fetal movement felt around weeks 18-20 (quickening).</p><p><b>Third Trimester (Weeks 28-40):</b> Lung maturation and weight gain prior to delivery.</p>",
+      "content_html": "<p><b>Primer Trimestre (Semanas 1-13):</b> Organogénesis embrionaria. Latido fetal detectable por ecografía hacia la semana 6.</p><p><b>Segundo Trimestre (Semanas 14-27):</b> Primeros movimientos fetales percibidos hacia las semanas 18-20.</p><p><b>Tercer Trimestre (Semanas 28-40):</b> Maduración pulmonar y ganancia de peso acelerada previa al parto.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "lmpDate",
+      "label": "Fecha del primer día de la última regla (LMP)",
+      "label_en": "First Day of Last Menstrual Period (LMP)",
+      "type": "date",
+      "default": "2026-05-15",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "cycleLength",
+      "label": "Duración habitual del ciclo menstrual",
+      "label_en": "Average Menstrual Cycle Length",
+      "type": "number",
+      "default": 28,
+      "min": 21,
+      "max": 40,
+      "step": 1,
+      "unit": "días",
+      "unit_en": "days",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [21, 40], "message": "Ciclo entre 21 y 40 días", "message_en": "Cycle length between 21 and 40 days" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalGestationalDays",
+      "label": "Días de Gestación Acumulados Hoy",
+      "label_en": "Total Gestational Days Accumulated Today",
+      "expression": "max(daysBetween(lmpDate, todayDate()), 0)",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "currentGestationalWeeks",
+      "label": "Semanas de Gestación Actuales",
+      "label_en": "Current Gestational Age",
+      "expression": "floor(totalGestationalDays / 7)",
+      "unit": "semanas",
+      "unit_en": "weeks",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "currentGestationalWeeks", "op": "<=", "value": 13 }, "label": "Primer Trimestre", "label_en": "First Trimester", "tone": "info", "text": "Etapa inicial de organogénesis y desarrollo embrionario.", "text_en": "Initial stage of organogenesis and embryonic development." },
+        { "when": { "field": "currentGestationalWeeks", "op": "between", "value": [14, 27] }, "label": "Segundo Trimestre", "label_en": "Second Trimester", "tone": "success", "text": "Etapa de rápido crecimiento y movilidad fetal.", "text_en": "Stage of rapid growth and fetal movement." },
+        { "when": { "field": "currentGestationalWeeks", "op": ">=", "value": 28 }, "label": "Tercer Trimestre", "label_en": "Third Trimester", "tone": "warning", "text": "Etapa final de maduración para el parto.", "text_en": "Final stage preparing for delivery." }
+      ]
+    },
+    {
+      "id": "extraDaysInWeek",
+      "label": "Días Adicionales de la Semana Actual",
+      "label_en": "Days into Current Week",
+      "expression": "totalGestationalDays % 7",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "estimatedDueDate",
+      "label": "Fecha Estimada de Parto (FPP / Due Date)",
+      "label_en": "Estimated Delivery Due Date (EDD)",
+      "expression": "addDays(lmpDate, 280 + (cycleLength - 28))",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "daysRemainingToDelivery",
+      "label": "Días Faltantes para el Nacimiento",
+      "label_en": "Remaining Days Until Estimated Delivery",
+      "expression": "max(daysBetween(todayDate(), estimatedDueDate), 0)",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "due-date-calculator", "type": "static", "message": "Calcula tu fecha por ecografía o concepción", "message_en": "Calculate due date by ultrasound or conception", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Obstetra y Especialista en Salud Materno-Fetal",
+    "role_en": "Obstetrician & Maternal-Fetal Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "cálido y profesional",
+    "includeData": ["currentGestationalWeeks", "extraDaysInWeek", "estimatedDueDate", "daysRemainingToDelivery"],
+    "instructions": [
+      "Sintetiza la edad gestacional actual en semanas y días, la fecha estimada de parto (FPP) y los días faltantes en 2 frases concisas.",
+      "Ofrece una recomendación obstétrica adaptada al trimestre en el que se encuentra la usuaria."
+    ],
+    "instructions_en": [
+      "Summarize current gestational age in weeks and days, estimated due date (EDD), and countdown in 2 concise sentences.",
+      "Offer supportive clinical advice appropriate for the user's current pregnancy trimester."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Embarazo y Semanas de Gestación (LMP) | CalculadoraHub",
+    "metaTitle_en": "Pregnancy & Gestational Age Calculator (LMP Date) | CalculadoraHub",
+    "metaDescription": "Calcula tus semanas exactas de embarazo y fecha de parto por la última regla. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate exact gestational age in weeks/days and delivery due date using Last Period date. Free, instant results.",
+    "keywords": ["pregnancy calculator", "semanas de embarazo", "fecha de parto", "regla de naegele"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

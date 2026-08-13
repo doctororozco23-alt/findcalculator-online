@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "average-calculator",
+    "title": "Calculadora de Promedio Ponderado, Geométrico y Armónico",
+    "title_en": "Weighted, Geometric & Harmonic Average Calculator",
+    "slug": "calculadora-de-promedio-ponderado-geometrico-armonico",
+    "category": "statistics",
+    "subcategory": "descriptive",
+    "tags": ["promedio", "promedio-ponderado", "promedio-geometrico", "promedio-armonico", "estadistica"],
+    "tags_en": ["average", "weighted-average", "geometric-mean", "harmonic-mean", "statistics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "BarChart3"
+  },
+  "content": {
+    "shortDescription": "Calcula el Promedio Ponderado por pesos ($w_i$), Promedio Geométrico ($\\sqrt[n]{\\prod x_i}$) y Promedio Armónico de un conjunto de datos.",
+    "shortDescription_en": "Compute Weighted Average ($w_i$), Geometric Mean ($\\sqrt[n]{\\prod x_i}$), and Harmonic Mean.",
+    "longDescription": "Calculadora de promedios estadísticos avanzados. Permite calcular el promedio ponderado asignando pesos de importancia $w_i$, así como las medias pitagóricas (Geométrica para tasas/intereses y Armónica para velocidades).",
+    "longDescription_en": "Advanced statistical average calculator. Computes weighted averages with custom weights $w_i$, and Pythagorean means (Geometric for rates, Harmonic for speeds).",
+    "howToUse": [
+      "Ingresa hasta 3 valores numéricos ($x_1, x_2, x_3$).",
+      "Ingresa los Pesos o Ponderaciones correspondientes ($w_1, w_2, w_3$).",
+      "Consulta el Promedio Ponderado, Promedio Aritmético simple y Promedio Geométrico."
+    ],
+    "howToUse_en": [
+      "Enter up to 3 numeric values ($x_1, x_2, x_3$).",
+      "Enter corresponding Weights ($w_1, w_2, w_3$).",
+      "View Weighted Average, Simple Arithmetic Mean, and Geometric Mean."
+    ],
+    "methodology": "Promedio Ponderado = ∑(w_i * x_i) / ∑w_i. Promedio Geométrico = (x1 * x2 * x3)^(1/3).",
+    "methodology_en": "Weighted Average = ∑(w_i * x_i) / ∑w_i. Geometric Mean = (x1 * x2 * x3)^(1/3)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Medias Pitagóricas y Ponderadas",
+    "role_en": "Pythagorean & Weighted Means Specialist Assistant",
+    "includeData": ["weightedAvgResult", "simpleMean", "geometricMean", "totalWeights"],
+    "instructions": [
+      "Explica la aplicación del Promedio Ponderado según las cargas asignadas.",
+      "Compara la Media Aritmética vs Media Geométrica (útil en finanzas e interés compuesto).",
+      "Verifica la desigualdad de las medias: Armónica ≤ Geométrica ≤ Aritmética."
+    ],
+    "instructions_en": [
+      "Explain Weighted Average application based on assigned weights.",
+      "Compare Arithmetic vs Geometric Mean (useful in finance and compound interest).",
+      "Verify inequality of means: Harmonic ≤ Geometric ≤ Arithmetic."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "avg-guide",
+      "icon": "🧮",
+      "title": "Types of Averages & Applications",
+      "title_es": "Tipos de Promedios y Aplicaciones",
+      "content_html_en": "<p><b>Weighted Average:</b> Used in school grades, financial portfolios, and CPI calculations where items have different importance.</p><p><b>Geometric Mean:</b> Used for growth rates, compound interest, and financial yields.</p><p><b>Harmonic Mean:</b> Used for average speed, ratios, and rates.</p>",
+      "content_html": "<p><b>Promedio Ponderado:</b> Usado en notas escolares, portafolios financieros e IPC donde los ítems tienen distinta importancia.</p><p><b>Promedio Geométrico:</b> Usado para tasas de crecimiento, interés compuesto y rendimientos financieros.</p><p><b>Promedio Armónico:</b> Usado para velocidades medias, razones y proporciones de tiempo.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "item1",
+      "label": "Valor 1 (x₁)",
+      "label_en": "Value 1 (x₁)",
+      "type": "number",
+      "default": 85,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "weight1",
+      "label": "Peso / Ponderación 1 (w₁ %)",
+      "label_en": "Weight 1 (w₁ %)",
+      "type": "number",
+      "default": 40,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "item2",
+      "label": "Valor 2 (x₂)",
+      "label_en": "Value 2 (x₂)",
+      "type": "number",
+      "default": 90,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "weight2",
+      "label": "Peso / Ponderación 2 (w₂ %)",
+      "label_en": "Weight 2 (w₂ %)",
+      "type": "number",
+      "default": 30,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "item3",
+      "label": "Valor 3 (x₃)",
+      "label_en": "Value 3 (x₃)",
+      "type": "number",
+      "default": 75,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "weight3",
+      "label": "Peso / Ponderación 3 (w₃ %)",
+      "label_en": "Weight 3 (w₃ %)",
+      "type": "number",
+      "default": 30,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalWeights",
+      "label": "Suma de Pesos (∑w)",
+      "label_en": "Sum of Weights (∑w)",
+      "expression": "weight1 + weight2 + weight3",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "weightedAvgResult",
+      "label": "Promedio Ponderado Calculado",
+      "label_en": "Calculated Weighted Average",
+      "expression": "totalWeights != 0 ? ((item1 * weight1 + item2 * weight2 + item3 * weight3) / totalWeights) : 0",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "weightedAvgResult", "op": ">=", "value": 0 }, "label": "Promedio Ponderado Obtenido", "label_en": "Weighted Average Computed", "tone": "success", "text": "Promedio ponderado evaluado correctamente según las cargas asignadas.", "text_en": "Weighted average evaluated based on assigned weights." }
+      ]
+    },
+    {
+      "id": "simpleMean",
+      "label": "Promedio Aritmético Simple (sin ponderar)",
+      "label_en": "Simple Arithmetic Mean (unweighted)",
+      "expression": "(item1 + item2 + item3) / 3",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "geometricMean",
+      "label": "Promedio Geométrico (∛(x₁ · x₂ · x₃))",
+      "label_en": "Geometric Mean (∛(x₁ · x₂ · x₃))",
+      "expression": "(item1 > 0 && item2 > 0 && item3 > 0) ? ((item1 * item2 * item3)^(1/3)) : 0",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

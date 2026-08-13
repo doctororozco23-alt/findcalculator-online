@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "pcb-trace-current-width-calculator",
+    "title": "Calculadora de Ancho de Pista de PCB según Corriente (IPC-2221)",
+    "title_en": "PCB Trace Width & Current Capacity Calculator (IPC-2221)",
+    "slug": "calculadora-de-ancho-de-pista-de-pcb-segun-corriente-ipc-2221",
+    "category": "technology",
+    "subcategory": "electrical",
+    "tags": ["pcb", "ancho-de-pista", "ipc-2221", "circuito-impreso", "amperios", "cobre-pcb", "electronica", "tecnologia"],
+    "tags_en": ["pcb", "trace-width", "ipc-2221", "printed-circuit-board", "current-capacity", "copper-weight", "electronics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el ancho mínimo de pista de cobre en placas de circuito impreso PCB según la norma IPC-2221 para limitar el calentamiento.",
+    "shortDescription_en": "Calculate minimum copper trace width for printed circuit boards per IPC-2221 standard to limit temperature rise.",
+    "longDescription": "Herramienta de diseño de placas PCB y electrónica de potencia. Determina el ancho en mils y milímetros a partir de la corriente en Amperios, grosor de cobre (1 oz/2 oz) y aumento térmico admisible.",
+    "longDescription_en": "PCB layout design and power electronics tool. Computes trace width in mils and mm based on Amps current, copper weight (1 oz/2 oz), and allowed temp rise.",
+    "howToUse": [
+      "Ingresa la Corriente Máxima Continua de la Pista ($I$ en Amperios - A).",
+      "Selecciona el Grosor de la Capa de Cobre (1 oz/ft² = 35 $\\mu$m o 2 oz/ft² = 70 $\\mu$m).",
+      "Ingresa el Aumento de Temperatura Admisible ($\\Delta T$ en °C, ej. 10°C).",
+      "Consulta el Ancho Mínimo de Pista Calculado en mils (milésimas de pulgada) y milímetros (mm)."
+    ],
+    "howToUse_en": [
+      "Enter Maximum Continuous Trace Current ($I$ in Amps - A).",
+      "Select Copper Thickness Weight (1 oz/ft² = 35 $\\mu$m or 2 oz/ft² = 70 $\\mu$m).",
+      "Enter Allowed Temperature Rise ($\\Delta T$ in °C, e.g. 10°C).",
+      "View Calculated Minimum Trace Width in mils (thou) and millimeters (mm)."
+    ],
+    "methodology": "IPC-2221 Capa Externa: Área (mils²) = (I / (0.048 * ΔT^0.44))^(1 / 0.725). Ancho (mils) = Área / (GrosorOz * 1.378).",
+    "methodology_en": "IPC-2221 External Layer: Area (mils²) = (I / (0.048 * ΔT^0.44))^(1 / 0.725). Width (mils) = Area / (ThicknessOz * 1.378)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Diseño y Fabricación de Circuitos Impresos (PCB Layout)",
+    "role_en": "PCB Layout Design & Manufacturing Specialist Assistant",
+    "includeData": ["traceWidthMmResult", "traceWidthMilsResult"],
+    "instructions": [
+      "Interpreta el ancho de pista mínimo en mm y mils según la norma IPC-2221 para capas externas.",
+      "Explica la diferencia entre pistas en capas externas (mejor disipación por aire) vs capas internas de PCB multicapa.",
+      "Muestra la recomendación de aumentar el grosor de cobre a 2 oz/ft² en pistas de alta potencia para reducir el ancho físico."
+    ],
+    "instructions_en": [
+      "Interpret minimum trace width in mm and mils per IPC-2221 standard for external layers.",
+      "Explain difference between external trace layers (better air cooling) vs internal layers in multilayer PCBs.",
+      "Show recommendation for increasing copper weight to 2 oz/ft² on high-current traces to reduce physical width."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ptw-guide",
+      "icon": "📐",
+      "title": "IPC-2221 Copper Weight Standards",
+      "title_es": "Estándares de Peso de Cobre IPC-2221",
+      "content_html_en": "<p><b>1 oz/ft² Copper:</b> 1.37 mils (35 μm) thickness - Most common standard PCB copper.</p><p><b>2 oz/ft² Copper:</b> 2.74 mils (70 μm) thickness - Heavy power trace copper.</p>",
+      "content_html": "<p><b>Cobre 1 oz/ft²:</b> Espesor de 1.37 mils (35 μm) - Cobre estándar más habitual.</p><p><b>Cobre 2 oz/ft²:</b> Espesor de 2.74 mils (70 μm) - Cobre para pistas de potencia.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "traceCurrentAmps",
+      "label": "Corriente Máxima Continua (I en Amperios - A)",
+      "label_en": "Maximum Continuous Current (I in Amps - A)",
+      "type": "number",
+      "default": 3.0,
+      "min": 0.1,
+      "max": 100,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "copperWeightOz",
+      "label": "Grosor de la Capa de Cobre",
+      "label_en": "Copper Weight Thickness",
+      "type": "select",
+      "default": "1.0",
+      "options": [
+        { "value": "1.0", "label": "1 oz/ft² (35 μm - Estándar)", "label_en": "1 oz/ft² (35 μm - Standard)" },
+        { "value": "2.0", "label": "2 oz/ft² (70 μm - Potencia)", "label_en": "2 oz/ft² (70 μm - Heavy Power)" }
+      ]
+    },
+    {
+      "id": "allowedTempRiseC",
+      "label": "Aumento de Temperatura Admisible (ΔT en °C)",
+      "label_en": "Allowed Temperature Rise (ΔT in °C)",
+      "type": "number",
+      "default": 10,
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "traceCrossAreaMils2Val",
+      "label": "Área Transversal Mínima (mils²)",
+      "label_en": "Minimum Cross-Section Area (mils²)",
+      "expression": "allowedTempRiseC > 0 ? ((traceCurrentAmps / (0.048 * (allowedTempRiseC ^ 0.44))) ^ 1.379) : 0",
+      "unit": "mils²",
+      "unit_en": "mils²",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "traceWidthMilsResult",
+      "label": "Ancho Mínimo de Pista en Mils (milésimas de pulgada)",
+      "label_en": "Minimum Trace Width in Mils (thou)",
+      "expression": "copperWeightOz > 0 ? (traceCrossAreaMils2Val / (copperWeightOz * 1.378)) : 0",
+      "unit": "mils",
+      "unit_en": "mils",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "traceWidthMilsResult", "op": ">=", "value": 0 }, "label": "Ancho Calculado", "label_en": "Width Computed", "tone": "success", "text": "Ancho mínimo de pista de cobre cuantificado.", "text_en": "Minimum copper trace width quantified." }
+      ]
+    },
+    {
+      "id": "traceWidthMmResult",
+      "label": "Ancho Equivalente en Milímetros (mm)",
+      "label_en": "Equivalent Width in Millimeters (mm)",
+      "expression": "traceWidthMilsResult * 0.0254",
+      "unit": "mm",
+      "unit_en": "mm",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

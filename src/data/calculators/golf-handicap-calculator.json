@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "golf-handicap-calculator",
+    "title": "Calculadora de Hándicap de Golf (Diferencial de Ronda WHS)",
+    "title_en": "Golf Handicap Calculator (WHS Score Differential)",
+    "slug": "calculadora-de-handicap-de-golf-whs-diferencial",
+    "category": "fitness",
+    "subcategory": "running",
+    "tags": ["golf", "handicap", "diferencial-de-golf", "whs", "usga", "puntuacion-de-golf", "deportes"],
+    "tags_en": ["golf", "handicap", "score-differential", "whs", "usga", "golf-score", "sports"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el Diferencial de Puntuación de una ronda de golf según el Sistema de Hándicap Mundial ($WHS / USGA$).",
+    "shortDescription_en": "Calculate Golf Score Differential for a round following World Handicap System ($WHS / USGA$) standards.",
+    "longDescription": "Herramienta deportiva y de competición de golf. Determina el diferencial de juego ajustando el resultado según la Dificultad del Campo (Course Rating) y la Pendiente (Slope Rating).",
+    "longDescription_en": "Golf sports and tournament tool. Computes round score differential adjusting score for Course Rating and Slope Rating.",
+    "howToUse": [
+      "Ingresa tu Puntuación Bruta Ajustada de la ronda (Gross Score).",
+      "Ingresa la Calificación del Campo (Course Rating, ej. 71.5).",
+      "Ingresa la Valoración de Pendiente del Campo (Slope Rating, ej. 125, estándar 113).",
+      "Consulta el Diferencial de Puntuación Obtenido para tu Hándicap."
+    ],
+    "howToUse_en": [
+      "Enter Adjusted Gross Score for the round.",
+      "Enter Course Rating (e.g. 71.5).",
+      "Enter Course Slope Rating (e.g. 125, standard 113).",
+      "View Calculated Score Differential for your Handicap Index."
+    ],
+    "methodology": "Diferencial de Ronda = ((Puntuación - CourseRating) * 113) / SlopeRating.",
+    "methodology_en": "Round Differential = ((Score - CourseRating) * 113) / SlopeRating."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Reglamento y Hándicap de Golf USGA/WHS",
+    "role_en": "USGA / WHS Golf Rules & Handicap Specialist Assistant",
+    "includeData": ["golfScoreDifferentialVal"],
+    "instructions": [
+      "Interpreta el diferencial de puntuación calculado para la ronda de golf.",
+      "Explica cómo el Índice de Hándicap se calcula promediando los 8 mejores diferenciales de las últimas 20 rondas.",
+      "Muestra el impacto del Slope Rating en campos de mayor dificultad."
+    ],
+    "instructions_en": [
+      "Interpret calculated score differential for the golf round.",
+      "Explain how Handicap Index is computed averaging best 8 differentials out of last 20 rounds.",
+      "Show impact of Slope Rating on courses with higher difficulty."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "glf-guide",
+      "icon": "⛳",
+      "title": "WHS Score Differential Formula",
+      "title_es": "Fórmula del Diferencial de Puntuación WHS",
+      "content_html_en": "<p><b>Formula:</b> Differential = (Adjusted Gross Score - Course Rating) × 113 / Slope Rating.</p><p><b>Standard Slope:</b> 113 represents a course of standard playing difficulty for a scratch golfer.</p>",
+      "content_html": "<p><b>Fórmula:</b> Diferencial = (Puntuación Bruta - Valoración Campo) × 113 / Valoración Pendiente.</p><p><b>Pendiente Estándar:</b> 113 representa un campo de dificultad media estándar.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "grossScoreAdjusted",
+      "label": "Puntuación Bruta Ajustada de la Ronda",
+      "label_en": "Adjusted Gross Score",
+      "type": "number",
+      "default": 85,
+      "min": 50,
+      "max": 180,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "courseRatingVal",
+      "label": "Calificación del Campo (Course Rating)",
+      "label_en": "Course Rating",
+      "type": "number",
+      "default": 71.5,
+      "min": 50,
+      "max": 90,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "slopeRatingVal",
+      "label": "Pendiente del Campo (Slope Rating)",
+      "label_en": "Slope Rating",
+      "type": "number",
+      "default": 125,
+      "min": 55,
+      "max": 155,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "golfScoreDifferentialVal",
+      "label": "Diferencial de Puntuación de la Ronda",
+      "label_en": "Round Score Differential",
+      "expression": "slopeRatingVal > 0 ? (((grossScoreAdjusted - courseRatingVal) * 113) / slopeRatingVal) : 0",
+      "unit": "",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "golfScoreDifferentialVal", "op": "<=", "value": 10 }, "label": "Ronda Excelente (Diferencial ≤ 10)", "label_en": "Excellent Round (Diff ≤ 10)", "tone": "success", "text": "Rendimiento de jugador de hándicap bajo.", "text_en": "Low handicap player performance." },
+        { "when": { "field": "golfScoreDifferentialVal", "op": "between", "value": [10.1, 20] }, "label": "Ronda Promedio (Diferencial 10 - 20)", "label_en": "Average Round (Diff 10 - 20)", "tone": "info", "text": "Rendimiento de jugador intermedio.", "text_en": "Mid handicap player performance." },
+        { "when": { "field": "golfScoreDifferentialVal", "op": ">", "value": 20 }, "label": "Ronda de Hándicap Alto (> 20)", "label_en": "High Handicap Round (> 20)", "tone": "warning", "text": "Rendimiento para desarrollo de juego.", "text_en": "Game improvement player performance." }
+      ]
+    }
+  ]
+}

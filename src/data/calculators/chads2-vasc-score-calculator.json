@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "chads2-vasc-score-calculator",
+    "title": "Calculadora del Score CHA₂DS₂-VASc para Riesgo de ACV en Fibrilación Auricular",
+    "title_en": "CHA₂DS₂-VASc Score Calculator for Stroke Risk in Atrial Fibrillation",
+    "slug": "chads2-vasc-score-riesgo-acv-fibrilacion-auricular",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["chads2-vasc", "acv", "ictus", "fibrilacion-auricular", "anticoagulacion", "cardiologia"],
+    "tags_en": ["chads2-vasc", "stroke", "atrial-fibrillation", "anticoagulation", "cardiology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Heart"
+  },
+  "content": {
+    "shortDescription": "Calcula la puntuación CHA₂DS₂-VASc para estimar el riesgo anual de accidente cerebrovascular (ACV/ictus) en pacientes con Fibrilación Auricular no valvular.",
+    "shortDescription_en": "Calculate the CHA₂DS₂-VASc score to estimate annual stroke risk in non-valvular Atrial Fibrillation.",
+    "longDescription": "Estratificación de riesgo tromboembólico según las Guías ESC/AHA/ACC. Asigna puntos a factores clínicos (Insuficiencia Cardíaca, HTA, Edad ≥ 75, Diabetes, Ictus previo, Enfermedad Vascular, Edad 65-74, Categ. Sexo femenino) y orienta el inicio de Anticoagulación Oral.",
+    "longDescription_en": "Thromboembolic risk stratification according to ESC/AHA/ACC Guidelines. Assigns points to clinical factors and guides Oral Anticoagulation therapy.",
+    "howToUse": [
+      "Selecciona la presencia de Insuficiencia Cardíaca Congénita.",
+      "Indica si el paciente presenta Hipertensión Arterial.",
+      "Selecciona el rango de Edad (Menor de 65, 65-74 o 75+ años).",
+      "Indica si presenta Diabetes Mellitus.",
+      "Selecciona antecedente de Ictus / AIT / Tromboembolismo previo.",
+      "Indica presencia de Enfermedad Vascular (IAM previo, EVP, placa aórtica).",
+      "Selecciona el Sexo biológico del paciente.",
+      "Revisa la puntuación CHA₂DS₂-VASc, la tasa anual de Ictus y la recomendación de anticoagulación."
+    ],
+    "howToUse_en": [
+      "Select presence of Congestive Heart Failure.",
+      "Indicate if patient has Hypertension.",
+      "Select Age range (<65, 65-74, or 75+ years).",
+      "Indicate if patient has Diabetes.",
+      "Select history of prior Stroke / TIA / Thromboembolism.",
+      "Indicate presence of Vascular Disease.",
+      "Select biological Sex.",
+      "Review CHA₂DS₂-VASc score, annual stroke rate, and anticoagulation recommendation."
+    ],
+    "methodology": "Score CHA₂DS₂-VASc (Lip et al. Chest 2010): C (CHF +1), H (HTN +1), A2 (Age ≥75 +2), D (Diabetes +1), S2 (Stroke/TIA +2), V (Vascular disease +1), A (Age 65-74 +1), Sc (Sex category female +1). Rango 0-9 puntos.",
+    "methodology_en": "CHA₂DS₂-VASc Score (Lip et al. Chest 2010): CHF (+1), HTN (+1), Age ≥75 (+2), Diabetes (+1), Stroke/TIA (+2), Vascular disease (+1), Age 65-74 (+1), Sex female (+1). Total range 0-9 points."
+  },
+  "guideSections": [
+    {
+      "id": "chads-guide",
+      "icon": "❤️",
+      "title": "Clinical Anticoagulation Indications (ESC/AHA Guidelines)",
+      "title_es": "Indicaciones Clínicas de Anticoagulación (Guías ESC/AHA)",
+      "content_html_en": "<p><b>Score 0 (Men) / 1 (Women):</b> Low risk. No oral anticoagulation recommended.</p><p><b>Score 1 (Men):</b> Moderate risk. Consider oral anticoagulation (DOAC preferred over Warfarin).</p><p><b>Score ≥ 2 (Men) / ≥ 3 (Women):</b> High risk. Oral anticoagulation strongly indicated.</p>",
+      "content_html": "<p><b>Score 0 (Hombres) / 1 (Mujeres):</b> Bajo riesgo. No se recomienda anticoagulación oral.</p><p><b>Score 1 (Hombres):</b> Riesgo moderado. Considerar anticoagulación oral (ACOD de elección sobre Sintrom/Warfarina).</p><p><b>Score ≥ 2 (Hombres) / ≥ 3 (Mujeres):</b> Alto riesgo. Anticoagulación oral fuertemente indicada.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "chf",
+      "label": "Insuficiencia Cardíaca Congénita / Disfunción VI",
+      "label_en": "Congestive Heart Failure / LVEF ≤ 40%",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "htn",
+      "label": "Hipertensión Arterial (Tratada o PAS > 140 mmHg)",
+      "label_en": "Hypertension (Treated or SBP > 140 mmHg)",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "age_cat",
+      "label": "Edad del paciente",
+      "label_en": "Patient Age Category",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "Menor de 65 años (0 pts)", "label_en": "Under 65 years (0 pts)" },
+        { "value": 1, "label": "65 a 74 años (+1 pt)", "label_en": "65 to 74 years (+1 pt)" },
+        { "value": 2, "label": "75 años o más (+2 pts)", "label_en": "75 years or older (+2 pts)" }
+      ]
+    },
+    {
+      "id": "diabetes",
+      "label": "Diabetes Mellitus (Tratada o Glucemia en ayunas > 126 mg/dL)",
+      "label_en": "Diabetes Mellitus",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "stroke",
+      "label": "Antecedente de Ictus / AIT / Tromboembolismo previo",
+      "label_en": "Prior Stroke / TIA / Thromboembolism",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 2, "label": "Sí (+2 pts)", "label_en": "Yes (+2 pts)" }
+      ]
+    },
+    {
+      "id": "vascular",
+      "label": "Enfermedad Vascular (IAM previo, EVP o placa aórtica)",
+      "label_en": "Vascular Disease (Prior MI, PAD, or aortic plaque)",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "sex_cat",
+      "label": "Sexo biológico",
+      "label_en": "Biological Sex Category",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "Hombre (0 pts)", "label_en": "Male (0 pts)" },
+        { "value": 1, "label": "Mujer (+1 pt)", "label_en": "Female (+1 pt)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "chads2VascTotal",
+      "label": "Puntuación CHA₂DS₂-VASc Total",
+      "label_en": "Total CHA₂DS₂-VASc Score",
+      "expression": "chf + htn + age_cat + diabetes + stroke + vascular + sex_cat",
+      "unit": "puntos",
+      "unit_en": "points",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "chads2VascTotal", "op": "==", "value": 0 }, "label": "Score 0: Riesgo Muy Bajo (0% Ictus/año)", "label_en": "Score 0: Very Low Risk (0% Stroke/yr)", "tone": "success", "text": "Sin indicación de anticoagulación oral.", "text_en": "No oral anticoagulation indicated." },
+        { "when": { "field": "chads2VascTotal", "op": "==", "value": 1 }, "label": "Score 1: Riesgo Bajo-Moderado (1.3% Ictus/año)", "label_en": "Score 1: Low-Moderate Risk (1.3% Stroke/yr)", "tone": "info", "text": "Considerar anticoagulación oral según juicio clínico.", "text_en": "Consider oral anticoagulation based on clinical judgment." },
+        { "when": { "field": "chads2VascTotal", "op": "==", "value": 2 }, "label": "Score 2: Riesgo Moderado (2.2% Ictus/año)", "label_en": "Score 2: Moderate Risk (2.2% Stroke/yr)", "tone": "warning", "text": "Anticoagulación oral recomendada (ACOD de elección).", "text_en": "Oral anticoagulation recommended (DOAC preferred)." },
+        { "when": { "field": "chads2VascTotal", "op": ">=", "value": 3 }, "label": "Score ≥ 3: Alto Riesgo (> 3.2% Ictus/año)", "label_en": "Score ≥ 3: High Risk (> 3.2% Stroke/yr)", "tone": "warning", "text": "Anticoagulación oral indicada fuertemente.", "text_en": "Oral anticoagulation strongly indicated." }
+      ]
+    }
+  ]
+}

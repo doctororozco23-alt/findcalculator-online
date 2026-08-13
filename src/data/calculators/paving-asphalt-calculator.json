@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "paving-asphalt-calculator",
+    "title": "Calculadora de Asfalto y Mezcla de Pavimentos (Toneladas y Volumen)",
+    "title_en": "Asphalt Paving Weight & Volume Calculator",
+    "slug": "calculadora-de-asfalto-mezcla-de-pavimentos-toneladas-entradas",
+    "category": "construction",
+    "subcategory": "materials",
+    "tags": ["asfalto", "pavimento", "mezcla-asfaltica", "toneladas-de-asfalto", "calzadas", "entradas", "materiales"],
+    "tags_en": ["asphalt", "paving", "asphalt-mix", "asphalt-tons", "driveway", "roadway", "materials"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el peso en toneladas US / métricas y el volumen de mezcla asfáltica necesario para pavimentar calzadas y estacionamientos.",
+    "shortDescription_en": "Calculate weight in tons and volume of hot mix asphalt required for paving driveways and parking lots.",
+    "longDescription": "Herramienta de pavimentación e ingeniería vial. Aplica la densidad compactada del asfalto caliente (~2,400 kg/m³ o 145 lbs/ft³).",
+    "longDescription_en": "Paving and highway engineering tool. Applies compacted hot mix asphalt density (~2,400 kg/m³ or 145 lbs/ft³).",
+    "howToUse": [
+      "Ingresa el Área de Pavimentación (m² o pies²).",
+      "Ingresa el Espesor Compactado del Asfalto (centímetros - cm o pulgadas).",
+      "Consulta las Toneladas Métricas y Toneladas US de Mezcla Asfáltica requeridas."
+    ],
+    "howToUse_en": [
+      "Enter Paving Area (m² or sq ft).",
+      "Enter Compacted Asphalt Thickness (centimeters - cm or inches).",
+      "View Required Metric Tons and US Tons of Asphalt Mix."
+    ],
+    "methodology": "Volumen = Área * Espesor. Peso (kg) = Volumen(m³) * 2400 kg/m³. Toneladas = Peso / 1000.",
+    "methodology_en": "Volume = Area * Thickness. Weight (kg) = Volume(m³) * 2400 kg/m³. Tons = Weight / 1000."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Pavimentación Vial y Mezclas Asfálticas",
+    "role_en": "Paving & Asphalt Mixes Specialist Assistant",
+    "includeData": ["asphaltTonsMetricResult", "asphaltVolumeM3Result"],
+    "instructions": [
+      "Interpreta la cantidad de toneladas de asfalto caliente compactado requeridas.",
+      "Explica la diferencia entre capa de rodadura fina (5 cm / 2 pulg) vs capa base pesada (10 cm / 4 pulg).",
+      "Muestra la recomendación de usar emulsión asfáltica de riego de liga (tack coat) sobre la base."
+    ],
+    "instructions_en": [
+      "Interpret calculated compacted hot mix asphalt tons.",
+      "Explain difference between wearing surface course (5 cm / 2 in) vs heavy base course (10 cm / 4 in).",
+      "Show recommendation for asphalt tack coat emulsion application on base."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "pva-guide",
+      "icon": "🛣️",
+      "title": "Asphalt Paving Density Benchmarks",
+      "title_es": "Pautas de Densidad de Pavimentación Asfáltica",
+      "content_html_en": "<p><b>Compacted Density:</b> ~2,400 kg/m³ (145 lbs/cu ft).</p><p><b>Standard Driveway Thickness:</b> 2 to 3 inches (5 to 7.5 cm) of compacted HMA.</p>",
+      "content_html": "<p><b>Densidad Compactada:</b> ~2,400 kg/m³ (145 lbs/pie³).</p><p><b>Espesor Estándar Entrada de Garaje:</b> 5 a 7.5 cm (2 a 3 pulgadas) de HMA compactado.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "pavingAreaM2",
+      "label": "Área de Pavimentación (m²)",
+      "label_en": "Paving Area (m²)",
+      "type": "number",
+      "default": 150,
+      "min": 1,
+      "max": 100000,
+      "step": 10,
+      "required": true
+    },
+    {
+      "id": "asphaltThicknessCm",
+      "label": "Espesor Compactado Deseado (cm)",
+      "label_en": "Desired Compacted Thickness (cm)",
+      "type": "number",
+      "default": 5.0,
+      "min": 1,
+      "max": 50,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "asphaltVolumeM3Result",
+      "label": "Volumen de Mezcla Asfáltica (m³)",
+      "label_en": "Asphalt Mix Volume (m³)",
+      "expression": "pavingAreaM2 * (asphaltThicknessCm / 100)",
+      "unit": "m³",
+      "unit_en": "m³",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "asphaltTonsMetricResult",
+      "label": "Toneladas Métricas de Asfalto Requeridas (con 5% desperdicio)",
+      "label_en": "Required Metric Tons of Asphalt (with 5% waste)",
+      "expression": "((asphaltVolumeM3Result * 2400) / 1000) * 1.05",
+      "unit": "t",
+      "unit_en": "t",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "asphaltTonsMetricResult", "op": ">=", "value": 0 }, "label": "Asfalto Calculado", "label_en": "Asphalt Computed", "tone": "success", "text": "Masa total de asfalto caliente compactado cuantificada.", "text_en": "Total compacted hot mix asphalt mass quantified." }
+      ]
+    }
+  ]
+}

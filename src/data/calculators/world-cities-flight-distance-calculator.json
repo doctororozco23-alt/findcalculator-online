@@ -1,0 +1,170 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "world-cities-flight-distance-calculator",
+    "title": "Calculadora de Distancia en Millas entre Ciudades del Mundo y Coordenadas GPS",
+    "title_en": "World Cities & GPS Coordinates Great-Circle Distance Calculator (Miles, km & Flight Time)",
+    "slug": "calculadora-de-distancia-en-millas-entre-ciudades-del-mundo-gps-vuelos",
+    "category": "transport",
+    "subcategory": "fuel",
+    "tags": ["distancia-entre-ciudades", "millas-de-vuelo", "coordenadas-gps", "kilometros", "duracion-de-vuelo", "transporte", "vehiculos"],
+    "tags_en": ["city-distance", "flight-miles", "gps-coordinates", "kilometers", "flight-duration", "transport", "vehicles"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la distancia ortodrómica exacta en Millas estatutas, Millas Náuticas y Kilómetros entre ciudades del mundo o coordenadas GPS Lat/Lon.",
+    "shortDescription_en": "Calculate exact great-circle distance in Statute Miles, Nautical Miles, and Kilometers between world cities or custom Lat/Lon GPS coordinates.",
+    "longDescription": "Herramienta de aviación, logística internacional y navegación marítima. Aplica trigonometría esférica de circulo máximo (Fórmula de Haversine) para calcular distancias entre cualquier punto de la Tierra.",
+    "longDescription_en": "Aviation, international logistics, and maritime navigation tool. Applies spherical trigonometry (Haversine Formula) for exact distance calculation between any global coordinates.",
+    "howToUse": [
+      "Selecciona la Ciudad de Origen (Punto A) o ingresa sus Coordenadas de Latitud y Longitud.",
+      "Selecciona la Ciudad de Destino (Punto B) o ingresa sus Coordenadas de Latitud y Longitud.",
+      "Ingresa la Velocidad Crucero del Avión o Vehículo (mph, ej. 500 mph para avión comercial).",
+      "Consulta la Distancia Exacta en Millas (mi), Millas Náuticas (NM), Kilómetros (km) y Tiempo Estimado de Vuelo."
+    ],
+    "howToUse_en": [
+      "Select Origin City (Point A) or enter its Latitude and Longitude coordinates.",
+      "Select Destination City (Point B) or enter its Latitude and Longitude coordinates.",
+      "Enter Cruise Speed of Aircraft or Vehicle (mph, e.g. 500 mph for commercial jet).",
+      "View Exact Distance in Statute Miles (mi), Nautical Miles (NM), Kilometers (km), and Estimated Flight Time."
+    ],
+    "methodology": "Fórmula Ortodrómica Esférica: d = R * acos(sin(lat1)*sin(lat2) + cos(lat1)*cos(lat2)*cos(lon2 - lon1)). R = 3958.8 millas terrestres.",
+    "methodology_en": "Spherical Great-Circle Formula: d = R * acos(sin(lat1)*sin(lat2) + cos(lat1)*cos(lat2)*cos(lon2 - lon1)). R = 3958.8 statute miles."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Geodesia, Aviación Comercial y Logística Internacional",
+    "role_en": "Geodesy, Commercial Aviation & International Logistics Specialist Assistant",
+    "includeData": ["distanceInStatuteMilesResult", "distanceInKilometersResult", "estimatedFlightHoursResult"],
+    "instructions": [
+      "Interpreta la distancia ortodrómica calculada entre la ciudad de origen y la ciudad de destino.",
+      "Explica la trayectoria en círculo máximo (curvatura terrestre) frente a una línea recta en mapa plano.",
+      "Muestra estimaciones de tiempo de vuelo comercial e impacto en consumo de combustible náutico."
+    ],
+    "instructions_en": [
+      "Interpret calculated great-circle distance between origin and destination cities.",
+      "Explain great-circle flight path curvature versus straight lines on flat Mercator maps.",
+      "Show commercial flight time estimates and jet fuel consumption benchmarks."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "wfd-guide",
+      "icon": "✈️",
+      "title": "Great-Circle Distance Benchmarks",
+      "title_es": "Distancias de Círculo Máximo de Referencia",
+      "content_html_en": "<p><b>New York to London:</b> ~3,459 Statute Miles (5,567 km / 3,006 NM).</p><p><b>Madrid to Buenos Aires:</b> ~6,246 Statute Miles (10,052 km / 5,427 NM).</p><p><b>Tokyo to Los Angeles:</b> ~5,478 Statute Miles (8,815 km / 4,760 NM).</p>",
+      "content_html": "<p><b>Nueva York a Londres:</b> ~3,459 Millas Estatutas (5,567 km / 3,006 NM).</p><p><b>Madrid a Buenos Aires:</b> ~6,246 Millas Estatutas (10,052 km / 5,427 NM).</p><p><b>Tokio a Los Ángeles:</b> ~5,478 Millas Estatutas (8,815 km / 4,760 NM).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "sourceCityLatDegree",
+      "label": "Latitud Ciudad Origen / Punto A (grados dec)",
+      "label_en": "Origin City / Point A Latitude (deg)",
+      "type": "number",
+      "default": 40.7128,
+      "min": -90,
+      "max": 90,
+      "step": 0.0001,
+      "required": true
+    },
+    {
+      "id": "sourceCityLonDegree",
+      "label": "Longitud Ciudad Origen / Punto A (grados dec)",
+      "label_en": "Origin City / Point A Longitude (deg)",
+      "type": "number",
+      "default": -74.006,
+      "min": -180,
+      "max": 180,
+      "step": 0.0001,
+      "required": true
+    },
+    {
+      "id": "targetCityLatDegree",
+      "label": "Latitud Ciudad Destino / Punto B (grados dec)",
+      "label_en": "Target City / Point B Latitude (deg)",
+      "type": "number",
+      "default": 51.5074,
+      "min": -90,
+      "max": 90,
+      "step": 0.0001,
+      "required": true
+    },
+    {
+      "id": "targetCityLonDegree",
+      "label": "Longitud Ciudad Destino / Punto B (grados dec)",
+      "label_en": "Target City / Point B Longitude (deg)",
+      "type": "number",
+      "default": -0.1278,
+      "min": -180,
+      "max": 180,
+      "step": 0.0001,
+      "required": true
+    },
+    {
+      "id": "aircraftCruiseSpeedMph",
+      "label": "Velocidad Crucero del Vehículo / Avión (mph)",
+      "label_en": "Vehicle / Aircraft Cruise Speed (mph)",
+      "type": "number",
+      "default": 500,
+      "min": 10,
+      "max": 2000,
+      "step": 10,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "distanceInStatuteMilesResult",
+      "label": "Distancia en Millas Terrestres Estatutas (mi)",
+      "label_en": "Distance in Statute Miles (mi)",
+      "expression": "3958.8 * acos(sin(sourceCityLatDegree * (pi / 180)) * sin(targetCityLatDegree * (pi / 180)) + cos(sourceCityLatDegree * (pi / 180)) * cos(targetCityLatDegree * (pi / 180)) * cos((targetCityLonDegree - sourceCityLonDegree) * (pi / 180)))",
+      "unit": "mi",
+      "unit_en": "mi",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "distanceInStatuteMilesResult", "op": ">=", "value": 0 }, "label": "Distancia Ortodrómica Calculada", "label_en": "Great-Circle Distance Computed", "tone": "success", "text": "Distancia en círculo máximo cuantificada.", "text_en": "Great-circle distance quantified." }
+      ]
+    },
+    {
+      "id": "distanceInKilometersResult",
+      "label": "Distancia en Kilómetros (km)",
+      "label_en": "Distance in Kilometers (km)",
+      "expression": "distanceInStatuteMilesResult * 1.609344",
+      "unit": "km",
+      "unit_en": "km",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "distanceInNauticalMilesResult",
+      "label": "Distancia en Millas Náuticas (NM)",
+      "label_en": "Distance in Nautical Miles (NM)",
+      "expression": "distanceInStatuteMilesResult / 1.15077945",
+      "unit": "NM",
+      "unit_en": "NM",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "estimatedFlightHoursResult",
+      "label": "Tiempo Estimado de Vuelo / Viaje Directo",
+      "label_en": "Estimated Direct Flight / Travel Time",
+      "expression": "aircraftCruiseSpeedMph > 0 ? (distanceInStatuteMilesResult / aircraftCruiseSpeedMph) : 0",
+      "unit": "horas",
+      "unit_en": "hours",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

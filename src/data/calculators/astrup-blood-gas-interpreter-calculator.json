@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "astrup-blood-gas-interpreter-calculator",
+    "title": "Calculadora de Gasometría Arterial e Interpretación Ácido-Base (Ecuación de Winter)",
+    "title_en": "Arterial Blood Gas Interpreter & Winter's Formula Calculator",
+    "slug": "gasometria-arterial-astrup-winter-acido-base",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["gasometria", "astrup", "winter", "paco2", "hco3", "acidosis", "alcalosis", "uci"],
+    "tags_en": ["abg", "blood-gas", "winter-formula", "paco2", "hco3", "acidosis", "alkalosis", "icu"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Interpreta la Gasometría Arterial (pH, PaCO₂, HCO₃⁻) y calcula la respuesta compensatoria esperada mediante la Ecuación de Winter en Acidosis Metabólica.",
+    "shortDescription_en": "Interpret Arterial Blood Gas (pH, PaCO₂, HCO₃⁻) and calculate expected respiratory compensation via Winter's Formula in Metabolic Acidosis.",
+    "longDescription": "Auditoría de equilibrio ácido-base clínica. Identifica trastornos primarios (Acidosis/Alcalosis Metabólica o Respiratoria) y calcula la PaCO₂ esperada = (1.5 × HCO₃⁻) + 8 ± 2 en acidosis metabólica.",
+    "longDescription_en": "Acid-base balance clinical audit. Identifies primary disorders and computes expected PaCO₂ = (1.5 × HCO₃⁻) + 8 ± 2 in metabolic acidosis.",
+    "howToUse": [
+      "Ingresa el pH arterial.",
+      "Ingresa la PaCO₂ en mmHg.",
+      "Ingresa el Bicarbonato (HCO₃⁻) en mEq/L.",
+      "Revisa la interpretación del trastorno primario y la PaCO₂ esperada por Winter."
+    ],
+    "howToUse_en": [
+      "Enter arterial pH.",
+      "Enter PaCO₂ in mmHg.",
+      "Enter Bicarbonate (HCO₃⁻) in mEq/L.",
+      "Review primary disorder interpretation and expected PaCO₂ via Winter's formula."
+    ],
+    "methodology": "Valores normales: pH 7.35-7.45, PaCO₂ 35-45 mmHg, HCO₃⁻ 22-26 mEq/L. Ecuación de Winter: PaCO₂ esperada = 1.5 × HCO₃⁻ + 8.",
+    "methodology_en": "Normal values: pH 7.35-7.45, PaCO₂ 35-45 mmHg, HCO₃⁻ 22-26 mEq/L. Winter's Formula: Expected PaCO₂ = 1.5 × HCO₃⁻ + 8."
+  },
+  "guideSections": [
+    {
+      "id": "abg-guide",
+      "icon": "🩸",
+      "title": "ABG Diagnostic Algorithm",
+      "title_es": "Algoritmo Diagnóstico de Gasometría Arterial",
+      "content_html_en": "<p><b>Step 1:</b> Assess pH (Acidemia &lt; 7.35 vs Alkalemia &gt; 7.45).</p><p><b>Step 2:</b> Identify primary driver (PaCO₂ for respiratory, HCO₃⁻ for metabolic).</p><p><b>Step 3:</b> Calculate compensation (Winter's formula for metabolic acidosis).</p>",
+      "content_html": "<p><b>Paso 1:</b> Evaluar pH (Acidemia &lt; 7.35 vs Alkalemia &gt; 7.45).</p><p><b>Paso 2:</b> Identificar trastorno primario (PaCO₂ respiratorio, HCO₃⁻ metabólico).</p><p><b>Paso 3:</b> Calcular compensación (Fórmula de Winter para acidosis metabólica).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "phVal",
+      "label": "pH Arterial",
+      "label_en": "Arterial pH",
+      "type": "number",
+      "default": 7.40,
+      "min": 6.80,
+      "max": 7.80,
+      "step": 0.01,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [6.80, 7.80], "message": "pH entre 6.80 y 7.80", "message_en": "pH between 6.80 and 7.80" }]
+    },
+    {
+      "id": "paco2Mmhg",
+      "label": "PaCO₂ Arterial",
+      "label_en": "Arterial PaCO₂",
+      "type": "number",
+      "default": 40,
+      "min": 10,
+      "max": 130,
+      "step": 1,
+      "unit": "mmHg",
+      "unit_en": "mmHg",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [10, 130], "message": "PaCO₂ entre 10 y 130 mmHg", "message_en": "PaCO₂ between 10 and 130 mmHg" }]
+    },
+    {
+      "id": "hco3Meql",
+      "label": "Bicarbonato (HCO₃⁻)",
+      "label_en": "Serum Bicarbonate (HCO₃⁻)",
+      "type": "number",
+      "default": 24,
+      "min": 2,
+      "max": 60,
+      "step": 1,
+      "unit": "mEq/L",
+      "unit_en": "mEq/L",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [2, 60], "message": "HCO₃⁻ entre 2 y 60 mEq/L", "message_en": "HCO₃⁻ between 2 and 60 mEq/L" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "expectedPaco2Winter",
+      "label": "PaCO₂ Esperada (Ecuación de Winter)",
+      "label_en": "Expected PaCO₂ (Winter's Formula)",
+      "expression": "1.5 * hco3Meql + 8",
+      "unit": "mmHg",
+      "unit_en": "mmHg",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "phVal", "op": "<", "value": 7.35 }, "label": "Acidemia (pH < 7.35)", "label_en": "Acidemia (pH < 7.35)", "tone": "warning", "text": "Acidemia presente. Evaluar trastorno metabólico vs respiratorio.", "text_en": "Acidemia present. Evaluate metabolic vs respiratory disorder." },
+        { "when": { "field": "phVal", "op": "between", "value": [7.35, 7.45] }, "label": "pH Normal (7.35 - 7.45)", "label_en": "Normal pH (7.35 - 7.45)", "tone": "success", "text": "Equilibrio pH conservado o trastorno mixto compensado.", "text_en": "Preserved pH balance or compensated mixed disorder." },
+        { "when": { "field": "phVal", "op": ">", "value": 7.45 }, "label": "Alcalemia (pH > 7.45)", "label_en": "Alkalemia (pH > 7.45)", "tone": "warning", "text": "Alcalemia presente. Evaluar causa de pérdidas o retención de HCO3.", "text_en": "Alkalemia present. Evaluate cause of losses or HCO3 retention." }
+      ]
+    }
+  ]
+}

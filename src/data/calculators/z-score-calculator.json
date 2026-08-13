@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "z-score-calculator",
+    "title": "Calculadora de Z-Score (Puntuación Z y Probabilidad Normal)",
+    "title_en": "Z-Score & Normal Probability Calculator",
+    "slug": "calculadora-de-z-score-puntuacion-z-percentil",
+    "category": "statistics",
+    "subcategory": "descriptive",
+    "tags": ["z-score", "puntuacion-z", "percentil", "distribucion-normal", "estadistica", "probabilidad"],
+    "tags_en": ["z-score", "z-value", "percentile", "normal-distribution", "statistics", "probability"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "BarChart3"
+  },
+  "content": {
+    "shortDescription": "Calcula la Puntuación Z ( $Z = \\frac{X - \\mu}{\\sigma}$ ), estandarizando un valor $X$ respecto a la Media ( $\\mu$ ) y Desviación Estándar ( $\\sigma$ ).",
+    "shortDescription_en": "Compute Z-Score ( $Z = \\frac{X - \\mu}{\\sigma}$ ), standardizing a value $X$ given Mean ( $\\mu$ ) and Standard Deviation ( $\\sigma$ ).",
+    "longDescription": "Herramienta estadística fundamental para tipificación de variables. Convierte cualquier distribución normal a la Distribución Normal Estándar $\\mathcal{N}(0, 1)$, indicando cuántas desviaciones estándar se aleja un valor de la media.",
+    "longDescription_en": "Essential statistical tool for standardization. Converts any normal distribution to Standard Normal $\\mathcal{N}(0, 1)$, indicating standard deviations from mean.",
+    "howToUse": [
+      "Ingresa el Valor Bruto Observado ($X$).",
+      "Ingresa la Media Poblacional o Muestral ($\\mu$).",
+      "Ingresa la Desviación Estándar ($\\sigma > 0$).",
+      "Consulta la Puntuación Z ($Z$) calculada y el percentil acumulado."
+    ],
+    "howToUse_en": [
+      "Enter Observed Raw Value ($X$).",
+      "Enter Population or Sample Mean ($\\mu$).",
+      "Enter Standard Deviation ($\\sigma > 0$).",
+      "View calculated Z-Score ($Z$) and cumulative percentile."
+    ],
+    "methodology": "Z-Score: Z = (X - μ) / σ. Indica la posición relativa estandarizada.",
+    "methodology_en": "Z-Score: Z = (X - μ) / σ. Indicates standardized relative position."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Distribución Normal y Tipificación",
+    "role_en": "Normal Distribution & Standardization Specialist Assistant",
+    "includeData": ["zScoreResult", "distanceFromMean"],
+    "instructions": [
+      "Interpreta la puntuación Z en número de desviaciones estándar respecto a la media.",
+      "Aplica la regla empírica (68-95-99.7%).",
+      "Explica la posición relativa del dato en la curva de Gauss."
+    ],
+    "instructions_en": [
+      "Interpret Z-score in number of standard deviations from mean.",
+      "Apply empirical rule (68-95-99.7%).",
+      "Explain relative position in Gaussian bell curve."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "z-guide",
+      "icon": "📏",
+      "title": "Standard Normal Distribution & Z-Table",
+      "title_es": "Distribución Normal Estándar y Tabla Z",
+      "content_html_en": "<p><b>Z = 0:</b> The value X is exactly equal to the mean μ.</p><p><b>Z = +1:</b> Value is 1 standard deviation above the mean (~84.1% cumulative percentile).</p><p><b>Z = +2:</b> Value is 2 standard deviations above the mean (~97.7% cumulative percentile).</p><p><b>Empirical Rule (68-95-99.7):</b> 68% of data lies within Z = ±1, 95% within Z = ±2, 99.7% within Z = ±3.</p>",
+      "content_html": "<p><b>Z = 0:</b> El valor X es exactamente igual a la media μ.</p><p><b>Z = +1:</b> El valor está 1 desviación estándar por encima de la media (~percentil 84.1%).</p><p><b>Z = +2:</b> El valor está 2 desviaciones estándar por encima de la media (~percentil 97.7%).</p><p><b>Regla Empírica (68-95-99.7):</b> El 68% de datos está en Z = ±1, el 95% en Z = ±2, y el 99.7% en Z = ±3.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "rawValueX",
+      "label": "Valor Bruto Observado (X)",
+      "label_en": "Observed Raw Value (X)",
+      "type": "number",
+      "default": 115,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "meanMu",
+      "label": "Media Poblacional / Muestral (μ)",
+      "label_en": "Population / Sample Mean (μ)",
+      "type": "number",
+      "default": 100,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "sdSigma",
+      "label": "Desviación Estándar (σ)",
+      "label_en": "Standard Deviation (σ)",
+      "type": "number",
+      "default": 15,
+      "min": 0.001,
+      "max": 10000,
+      "step": 0.1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.001, 10000], "message": "La desviación estándar debe ser > 0", "message_en": "Standard deviation must be > 0" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "zScoreResult",
+      "label": "Puntuación Z Calculada (Z = (X - μ) / σ)",
+      "label_en": "Calculated Z-Score (Z = (X - μ) / σ)",
+      "expression": "sdSigma != 0 ? ((rawValueX - meanMu) / sdSigma) : 0",
+      "unit": "σ",
+      "unit_en": "σ",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "zScoreResult", "op": ">", "value": 0 }, "label": "Por Encima de la Media (Z > 0)", "label_en": "Above Mean (Z > 0)", "tone": "success", "text": "El valor está por encima del promedio poblacional.", "text_en": "Value is above the population average." },
+        { "when": { "field": "zScoreResult", "op": "==", "value": 0 }, "label": "Igual a la Media (Z = 0)", "label_en": "Equal to Mean (Z = 0)", "tone": "info", "text": "El valor es exactamente igual a la media.", "text_en": "Value equals the mean exactly." },
+        { "when": { "field": "zScoreResult", "op": "<", "value": 0 }, "label": "Por Debajo de la Media (Z < 0)", "label_en": "Below Mean (Z < 0)", "tone": "warning", "text": "El valor está por debajo del promedio poblacional.", "text_en": "Value is below the population average." }
+      ]
+    },
+    {
+      "id": "distanceFromMean",
+      "label": "Distancia Absoluta a la Media (|X - μ|)",
+      "label_en": "Absolute Distance to Mean (|X - μ|)",
+      "expression": "abs(rawValueX - meanMu)",
+      "unit": "unidades",
+      "unit_en": "units",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

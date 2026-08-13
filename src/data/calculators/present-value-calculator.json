@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "present-value-calculator",
+    "title": "Calculadora de Valor Presente (PV)",
+    "title_en": "Present Value (PV) Calculator",
+    "slug": "valor-presente-pv",
+    "category": "finance",
+    "subcategory": "investments",
+    "tags": ["valor-presente", "pv", "descuento"],
+    "tags_en": ["present-value", "pv", "discounting"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "DollarSign"
+  },
+  "content": {
+    "shortDescription": "Calcula el valor actual equivalente en el presente de una suma de dinero recibida en el futuro.",
+    "shortDescription_en": "Calculate the current present value today of a future sum of money discounted at a given interest rate.",
+    "longDescription": "Descuenta una suma futura de dinero para determinar su valor equivalente en el presente aplicando una tasa de descuento anual determinada.",
+    "longDescription_en": "Discount a future sum of money to determine its present-day value equivalent applying a specific annual discount rate.",
+    "howToUse": [
+      "Ingresa el valor futuro deseado a recibir.",
+      "Establece la tasa de descuento anual (%).",
+      "Indica los años en el futuro.",
+      "Consulta el valor presente equivalente hoy."
+    ],
+    "howToUse_en": [
+      "Enter target future value to receive and active currency.",
+      "Set annual discount rate (%).",
+      "Enter number of future years.",
+      "View equivalent present value today."
+    ],
+    "methodology": "Fórmula Valor Presente: PV = Valor Futuro / (1 + TasaDescuento)^Años.",
+    "methodology_en": "Present Value Formula: PV = Future Value / (1 + Discount Rate)^Years."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "💵",
+      "title": "Time Value of Money (TVM)",
+      "title_es": "El Valor del Dinero en el Tiempo",
+      "content_html_en": "<p>Money available today is worth more than the same amount in the future due to its potential earning capacity and inflation erosion.</p>",
+      "content_html": "<p>Un dólar hoy vale más que un dólar mañana debido a la capacidad de generar intereses y a la erosión de la inflación.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "futureValue",
+      "label": "Monto futuro esperado",
+      "label_en": "Expected Future Value",
+      "type": "currency",
+      "default": 50000,
+      "min": 100,
+      "max": 10000000,
+      "step": 1000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "discountRate",
+      "label": "Tasa de descuento anual (%)",
+      "label_en": "Annual Discount Rate (%)",
+      "type": "number",
+      "default": 6.0,
+      "min": 0.1,
+      "max": 25,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "years",
+      "label": "Número de años en el futuro",
+      "label_en": "Years in the Future",
+      "type": "slider",
+      "default": 10,
+      "min": 1,
+      "max": 40,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "presentValueAmount",
+      "label": "Valor Presente Equivalente Hoy",
+      "label_en": "Equivalent Present Value Today",
+      "expression": "futureValue / ((1 + discountRate / 100) ^ years)",
+      "unit": { "follows": "futureValue" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "presentValueAmount", "op": ">", "value": 0 }, "label": "Valor Descontado", "label_en": "Discounted Present Value", "tone": "info", "text": "Monto requerido hoy para alcanzar el objetivo futuro.", "text_en": "Amount required today to achieve target future sum." }
+      ]
+    },
+    {
+      "id": "discountAmount",
+      "label": "Descuento total acumulado",
+      "label_en": "Total Cumulative Discount Amount",
+      "expression": "futureValue - presentValueAmount",
+      "unit": { "follows": "futureValue" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "future-value-calculator", "type": "static", "message": "Calcula el valor futuro de una inversión", "message_en": "Calculate future value of an investment", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Valor Presente TVM",
+    "role_en": "Present Value TVM Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["presentValueAmount", "discountAmount", "futureValue", "discountRate"],
+    "instructions": [
+      "Sintetiza el valor presente equivalente hoy y el descuento acumulado en 2 frases concisas.",
+      "Destaca que tasas de descuento más altas reducen el valor presente actual."
+    ],
+    "instructions_en": [
+      "Summarize present value equivalent today and total discount amount in 2 concise sentences.",
+      "Emphasize that higher discount rates reduce the current present value."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Valor Presente (PV) | CalculadoraHub",
+    "metaTitle_en": "Present Value (PV) Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el valor presente de una suma de dinero futura descontada. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate present value today of future cash flows discounted at a rate. Free, instant results.",
+    "keywords": ["present value calculator", "valor presente", "pv calculator", "descuento tvm"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "real-estate-calculator",
+    "title": "Calculadora de Inversión Inmobiliaria y Cap Rate",
+    "title_en": "Real Estate Investment & Cap Rate Calculator",
+    "slug": "inversion-inmobiliaria-cap-rate",
+    "category": "finance",
+    "subcategory": "mortgages",
+    "tags": ["bienes-raices", "inmuebles", "cap-rate"],
+    "tags_en": ["real-estate", "properties", "cap-rate"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Building"
+  },
+  "content": {
+    "shortDescription": "Evalúa la rentabilidad bruta, la tasa de capitalización (Cap Rate) y el flujo de caja neto de una propiedad inmobiliaria.",
+    "shortDescription_en": "Evaluate gross rental yield, capitalization rate (Cap Rate), and net cash flow of a real estate property.",
+    "longDescription": "Calcula el retorno de inversión inmobiliaria (Cap Rate) restando los gastos operativos anuales (mantenimiento, impuestos, seguros) de los ingresos por alquiler.",
+    "longDescription_en": "Calculate real estate Capitalization Rate (Cap Rate) by subtracting annual operating expenses (maintenance, taxes, insurance) from rental gross income.",
+    "howToUse": [
+      "Ingresa el precio de compra o valor del inmueble.",
+      "Indica el ingreso bruto anual por alquileres.",
+      "Añade los gastos operativos anuales (impuestos, seguros, mantenimiento).",
+      "Consulta la Tasa Cap Rate % y el Ingreso Operativo Neto (NOI)."
+    ],
+    "howToUse_en": [
+      "Enter total property purchase price.",
+      "Enter annual gross rental income.",
+      "Add annual operating expenses (taxes, insurance, maintenance).",
+      "View Cap Rate % and Net Operating Income (NOI)."
+    ],
+    "methodology": "Fórmula Cap Rate: Cap Rate (%) = (Ingreso Operativo Neto / Precio de Compra) × 100.",
+    "methodology_en": "Cap Rate Formula: Cap Rate (%) = (Net Operating Income / Purchase Price) × 100."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🏢",
+      "title": "Understanding Capitalization Rate (Cap Rate)",
+      "title_es": "Comprendiendo la Tasa Cap Rate",
+      "content_html_en": "<p>Cap Rate evaluates the profitability of a real estate property regardless of mortgage financing. A higher Cap Rate indicates higher potential yield (or higher risk).</p>",
+      "content_html": "<p>La tasa Cap Rate evalúa el rendimiento libre de apalancamiento de un inmueble. Un Cap Rate más alto indica mayor rentabilidad anual sobre el capital invertido.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "propertyPrice",
+      "label": "Precio de compra del inmueble",
+      "label_en": "Property Purchase Price",
+      "type": "currency",
+      "default": 250000,
+      "min": 10000,
+      "max": 10000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [10000, 10000000], "message": "Precio entre 10.000 y 10.000.000", "message_en": "Price between 10,000 and 10,000,000" }]
+    },
+    {
+      "id": "grossAnnualRent",
+      "label": "Ingreso bruto anual por alquileres",
+      "label_en": "Annual Gross Rental Income",
+      "type": "currency",
+      "default": 24000,
+      "min": 0,
+      "max": 1000000,
+      "step": 1000,
+      "unit": { "follows": "propertyPrice" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "operatingExpenses",
+      "label": "Gastos operativos anuales (impuestos, seguros, reparaciones)",
+      "label_en": "Annual Operating Expenses (taxes, insurance, maintenance)",
+      "type": "currency",
+      "default": 6000,
+      "min": 0,
+      "max": 500000,
+      "step": 500,
+      "unit": { "follows": "propertyPrice" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "noi",
+      "label": "Ingreso Operativo Neto (NOI Anual)",
+      "label_en": "Net Operating Income (Annual NOI)",
+      "expression": "grossAnnualRent - operatingExpenses",
+      "unit": { "follows": "propertyPrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "capRate",
+      "label": "Tasa de Capitalización (Cap Rate %)",
+      "label_en": "Capitalization Rate (Cap Rate %)",
+      "expression": "(noi / propertyPrice) * 100",
+      "unit": "%",
+      "precision": 2,
+      "format": "percent",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "capRate", "op": ">=", "value": 7 }, "label": "Alta Rentabilidad Inmobiliaria", "label_en": "High Property Yield", "tone": "success", "text": "Excelente retorno sobre el valor del inmueble.", "text_en": "Excellent rental return rate relative to purchase price." }
+      ]
+    },
+    {
+      "id": "grossYield",
+      "label": "Rentabilidad Bruta Anual",
+      "label_en": "Gross Annual Rental Yield",
+      "expression": "(grossAnnualRent / propertyPrice) * 100",
+      "unit": "%",
+      "precision": 2,
+      "format": "percent",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "rental-property-calculator", "type": "static", "message": "Calcula el flujo de caja con hipoteca", "message_en": "Calculate mortgage cash flow", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Inversión Inmobiliaria",
+    "role_en": "Real Estate Investment Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y técnico",
+    "includeData": ["capRate", "noi", "grossYield", "propertyPrice"],
+    "instructions": [
+      "Sintetiza la tasa Cap Rate % y el ingreso neto anual (NOI) en 2 frases concisas.",
+      "Menciona si la rentabilidad está por encima del rango promedio de mercado (5-8%)."
+    ],
+    "instructions_en": [
+      "Summarize Cap Rate % and annual Net Operating Income (NOI) in 2 concise sentences.",
+      "Mention if property yield meets standard market benchmark ranges (5-8%)."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Inversión Inmobiliaria y Cap Rate | CalculadoraHub",
+    "metaTitle_en": "Real Estate Investment & Cap Rate Calculator | CalculadoraHub",
+    "metaDescription": "Calcula la tasa Cap Rate % y el ingreso neto operativo (NOI) de un inmueble. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate Cap Rate % and Net Operating Income (NOI) for real estate investments. Free, instant results.",
+    "keywords": ["real estate calculator", "cap rate calculator", "rentabilidad inmobiliaria", "noi"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

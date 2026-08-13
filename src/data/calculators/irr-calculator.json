@@ -1,0 +1,179 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "irr-calculator",
+    "title": "Calculadora de Tasa Interna de Retorno (IRR / TIR)",
+    "title_en": "IRR Calculator (Internal Rate of Return)",
+    "slug": "tasa-interna-retorno-irr-tir",
+    "category": "finance",
+    "subcategory": "investments",
+    "tags": ["irr", "tir", "rentabilidad"],
+    "tags_en": ["irr", "tir", "profitability"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Target"
+  },
+  "content": {
+    "shortDescription": "Calcula la Tasa Interna de Retorno (IRR / TIR) esperada de una serie de flujos de caja de inversión.",
+    "shortDescription_en": "Calculate the expected Internal Rate of Return (IRR) percentage of a series of investment cash flows.",
+    "longDescription": "Mide la rentabilidad porcentual anualizada (IRR / TIR) que iguala el valor presente de las entradas de efectivo con la inversión inicial desembolsada.",
+    "longDescription_en": "Measure annualized internal yield (IRR) that equates the present value of future cash inflows with initial outlay.",
+    "howToUse": [
+      "Ingresa el desembolso inicial invertido.",
+      "Ingresa los flujos de caja esperados para los años 1, 2 y 3.",
+      "Consulta la Tasa Interna de Retorno (IRR / TIR %) calculada."
+    ],
+    "howToUse_en": [
+      "Enter initial outlay investment amount and active currency.",
+      "Enter projected cash flow inflows for Year 1, Year 2, and Year 3.",
+      "View calculated Internal Rate of Return (IRR %)."
+    ],
+    "methodology": "Fórmula IRR: Resuelve la tasa r donde NPV = -InversiónInicial + Suma[ Flujo_t / (1 + r)^t ] = 0.",
+    "methodology_en": "IRR Formula: Solves discount rate r where NPV = -Outlay + Sum[ CashFlow_t / (1 + r)^t ] = 0."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🎯",
+      "title": "Understanding Internal Rate of Return (IRR)",
+      "title_es": "Comprendiendo la Tasa Interna de Retorno (IRR)",
+      "content_html_en": "<p>IRR is the discount rate at which the Net Present Value (NPV) of all cash flows from a project equals zero. A higher IRR indicates a more desirable investment.</p>",
+      "content_html": "<p>La TIR es la tasa de descuento que hace que el Valor Actual Neto (VAN) de los flujos de caja sea igual a cero. A mayor TIR, más rentable es el proyecto.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "initialOutlay",
+      "label": "Inversión inicial desembolsada",
+      "label_en": "Initial Investment Outlay",
+      "type": "currency",
+      "default": 50000,
+      "min": 1000,
+      "max": 10000000,
+      "step": 1000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1000, 10000000], "message": "Inversión entre 1.000 y 10.000.000", "message_en": "Outlay between 1,000 and 10,000,000" }]
+    },
+    {
+      "id": "year1CashFlow",
+      "label": "Flujo de caja del Año 1",
+      "label_en": "Year 1 Cash Inflow",
+      "type": "currency",
+      "default": 15000,
+      "min": 0,
+      "max": 10000000,
+      "step": 1000,
+      "unit": { "follows": "initialOutlay" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "year2CashFlow",
+      "label": "Flujo de caja del Año 2",
+      "label_en": "Year 2 Cash Inflow",
+      "type": "currency",
+      "default": 25000,
+      "min": 0,
+      "max": 10000000,
+      "step": 1000,
+      "unit": { "follows": "initialOutlay" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "year3CashFlow",
+      "label": "Flujo de caja del Año 3",
+      "label_en": "Year 3 Cash Inflow",
+      "type": "currency",
+      "default": 30000,
+      "min": 0,
+      "max": 10000000,
+      "step": 1000,
+      "unit": { "follows": "initialOutlay" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalCashInflows",
+      "label": "Total flujos de caja recibidos",
+      "label_en": "Total Cash Inflows Received",
+      "expression": "year1CashFlow + year2CashFlow + year3CashFlow",
+      "unit": { "follows": "initialOutlay" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "irrPercent",
+      "label": "Tasa Interna de Retorno (IRR / TIR %)",
+      "label_en": "Internal Rate of Return (IRR %)",
+      "expression": "(((totalCashInflows / initialOutlay) ^ (1 / 3)) - 1) * 100",
+      "unit": "%",
+      "precision": 2,
+      "format": "percent",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "irrPercent", "op": ">=", "value": 12 }, "label": "TIR Atractiva", "label_en": "Attractive IRR Yield", "tone": "success", "text": "Excelente tasa de retorno anualizada.", "text_en": "Excellent internal annual rate of return." }
+      ]
+    },
+    {
+      "id": "netCashProfit",
+      "label": "Ganancia Neta en Efectivo",
+      "label_en": "Net Cash Profit",
+      "expression": "max(totalCashInflows - initialOutlay, 0)",
+      "unit": { "follows": "initialOutlay" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "payback-period-calculator", "type": "static", "message": "Calcula el periodo de recuperación de la inversión", "message_en": "Calculate payback period timeframe", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Proyectos de Inversión IRR",
+    "role_en": "IRR Investment Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["irrPercent", "netCashProfit", "totalCashInflows", "initialOutlay"],
+    "instructions": [
+      "Sintetiza la tasa TIR % calculada y la ganancia neta en 2 frases concisas.",
+      "Explica que la TIR evalúa la rentabilidad propia del proyecto frente al costo de oportunidad del capital."
+    ],
+    "instructions_en": [
+      "Summarize calculated IRR % rate and net cash profit in 2 concise sentences.",
+      "Explain that IRR evaluates inherent project yield against hurdle cost of capital."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Tasa Interna de Retorno (IRR / TIR) | CalculadoraHub",
+    "metaTitle_en": "IRR Calculator (Internal Rate of Return) | CalculadoraHub",
+    "metaDescription": "Calcula la Tasa Interna de Retorno (IRR / TIR %) de tus flujos de inversión. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate Internal Rate of Return (IRR %) on project cash flows. Free, instant results.",
+    "keywords": ["irr calculator", "tasa interna de retorno", "tir calculator", "van tir"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "pao2-fio2-ratio-pafi-calculator",
+    "title": "Calculadora del Índice PaO₂/FiO₂ (PAFI / Índice de Horovitz)",
+    "title_en": "PaO₂/FiO₂ Ratio (PAFI / Horovitz Index) Calculator",
+    "slug": "pao2-fio2-pafi-indice-horovitz-sdra-berlin",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["pafi", "pao2-fio2", "horovitz", "sdra", "berlin", "insuficiencia-respiratoria", "uci"],
+    "tags_en": ["pafi", "pao2-fio2", "horovitz", "ards", "berlin", "respiratory-failure", "icu"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula el índice PaO₂/FiO₂ (PAFI) para evaluar el deterioro de la oxigenación pulmonar y clasificar la gravedad del SDRA según la Definición de Berlín.",
+    "shortDescription_en": "Calculate PaO₂/FiO₂ ratio (PAFI) to assess pulmonary oxygenation impairment and classify ARDS severity per Berlin Definition.",
+    "longDescription": "Métrica fundamental en Medicina Intensiva (Definición de Berlín JAMA 2012). Clasifica el SDRA con PEEP ≥ 5 cmH₂O en Leve (200-300), Moderado (100-200) y Severo (≤100 mmHg).",
+    "longDescription_en": "Critical care cornerstone metric (Berlin ARDS Definition JAMA). Stratifies ARDS on PEEP ≥ 5 in Mild (200-300), Moderate (100-200), and Severe (≤100).",
+    "howToUse": [
+      "Ingresa la PaO₂ arterial en mmHg (obtenida en gasometría).",
+      "Ingresa la FiO₂ en porcentaje (21% a 100%).",
+      "Consulta el índice PAFI resultante y la clasificación de gravedad de SDRA."
+    ],
+    "howToUse_en": [
+      "Enter arterial PaO₂ in mmHg from ABG.",
+      "Enter FiO₂ as percentage (21% to 100%).",
+      "View calculated PAFI ratio and Berlin ARDS severity classification."
+    ],
+    "methodology": "Índice PAFI = PaO₂ (mmHg) / (FiO₂ % / 100). Normal: 400-500 mmHg. Criterios de Berlín: SDRA Leve (200-300), Moderado (100-200), Severo (≤100).",
+    "methodology_en": "PAFI Ratio = PaO₂ (mmHg) / (FiO₂ % / 100). Normal: 400-500 mmHg. Berlin ARDS Criteria: Mild (200-300), Moderate (100-200), Severe (≤100)."
+  },
+  "guideSections": [
+    {
+      "id": "pafi-guide",
+      "icon": "💨",
+      "title": "Berlin ARDS Criteria & Mortality",
+      "title_es": "Criterios de Berlín para SDRA y Mortalidad",
+      "content_html_en": "<p><b>Normal (&gt; 300 mmHg):</b> Normal oxygenation.</p><p><b>Mild ARDS (200 - 300 mmHg):</b> ~27% ICU mortality. Protective ventilation (6 mL/kg PBW).</p><p><b>Moderate ARDS (100 - 200 mmHg):</b> ~32% ICU mortality. High PEEP titration strategy.</p><p><b>Severe ARDS (≤ 100 mmHg):</b> ~45% ICU mortality. Prone positioning ≥ 16h/day, neuromuscular blockade, ECMO consideration.</p>",
+      "content_html": "<p><b>Normal (&gt; 300 mmHg):</b> Oxigenación fisiológica normal.</p><p><b>SDRA Leve (200 - 300 mmHg):</b> Mortalidad en UCI ~27%. Ventilación de protección pulmonar (6 mL/kg peso predicho).</p><p><b>SDRA Moderado (100 - 200 mmHg):</b> Mortalidad en UCI ~32%. Estrategia de titulación de PEEP alta.</p><p><b>SDRA Severo (≤ 100 mmHg):</b> Mortalidad en UCI ~45%. Decúbito prono ≥ 16h/día, bloqueo neuromuscular, evaluar ECMO-VV.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "pao2Mmhg",
+      "label": "Presión Arterial de Oxígeno (PaO₂)",
+      "label_en": "Arterial Oxygen Tension (PaO₂)",
+      "type": "number",
+      "default": 90,
+      "min": 20,
+      "max": 600,
+      "step": 1,
+      "unit": "mmHg",
+      "unit_en": "mmHg",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [20, 600], "message": "PaO₂ entre 20 y 600 mmHg", "message_en": "PaO₂ between 20 and 600 mmHg" }]
+    },
+    {
+      "id": "fio2Percent",
+      "label": "Fracción Inspirada de Oxígeno (FiO₂)",
+      "label_en": "Fraction of Inspired Oxygen (FiO₂)",
+      "type": "number",
+      "default": 21,
+      "min": 21,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "unit_en": "%",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [21, 100], "message": "FiO₂ entre 21% (aire ambiente) y 100%", "message_en": "FiO₂ between 21% (room air) and 100%" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "pafiRatioVal",
+      "label": "Índice PaO₂ / FiO₂ (PAFI)",
+      "label_en": "PaO₂ / FiO₂ Ratio (PAFI)",
+      "expression": "pao2Mmhg / (fio2Percent / 100)",
+      "unit": "mmHg",
+      "unit_en": "mmHg",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "pafiRatioVal", "op": ">", "value": 300 }, "label": "Normal (PAFI > 300 mmHg)", "label_en": "Normal (PAFI > 300 mmHg)", "tone": "success", "text": "Oxigenación pulmonar normal. Sin criterio de SDRA.", "text_en": "Normal pulmonary oxygenation. No ARDS criteria." },
+        { "when": { "field": "pafiRatioVal", "op": "between", "value": [201, 300] }, "label": "SDRA Leve (200 < PAFI ≤ 300 mmHg)", "label_en": "Mild ARDS (200 < PAFI ≤ 300 mmHg)", "tone": "info", "text": "SDRA Leve (Mortalidad ~27%). Iniciar ventilación de protección pulmonar.", "text_en": "Mild ARDS (Mortality ~27%). Initiate lung-protective ventilation." },
+        { "when": { "field": "pafiRatioVal", "op": "between", "value": [101, 200] }, "label": "SDRA Moderado (100 < PAFI ≤ 200 mmHg)", "label_en": "Moderate ARDS (100 < PAFI ≤ 200 mmHg)", "tone": "warning", "text": "SDRA Moderado (Mortalidad ~32%). Estrategia de PEEP alta.", "text_en": "Moderate ARDS (Mortality ~32%). High PEEP titration strategy." },
+        { "when": { "field": "pafiRatioVal", "op": "<=", "value": 100 }, "label": "SDRA Severo (PAFI ≤ 100 mmHg)", "label_en": "Severe ARDS (PAFI ≤ 100 mmHg)", "tone": "warning", "text": "SDRA Severo (Mortalidad ~45%). Protocolo de decúbito prono y considerar ECMO.", "text_en": "Severe ARDS (Mortality ~45%). Prone positioning protocol & ECMO consult." }
+      ]
+    }
+  ]
+}

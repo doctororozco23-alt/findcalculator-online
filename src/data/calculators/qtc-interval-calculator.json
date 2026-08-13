@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "qtc-interval-calculator",
+    "title": "Calculadora del Intervalo QTc Corregido (Bazett y Fridericia)",
+    "title_en": "Corrected QTc Interval Calculator (Bazett & Fridericia)",
+    "slug": "qtc-intervalo-corregido-ecg-bazett-fridericia",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["qtc", "ecg", "electrocardiograma", "torsades-de-pointes", "arritmia", "electrofisiologia"],
+    "tags_en": ["qtc", "ecg", "electrocardiogram", "torsades-de-pointes", "arrhythmia", "electrophysiology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula el intervalo QT corregido (QTc) en el Electrocardiograma mediante las fórmulas de Bazett y Fridericia para evaluar el riesgo de Torsades de Pointes.",
+    "shortDescription_en": "Calculate corrected QT interval (QTc) using Bazett and Fridericia formulas to evaluate Torsades de Pointes arrhythmia risk.",
+    "longDescription": "Auditoría electrofisiológica. La fórmula de Bazett sobrecorrige en taquicardia y subcorrige en bradicardia. La fórmula de Fridericia (raíz cúbica) es el estándar actual en arritmias y ensayos clínicos.",
+    "longDescription_en": "Electrophysiology audit. Bazett overcorrects at high heart rates. Fridericia (cube root) is current standard in clinical trials and extremes of HR.",
+    "howToUse": [
+      "Ingresa el intervalo QT medido en el ECG (en milisegundos ms).",
+      "Ingresa la Frecuencia Cardíaca en latidos por minuto (lpm).",
+      "Consulta los valores de QTc calculados por Bazett y Fridericia y la alerta de riesgo arritmogénico."
+    ],
+    "howToUse_en": [
+      "Enter measured QT interval from ECG in milliseconds (ms).",
+      "Enter Heart Rate in beats per minute (bpm).",
+      "Review QTc values by Bazett and Fridericia and arrhythmia risk alert."
+    ],
+    "methodology": "Bazett: QTc = QT / √(RR en seg). Fridericia: QTc = QT / ∛(RR en seg). RR = 60 / Frecuencia Cardíaca.",
+    "methodology_en": "Bazett: QTc = QT / √(RR in sec). Fridericia: QTc = QT / ∛(RR in sec). RR = 60 / Heart Rate."
+  },
+  "guideSections": [
+    {
+      "id": "qtc-guide",
+      "icon": "📈",
+      "title": "Clinical QTc Reference Thresholds",
+      "title_es": "Umbrales Clínicos de Referencia para QTc",
+      "content_html_en": "<p><b>Normal QTc:</b> Men &lt; 450 ms, Women &lt; 460 ms.</p><p><b>Borderline QTc:</b> 450-470 ms (men), 460-480 ms (women).</p><p><b>Prolonged QTc (&gt; 470/480 ms):</b> Increased risk of ventricular arrhythmias.</p><p><b>Critical Threshold (&gt; 500 ms):</b> High risk of Torsades de Pointes. Discontinue QT-prolonging drugs immediately.</p>",
+      "content_html": "<p><b>QTc Normal:</b> Hombres &lt; 450 ms, Mujeres &lt; 460 ms.</p><p><b>QTc Límite:</b> 450-470 ms (hombres), 460-480 ms (mujeres).</p><p><b>QTc Prolongado (&gt; 470/480 ms):</b> Riesgo incrementado de arritmias ventriculares.</p><p><b>Umbral Crítico (&gt; 500 ms):</b> Alto riesgo de Torsades de Pointes. Suspender fármacos hiperprolongadores del QT inmediatamente.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "qtMeasuredMs",
+      "label": "Intervalo QT medido en el ECG",
+      "label_en": "Measured QT Interval from ECG",
+      "type": "number",
+      "default": 400,
+      "min": 200,
+      "max": 800,
+      "step": 5,
+      "unit": "ms",
+      "unit_en": "ms",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [200, 800], "message": "QT entre 200 y 800 ms", "message_en": "QT between 200 and 800 ms" }]
+    },
+    {
+      "id": "heartRateBpm",
+      "label": "Frecuencia Cardíaca del paciente",
+      "label_en": "Patient Heart Rate",
+      "type": "number",
+      "default": 75,
+      "min": 30,
+      "max": 220,
+      "step": 1,
+      "unit": "lpm",
+      "unit_en": "bpm",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [30, 220], "message": "FC entre 30 y 220 lpm", "message_en": "HR between 30 and 220 bpm" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "rrSec",
+      "label": "Intervalo RR",
+      "label_en": "RR Interval",
+      "expression": "60 / heartRateBpm",
+      "unit": "seg",
+      "unit_en": "sec",
+      "precision": 3,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "qtcBazett",
+      "label": "Intervalo QTc Corregido por Bazett",
+      "label_en": "Corrected QTc (Bazett Formula)",
+      "expression": "qtMeasuredMs / sqrt(rrSec)",
+      "unit": "ms",
+      "unit_en": "ms",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "qtcBazett", "op": "<=", "value": 450 }, "label": "Bazett Normal (≤ 450 ms)", "label_en": "Bazett Normal (≤ 450 ms)", "tone": "success", "text": "Intervalo QTc en rango fisiológico normal.", "text_en": "QTc interval within normal physiological range." },
+        { "when": { "field": "qtcBazett", "op": "between", "value": [451, 499.9] }, "label": "Bazett Prolongado (451 - 499 ms)", "label_en": "Bazett Prolonged (451 - 499 ms)", "tone": "warning", "text": "QTc prolongado. Revisar fármacos y electrolitos.", "text_en": "Prolonged QTc. Check drugs and serum electrolytes." },
+        { "when": { "field": "qtcBazett", "op": ">=", "value": 500 }, "label": "Bazett Crítico (≥ 500 ms)", "label_en": "Bazett Critical (≥ 500 ms)", "tone": "warning", "text": "Alto riesgo de Torsades de Pointes. Monitorización ECG continua.", "text_en": "High risk of Torsades de Pointes. Continuous ECG monitoring required." }
+      ]
+    },
+    {
+      "id": "qtcFridericia",
+      "label": "Intervalo QTc Corregido por Fridericia",
+      "label_en": "Corrected QTc (Fridericia Formula)",
+      "expression": "qtMeasuredMs / (rrSec ^ (1 / 3))",
+      "unit": "ms",
+      "unit_en": "ms",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

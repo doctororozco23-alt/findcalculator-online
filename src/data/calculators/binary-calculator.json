@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "binary-calculator",
+    "title": "Calculadora Binaria (Conversión y Aritmética Binaria Base 2)",
+    "title_en": "Binary Calculator (Base 2 Conversion & Arithmetic)",
+    "slug": "calculadora-binaria-conversion-base-2",
+    "category": "math",
+    "subcategory": "number-systems",
+    "tags": ["binario", "base-2", "conversion-binaria", "bits", "sistemas-numericos", "programacion"],
+    "tags_en": ["binary", "base-2", "binary-conversion", "bits", "number-systems", "programming"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte números enteros entre Base Decimal (10) y Base Binaria (2), calculando la cantidad de Bits necesarios.",
+    "shortDescription_en": "Convert integers between Decimal Base (10) and Binary Base (2), computing total required Bits.",
+    "longDescription": "Herramienta de informática y ciencias de la computación. Realiza conversiones entre el sistema decimal y la representación binaria en bits de base 2.",
+    "longDescription_en": "Computer science tool. Performs conversions between decimal system and binary bit representation base 2.",
+    "howToUse": [
+      "Ingresa el Número Decimal entero.",
+      "Consulta el equivalente Binario, la cantidad de Bits requeridos y el complemento a 1."
+    ],
+    "howToUse_en": [
+      "Enter Integer Decimal Number.",
+      "View Binary equivalent, required Bit count, and 1's complement."
+    ],
+    "methodology": "Conversión Decimal a Binario mediante divisiones sucesivas entre 2. Conteo de bits: floor(log2(N)) + 1.",
+    "methodology_en": "Decimal to Binary conversion via successive division by 2. Bit count: floor(log2(N)) + 1."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Arquitectura de Computadores y Sistemas Binarios",
+    "role_en": "Computer Architecture & Binary Systems Assistant",
+    "includeData": ["decimalInputVal", "bitsRequired"],
+    "instructions": [
+      "Explica la representación en potencias de 2 (2⁰, 2¹, 2², 2³...).",
+      "Calcula la cantidad de bits necesarios para almacenar el número decimal.",
+      "Demuestra la conversión en binario positivo."
+    ],
+    "instructions_en": [
+      "Explain representation in powers of 2 (2⁰, 2¹, 2², 2³...).",
+      "Calculate number of bits required to store decimal value.",
+      "Demonstrate positive binary conversion."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "bin-guide",
+      "icon": "💻",
+      "title": "Binary System Base 2 Fundamentals",
+      "title_es": "Fundamentos del Sistema Binario Base 2",
+      "content_html_en": "<p><b>Binary Base 2:</b> Uses only two digits: 0 and 1.</p><p><b>Bit Count:</b> Bits = floor(log₂(N)) + 1.</p><p><b>Byte:</b> Group of 8 bits capable of representing numbers from 0 to 255.</p>",
+      "content_html": "<p><b>Base Binaria 2:</b> Utiliza únicamente dos dígitos: 0 y 1.</p><p><b>Conteo de Bits:</b> Bits = floor(log₂(N)) + 1.</p><p><b>Byte:</b> Grupo de 8 bits capaz de representar números del 0 al 255.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "decimalInputVal",
+      "label": "Número Decimal Entero (Base 10)",
+      "label_en": "Integer Decimal Number (Base 10)",
+      "type": "number",
+      "default": 42,
+      "min": 0,
+      "max": 1000000,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0, 1000000], "message": "Ingresa entero entre 0 y 1,000,000", "message_en": "Enter integer between 0 and 1,000,000" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "bitsRequired",
+      "label": "Cantidad de Bits Requeridos",
+      "label_en": "Required Bits Count",
+      "expression": "decimalInputVal > 0 ? (floor(log(decimalInputVal) / log(2)) + 1) : 1",
+      "unit": "bits",
+      "unit_en": "bits",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "bitsRequired", "op": ">=", "value": 1 }, "label": "Conversión Binaria Evaluada", "label_en": "Binary Conversion Evaluated", "tone": "success", "text": "Representación en bits calculada.", "text_en": "Bit representation evaluated." }
+      ]
+    }
+  ]
+}

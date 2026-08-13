@@ -1,0 +1,186 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "work-hours-timesheet-calculator",
+    "title": "Calculadora de Horas Trabajadas, Fichaje (Timesheet) y Salario Semanal/Mensual",
+    "title_en": "Work Hours, Timesheet & Weekly/Monthly Paycheck Calculator",
+    "slug": "calculadora-de-horas-trabajadas-fichaje-timesheet-salario-semanal-mensual",
+    "category": "datetime",
+    "subcategory": "time",
+    "tags": ["horas-trabajadas", "fichaje", "timesheet", "horas-extra", "salario-semanal", "salario-mensual", "fecha-y-tiempo"],
+    "tags_en": ["work-hours", "timesheet", "time-card", "overtime", "weekly-pay", "monthly-pay", "date-time"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.1.0",
+    "icon": "Clock"
+  },
+  "content": {
+    "shortDescription": "Calcula el total de horas trabajadas desglosadas en ordinarias y extras (>40h), estimando la paga semanal, mensual y anual.",
+    "shortDescription_en": "Calculate total worked hours disaggregated into regular and overtime (>40h), estimating weekly, monthly, and annual gross paycheck.",
+    "longDescription": "Herramienta avanzada de control de fichaje laboral y nóminas. Descuenta pausas de almuerzo e incorpora tarifas de horas extras a 1.5x o 2.0x.",
+    "longDescription_en": "Advanced time card tracking and payroll tool. Deducts meal breaks and incorporates overtime pay multipliers (1.5x or 2.0x).",
+    "howToUse": [
+      "Ingresa las Horas Brutas Diarias de Turno (ej. 9 horas/día).",
+      "Ingresa el Tiempo de Pausa Diaria para Almuerzo (minutos/día, ej. 60 min).",
+      "Ingresa el Número de Días Trabajados a la Semana (ej. 5 días).",
+      "Ingresa la Tarifa Salarial Ordinaria por Hora ($/hora, ej. 18 $/h).",
+      "Selecciona el Multiplicador de Horas Extras (1.5x Tiempo y Medio, o 2.0x Doble Tiempo).",
+      "Consulta las Horas Netas Semanales, Paga Regular, Paga Extra y Proyección Mensual."
+    ],
+    "howToUse_en": [
+      "Enter Gross Daily Shift Hours (e.g. 9 hours/day).",
+      "Enter Daily Meal Break Duration (minutes/day, e.g. 60 min).",
+      "Enter Days Worked per Week (e.g. 5 days).",
+      "Enter Base Hourly Pay Rate ($/hour, e.g. 18 $/hr).",
+      "Select Overtime Pay Multiplier (1.5x Time-and-a-half, or 2.0x Double-time).",
+      "View Net Weekly Hours, Regular Pay, Overtime Pay, and Projected Monthly Income."
+    ],
+    "methodology": "HorasDiariasNetas = HorasBrutas - (PausaMinutos/60). HorasSemanales = HorasDiarias * Días. HorasExtra = max(0, HorasSemanales - 40). PagaSemanal = (HorasReg * Tarifa) + (HorasExtra * Tarifa * Multiplicador).",
+    "methodology_en": "NetDailyHours = GrossHours - (BreakMins/60). WeeklyHours = NetDailyHours * Days. Overtime = max(0, WeeklyHours - 40). WeeklyPay = (RegHours * Rate) + (OTHours * Rate * Multiplier)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Control de Fichaje, Horas Extras y Nóminas",
+    "role_en": "Time Card Tracking, Overtime & Payroll Specialist Assistant",
+    "includeData": ["netWeeklyHoursResult", "grossWeeklyPaycheckResult", "projectedMonthlyGrossSalaryResult"],
+    "instructions": [
+      "Interpreta las horas netas semanales trabajadas y la estructura del cheque de pago bruto.",
+      "Explica la bonificación por horas extras y la regla de las 40 horas semanales.",
+      "Muestra la proyección de ingresos brutos anuales basada en 52 semanas laborales."
+    ],
+    "instructions_en": [
+      "Interpret calculated net weekly work hours and gross paycheck structure.",
+      "Explain overtime bonus rate and the 40-hour weekly threshold rule.",
+      "Show annual gross income projection based on 52 work weeks."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "wht-guide",
+      "icon": "⏱️",
+      "title": "Overtime Rate Multipliers Reference",
+      "title_es": "Referencia de Multiplicadores de Horas Extras",
+      "content_html_en": "<p><b>1.5x (Time and a Half):</b> Standard overtime multiplier for hours &gt; 40 in a week.</p><p><b>2.0x (Double Time):</b> Premium overtime rate for holidays or shifts &gt; 12 hours in a single day (e.g. California labor law).</p>",
+      "content_html": "<p><b>1.5x (Tiempo y Medio):</b> Multiplicador estándar para horas &gt; 40 a la semana.</p><p><b>2.0x (Doble Tiempo):</b> Tarifa premium para días festivos o turnos &gt; 12 horas diarias.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "grossDailyShiftHours",
+      "label": "Horas Brutas Diarias de Turno (horas)",
+      "label_en": "Gross Daily Shift Hours (hours)",
+      "type": "number",
+      "default": 9.0,
+      "min": 1,
+      "max": 24,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "dailyLunchBreakMinutes",
+      "label": "Pausa Diaria para Almuerzo (minutos)",
+      "label_en": "Daily Lunch Break (minutes)",
+      "type": "number",
+      "default": 60,
+      "min": 0,
+      "max": 240,
+      "step": 15,
+      "required": true
+    },
+    {
+      "id": "daysWorkedPerWeek",
+      "label": "Días Trabajados por Semana",
+      "label_en": "Days Worked per Week",
+      "type": "number",
+      "default": 5,
+      "min": 1,
+      "max": 7,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "hourlyPayRateCost",
+      "label": "Tarifa Salarial Ordinaria por Hora ($/hora)",
+      "label_en": "Base Hourly Pay Rate ($/hour)",
+      "type": "number",
+      "default": 20.0,
+      "min": 1,
+      "max": 500,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "overtimeMultiplierFactor",
+      "label": "Multiplicador de Horas Extras",
+      "label_en": "Overtime Pay Rate Multiplier",
+      "type": "select",
+      "default": "1.5",
+      "options": [
+        { "value": "1.5", "label": "1.5x (Tiempo y Medio - Estándar)", "label_en": "1.5x (Time and a half - Standard)" },
+        { "value": "2.0", "label": "2.0x (Doble Tiempo - Festivos/Domingos)", "label_en": "2.0x (Double time - Holidays/Sundays)" },
+        { "value": "1.25", "label": "1.25x (Bonificación Nocturna/Turnos)", "label_en": "1.25x (Night shift bonus)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "netDailyWorkHoursResult",
+      "label": "Horas Netas de Trabajo Diario",
+      "label_en": "Net Daily Work Hours",
+      "expression": "max(0, grossDailyShiftHours - (dailyLunchBreakMinutes / 60))",
+      "unit": "h/día",
+      "unit_en": "h/day",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "netWeeklyHoursResult",
+      "label": "Total de Horas Netas Trabajadas a la Semana",
+      "label_en": "Total Net Weekly Work Hours",
+      "expression": "netDailyWorkHoursResult * daysWorkedPerWeek",
+      "unit": "h/semana",
+      "unit_en": "h/week",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "netWeeklyHoursResult", "op": ">=", "value": 0 }, "label": "Horas Calculadas", "label_en": "Hours Computed", "tone": "success", "text": "Horas netas semanales de trabajo cuantificadas.", "text_en": "Net weekly work hours quantified." }
+      ]
+    },
+    {
+      "id": "weeklyOvertimeHoursResult",
+      "label": "Horas Extras Semanales (> 40h)",
+      "label_en": "Weekly Overtime Hours (> 40h)",
+      "expression": "max(0, netWeeklyHoursResult - 40)",
+      "unit": "h extra",
+      "unit_en": "OT hours",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "grossWeeklyPaycheckResult",
+      "label": "Salario Bruto Semanal Estimado ($)",
+      "label_en": "Estimated Gross Weekly Paycheck ($)",
+      "expression": "(min(40, netWeeklyHoursResult) * hourlyPayRateCost) + (weeklyOvertimeHoursResult * hourlyPayRateCost * overtimeMultiplierFactor)",
+      "unit": "$",
+      "unit_en": "$",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "projectedMonthlyGrossSalaryResult",
+      "label": "Salario Bruto Mensual Proyectado ($)",
+      "label_en": "Projected Gross Monthly Income ($)",
+      "expression": "grossWeeklyPaycheckResult * 4.333333",
+      "unit": "$/mes",
+      "unit_en": "$/month",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

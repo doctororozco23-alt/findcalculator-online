@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "child-height-predictor-calculator",
+    "title": "Calculadora de Estatura Objetivo Adulta Infantil (Talla Midparental Tanner)",
+    "title_en": "Child Adult Height Predictor Calculator (Tanner Mid-Parental)",
+    "slug": "estatura-objetivo-adulta-ninos-tanner",
+    "category": "health",
+    "subcategory": "child-growth",
+    "tags": ["estatura-ninos", "talla-midparental", "tanner", "crecimiento-infantil"],
+    "tags_en": ["child-height", "mid-parental-height", "tanner", "child-growth"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Baby"
+  },
+  "content": {
+    "shortDescription": "Pronostica la estatura genética adulta que alcanzará tu hijo o hija basándote en la fórmula clínica de talla midparental de Tanner.",
+    "shortDescription_en": "Predict the target adult height your child will reach based on the Tanner mid-parental genetic height formula.",
+    "longDescription": "Auditoría de endocrinología pediátrica y potencial genético de crecimiento. La fórmula médica de talla midparental del Dr. J.M. Tanner proyecta la estatura objetivo que alcanzará un niño en la edad adulta a partir de la estatura biológica de sus padres.",
+    "longDescription_en": "Pediatric endocrinology and genetic growth potential audit. Dr. J.M. Tanner's mid-parental height formula projects a child's target adult height based on parental biological heights.",
+    "howToUse": [
+      "Selecciona el sexo biológico del hijo o hija.",
+      "Ingresa la estatura exacta del padre biológico.",
+      "Ingresa la estatura exacta de la madre biológica.",
+      "Consulta la estatura adulta objetivo en cm/pies y el canal de variabilidad genética (± 8.5 cm)."
+    ],
+    "howToUse_en": [
+      "Select child biological sex.",
+      "Enter biological father's exact height.",
+      "Enter biological mother's exact height.",
+      "View projected target adult height in cm/ft and genetic variance corridor (± 8.5 cm)."
+    ],
+    "methodology": "Ecuación Midparental de Tanner: Niños = (Estatura Padre + Estatura Madre + 13 cm) / 2. Niñas = (Estatura Padre + Estatura Madre - 13 cm) / 2. Rango de variabilidad genética = ± 8.5 cm.",
+    "methodology_en": "Tanner Mid-Parental Formula: Boys = (Father Height + Mother Height + 13 cm) / 2. Girls = (Father Height + Mother Height - 13 cm) / 2. Genetic Variance Corridor = ± 8.5 cm."
+  },
+  "guideSections": [
+    {
+      "id": "tanner-formula-guide",
+      "icon": "📏",
+      "title": "Pediatric Genetic Target Height Principles",
+      "title_es": "Principios de la Talla Genética Objetivo Pediátrica",
+      "content_html_en": "<p><b>Genetic Variance (± 8.5 cm):</b> 95% of healthy children will reach a final adult height within ± 8.5 cm of their Tanner mid-parental target.</p><p><b>Environmental Factors:</b> Proper nutrition, sleep hormone release, and physical activity optimize reaching the upper limit of the genetic potential.</p>",
+      "content_html": "<p><b>Variabilidad Genética (± 8.5 cm):</b> El 95% de los niños sanos alcanzarán una estatura adulta final dentro del margen de ± 8.5 cm respecto a su talla midparental de Tanner.</p><p><b>Factores Ambientales:</b> Nutrición adecuada, descanso nocturno y actividad física ayudan a alcanzar la parte superior del potencial genético.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "childGender",
+      "label": "Sexo biológico del menor",
+      "label_en": "Child Biological Sex",
+      "type": "select",
+      "default": "boy",
+      "options": [
+        { "value": "boy", "label": "Niño / Varón", "label_en": "Boy / Male" },
+        { "value": "girl", "label": "Niña / Mujer", "label_en": "Girl / Female" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "fatherHeightCm",
+      "label": "Estatura del padre biológico",
+      "label_en": "Biological Father Height",
+      "type": "number",
+      "default": 178,
+      "min": 120,
+      "max": 230,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [120, 230], "message": "Estatura entre 120 y 230 cm", "message_en": "Height between 120 and 230 cm" }]
+    },
+    {
+      "id": "motherHeightCm",
+      "label": "Estatura de la madre biológica",
+      "label_en": "Biological Mother Height",
+      "type": "number",
+      "default": 165,
+      "min": 120,
+      "max": 230,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [120, 230], "message": "Estatura entre 120 y 230 cm", "message_en": "Height between 120 and 230 cm" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "targetHeightCm",
+      "label": "Estatura Adulta Objetivo (Talla Midparental)",
+      "label_en": "Target Adult Height (Mid-Parental)",
+      "expression": "childGender == 'boy' ? ((fatherHeightCm + motherHeightCm + 13) / 2) : ((fatherHeightCm + motherHeightCm - 13) / 2)",
+      "unit": "cm",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "targetHeightCm", "op": ">", "value": 0 }, "label": "Potencial Genético Promedio", "label_en": "Average Genetic Potential", "tone": "success", "text": "Estatura adulta estimada en base a la herencia biológica de ambos progenitores.", "text_en": "Target adult height estimated based on biological parental heritage." }
+      ]
+    },
+    {
+      "id": "minTargetHeightCm",
+      "label": "Límite Inferior del Rango Genético (-8.5 cm)",
+      "label_en": "Lower Bound of Genetic Range (-8.5 cm)",
+      "expression": "targetHeightCm - 8.5",
+      "unit": "cm",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "maxTargetHeightCm",
+      "label": "Límite Superior del Rango Genético (+8.5 cm)",
+      "label_en": "Upper Bound of Genetic Range (+8.5 cm)",
+      "expression": "targetHeightCm + 8.5",
+      "unit": "cm",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "pediatric-bmi-calculator", "type": "static", "message": "Calcula los percentiles de peso e IMC infantil actual", "message_en": "Calculate current pediatric weight & BMI percentiles", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Endocrinólogo Pediátrico y Especialista en Crecimiento",
+    "role_en": "Pediatric Endocrinologist & Growth Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "cálido y tranquilizador",
+    "includeData": ["targetHeightCm", "minTargetHeightCm", "maxTargetHeightCm", "fatherHeightCm", "motherHeightCm"],
+    "instructions": [
+      "Sintetiza la estatura adulta estimada, el rango de variabilidad genética (mínimo a máximo) en 2 frases concisas.",
+      "Explica que una nutrición óptima y un descanso adecuado permiten alcanzar el extremo superior del potencial genético."
+    ],
+    "instructions_en": [
+      "Summarize target adult height and genetic variance corridor (min to max) in 2 concise sentences.",
+      "Explain that optimal nutrition and adequate sleep help reach the upper bound of genetic potential."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Estatura Objetivo Adulta Infantil (Tanner) | CalculadoraHub",
+    "metaTitle_en": "Child Adult Height Predictor Calculator (Tanner) | CalculadoraHub",
+    "metaDescription": "Calcula cuánto medirá de adulto tu hijo o hija con la fórmula de talla midparental de Tanner. Gratis e instantáneo.",
+    "metaDescription_en": "Predict your child's target adult height using Tanner's mid-parental formula. Free, instant results.",
+    "keywords": ["child height predictor calculator", "cuanto medira mi hijo", "talla midparental tanner", "estatura adulta ninos"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "other-calculators-hub",
+    "title": "Hub Central de Calculadoras Diversas y Herramientas Especializadas",
+    "title_en": "Other Calculators & Specialized Tools Central Hub",
+    "slug": "hub-central-de-calculadoras-diversas-herramientas",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["hub-de-calculadoras", "otras-calculadoras", "herramientas-utiles", "directorio-de-calculadoras", "catalog"],
+    "tags_en": ["calculators-hub", "other-calculators", "useful-tools", "calculators-directory", "catalog"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Directorio central con más de 55 calculadoras diversas de tiempo, construcción, transporte, ingeniería, física y utilidades.",
+    "shortDescription_en": "Central directory with 55+ specialized calculators for time, construction, transport, engineering, physics, and daily life.",
+    "longDescription": "Hub de navegación estructurado. Conecta y organiza todas las calculadoras diversas del catálogo en 9 categorías temáticas especializadas con análisis inteligente de IA.",
+    "longDescription_en": "Structured navigation hub. Connects and organizes all specialized catalog calculators into 9 thematic categories powered by Smart AI.",
+    "howToUse": [
+      "Selecciona la Categoría de Interés (Tiempo, Construcción, Automotriz, Física, Química, etc.).",
+      "Selecciona la Calculadora deseada para abrir la herramienta interactiva de inmediato."
+    ],
+    "howToUse_en": [
+      "Select Category of Interest (Time, Construction, Automotive, Physics, Chemistry, etc.).",
+      "Select Desired Calculator to launch the interactive tool immediately."
+    ],
+    "methodology": "Directorio y motor de búsqueda interactivo optimizado para CalculadoraHub.",
+    "methodology_en": "Directory and interactive search engine optimized for CalculadoraHub."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Orientación de Herramientas y Catálogo General",
+    "role_en": "Tools Guidance & General Catalog Specialist Assistant",
+    "includeData": ["totalCalculatorsCountEcho"],
+    "instructions": [
+      "Ofrece orientación sobre cómo encontrar la calculadora precisa para cualquier problema cotidiano o profesional.",
+      "Resalta que todas las calculadoras son gratuitas, bilingües y cuentan con análisis de IA.",
+      "Invita a explorar las distintas categorías temáticas del catálogo."
+    ],
+    "instructions_en": [
+      "Offer guidance on finding the exact calculator for any daily or professional task.",
+      "Highlight that all calculators are free, bilingual, and equipped with AI analysis.",
+      "Invite exploring the different thematic categories of the catalog."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "hub-guide",
+      "icon": "🌐",
+      "title": "CalculadoraHub Complete Catalog Overview",
+      "title_es": "Visión General del Catálogo Completo CalculadoraHub",
+      "content_html_en": "<p><b>55+ Specialized Tools:</b> Time & Dates, Education, Construction, Landscaping, Automotive, Electrical Engineering, Physical Sciences, Chemistry, Technology, and Finance.</p>",
+      "content_html": "<p><b>55+ Herramientas Especializadas:</b> Tiempo y Fechas, Educación, Construcción, Paisajismo, Automotriz, Ingeniería Eléctrica, Ciencias Físicas, Química, Tecnología y Finanzas.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "selectedCategoryFilter",
+      "label": "Filtrar por Categoría Principal",
+      "label_en": "Filter by Main Category",
+      "type": "select",
+      "default": "all",
+      "options": [
+        { "value": "all", "label": "Todas las Categorías (55+ Calculadoras)", "label_en": "All Categories (55+ Calculators)" },
+        { "value": "datetime", "label": "Fecha y Tiempo (6 Calculadoras)", "label_en": "Date & Time (6 Calculators)" },
+        { "value": "education", "label": "Educación y Promedios (6 Calculadoras)", "label_en": "Education & Grades (6 Calculators)" },
+        { "value": "construction", "label": "Construcción y Reformas (6 Calculadoras)", "label_en": "Construction & Remodeling (6 Calculators)" },
+        { "value": "transport", "label": "Automotriz y Transporte (6 Calculadoras)", "label_en": "Automotive & Transport (6 Calculators)" },
+        { "value": "engineering", "label": "Ingeniería Eléctrica (6 Calculadoras)", "label_en": "Electrical Engineering (6 Calculators)" },
+        { "value": "physics", "label": "Ciencias Físicas y Meteorología (6 Calculadoras)", "label_en": "Physical Sciences & Weather (6 Calculators)" },
+        { "value": "chemistry", "label": "Química y Moles (6 Calculadoras)", "label_en": "Chemistry & Moles (6 Calculators)" },
+        { "value": "technology", "label": "Tecnología y Redes (6 Calculadoras)", "label_en": "Technology & Networks (6 Calculators)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalCalculatorsCountEcho",
+      "label": "Calculadoras Disponibles en Producción",
+      "label_en": "Total Live Calculators Available",
+      "expression": "55",
+      "unit": "herramientas",
+      "unit_en": "tools",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalCalculatorsCountEcho", "op": ">=", "value": 50 }, "label": "Catálogo Completo Disponible", "label_en": "Full Catalog Available", "tone": "success", "text": "Todas las calculadoras diversas activas y listas.", "text_en": "All specialized calculators live and ready." }
+      ]
+    }
+  ]
+}

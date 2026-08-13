@@ -1,0 +1,205 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "cashback-vs-low-interest-calculator",
+    "title": "Calculadora de Reembolso en Efectivo vs Interés Bajo",
+    "title_en": "Cash Back or Low Interest Calculator",
+    "slug": "reembolso-efectivo-vs-interes-bajo",
+    "category": "finance",
+    "subcategory": "loans",
+    "tags": ["auto", "cashback", "intereses"],
+    "tags_en": ["auto", "cashback", "low-interest"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Tag"
+  },
+  "content": {
+    "shortDescription": "Compara si te conviene aceptar un reembolso en efectivo (Cash Back) o un tipo de interés reducido al comprar un auto.",
+    "shortDescription_en": "Compare whether taking a dealer cash back rebate vs a promotional low interest rate saves more money on a car purchase.",
+    "longDescription": "Analiza las dos promociones más habituales de concesionarios de vehículos: rebaja de precio inicial mediante Cash Back con tasa bancaria estándar frente a tasa promocional de interés bajo (ej. 0.9% o 1.9%).",
+    "longDescription_en": "Analyze 2 popular dealer auto incentive offers: taking immediate price cash back rebate financed at standard bank APR vs promotional low interest rate financing.",
+    "howToUse": [
+      "Ingresa el precio del vehículo.",
+      "Ingresa la oferta de Cash Back (descuento en efectivo) y la tasa bancaria regular (%).",
+      "Ingresa la tasa de interés baja promocional (%).",
+      "Consulta la opción que te ahorra más dinero total."
+    ],
+    "howToUse_en": [
+      "Enter vehicle price and active currency.",
+      "Enter dealer Cash Back rebate amount and standard bank APR %.",
+      "Enter promotional low APR % offer.",
+      "View which deal results in lower total financing costs."
+    ],
+    "methodology": "Comparativa de Ofertas: Opción A = Cuota(Precio - Rebaja, TasaEstándar). Opción B = Cuota(Precio, TasaBajaPromocional).",
+    "methodology_en": "Incentive Comparison: Option A = Payment(Price - Rebate, Standard APR). Option B = Payment(Price, Low Promotional APR)."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🏷️",
+      "title": "Cash Back Rebate vs Low Interest Financing",
+      "title_es": "Reembolso en Efectivo vs Tasa Promocional Baja",
+      "content_html_en": "<p>Car dealerships often offer a choice between a instant cash back rebate (reducing loan principal) or promotional low APR financing (lowering monthly interest).</p>",
+      "content_html": "<p>Los concesionarios suelen ofrecer elegir entre un descuento directo en el precio (Cash Back) o una financiación promocional a tasa muy baja.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "carPrice",
+      "label": "Precio del vehículo",
+      "label_en": "Vehicle Purchase Price",
+      "type": "currency",
+      "default": 28000,
+      "min": 1000,
+      "max": 300000,
+      "step": 500,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "cashbackRebate",
+      "label": "Reembolso en efectivo ofrecido (Cash Back)",
+      "label_en": "Cash Back Rebate Offered",
+      "type": "currency",
+      "default": 2500,
+      "min": 0,
+      "max": 50000,
+      "step": 250,
+      "unit": { "follows": "carPrice" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "standardRate",
+      "label": "Tasa de interés bancaria regular con Cash Back (%)",
+      "label_en": "Standard Bank Rate with Cash Back (%)",
+      "type": "number",
+      "default": 6.5,
+      "min": 0.1,
+      "max": 25,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "promoLowRate",
+      "label": "Tasa promocional reducida sin Cash Back (%)",
+      "label_en": "Promotional Low Interest Rate (%)",
+      "type": "number",
+      "default": 1.9,
+      "min": 0,
+      "max": 25,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "loanMonths",
+      "label": "Plazo del préstamo (meses)",
+      "label_en": "Loan Term (months)",
+      "type": "slider",
+      "default": 60,
+      "min": 12,
+      "max": 84,
+      "step": 12,
+      "unit": "meses",
+      "unit_en": "months",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "paymentWithCashback",
+      "label": "Cuota Mensual con Cash Back (Tasa Regular)",
+      "label_en": "Monthly Payment with Cash Back (Standard APR)",
+      "expression": "(carPrice - cashbackRebate) * (standardRate / 1200) / (1 - (1 + standardRate / 1200) ^ -loanMonths)",
+      "unit": { "follows": "carPrice" },
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "paymentWithCashback", "op": "<", "value": 1000 }, "label": "Opción Cash Back", "label_en": "Cash Back Option", "tone": "info", "text": "Calculado aplicando la rebaja directa al capital inicial.", "text_en": "Calculated applying direct price rebate to initial principal." }
+      ]
+    },
+    {
+      "id": "paymentWithLowRate",
+      "label": "Cuota Mensual con Tasa Promocional Baja",
+      "label_en": "Monthly Payment with Low Interest Rate",
+      "expression": "carPrice * (promoLowRate / 1200) / (1 - (1 + promoLowRate / 1200) ^ -loanMonths)",
+      "unit": { "follows": "carPrice" },
+      "precision": 2,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "totalPaidCashback",
+      "label": "Costo total con Cash Back",
+      "label_en": "Total Cost with Cash Back",
+      "expression": "paymentWithCashback * loanMonths",
+      "unit": { "follows": "carPrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "totalPaidLowRate",
+      "label": "Costo total con Tasa Promocional Baja",
+      "label_en": "Total Cost with Low Interest",
+      "expression": "paymentWithLowRate * loanMonths",
+      "unit": { "follows": "carPrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "auto-loan-calculator", "type": "static", "message": "Calcula un préstamo de auto estándar", "message_en": "Calculate standard auto loan", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Incentivos Financieros de Autos",
+    "role_en": "Auto Incentive Deals Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y comparativo",
+    "includeData": ["paymentWithCashback", "paymentWithLowRate", "totalPaidCashback", "totalPaidLowRate"],
+    "instructions": [
+      "Compara la cuota mensual de la opción Cash Back frente a la opción de Tasa Baja Promocional en 2 frases concisas.",
+      "Identifica claramente cuál de las dos opciones genera menor desembolso total al cliente."
+    ],
+    "instructions_en": [
+      "Compare monthly payment of Cash Back rebate option vs Low Interest rate deal in 2 concise sentences.",
+      "Clearly identify which dealer incentive deal results in lower total lifetime financing cost."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Reembolso en Efectivo vs Interés Bajo | CalculadoraHub",
+    "metaTitle_en": "Cash Back or Low Interest Calculator | CalculadoraHub",
+    "metaDescription": "Compara si te conviene un descuento Cash Back o un interés bajo al comprar un auto. Gratis e instantáneo.",
+    "metaDescription_en": "Compare dealer cash back rebate vs low promotional APR interest rate on car financing. Free, instant results.",
+    "keywords": ["cash back vs low interest calculator", "descuento auto", "leasing o compra", "tasa 0"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

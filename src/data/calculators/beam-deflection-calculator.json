@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "beam-deflection-calculator",
+    "title": "Calculadora de Deflexión Máxima en Vigas (Carga Uniforme y Central)",
+    "title_en": "Beam Deflection Calculator (Uniform & Center Load)",
+    "slug": "calculadora-de-deflexion-maxima-en-vigas-flexion-ingenieria",
+    "category": "engineering",
+    "subcategory": "civil",
+    "tags": ["deflexion-de-vigas", "vigas", "flexion", "inercia", "modulo-de-young", "ingenieria-estructural", "civil"],
+    "tags_en": ["beam-deflection", "beams", "bending", "inertia", "youngs-modulus", "structural-engineering", "civil"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la deflexión o flecha máxima (δ_max) en vigas simplemente apoyadas sometidas a una carga puntual central.",
+    "shortDescription_en": "Calculate maximum deflection (δ_max) for simply supported beams subjected to a central point load.",
+    "longDescription": "Herramienta de ingeniería civil y de estructuras. Evalúa la rigidez a la flexión de perfiles de acero o madera en función del Módulo de Elasticidad ($E$) y el Momento de Inercia ($I$).",
+    "longDescription_en": "Civil and structural engineering tool. Evaluates bending stiffness of steel or timber sections based on Elastic Modulus ($E$) and Moment of Inertia ($I$).",
+    "howToUse": [
+      "Ingresa la Carga Puntual Central ($P$ en Newtons - N o kN).",
+      "Ingresa la Luz / Longitud de la Viga ($L$ en metros).",
+      "Selecciona el Módulo de Elasticidad del Material ($E$, ej. Acero = 200 GPa).",
+      "Ingresa el Momento de Inercia de la Sección ($I$ en cm⁴).",
+      "Consulta la Deflexión Máxima Calculada (δ_max en mm)."
+    ],
+    "howToUse_en": [
+      "Enter Central Point Load ($P$ in Newtons - N).",
+      "Enter Beam Span Length ($L$ in meters).",
+      "Select Material Elastic Modulus ($E$, e.g. Steel = 200 GPa).",
+      "Enter Cross-Section Moment of Inertia ($I$ in cm⁴).",
+      "View Calculated Maximum Deflection ($\u03b4_{\\max}$ in mm)."
+    ],
+    "methodology": "Deflexión Máxima en el centro δ_max = (P * L³) / (48 * E * I). 1 GPa = 10⁹ Pa.",
+    "methodology_en": "Center Maximum Deflection δ_max = (P * L³) / (48 * E * I). 1 GPa = 10⁹ Pa."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Ingeniería Estructural y Resistencia de Materiales",
+    "role_en": "Structural Engineering & Strength of Materials Specialist Assistant",
+    "includeData": ["maxBeamDeflectionMmResult", "spanDeflectionRatioResult"],
+    "instructions": [
+      "Interpreta la flecha máxima calculada respecto a los límites normativos de deformación (ej. $L/360$ para forjados habituales en edificación).",
+      "Explica la gran influencia de la longitud de luz ($L^3$ en el numerador).",
+      "Muestra recomendaciones para aumentar la inercia del perfil metálico o de madera."
+    ],
+    "instructions_en": [
+      "Interpret calculated maximum deflection against code deflection limits (e.g. $L/360$ for standard building floors).",
+      "Explain heavy influence of span length ($L^3$ in numerator).",
+      "Show recommendations to increase section moment of inertia."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "bdf-guide",
+      "icon": "🏗️",
+      "title": "Beam Deflection Formula & Code Limits",
+      "title_es": "Fórmula de Deflexión en Vigas y Límites de Código",
+      "content_html_en": "<p><b>Formula:</b> δ_max = (P × L³) / (48 × E × I)</p><p><b>L/360 Limit:</b> Maximum allowable deflection for floor joists supporting plaster ceilings.</p><p><b>L/240 Limit:</b> Maximum allowable deflection for roof rafters.</p>",
+      "content_html": "<p><b>Fórmula:</b> δ_max = (P × L³) / (48 × E × I)</p><p><b>Límite L/360:</b> Deflexión máxima admisible para viguetas de piso que soportan techos de yeso.</p><p><b>Límite L/240:</b> Deflexión máxima admisible para cabios de cubierta.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "pointLoadNewtons",
+      "label": "Carga Puntual Central (P en Newtons - N)",
+      "label_en": "Central Point Load (P in Newtons - N)",
+      "type": "number",
+      "default": 10000,
+      "min": 10,
+      "max": 10000000,
+      "step": 500,
+      "required": true
+    },
+    {
+      "id": "beamSpanMeters",
+      "label": "Longitud / Luz de la Viga (L en metros)",
+      "label_en": "Beam Span Length (L in meters)",
+      "type": "number",
+      "default": 6.0,
+      "min": 0.5,
+      "max": 100,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "elasticModulusGpa",
+      "label": "Módulo de Elasticidad (E en GPa)",
+      "label_en": "Elastic Modulus (E in GPa)",
+      "type": "select",
+      "default": "200",
+      "options": [
+        { "value": "200", "label": "Acero Estructural (E = 200 GPa)", "label_en": "Structural Steel (E = 200 GPa)" },
+        { "value": "70", "label": "Aluminio (E = 70 GPa)", "label_en": "Aluminum (E = 70 GPa)" },
+        { "value": "30", "label": "Hormigón / Concreto (E = 30 GPa)", "label_en": "Concrete (E = 30 GPa)" },
+        { "value": "12", "label": "Madera Estructural (E = 12 GPa)", "label_en": "Structural Timber (E = 12 GPa)" }
+      ]
+    },
+    {
+      "id": "momentInertiaCm4",
+      "label": "Momento de Inercia de Sección (I en cm⁴)",
+      "label_en": "Section Moment of Inertia (I in cm⁴)",
+      "type": "number",
+      "default": 2500,
+      "min": 1,
+      "max": 1000000,
+      "step": 50,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "maxBeamDeflectionMmResult",
+      "label": "Deflexión Máxima Calculada (δ_max en mm)",
+      "label_en": "Calculated Maximum Deflection (δ_max in mm)",
+      "expression": "(momentInertiaCm4 > 0 && elasticModulusGpa > 0) ? (((pointLoadNewtons * (beamSpanMeters ^ 3)) / (48 * (elasticModulusGpa * 1000000000) * (momentInertiaCm4 * 0.00000001))) * 1000) : 0",
+      "unit": "mm",
+      "unit_en": "mm",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "maxBeamDeflectionMmResult", "op": ">=", "value": 0 }, "label": "Flecha Calculada", "label_en": "Deflection Computed", "tone": "success", "text": "Deformación elástica por flexión evaluada.", "text_en": "Elastic bending deformation evaluated." }
+      ]
+    },
+    {
+      "id": "spanDeflectionRatioResult",
+      "label": "Relación de Flecha respecto a la Luz (L / δ)",
+      "label_en": "Span to Deflection Ratio (L / δ)",
+      "expression": "maxBeamDeflectionMmResult > 0 ? ((beamSpanMeters * 1000) / maxBeamDeflectionMmResult) : 0",
+      "unit": "L/",
+      "unit_en": "L/",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

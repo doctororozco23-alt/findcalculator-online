@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "lawn-mowing-area-calculator",
+    "title": "Calculadora de Semillas de Césped, Fertilizante y Superficie",
+    "title_en": "Lawn Grass Seed, Fertilizer & Mowing Area Calculator",
+    "slug": "calculadora-de-semillas-de-cesped-fertilizante-superficie-jardin",
+    "category": "home",
+    "subcategory": "gardening",
+    "tags": ["cesped", "semillas-de-cesped", "fertilizante", "jardineria", "cesped-artificial", "mantenimiento-jardin", "hogar"],
+    "tags_en": ["lawn", "grass-seed", "fertilizer", "gardening", "artificial-turf", "lawn-maintenance", "home"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula los kilogramos de semillas de césped y bolsas de fertilizante requeridas según la superficie del jardín.",
+    "shortDescription_en": "Calculate grass seed weight in kilograms and fertilizer bags needed based on lawn area.",
+    "longDescription": "Herramienta de paisajismo y mantenimiento del hogar. Determina las dosis de siembra nueva o resembrado y nutrición nitrogenada para praderas de césped.",
+    "longDescription_en": "Landscaping and lawn care tool. Computes seeding/reseeding rates and nitrogen fertilizer dosage for turf grass.",
+    "howToUse": [
+      "Ingresa el Área Total del Jardín / Césped (m² o pies²).",
+      "Selecciona la Tarea a Realizar (Siembra Nueva Césped o Resiembra / Repoblación).",
+      "Consulta los Kilogramos de Semillas de Césped y Bolsas de Fertilizante requeridos."
+    ],
+    "howToUse_en": [
+      "Enter Total Lawn / Yard Area (m² or sq ft).",
+      "Select Lawn Task (New Lawn Seeding or Over-seeding / Repair).",
+      "View Required Grass Seed Weight in Kilograms and Fertilizer Bags."
+    ],
+    "methodology": "Siembra Nueva = 35 g/m². Resiembra = 20 g/m². Fertilizante ≈ 30 g/m². Semillas (kg) = (Área * Dosis) / 1000.",
+    "methodology_en": "New Lawn = 35 g/m². Over-seeding = 20 g/m². Fertilizer ≈ 30 g/m². Seed (kg) = (Area * Rate) / 1000."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Jardinería y Mantenimiento de Césped",
+    "role_en": "Gardening & Turf Grass Maintenance Specialist Assistant",
+    "includeData": ["grassSeedKgResult", "fertilizerKgResult"],
+    "instructions": [
+      "Interpreta los kilos de semillas y fertilizante requeridos para el césped.",
+      "Aconseja la época óptima de siembra (otoño temprano o primavera).",
+      "Muestra la rutina de riego de germinación (mantener el suelo húmedo sin encharcar durante 14 a 21 días)."
+    ],
+    "instructions_en": [
+      "Interpret required grass seed weight and fertilizer bags count.",
+      "Advise optimal seeding season (early autumn or spring).",
+      "Show germination watering routine (keep topsoil moist without pooling for 14 to 21 days)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "lma-guide",
+      "icon": "🌱",
+      "title": "Grass Seeding Rates Standards",
+      "title_es": "Estándares de Dosis de Siembra de Césped",
+      "content_html_en": "<p><b>New Lawn Seeding:</b> 30 to 40 grams / m² (6 to 8 lbs / 1,000 sq ft).</p><p><b>Overseeding / Repair:</b> 15 to 25 grams / m² (3 to 5 lbs / 1,000 sq ft).</p>",
+      "content_html": "<p><b>Siembra Nueva:</b> 30 a 40 gramos / m².</p><p><b>Resiembra / Repoblación:</b> 15 a 25 gramos / m².</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "lawnAreaM2",
+      "label": "Superficie del Jardín / Césped (m²)",
+      "label_en": "Lawn / Yard Area (m²)",
+      "type": "number",
+      "default": 250,
+      "min": 5,
+      "max": 50000,
+      "step": 10,
+      "required": true
+    },
+    {
+      "id": "seedingTaskTypeRate",
+      "label": "Tipo de Trabajo en el Césped",
+      "label_en": "Lawn Task Type",
+      "type": "select",
+      "default": "35",
+      "options": [
+        { "value": "35", "label": "Siembra Nueva desde Cero (35 g/m²)", "label_en": "New Lawn from Scratch (35 g/m²)" },
+        { "value": "20", "label": "Resiembra / Reparación de Pradera (20 g/m²)", "label_en": "Overseeding / Patch Repair (20 g/m²)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "grassSeedKgResult",
+      "label": "Semillas de Césped Requeridas (kg)",
+      "label_en": "Required Grass Seed (kg)",
+      "expression": "((lawnAreaM2 * seedingTaskTypeRate) / 1000) * 1.05",
+      "unit": "kg",
+      "unit_en": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "grassSeedKgResult", "op": ">=", "value": 0 }, "label": "Semillas Calculadas", "label_en": "Seed Computed", "tone": "success", "text": "Masa total de semillas de pradera cuantificada.", "text_en": "Total turf grass seed mass quantified." }
+      ]
+    },
+    {
+      "id": "fertilizerKgResult",
+      "label": "Fertilizante Césped NPK Requerido (kg)",
+      "label_en": "Required NPK Lawn Fertilizer (kg)",
+      "expression": "(lawnAreaM2 * 30) / 1000",
+      "unit": "kg",
+      "unit_en": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

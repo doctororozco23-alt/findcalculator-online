@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "running-race-predictor-calculator",
+    "title": "Calculadora de Pronóstico de Tiempo en Carrera (Fórmula Riegel 5K a 42K)",
+    "title_en": "Running Race Time Predictor Calculator (Riegel Formula 5K to 42K)",
+    "slug": "pronostico-tiempos-carrera-riegel",
+    "category": "fitness",
+    "subcategory": "running",
+    "tags": ["running", "riegel", "pronostico-maraton", "5k", "10k", "21k", "42k"],
+    "tags_en": ["running", "riegel", "marathon-predictor", "5k", "10k", "half-marathon"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Pronostica tus tiempos y ritmos de carrera esperados para 5K, 10K, Media Maratón (21K) y Maratón (42K) mediante la fórmula matemática de Riegel.",
+    "shortDescription_en": "Predict expected race finish times and paces for 5K, 10K, Half Marathon, and Full Marathon using Riegel's endurance formula.",
+    "longDescription": "Auditoría de rendimiento fisiológico en running. Utiliza el modelo de fatiga aeróbica de Peter Riegel (T2 = T1 × (D2/D1)^1.06) adoptado por Runner's World para proyectar marcas en distintas distancias basadas en tu mejor marca actual.",
+    "longDescription_en": "Running physiological performance audit. Uses Peter Riegel's endurance fatigue model (T2 = T1 × (D2/D1)^1.06) to project realistic race finish times across all distances based on your recent PR.",
+    "howToUse": [
+      "Selecciona la distancia de tu carrera reciente de referencia (5K, 10K o Media Maratón).",
+      "Ingresa el tiempo conseguido en esa carrera (minutos totales).",
+      "Consulta la tabla con los tiempos proyectados y ritmos por km para 5K, 10K, 21K y 42K."
+    ],
+    "howToUse_en": [
+      "Select your recent reference race distance (5K, 10K, or Half Marathon).",
+      "Enter total race finish time achieved (in minutes).",
+      "View projected finish times and per-km target paces for 5K, 10K, 21K, and Full Marathon."
+    ],
+    "methodology": "Fórmula de Fatiga Aeróbica de Riegel (1977): T2 = T1 × (D2 / D1) ^ 1.06. Exponente de fatiga 1.06 validado en fisiología para corredores de fondo con volumen semanal adecuado.",
+    "methodology_en": "Riegel Aerobic Fatigue Formula (1977): T2 = T1 × (D2 / D1) ^ 1.06. Fatigue exponent 1.06 validated for distance runners with adequate weekly volume."
+  },
+  "guideSections": [
+    {
+      "id": "riegel-model-guide",
+      "icon": "🏃",
+      "title": "Understanding Riegel's Race Prediction Model",
+      "title_es": "Comprensión del Modelo de Predicción de Riegel",
+      "content_html_en": "<p><b>Assumptions:</b> The 1.06 fatigue exponent assumes you have trained with sufficient weekly mileage and endurance long runs for the target distance.</p><p><b>Pacing Strategy:</b> Running negative splits (second half slightly faster than first half) maximizes your chances of hitting your Riegel target time.</p>",
+      "content_html": "<p><b>Premisa de Entrenamiento:</b> El exponente de fatiga 1.06 asume que el corredor posee un volumen semanal de entrenamiento y tiradas largas adecuadas para la distancia objetivo.</p><p><b>Estrategia de Ritmo:</b> Ejecutar un 'negative split' (segunda mitad ligeramente más rápida) maximiza las probabilidades de cumplir el tiempo de Riegel.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "refDistanceKm",
+      "label": "Distancia de la carrera de referencia",
+      "label_en": "Reference Race Distance",
+      "type": "select",
+      "default": "10",
+      "options": [
+        { "value": "5", "label": "5 Kilómetros (5K)", "label_en": "5 Kilometers (5K)" },
+        { "value": "10", "label": "10 Kilómetros (10K)", "label_en": "10 Kilometers (10K)" },
+        { "value": "21.0975", "label": "Media Maratón (21.097 km)", "label_en": "Half Marathon (21.097 km)" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "refTimeMinutes",
+      "label": "Tiempo conseguido en la carrera de referencia",
+      "label_en": "Recent Reference Race Finish Time",
+      "type": "number",
+      "default": 45,
+      "min": 12,
+      "max": 180,
+      "step": 0.5,
+      "unit": "minutos",
+      "unit_en": "minutes",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [12, 180], "message": "Tiempo entre 12 y 180 min", "message_en": "Time between 12 and 180 mins" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "predicted5kTimeMins",
+      "label": "Pronóstico de Tiempo en 5K",
+      "label_en": "Predicted 5K Finish Time",
+      "expression": "refTimeMinutes * ((5 / refDistanceKm) ^ 1.06)",
+      "unit": "min",
+      "unit_en": "min",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "predicted10kTimeMins",
+      "label": "Pronóstico de Tiempo en 10K",
+      "label_en": "Predicted 10K Finish Time",
+      "expression": "refTimeMinutes * ((10 / refDistanceKm) ^ 1.06)",
+      "unit": "min",
+      "unit_en": "min",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "predicted10kTimeMins", "op": ">", "value": 0 }, "label": "Pronóstico 10K Riegel", "label_en": "Riegel 10K Prediction", "tone": "info", "text": "Marca esperada en 10K basada en tu ritmo de referencia actual.", "text_en": "Target 10K finish time based on current reference race pace." }
+      ]
+    },
+    {
+      "id": "predictedHalfMarathonMins",
+      "label": "Pronóstico de Tiempo en Media Maratón (21K)",
+      "label_en": "Predicted Half Marathon Finish Time (21K)",
+      "expression": "refTimeMinutes * ((21.0975 / refDistanceKm) ^ 1.06)",
+      "unit": "min",
+      "unit_en": "min",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "predictedMarathonMins",
+      "label": "Pronóstico de Tiempo en Maratón Completa (42K)",
+      "label_en": "Predicted Full Marathon Finish Time (42K)",
+      "expression": "refTimeMinutes * ((42.195 / refDistanceKm) ^ 1.06)",
+      "unit": "min",
+      "unit_en": "min",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "predictedMarathonPace",
+      "label": "Ritmo Medio por km para Maratón (42K)",
+      "label_en": "Target Per-Km Pace for Full Marathon (42K)",
+      "expression": "predictedMarathonMins / 42.195",
+      "unit": "min/km",
+      "unit_en": "min/km",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "pace-calculator", "type": "static", "message": "Calcula el desglose exacto de ritmos min/km y min/milla", "message_en": "Calculate min/km and min/mile pace breakdown", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Entrenador de Maratón y Fisiología del Running",
+    "role_en": "Marathon Coach & Running Physiology Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "entusiasta y motivador",
+    "includeData": ["predicted10kTimeMins", "predictedHalfMarathonMins", "predictedMarathonMins", "predictedMarathonPace", "refTimeMinutes"],
+    "instructions": [
+      "Sintetiza los tiempos proyectados para 10K, Media Maratón y Maratón Completa y el ritmo objetivo de maratón en 2 frases concisas.",
+      "Destaca que para cumplir la proyección de Maratón de Riegel es indispensable contar con tiradas largas semanales."
+    ],
+    "instructions_en": [
+      "Summarize predicted 10K, Half Marathon, and Full Marathon finish times and target marathon pace in 2 concise sentences.",
+      "Highlight that hitting Riegel's marathon prediction requires consistent weekly long run mileage."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Pronóstico de Carrera (Riegel 5K a 42K) | CalculadoraHub",
+    "metaTitle_en": "Running Race Time Predictor Calculator (Riegel) | CalculadoraHub",
+    "metaDescription": "Pronostica tus tiempos y ritmos en 5K, 10K, 21K y 42K con la fórmula Riegel. Gratis e instantáneo.",
+    "metaDescription_en": "Predict expected finish times and per-km paces for 5K, 10K, 21K, and 42K using Riegel's formula. Free, instant results.",
+    "keywords": ["race predictor calculator", "pronostico maraton riegel", "tiempos carrera 21k 42k", "riegel formula running"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

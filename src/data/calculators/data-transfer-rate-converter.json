@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "data-transfer-rate-converter",
+    "title": "Conversor de Velocidad de Red y Transmisión de Datos (Mbps, MB/s)",
+    "title_en": "Data Transfer Rate & Network Speed Converter (Mbps, MB/s)",
+    "slug": "conversor-de-velocidad-de-red-transmision-de-datos-mbps-mbs",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["velocidad-de-red", "mbps", "mbs", "ancho-de-banda", "transmision-de-datos", "internet", "conversores"],
+    "tags_en": ["network-speed", "mbps", "mbs", "bandwidth", "data-transfer", "internet", "converters"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte velocidad de red entre Megabits por segundo (Mbps), Megabytes por segundo (MB/s), Gbps y KB/s.",
+    "shortDescription_en": "Convert network speed between Megabits per second (Mbps), Megabytes per second (MB/s), Gbps, and KB/s.",
+    "longDescription": "Herramienta de redes, fibra óptica e informática. Resuelve la confusión habitual entre la velocidad contratada en bits (Mbps) y la velocidad de descarga en bytes (MB/s).",
+    "longDescription_en": "Networking, fiber optics, and computer science tool. Resolves common confusion between ISP advertised speed in bits (Mbps) vs file download speed in bytes (MB/s).",
+    "howToUse": [
+      "Ingresa la Velocidad de Red / Ancho de Banda.",
+      "Selecciona la Unidad de Origen (ej. Mbps Megabits/s o MB/s Megabytes/s).",
+      "Consulta los Resultados Equivalentes en MB/s, Mbps, Gbps y KB/s."
+    ],
+    "howToUse_en": [
+      "Enter Network Speed / Bandwidth Rating.",
+      "Select Source Unit (e.g. Mbps Megabits/sec or MB/s Megabytes/sec).",
+      "View Equivalent Results in MB/s, Mbps, Gbps, and KB/s."
+    ],
+    "methodology": "1 Byte = 8 Bits. 100 Mbps = 12.5 MB/s. MB/s = Mbps / 8. Gbps = Mbps / 1000.",
+    "methodology_en": "1 Byte = 8 Bits. 100 Mbps = 12.5 MB/s. MB/s = Mbps / 8. Gbps = Mbps / 1000."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Redes de Telecomunicaciones y Ancho de Banda",
+    "role_en": "Telecom Networks & Bandwidth Specialist Assistant",
+    "includeData": ["rateInMbpsResult", "rateInMBsResult"],
+    "instructions": [
+      "Interpreta la conversión entre Megabits por segundo (b minúscula) y Megabytes por segundo (B mayúscula).",
+      "Explica la regla de dividir por 8 para saber la velocidad de descarga real de un archivo.",
+      "Muestra ejemplos de tiempo de descarga (ej. descargar un archivo de 1 GB a 100 Mbps tarda ~80 segundos)."
+    ],
+    "instructions_en": [
+      "Interpret conversion between Megabits per second (lowercase b) vs Megabytes per second (uppercase B).",
+      "Explain the divide-by-8 rule to calculate real file download speed.",
+      "Show download time examples (e.g. downloading a 1 GB file at 100 Mbps takes ~80 seconds)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "dtr-guide",
+      "icon": "🚀",
+      "title": "Bits vs Bytes Conversion Rules",
+      "title_es": "Reglas de Conversión Bits vs Bytes",
+      "content_html_en": "<p><b>8 Bits (b) = 1 Byte (B)</b></p><p><b>100 Mbps ISP Speed:</b> Equals 12.5 MB/s actual download speed.</p><p><b>1 Gbps Fiber Speed:</b> Equals 125 MB/s actual download speed.</p>",
+      "content_html": "<p><b>8 Bits (b) = 1 Byte (B)</b></p><p><b>100 Mbps Contratados:</b> Equivale a 12.5 MB/s de descarga real.</p><p><b>1 Gbps Fibra:</b> Equivale a 125 MB/s de descarga real.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputValueDataTransfer",
+      "label": "Velocidad a Convertir",
+      "label_en": "Speed Value to Convert",
+      "type": "number",
+      "default": 300,
+      "min": 0,
+      "max": 1000000,
+      "step": 10,
+      "required": true
+    },
+    {
+      "id": "inputDataTransferUnitFactor",
+      "label": "Unidad de Origen",
+      "label_en": "Source Unit",
+      "type": "select",
+      "default": "1.0",
+      "options": [
+        { "value": "1.0", "label": "Megabits por segundo (Mbps)", "label_en": "Megabits per second (Mbps)" },
+        { "value": "8.0", "label": "Megabytes por segundo (MB/s)", "label_en": "Megabytes per second (MB/s)" },
+        { "value": "1000.0", "label": "Gigabits por segundo (Gbps)", "label_en": "Gigabits per second (Gbps)" },
+        { "value": "0.008", "label": "Kilobytes por segundo (KB/s)", "label_en": "Kilobytes per second (KB/s)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "rateInMbpsResult",
+      "label": "Velocidad en Megabits por Segundo (Mbps)",
+      "label_en": "Speed in Megabits per Second (Mbps)",
+      "expression": "inputValueDataTransfer * inputDataTransferUnitFactor",
+      "unit": "Mbps",
+      "unit_en": "Mbps",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "rateInMbpsResult", "op": ">=", "value": 0 }, "label": "Velocidad Calculada", "label_en": "Speed Computed", "tone": "success", "text": "Ancho de banda en Mbps cuantificado.", "text_en": "Bandwidth in Mbps quantified." }
+      ]
+    },
+    {
+      "id": "rateInMBsResult",
+      "label": "Velocidad de Descarga Real en Megabytes por Segundo (MB/s)",
+      "label_en": "Real Download Speed in Megabytes per Second (MB/s)",
+      "expression": "rateInMbpsResult / 8",
+      "unit": "MB/s",
+      "unit_en": "MB/s",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "rateInGbpsResult",
+      "label": "Velocidad en Gigabits por Segundo (Gbps)",
+      "label_en": "Speed in Gigabits per Second (Gbps)",
+      "expression": "rateInMbpsResult / 1000",
+      "unit": "Gbps",
+      "unit_en": "Gbps",
+      "precision": 3,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

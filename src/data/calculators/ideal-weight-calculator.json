@@ -1,0 +1,271 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "ideal-weight-calculator",
+    "title": "Calculadora de Peso Ideal (5 Fórmulas Clínicas y Contextura)",
+    "title_en": "Ideal Body Weight Calculator (5 Clinical Formulas & Frame Size)",
+    "slug": "peso-ideal",
+    "category": "fitness",
+    "subcategory": "body-composition",
+    "tags": ["peso-ideal", "devine", "robinson", "miller", "hamwi", "oms"],
+    "tags_en": ["ideal-weight", "devine", "robinson", "miller", "hamwi", "who"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Scale"
+  },
+  "content": {
+    "shortDescription": "Calcula tu peso corporal ideal según 5 ecuaciones clínicas de referencia (Devine, Robinson, Miller, Hamwi y OMS) ajustadas por tu contextura ósea.",
+    "shortDescription_en": "Calculate your ideal body weight target using 5 clinical medical formulas (Devine, Robinson, Miller, Hamwi, and WHO) adjusted for frame size.",
+    "longDescription": "Evaluación médica de la composición corporal ideal. Compara los valores de peso objetivo recomendados por las 5 principales fórmulas clínicas farmacológicas ajustados por la complexión ósea (pequeña, mediana o grande).",
+    "longDescription_en": "Clinical medical assessment of target body weight. Compare target weight outputs across 5 established medical equations adjusted for skeletal frame size (small, medium, or large).",
+    "howToUse": [
+      "Selecciona tu sexo biológico y la fórmula médica clínica deseada.",
+      "Ingresa tu estatura exacta.",
+      "Selecciona tu contextura ósea (pequeña, mediana o grande).",
+      "Ingresa opcionalmente tu peso actual para ver la diferencia objetivo.",
+      "Revisa la tabla comparativa de las 5 fórmulas médicas."
+    ],
+    "howToUse_en": [
+      "Select biological sex and preferred clinical formula.",
+      "Enter exact height.",
+      "Select skeletal frame size (small, medium, or large).",
+      "Optionally enter current weight to view target difference.",
+      "Review the comprehensive 5-formula clinical comparison table."
+    ],
+    "methodology": "Fórmulas Clínicas: 1. Devine (1974): Hombres = 50 + 2.3×(pulgadas-60), Mujeres = 45.5 + 2.3×(pulgadas-60). 2. Robinson (1983). 3. Miller (1983). 4. Hamwi (1964). 5. Punto Medio OMS (IMC 22.0). Ajuste de contextura: Pequeña (-10%), Mediana (0%), Grande (+10%).",
+    "methodology_en": "Clinical Formulas: Devine (1974), Robinson (1983), Miller (1983), Hamwi (1964), and WHO Midpoint (BMI 22.0). Frame adjustment: Small (-10%), Medium (0%), Large (+10%)."
+  },
+  "guideSections": [
+    {
+      "id": "formulas-guide",
+      "icon": "⚖️",
+      "title": "Clinical Purpose of Ideal Weight Formulas",
+      "title_es": "Propósito Clínico de las Fórmulas de Peso Ideal",
+      "content_html_en": "<p><b>Devine Formula (1974):</b> The most widely used formula in hospitals to calculate medical drug dosages (e.g., anesthesia, antibiotics).</p><p><b>Frame Size:</b> Wrist circumference helps determine bone structure density. Small frames weigh ~10% less, large frames ~10% more.</p>",
+      "content_html": "<p><b>Fórmula Devine (1974):</b> La más utilizada en entornos hospitalarios para el cálculo de dosis de medicamentos (ej. anestésicos, antibióticos).</p><p><b>Contextura Ósea:</b> La circunferencia de muñeca determina la densidad estructural. Estructuras pequeñas pesan ~10% menos; grandes ~10% más.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "primaryFormula",
+      "label": "Fórmula médica de referencia",
+      "label_en": "Primary Medical Formula",
+      "type": "select",
+      "default": "devine",
+      "options": [
+        { "value": "devine", "label": "Fórmula Devine (1974 - Estándar Hospitalario)", "label_en": "Devine Formula (1974 - Hospital Standard)" },
+        { "value": "robinson", "label": "Fórmula Robinson (1983)", "label_en": "Robinson Formula (1983)" },
+        { "value": "miller", "label": "Fórmula Miller (1983)", "label_en": "Miller Formula (1983)" },
+        { "value": "hamwi", "label": "Fórmula Hamwi (1964)", "label_en": "Hamwi Formula (1964)" },
+        { "value": "who", "label": "Punto Medio OMS (IMC 22.0 kg/m²)", "label_en": "WHO Midpoint (BMI 22.0 kg/m²)" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "gender",
+      "label": "Sexo biológico",
+      "label_en": "Biological Sex",
+      "type": "select",
+      "default": "male",
+      "options": [
+        { "value": "male", "label": "Hombre", "label_en": "Male" },
+        { "value": "female", "label": "Mujer", "label_en": "Female" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "heightCm",
+      "label": "Estatura",
+      "label_en": "Height",
+      "type": "number",
+      "default": 175,
+      "min": 120,
+      "max": 230,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "frameSize",
+      "label": "Contextura ósea (Frame Size)",
+      "label_en": "Skeletal Frame Size",
+      "type": "select",
+      "default": "medium",
+      "options": [
+        { "value": "small", "label": "Pequeña / Fina (-10% ajuste)", "label_en": "Small / Fine (-10% adjustment)" },
+        { "value": "medium", "label": "Mediana / Estándar (0% ajuste)", "label_en": "Medium / Standard (0% adjustment)" },
+        { "value": "large", "label": "Grande / Robusta (+10% ajuste)", "label_en": "Large / Broad (+10% adjustment)" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "currentWeightKg",
+      "label": "Peso actual (opcional para ver diferencia)",
+      "label_en": "Current Weight (optional for target diff)",
+      "type": "number",
+      "default": 82,
+      "min": 30,
+      "max": 300,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": false,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "devineBase",
+      "label": "Devine Base",
+      "label_en": "Devine Base",
+      "expression": "gender == 'male' ? 50 + 0.9055 * (heightCm - 152.4) : 45.5 + 0.9055 * (heightCm - 152.4)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "robinsonBase",
+      "label": "Robinson Base",
+      "label_en": "Robinson Base",
+      "expression": "gender == 'male' ? 52 + 0.748 * (heightCm - 152.4) : 49 + 0.669 * (heightCm - 152.4)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "millerBase",
+      "label": "Miller Base",
+      "label_en": "Miller Base",
+      "expression": "gender == 'male' ? 56.2 + 0.555 * (heightCm - 152.4) : 53.1 + 0.535 * (heightCm - 152.4)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "hamwiBase",
+      "label": "Hamwi Base",
+      "label_en": "Hamwi Base",
+      "expression": "gender == 'male' ? 48.0 + 1.063 * (heightCm - 152.4) : 45.5 + 0.866 * (heightCm - 152.4)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "whoBase",
+      "label": "OMS Punto Medio (IMC 22.0)",
+      "label_en": "WHO Midpoint (BMI 22.0)",
+      "expression": "22.0 * ((heightCm / 100) ^ 2)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "rawSelectedIdealWeight",
+      "label": "Peso Ideal de la Fórmula Seleccionada",
+      "label_en": "Raw Selected Formula Ideal Weight",
+      "expression": "primaryFormula == 'robinson' ? robinsonBase : (primaryFormula == 'miller' ? millerBase : (primaryFormula == 'hamwi' ? hamwiBase : (primaryFormula == 'who' ? whoBase : devineBase)))",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "frameAdjustedIdealWeightKg",
+      "label": "Peso Ideal Ajustado por Contextura Ósea",
+      "label_en": "Ideal Body Weight (Frame-Adjusted)",
+      "expression": "rawSelectedIdealWeight * (frameSize == 'small' ? 0.90 : (frameSize == 'large' ? 1.10 : 1.00))",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "frameAdjustedIdealWeightKg", "op": ">", "value": 0 }, "label": "Peso Ideal Clínico", "label_en": "Clinical Ideal Weight Target", "tone": "info", "text": "Peso central recomendado ajustado por contextura ósea.", "text_en": "Baseline reference target weight adjusted for skeletal frame size." }
+      ]
+    },
+    {
+      "id": "whoMinHealthyKg",
+      "label": "Rango Mínimo Saludable OMS (IMC 18.5)",
+      "label_en": "WHO Minimum Healthy Weight (BMI 18.5)",
+      "expression": "18.5 * ((heightCm / 100) ^ 2)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "whoMaxHealthyKg",
+      "label": "Rango Máximo Saludable OMS (IMC 24.9)",
+      "label_en": "WHO Maximum Healthy Weight (BMI 24.9)",
+      "expression": "24.9 * ((heightCm / 100) ^ 2)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "weightDifferenceKg",
+      "label": "Diferencia con tu Peso Actual",
+      "label_en": "Difference from Current Weight",
+      "expression": "currentWeightKg > 0 ? (currentWeightKg - frameAdjustedIdealWeightKg) : 0",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "body-fat-calculator", "type": "static", "message": "Calcula tu porcentaje de grasa corporal real", "message_en": "Calculate your actual body fat percentage", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Especialista en Antropometría y Medicina Nutricional",
+    "role_en": "Anthropometry & Clinical Nutritionist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y analítico",
+    "includeData": ["frameAdjustedIdealWeightKg", "whoMinHealthyKg", "whoMaxHealthyKg", "weightDifferenceKg", "primaryFormula"],
+    "instructions": [
+      "Sintetiza el peso ideal ajustado por contextura y el rango saludable de la OMS en 2 frases concisas.",
+      "Destaca que el peso ideal clínico es una referencia que debe complementarse con la evaluación del porcentaje de grasa y masa magra."
+    ],
+    "instructions_en": [
+      "Summarize frame-adjusted ideal weight and WHO healthy weight range in 2 concise sentences.",
+      "Highlight that clinical ideal weight is a benchmark reference best interpreted alongside body fat and muscle mass evaluation."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Peso Ideal (5 Fórmulas Clínicas y Contextura) | CalculadoraHub",
+    "metaTitle_en": "Ideal Body Weight Calculator (5 Formulas & Frame Size) | CalculadoraHub",
+    "metaDescription": "Calcula tu peso ideal con Devine, Robinson, Miller, Hamwi y OMS ajustado por contextura. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate ideal body weight using Devine, Robinson, Miller, Hamwi, and WHO formulas. Free, instant results.",
+    "keywords": ["ideal weight calculator", "peso ideal", "formula devine", "contextura osea", "robinson formula"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

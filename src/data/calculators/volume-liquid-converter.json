@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "volume-liquid-converter",
+    "title": "Conversor Universal de Volumen y Líquidos (Litros, Galones, m³)",
+    "title_en": "Universal Liquid Volume Converter (Liters, Gallons, m³)",
+    "slug": "conversor-universal-de-volumen-liquidos-litros-galones-metros-cubicos",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["conversor-de-volumen", "litros", "galones", "metros-cubicos", "onzas-liquidas", "mililitros", "conversores"],
+    "tags_en": ["volume-converter", "liters", "gallons", "cubic-meters", "fluid-ounces", "milliliters", "converters"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte instantáneamente entre litros, mililitros, metros cúbicos, galones US, onzas líquidas y tazas.",
+    "shortDescription_en": "Instantly convert between liters, milliliters, cubic meters, US gallons, fluid ounces, and cups.",
+    "longDescription": "Herramienta de conversión de volumen volumétrico métrico e imperial. Ideal para recetas de cocina, capacidad de depósitos y física de fluidos.",
+    "longDescription_en": "Metric and imperial volumetric conversion tool. Ideal for cooking recipes, tank capacities, and fluid physics.",
+    "howToUse": [
+      "Ingresa el Valor de Volumen a Convertir.",
+      "Selecciona la Unidad de Origen (ej. Litros, Galones US, m³).",
+      "Consulta los Resultados Equivalentes en Litros, Galones US, m³ y Onzas Líquidas (fl oz)."
+    ],
+    "howToUse_en": [
+      "Enter Volume Value to Convert.",
+      "Select Source Unit (e.g. Liters, US Gallons, m³).",
+      "View Equivalent Results in Liters, US Gallons, m³, and Fluid Ounces (fl oz)."
+    ],
+    "methodology": "Factor base en Litros: 1 L = 1.0, 1 mL = 0.001, 1 m³ = 1000.0, 1 gal US = 3.785411784, 1 fl oz US = 0.0295735296, 1 cup US = 0.24.",
+    "methodology_en": "Base factor in Liters: 1 L = 1.0, 1 mL = 0.001, 1 m³ = 1000.0, 1 gal US = 3.785411784, 1 fl oz US = 0.0295735296, 1 cup US = 0.24."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Conversión de Unidades de Volumen de Líquidos",
+    "role_en": "Liquid Volume Unit Conversion Specialist Assistant",
+    "includeData": ["volumeInLitersResult", "volumeInGallonsResult"],
+    "instructions": [
+      "Interpreta la conversión de volumen de líquido realizada.",
+      "Explica la diferencia entre el Galón US (3.785 L) y el Galón Imperial UK (4.546 L).",
+      "Muestra equivalencias de cocina (1 taza US = 240 mL = 8 onzas líquidas)."
+    ],
+    "instructions_en": [
+      "Interpret performed liquid volume conversion.",
+      "Explain difference between US Gallon (3.785 L) vs UK Imperial Gallon (4.546 L).",
+      "Show culinary equivalences (1 US cup = 240 mL = 8 fluid ounces)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "vlc-guide",
+      "icon": "🧪",
+      "title": "Liquid Volume Conversion Benchmarks",
+      "title_es": "Equivalencias de Volumen de Líquidos",
+      "content_html_en": "<p><b>1 US Gallon:</b> 3.78541 Liters = 128 US Fluid Ounces</p><p><b>1 Cubic Meter (m³):</b> 1,000 Liters = 264.172 US Gallons</p><p><b>1 US Cup:</b> 240 Milliliters = 8 US Fluid Ounces</p>",
+      "content_html": "<p><b>1 Galón US:</b> 3.78541 Litros = 128 Onzas Líquidas US</p><p><b>1 Metro Cúbico (m³):</b> 1,000 Litros = 264.172 Galones US</p><p><b>1 Taza US:</b> 240 Mililitros = 8 Onzas Líquidas US</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputValueVolume",
+      "label": "Valor a Convertir",
+      "label_en": "Value to Convert",
+      "type": "number",
+      "default": 10,
+      "min": 0,
+      "max": 1000000000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "inputVolumeUnitFactor",
+      "label": "Unidad de Origen",
+      "label_en": "Source Unit",
+      "type": "select",
+      "default": "1.0",
+      "options": [
+        { "value": "1.0", "label": "Litros (L)", "label_en": "Liters (L)" },
+        { "value": "3.785411784", "label": "Galones US (gal)", "label_en": "US Gallons (gal)" },
+        { "value": "1000.0", "label": "Metros Cúbicos (m³)", "label_en": "Cubic Meters (m³)" },
+        { "value": "0.001", "label": "Mililitros (mL)", "label_en": "Milliliters (mL)" },
+        { "value": "0.0295735296", "label": "Onzas Líquidas US (fl oz)", "label_en": "US Fluid Ounces (fl oz)" },
+        { "value": "0.24", "label": "Tazas US (cups)", "label_en": "US Cups (cups)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "volumeInLitersResult",
+      "label": "Equivalente en Litros (L)",
+      "label_en": "Equivalent in Liters (L)",
+      "expression": "inputValueVolume * inputVolumeUnitFactor",
+      "unit": "L",
+      "unit_en": "L",
+      "precision": 3,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "volumeInLitersResult", "op": ">=", "value": 0 }, "label": "Conversión Calculada", "label_en": "Conversion Computed", "tone": "success", "text": "Volumen equivalente en litros cuantificado.", "text_en": "Equivalent volume in liters quantified." }
+      ]
+    },
+    {
+      "id": "volumeInGallonsResult",
+      "label": "Equivalente en Galones US (gal)",
+      "label_en": "Equivalent in US Gallons (gal)",
+      "expression": "volumeInLitersResult / 3.785411784",
+      "unit": "gal",
+      "unit_en": "gal",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "volumeInM3Result",
+      "label": "Equivalente en Metros Cúbicos (m³)",
+      "label_en": "Equivalent in Cubic Meters (m³)",
+      "expression": "volumeInLitersResult / 1000",
+      "unit": "m³",
+      "unit_en": "m³",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "volumeInFlOzResult",
+      "label": "Equivalente en Onzas Líquidas US (fl oz)",
+      "label_en": "Equivalent in US Fluid Ounces (fl oz)",
+      "expression": "volumeInLitersResult / 0.0295735296",
+      "unit": "fl oz",
+      "unit_en": "fl oz",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

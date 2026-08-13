@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "energy-power-converter",
+    "title": "Conversor de Energía y Potencia (kWh, Joules, BTU, HP, Watts)",
+    "title_en": "Energy & Power Unit Converter (kWh, Joules, BTU, HP, Watts)",
+    "slug": "conversor-de-energia-potencia-kwh-joules-btu-hp-watts",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["conversor-de-energia", "kwh", "joules", "btu", "hp", "watts", "potencia", "conversores"],
+    "tags_en": ["energy-converter", "kwh", "joules", "btu", "hp", "watts", "power", "converters"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte unidades de energía (kWh, Joules, Calorías, BTU) y unidades de potencia (Watts, Kilowatts, caballos de fuerza HP).",
+    "shortDescription_en": "Convert energy units (kWh, Joules, Calories, BTU) and power units (Watts, Kilowatts, Horsepower HP).",
+    "longDescription": "Herramienta de física termodinámica y electricidad. Permite traducir unidades de trabajo de energía y tasas de transferencia de potencia.",
+    "longDescription_en": "Thermodynamic physics and electrical engineering tool. Converts energy work units and power rate transfers.",
+    "howToUse": [
+      "Ingresa el Valor Energético a Convertir.",
+      "Selecciona la Unidad de Origen (ej. Kilovatios-hora kWh, Joules J, BTU, Calorías kcal).",
+      "Consulta los Resultados Equivalentes en kWh, Joules, BTU y Kilocalorías."
+    ],
+    "howToUse_en": [
+      "Enter Energy Value to Convert.",
+      "Select Source Unit (e.g. Kilowatt-hours kWh, Joules J, BTU, Kilocalories kcal).",
+      "View Equivalent Results in kWh, Joules, BTU, and Kilocalories."
+    ],
+    "methodology": "Factor base en kWh: 1 kWh = 1.0, 1 J = 2.77777778e-7, 1 kJ = 2.77777778e-4, 1 BTU = 0.000293071, 1 kcal = 0.001163.",
+    "methodology_en": "Base factor in kWh: 1 kWh = 1.0, 1 J = 2.77777778e-7, 1 kJ = 2.77777778e-4, 1 BTU = 0.000293071, 1 kcal = 0.001163."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Termodinámica y Conversión Energética",
+    "role_en": "Thermodynamics & Energy Conversion Specialist Assistant",
+    "includeData": ["energyInKwhResult", "energyInJoulesResult", "energyInBtuResult"],
+    "instructions": [
+      "Interpreta la conversión de energía realizada.",
+      "Muestra equivalencias conocidas (1 kWh = 3,600,000 Joules = 3,412.14 BTU = 860 kcal).",
+      "Explica la distinción clave entre Energía (trabajo total acumulado en kWh o J) vs Potencia (tasa instantánea en Watts o HP)."
+    ],
+    "instructions_en": [
+      "Interpret performed energy unit conversion.",
+      "Show known equivalences (1 kWh = 3,600,000 Joules = 3,412.14 BTU = 860 kcal).",
+      "Explain key distinction between Energy (total accumulated work in kWh or J) vs Power (instantaneous rate in Watts or HP)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "epc-guide",
+      "icon": "🔥",
+      "title": "Energy & Power Units Benchmarks",
+      "title_es": "Pautas de Unidades de Energía y Potencia",
+      "content_html_en": "<p><b>1 kWh:</b> 3.6 Megajoules (MJ) = 3,412.14 BTU = 860 kcal</p><p><b>1 Horsepower (HP Mechanical):</b> 745.7 Watts (0.746 kW)</p><p><b>1 Metric Horsepower (CV):</b> 735.5 Watts</p>",
+      "content_html": "<p><b>1 kWh:</b> 3.6 Megajoules (MJ) = 3,412.14 BTU = 860 kcal</p><p><b>1 Caballo de Fuerza (HP):</b> 745.7 Vatios (0.746 kW)</p><p><b>1 Caballo de Vapor (CV):</b> 735.5 Vatios</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputValueEnergy",
+      "label": "Valor Energético a Convertir",
+      "label_en": "Energy Value to Convert",
+      "type": "number",
+      "default": 100,
+      "min": 0,
+      "max": 1000000000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "inputEnergyUnitFactor",
+      "label": "Unidad de Origen",
+      "label_en": "Source Unit",
+      "type": "select",
+      "default": "1.0",
+      "options": [
+        { "value": "1.0", "label": "Kilovatios-hora (kWh)", "label_en": "Kilowatt-hours (kWh)" },
+        { "value": "0.000293071", "label": "BTU (British Thermal Unit)", "label_en": "BTU (British Thermal Unit)" },
+        { "value": "0.001163", "label": "Kilocalorías (kcal / Caloria)", "label_en": "Kilocalories (kcal / Calorie)" },
+        { "value": "0.0000002777777778", "label": "Joules (J)", "label_en": "Joules (J)" },
+        { "value": "0.0002777777778", "label": "Kilojoules (kJ)", "label_en": "Kilojoules (kJ)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "energyInKwhResult",
+      "label": "Equivalente en Kilovatios-hora (kWh)",
+      "label_en": "Equivalent in Kilowatt-hours (kWh)",
+      "expression": "inputValueEnergy * inputEnergyUnitFactor",
+      "unit": "kWh",
+      "unit_en": "kWh",
+      "precision": 3,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "energyInKwhResult", "op": ">=", "value": 0 }, "label": "Energía Calculada", "label_en": "Energy Computed", "tone": "success", "text": "Energía equivalente en Kilovatios-hora cuantificada.", "text_en": "Equivalent energy in Kilowatt-hours quantified." }
+      ]
+    },
+    {
+      "id": "energyInJoulesResult",
+      "label": "Equivalente en Joules (J)",
+      "label_en": "Equivalent in Joules (J)",
+      "expression": "energyInKwhResult * 3600000",
+      "unit": "J",
+      "unit_en": "J",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "energyInBtuResult",
+      "label": "Equivalente en BTU",
+      "label_en": "Equivalent in BTU",
+      "expression": "energyInKwhResult / 0.000293071",
+      "unit": "BTU",
+      "unit_en": "BTU",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "energyInKcalResult",
+      "label": "Equivalente en Kilocalorías (kcal)",
+      "label_en": "Equivalent in Kilocalories (kcal)",
+      "expression": "energyInKwhResult / 0.001163",
+      "unit": "kcal",
+      "unit_en": "kcal",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

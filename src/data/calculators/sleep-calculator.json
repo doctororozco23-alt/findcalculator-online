@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "sleep-calculator",
+    "title": "Calculadora de Ciclos de Sueño y Horas para Despertar",
+    "title_en": "Sleep Cycle Calculator (Bedtime & Wake-Up Times)",
+    "slug": "calculadora-de-ciclos-de-sueno-hora-de-dormir-despertar",
+    "category": "health",
+    "subcategory": "sleep",
+    "tags": ["sueno", "ciclos-de-sueno", "hora-de-dormir", "despertar-descansado", "rem", "cronobiologia", "salud"],
+    "tags_en": ["sleep", "sleep-cycles", "bedtime", "wake-up-time", "rem-sleep", "chronobiology", "health"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula las horas ideales para ir a dormir o despertar según los ciclos naturales de sueño REM de 90 minutos.",
+    "shortDescription_en": "Calculate optimal bedtime or wake-up times based on natural 90-minute REM sleep cycles.",
+    "longDescription": "Herramienta de cronobiología y salud. Evita la inercia del sueño (despertar aturdido) programando la alarma justo al completar ciclos completos de 90 minutos.",
+    "longDescription_en": "Chronobiology and sleep health tool. Avoids sleep inertia (grogginess) by scheduling wake-up times at the end of complete 90-minute cycles.",
+    "howToUse": [
+      "Selecciona la Hora en la que planeas Ir a Dormir (ej. 23:00 / 11:00 PM).",
+      "Consulta los Horarios Óptimos para Despertar (completando 4, 5 o 6 ciclos de sueño).",
+      "Elige despertar tras 5 ciclos (7.5 horas de sueño + 15 min para conciliar)."
+    ],
+    "howToUse_en": [
+      "Select planned Bedtime (e.g. 11:00 PM).",
+      "View Optimal Wake-Up Times (completing 4, 5, or 6 sleep cycles).",
+      "Choose to wake up after 5 complete cycles (7.5 hours of sleep + 15 min latency)."
+    ],
+    "methodology": "Duración de Ciclo = 90 minutos (1.5 horas). Latencia de conciliación = 15 minutos. 5 Ciclos = 7.5 horas + 15 min = 7.75 horas.",
+    "methodology_en": "Cycle Duration = 90 minutes (1.5 hours). Sleep onset latency = 15 minutes. 5 Cycles = 7.5 hours + 15 min = 7.75 hours."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Medicina del Sueño y Cronobiología",
+    "role_en": "Sleep Medicine & Chronobiology Specialist Assistant",
+    "includeData": ["idealSleepDurationHours", "cyclesCompleted5Count"],
+    "instructions": [
+      "Interpreta las recomendaciones de horas de sueño según la edad adulta (7 a 9 horas es ideal).",
+      "Explica la arquitectura del sueño (fases NREM 1-3 y fase REM de ensueño).",
+      "Aconseja normas de higiene del sueño (reducir luz azul 1h antes, temperatura fresca en habitación)."
+    ],
+    "instructions_en": [
+      "Interpret sleep duration recommendations for adults (7 to 9 hours is optimal).",
+      "Explain sleep architecture (NREM 1-3 stages and REM dreaming phase).",
+      "Advise sleep hygiene rules (reduce blue light exposure 1h before bed, cool bedroom temperature)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "slp-guide",
+      "icon": "🌙",
+      "title": "90-Minute Sleep Cycle Architecture",
+      "title_es": "Arquitectura del Ciclo de Sueño de 90 Minutos",
+      "content_html_en": "<p><b>1 Complete Cycle:</b> ~90 minutes progressing through Light Sleep, Deep Sleep, and REM.</p><p><b>Optimal Adult Sleep:</b> 5 complete cycles = 7.5 hours of actual sleep + 15 minutes to fall asleep.</p>",
+      "content_html": "<p><b>1 Ciclo Completo:</b> ~90 minutos transitando por Sueño Ligero, Sueño Profundo y REM.</p><p><b>Sueño Adulto Óptimo:</b> 5 ciclos completos = 7.5 horas de sueño real + 15 minutos para quedarse dormido.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "targetCyclesNumber",
+      "label": "Número de Ciclos Deseados",
+      "label_en": "Target Number of Cycles",
+      "type": "select",
+      "default": "5",
+      "options": [
+        { "value": "4", "label": "4 Ciclos (6 Horas de sueño - Mínimo)", "label_en": "4 Cycles (6 Hours sleep - Minimum)" },
+        { "value": "5", "label": "5 Ciclos (7.5 Horas de sueño - Recomendado)", "label_en": "5 Cycles (7.5 Hours sleep - Recommended)" },
+        { "value": "6", "label": "6 Ciclos (9 Horas de sueño - Descanso Máximo)", "label_en": "6 Cycles (9 Hours sleep - Maximum Rest)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "actualSleepTimeHours",
+      "label": "Tiempo de Sueño Neto (horas)",
+      "label_en": "Net Sleep Time (hours)",
+      "expression": "targetCyclesNumber * 1.5",
+      "unit": "h",
+      "unit_en": "h",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "idealSleepDurationHours",
+      "label": "Tiempo Total Recomendado en Cama (con 15 min latencia)",
+      "label_en": "Total Recommended Time in Bed (incl. 15m latency)",
+      "expression": "actualSleepTimeHours + 0.25",
+      "unit": "h",
+      "unit_en": "h",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "idealSleepDurationHours", "op": ">=", "value": 7.5 }, "label": "Descanso Saludable Óptimo", "label_en": "Optimal Healthy Rest", "tone": "success", "text": "Duración de descanso dentro del rango saludable.", "text_en": "Rest duration within healthy optimal range." },
+        { "when": { "field": "idealSleepDurationHours", "op": "<", "value": 7.5 }, "label": "Descanso Mínimo Solicitado", "label_en": "Minimum Requested Rest", "tone": "info", "text": "Descanso funcional para días ocupados.", "text_en": "Functional rest for busy days." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "business-working-days-calculator",
+    "title": "Calculadora de Días Hábiles, Laborables y Horas Facturables (Excluye Fines de Semana)",
+    "title_en": "Business Working Days & Billable Hours Calculator (Excludes Weekends)",
+    "slug": "calculadora-de-dias-habiles-laborables-horas-facturables-excluye-fines-de-semana",
+    "category": "datetime",
+    "subcategory": "dates",
+    "tags": ["dias-habiles", "dias-laborables", "horas-facturables", "fines-de-semana", "plazos-bancarios", "vacaciones", "fecha-y-tiempo"],
+    "tags_en": ["business-days", "working-days", "billable-hours", "weekends", "bank-holidays", "vacation-days", "date-time"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.1.0",
+    "icon": "Briefcase"
+  },
+  "content": {
+    "shortDescription": "Calcula los días hábiles laborables efectivos (lunes a viernes/sábado) y el total de horas facturables excluyendo fines de semana y festivos.",
+    "shortDescription_en": "Calculate effective business working days (Monday-Friday/Saturday) and total billable work hours excluding weekends and public holidays.",
+    "longDescription": "Herramienta de gestión empresarial, nóminas, presupuestos de servicios y entregas logísticas. Permite personalizar la jornada laboral diaria.",
+    "longDescription_en": "Business management, payroll, service proposal, and logistics delivery tool. Customizable daily shift length.",
+    "howToUse": [
+      "Ingresa los Días Calendario Totales del Período (ej. 30 días).",
+      "Selecciona la Jornada Semanal (5 días L-V, 6 días L-S, o 4 días L-J).",
+      "Ingresa las Horas Laborales por Día (ej. 8h/día, 7.5h/día).",
+      "Ingresa el Número de Días Festivos / Feriados en el Período.",
+      "Consulta los Días Hábiles Efectivos, Días de Descanso Excluidos y Horas Facturables Totales."
+    ],
+    "howToUse_en": [
+      "Enter Total Calendar Days in Period (e.g. 30 days).",
+      "Select Workweek Schedule (5 days M-F, 6 days M-S, or 4 days M-Th).",
+      "Enter Daily Work Shift Hours (e.g. 8h/day, 7.5h/day).",
+      "Enter Number of Public / Bank Holidays in Period.",
+      "View Net Working Days, Excluded Rest Days, and Total Billable Hours."
+    ],
+    "methodology": "DíasDescanso = DíasTotales * (FactorDescanso). DíasHábiles = max(0, DíasTotales - DíasDescanso - Festivos). HorasFacturables = DíasHábiles * HorasDiarias.",
+    "methodology_en": "RestDays = TotalDays * (RestFactor). WorkDays = max(0, TotalDays - RestDays - Holidays). BillableHours = WorkDays * DailyHours."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Planificación Laboral y Plazos Administrativos",
+    "role_en": "Workforce Planning & Administrative Deadlines Specialist Assistant",
+    "includeData": ["netWorkingDaysResult", "totalBillableHoursResult"],
+    "instructions": [
+      "Interpreta los días hábiles laborables y las horas facturables totales calculadas.",
+      "Compara la proporción de días laborables frente al total de días calendario.",
+      "Explica la aplicación en facturación por horas (freelance / consultoría) y proyectos de ingeniería."
+    ],
+    "instructions_en": [
+      "Interpret calculated net business working days and total billable work hours.",
+      "Compare working days ratio against total calendar days.",
+      "Explain application in hourly billing (freelance / consulting) and engineering project management."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "bwd-guide",
+      "icon": "💼",
+      "title": "Working Days & Hours Standards",
+      "title_es": "Estándares de Días y Horas Laborables",
+      "content_html_en": "<p><b>Standard 5-Day Workweek:</b> 8 Hours/Day = 40 Hours/Week (~168 Hours/Month).</p><p><b>4-Day Workweek (Mon-Thu):</b> 10 Hours/Day = 40 Hours/Week (3 Weekend Days).</p><p><b>6-Day Workweek (Mon-Sat):</b> 6.67 Hours/Day = 40 Hours/Week (1 Weekend Day).</p>",
+      "content_html": "<p><b>Semana Estándar 5 Días:</b> 8 Horas/Día = 40 Horas/Semana (~168 Horas/Mes).</p><p><b>Semana 4 Días (L-J):</b> 10 Horas/Día = 40 Horas/Semana (3 Días de Descanso).</p><p><b>Semana 6 Días (L-S):</b> 6.67 Horas/Día = 40 Horas/Semana (1 Día de Descanso).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "totalCalendarDaysInput",
+      "label": "Días Calendario Totales en el Período",
+      "label_en": "Total Calendar Days in Period",
+      "type": "number",
+      "default": 30,
+      "min": 1,
+      "max": 3650,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "workWeekScheduleType",
+      "label": "Esquema de Jornada Semanal",
+      "label_en": "Workweek Schedule",
+      "type": "select",
+      "default": "5",
+      "options": [
+        { "value": "5", "label": "5 Días a la Semana (Lunes a Viernes - 2 días descanso)", "label_en": "5 Days a Week (Monday to Friday - 2 rest days)" },
+        { "value": "6", "label": "6 Días a la Semana (Lunes a Sábado - 1 día descanso)", "label_en": "6 Days a Week (Monday to Saturday - 1 rest day)" },
+        { "value": "4", "label": "4 Días a la Semana (Lunes a Jueves - 3 días descanso)", "label_en": "4 Days a Week (Monday to Thursday - 3 rest days)" }
+      ]
+    },
+    {
+      "id": "dailyShiftHoursInput",
+      "label": "Horas Laborales por Día (h/día)",
+      "label_en": "Daily Work Shift Hours (h/day)",
+      "type": "number",
+      "default": 8.0,
+      "min": 1,
+      "max": 16,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "publicHolidaysCount",
+      "label": "Días Festivos / Feriados en el Período",
+      "label_en": "Public / Bank Holidays in Period",
+      "type": "number",
+      "default": 2,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "weekendDaysCountResult",
+      "label": "Días de Descanso / Fin de Semana Excluidos",
+      "label_en": "Excluded Weekend / Rest Days",
+      "expression": "workWeekScheduleType == '5' ? round(totalCalendarDaysInput * (2 / 7)) : (workWeekScheduleType == '6' ? round(totalCalendarDaysInput * (1 / 7)) : round(totalCalendarDaysInput * (3 / 7)))",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "netWorkingDaysResult",
+      "label": "Días Hábiles Laborables Efectivos",
+      "label_en": "Net Effective Business Working Days",
+      "expression": "max(0, totalCalendarDaysInput - weekendDaysCountResult - publicHolidaysCount)",
+      "unit": "días hábiles",
+      "unit_en": "business days",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "netWorkingDaysResult", "op": ">=", "value": 0 }, "label": "Días Hábiles Calculados", "label_en": "Business Days Computed", "tone": "success", "text": "Días efectivos de trabajo cuantificados.", "text_en": "Net effective working days quantified." }
+      ]
+    },
+    {
+      "id": "totalBillableHoursResult",
+      "label": "Total de Horas Facturables / Trabajo Acumuladas",
+      "label_en": "Total Billable / Work Hours Accumulated",
+      "expression": "netWorkingDaysResult * dailyShiftHoursInput",
+      "unit": "horas",
+      "unit_en": "hours",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "workDaysRatioPercentageResult",
+      "label": "Porcentaje de Días Laborables del Período (%)",
+      "label_en": "Percentage of Working Days in Period (%)",
+      "expression": "totalCalendarDaysInput > 0 ? ((netWorkingDaysResult / totalCalendarDaysInput) * 100) : 0",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "tile-calculator",
+    "title": "Calculadora de Azulejos y Baldosas (Suelos, Paredes y Desperdicio)",
+    "title_en": "Tile Calculator for Floors & Walls (Tile Count & Waste)",
+    "slug": "calculadora-de-azulejos-baldosas-suelos-desperdicio",
+    "category": "construction",
+    "subcategory": "remodeling",
+    "tags": ["azulejos", "baldosas", "ceramica", "suelos", "paredes", "desperdicio-de-corte", "construccion"],
+    "tags_en": ["tile", "tile-calculator", "ceramics", "floors", "walls", "waste-margin", "construction"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la cantidad de baldosas o azulejos necesarios para suelos y paredes, incluyendo margen de desperdicio por recortes (10-15%).",
+    "shortDescription_en": "Calculate number of tiles needed for floors and walls including cutting waste margin (10-15%).",
+    "longDescription": "Herramienta de acabado de obras y revestimientos cerámicos. Determina el número exacto de baldosas individuales y cajas de revestimiento necesarias a partir del área a cubrir y las dimensiones de la pieza.",
+    "longDescription_en": "Finishing and ceramic wall/floor covering tool. Computes exact individual tile count and boxes needed based on area and tile dimensions.",
+    "howToUse": [
+      "Ingresa el Largo de la habitación / pared (pies o metros).",
+      "Ingresa el Ancho de la habitación / pared (pies o metros).",
+      "Ingresa las dimensiones de la Baldosa (Largo x Ancho en pulgadas).",
+      "Selecciona el Margen de Desperdicio por recortes (10% estándar, 15% en diagonal).",
+      "Consulta el Número Total de Baldosas y el Área Total en $ft^2$."
+    ],
+    "howToUse_en": [
+      "Enter Room / Wall Length (feet or meters).",
+      "Enter Room / Wall Width (feet or meters).",
+      "Enter Tile dimensions (Length x Width in inches).",
+      "Select Waste Margin for cuts (10% standard, 15% diagonal pattern).",
+      "View Total Tile Count and Total Area in $ft^2$."
+    ],
+    "methodology": "Área Superficie = Largo * Ancho. Área Baldosa (ft²) = (Largo_in * Ancho_in) / 144. Baldosas Base = ceil(Área Superficie / Área Baldosa). Total = ceil(Base * (1 + Desperdicio/100)).",
+    "methodology_en": "Surface Area = Length * Width. Tile Area (ft²) = (Length_in * Width_in) / 144. Base Tiles = ceil(Surface Area / Tile Area). Total = ceil(Base * (1 + Waste/100))."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Revestimientos Cerámicos y Acabados",
+    "role_en": "Ceramic Tile & Surface Finishes Specialist Assistant",
+    "includeData": ["totalTilesWithWaste", "totalSurfaceAreaSqFt", "baseTileCount"],
+    "instructions": [
+      "Interpreta la cantidad de baldosas totales necesarias con el margen de desperdicio incorporado.",
+      "Explica la razón del porcentaje de desperdicio según el patrón de colocación (recto vs diagonal).",
+      "Recomienda guardar 1 o 2 cajas extras para futuras reparaciones."
+    ],
+    "instructions_en": [
+      "Interpret total tile count needed with cutting waste margin included.",
+      "Explain waste percentage rationale based on installation layout (straight grid vs diagonal pattern).",
+      "Recommend keeping 1 or 2 extra boxes for future repairs."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "tle-guide",
+      "icon": "🔳",
+      "title": "Tile Installation Layout & Waste Margins",
+      "title_es": "Patrones de Colocación y Márgenes de Desperdicio",
+      "content_html_en": "<p><b>Straight Grid Pattern:</b> Add 10% waste for straight cuts along edges.</p><p><b>Diagonal / Herringbone Pattern:</b> Add 15% waste for complex angle cuts.</p><p><b>Extra Spare Boxes:</b> Keep extra tiles of the same dye lot for future repairs.</p>",
+      "content_html": "<p><b>Patrón Recto Estándar:</b> Añadir 10% de desperdicio para cortes rectos en bordes.</p><p><b>Patrón Diagonal / Espiga:</b> Añadir 15% de desperdicio para cortes en ángulo complejos.</p><p><b>Cajas de Repuesto:</b> Guardar baldosas adicionales del mismo lote de fabricación para futuras reparaciones.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "surfaceLengthFt",
+      "label": "Largo de la Superficie (pies)",
+      "label_en": "Surface Length (feet)",
+      "type": "number",
+      "default": 12,
+      "min": 1,
+      "max": 500,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "surfaceWidthFt",
+      "label": "Ancho de la Superficie (pies)",
+      "label_en": "Surface Width (feet)",
+      "type": "number",
+      "default": 10,
+      "min": 1,
+      "max": 500,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "tileLenInches",
+      "label": "Largo de la Baldosa (pulgadas)",
+      "label_en": "Tile Length (inches)",
+      "type": "number",
+      "default": 12,
+      "min": 2,
+      "max": 48,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "tileWidInches",
+      "label": "Ancho de la Baldosa (pulgadas)",
+      "label_en": "Tile Width (inches)",
+      "type": "number",
+      "default": 12,
+      "min": 2,
+      "max": 48,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "wastePercentNum",
+      "label": "Margen de Desperdicio (%)",
+      "label_en": "Waste Margin (%)",
+      "type": "select",
+      "default": "10",
+      "options": [
+        { "value": "5", "label": "5% (Cortes Mínimos)", "label_en": "5% (Minimal Cuts)" },
+        { "value": "10", "label": "10% (Estándar Recto)", "label_en": "10% (Standard Straight)" },
+        { "value": "15", "label": "15% (Colocación Diagonal)", "label_en": "15% (Diagonal Pattern)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalSurfaceAreaSqFt",
+      "label": "Área de la Superficie (ft²)",
+      "label_en": "Surface Area (ft²)",
+      "expression": "surfaceLengthFt * surfaceWidthFt",
+      "unit": "ft²",
+      "unit_en": "ft²",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "tileAreaSqFt",
+      "label": "Área de 1 Baldosa (ft²)",
+      "label_en": "Single Tile Area (ft²)",
+      "expression": "(tileLenInches * tileWidInches) / 144",
+      "unit": "ft²",
+      "unit_en": "ft²",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "baseTileCount",
+      "label": "Baldosas Base Mínimas (sin desperdicio)",
+      "label_en": "Base Minimum Tile Count (no waste)",
+      "expression": "tileAreaSqFt > 0 ? ceil(totalSurfaceAreaSqFt / tileAreaSqFt) : 0",
+      "unit": "piezas",
+      "unit_en": "tiles",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalTilesWithWaste",
+      "label": "Total de Baldosas a Comprar (con desperdicio)",
+      "label_en": "Total Tiles to Purchase (with waste)",
+      "expression": "ceil(baseTileCount * (1 + (wastePercentNum / 100)))",
+      "unit": "piezas",
+      "unit_en": "tiles",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalTilesWithWaste", "op": ">=", "value": 1 }, "label": "Cantidad de Baldosas Calculada", "label_en": "Tile Count Computed", "tone": "success", "text": "Materiales cerámicos cuantificados.", "text_en": "Ceramic tile materials quantified." }
+      ]
+    }
+  ]
+}

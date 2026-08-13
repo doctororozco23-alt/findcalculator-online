@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "ratio-calculator",
+    "title": "Calculadora de Razones y Proporciones (A:B = C:D)",
+    "title_en": "Ratio & Proportion Calculator (A:B = C:D)",
+    "slug": "calculadora-de-razones-y-proporciones",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["razones", "proporciones", "regla-de-tres", "escalas", "matematicas", "proporcionalidad"],
+    "tags_en": ["ratios", "proportions", "rule-of-three", "scales", "math", "proportionality"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Resuelve la incógnita en proporciones equivalentes (A:B = C:D), escala razones numéricas y simplifica relaciones entre valores.",
+    "shortDescription_en": "Solve for missing values in equivalent ratios (A:B = C:D), scale ratios, and simplify numerical proportions.",
+    "longDescription": "Herramienta esencial para matemáticas, química, cocina y diseño de escalas. Calcula el término faltante en una proporción directa mediante el producto cruzado ($A \\times D = B \\times C$) y simplifica la razón a su forma irreducible.",
+    "longDescription_en": "Essential tool for proportions, scaling, recipes, and geometry. Solves missing values using cross-multiplication (A × D = B × C) and simplifies ratios.",
+    "howToUse": [
+      "Ingresa los valores conocidos A y B para establecer la primera razón (A : B).",
+      "Ingresa el valor C o D conocido para encontrar el término desconocido.",
+      "Consulta el valor faltante calculado, el factor de escala y la razón simplificada."
+    ],
+    "howToUse_en": [
+      "Enter known values A and B to set the initial ratio (A : B).",
+      "Enter known value C or D to solve for the missing term.",
+      "View calculated missing term, scaling factor, and simplified ratio."
+    ],
+    "methodology": "Ecuación de Proporcionalidad: A / B = C / D => D = (B * C) / A  ó  C = (A * D) / B. Simplificación dividiendo A y B entre su MCD.",
+    "methodology_en": "Proportion Equation: A / B = C / D => D = (B * C) / A  or  C = (A * D) / B. Simplified via GCD(A, B)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Matemático de Proporciones y Escalas",
+    "role_en": "Proportions & Scale Math Assistant",
+    "includeData": ["calculatedD", "ratioDecimal", "scaleFactor"],
+    "instructions": [
+      "Verifica la relación de proporcionalidad directa (A * D = B * C).",
+      "Explica la aplicación del factor de escala obtenido.",
+      "Identifica el impacto de variaciones en la razón A:B."
+    ],
+    "instructions_en": [
+      "Verify direct proportion relation (A * D = B * C).",
+      "Explain the application of the scaling factor.",
+      "Identify the impact of ratio A:B changes."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ratio-guide",
+      "icon": "📐",
+      "title": "Understanding Ratios & Proportions",
+      "title_es": "Comprensión de Razones y Proporciones",
+      "content_html_en": "<p><b>Ratio (A:B):</b> Compares two quantities showing how much of one is contained in the other.</p><p><b>Proportion (A:B = C:D):</b> States that two ratios are equal.</p><p><b>Cross-Multiplication:</b> A × D = B × C is the fundamental law of proportions.</p>",
+      "content_html": "<p><b>Razón (A:B):</b> Compara dos cantidades mostrando cuántas veces una contiene a la otra.</p><p><b>Proporción (A:B = C:D):</b> Establece la igualdad entre dos razones.</p><p><b>Producto Cruzado:</b> A × D = B × C es la ley fundamental de las proporciones.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "valA",
+      "label": "Término A",
+      "label_en": "Term A",
+      "type": "number",
+      "default": 4,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "valB",
+      "label": "Término B",
+      "label_en": "Term B",
+      "type": "number",
+      "default": 5,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "valC",
+      "label": "Término C",
+      "label_en": "Term C",
+      "type": "number",
+      "default": 12,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "ratioDecimal",
+      "label": "Valor Decimal de la Razón (A / B)",
+      "label_en": "Ratio Decimal Value (A / B)",
+      "expression": "valB != 0 ? (valA / valB) : 0",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "calculatedD",
+      "label": "Término D Calculado (para A:B = C:D)",
+      "label_en": "Calculated Term D (for A:B = C:D)",
+      "expression": "valA != 0 ? ((valB * valC) / valA) : 0",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "calculatedD", "op": ">=", "value": 0 }, "label": "Término Proporcional D Calculado", "label_en": "Calculated Proportional Term D", "tone": "success", "text": "Proporción equivalente resuelta correctamente.", "text_en": "Equivalent proportion solved successfully." }
+      ]
+    },
+    {
+      "id": "scaleFactor",
+      "label": "Factor de Escala (C / A)",
+      "label_en": "Scale Factor (C / A)",
+      "expression": "valA != 0 ? (valC / valA) : 0",
+      "unit": "x",
+      "unit_en": "x",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

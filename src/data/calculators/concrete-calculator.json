@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "concrete-calculator",
+    "title": "Calculadora de Concreto / Hormigón (Volumen y Bolsas de Mezcla)",
+    "title_en": "Concrete Calculator (Volume & Pre-mix Bags)",
+    "slug": "calculadora-de-concreto-hormigon-losas-bolsas",
+    "category": "construction",
+    "subcategory": "building",
+    "tags": ["concreto", "hormigon", "losas", "bolsas-de-concreto", "volumen", "construccion", "cemento"],
+    "tags_en": ["concrete", "cement", "slabs", "pre-mix-bags", "volume", "construction", "building"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el volumen de concreto necesario en metros cúbicos ($m^3$) o yardas cúbicas ($yd^3$) y la cantidad de bolsas premezcladas.",
+    "shortDescription_en": "Compute required concrete volume in cubic meters ($m^3$) or cubic yards ($yd^3$) and pre-mix bags needed.",
+    "longDescription": "Herramienta fundamental para cimentaciones y losas de edificación. Calcula el volumen de concreto requerido para elementos rectangulares o vigas, estimando las bolsas premezcladas de 60 lb u 80 lb.",
+    "longDescription_en": "Essential tool for foundations and slabs. Calculates required concrete volume for rectangular forms, estimating 60 lb or 80 lb pre-mix bags.",
+    "howToUse": [
+      "Ingresa el Largo de la losa / elemento (en pies o metros).",
+      "Ingresa el Ancho de la losa / elemento (en pies o metros).",
+      "Ingresa el Espesor / Profundidad (en pulgadas o cm).",
+      "Consulta el Volumen Total en Yardas Cúbicas ($yd^3$) o $m^3$, y las Bolsas de Concreto necesarias."
+    ],
+    "howToUse_en": [
+      "Enter Length of slab / form (in feet or meters).",
+      "Enter Width of slab / form (in feet or meters).",
+      "Enter Thickness / Depth (in inches or cm).",
+      "View Total Volume in Cubic Yards ($yd^3$) or $m^3$, and required Pre-mix Bags."
+    ],
+    "methodology": "Volumen (cu ft) = Largo(ft) * Ancho(ft) * (Espesor(in) / 12). Yardas Cúbicas = Volumen / 27. Bolsas 80 lb ≈ Yardas * 45.",
+    "methodology_en": "Volume (cu ft) = Length(ft) * Width(ft) * (Thickness(in) / 12). Cubic Yards = Volume / 27. 80 lb Bags ≈ Yards * 45."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Estructuras y Materiales de Construcción",
+    "role_en": "Structural & Construction Materials Specialist Assistant",
+    "includeData": ["cubicYardsResult", "bags80lbCount", "cubicFeetResult"],
+    "instructions": [
+      "Interpreta el volumen de concreto calculado en yardas cúbicas y metros cúbicos.",
+      "Recomienda incluir un 5% a 10% adicional de volumen de reserva para desperdicio y derrames.",
+      "Explica la diferencia entre camión de concreto premezclado y bolsas individuales."
+    ],
+    "instructions_en": [
+      "Interpret concrete volume calculated in cubic yards and meters.",
+      "Recommend adding 5% to 10% extra volume margin for spillage and waste.",
+      "Explain difference between ready-mix truck delivery vs pre-mix bags."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "cnc-guide",
+      "icon": "🏗️",
+      "title": "Concrete Slabs & Bag Estimation Rules",
+      "title_es": "Losas de Concreto y Reglas de Estimación de Bolsas",
+      "content_html_en": "<p><b>80 lb Bag Yield:</b> Covers ~0.60 cubic feet of concrete (~45 bags per cubic yard).</p><p><b>60 lb Bag Yield:</b> Covers ~0.45 cubic feet of concrete (~60 bags per cubic yard).</p><p><b>Waste Margin:</b> Always order 10% extra concrete for uneven ground and forms.</p>",
+      "content_html": "<p><b>Rendimiento Bolsa 80 lb:</b> Cubre ~0.60 pies cúbicos de concreto (~45 bolsas por yarda cúbica).</p><p><b>Rendimiento Bolsa 60 lb:</b> Cubre ~0.45 pies cúbicos de concreto (~60 bolsas por yarda cúbica).</p><p><b>Margen de Desperdicio:</b> Ordenar siempre un 10% adicional para desniveles de terreno y cimbras.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "lengthFt",
+      "label": "Largo de la Losa (pies)",
+      "label_en": "Slab Length (feet)",
+      "type": "number",
+      "default": 10,
+      "min": 0.5,
+      "max": 1000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "widthFt",
+      "label": "Ancho de la Losa (pies)",
+      "label_en": "Slab Width (feet)",
+      "type": "number",
+      "default": 10,
+      "min": 0.5,
+      "max": 1000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "thicknessInches",
+      "label": "Espesor / Grosor (pulgadas)",
+      "label_en": "Thickness / Depth (inches)",
+      "type": "number",
+      "default": 4,
+      "min": 1,
+      "max": 48,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "cubicFeetResult",
+      "label": "Volumen en Pies Cúbicos (ft³)",
+      "label_en": "Volume in Cubic Feet (ft³)",
+      "expression": "lengthFt * widthFt * (thicknessInches / 12)",
+      "unit": "ft³",
+      "unit_en": "ft³",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "cubicYardsResult",
+      "label": "Volumen en Yardas Cúbicas (yd³)",
+      "label_en": "Volume in Cubic Yards (yd³)",
+      "expression": "cubicFeetResult / 27",
+      "unit": "yd³",
+      "unit_en": "yd³",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "cubicYardsResult", "op": ">=", "value": 0 }, "label": "Volumen de Concreto Calculado", "label_en": "Concrete Volume Computed", "tone": "success", "text": "Material estructural cuantificado.", "text_en": "Structural material quantified." }
+      ]
+    },
+    {
+      "id": "bags80lbCount",
+      "label": "Bolsas Premezcladas de 80 lb Necesarias",
+      "label_en": "80 lb Pre-mix Bags Needed",
+      "expression": "ceil(cubicFeetResult / 0.60)",
+      "unit": "bolsas",
+      "unit_en": "bags",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "bags60lbCount",
+      "label": "Bolsas Premezcladas de 60 lb Necesarias",
+      "label_en": "60 lb Pre-mix Bags Needed",
+      "expression": "ceil(cubicFeetResult / 0.45)",
+      "unit": "bolsas",
+      "unit_en": "bags",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "ohms-law-calculator",
+    "title": "Calculadora de la Ley de Ohm (Voltaje, Corriente, Resistencia y Potencia)",
+    "title_en": "Ohm's Law Calculator (Voltage, Current, Resistance & Power)",
+    "slug": "calculadora-de-la-ley-de-ohm-voltios-amperios-ohmios-vatios",
+    "category": "engineering",
+    "subcategory": "electrical",
+    "tags": ["ley-de-ohm", "voltaje", "amperios", "resistencia", "ohmios", "vatios", "potencia", "electricidad"],
+    "tags_en": ["ohms-law", "voltage", "current", "amps", "resistance", "ohms", "watts", "power", "electricity"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula Voltaje ($V$), Corriente ($I$), Resistencia ($R$) y Potencia ($P$) utilizando las fórmulas fundamentales de la Ley de Ohm.",
+    "shortDescription_en": "Calculate Voltage ($V$), Current ($I$), Resistance ($R$), and Power ($P$) using fundamental Ohm's Law formulas.",
+    "longDescription": "Herramienta esencial de electrónica e ingeniería eléctrica. Resuelve las cuatro magnitudes fundamentales del triángulo de la Ley de Ohm ($V = I \\cdot R$, $P = V \\cdot I$).",
+    "longDescription_en": "Essential electronics and electrical engineering tool. Solves the four core variables of Ohm's Law triangle ($V = I \\cdot R$, $P = V \\cdot I$).",
+    "howToUse": [
+      "Ingresa el Voltaje ($V$) en voltios.",
+      "Ingresa la Corriente ($I$) en amperios.",
+      "Consulta la Resistencia ($R$) en Ohmios (Ω) y la Potencia Disipada ($P$) en Vatios (Watts)."
+    ],
+    "howToUse_en": [
+      "Enter Voltage ($V$) in volts.",
+      "Enter Current ($I$) in amperes.",
+      "View Resistance ($R$) in Ohms (Ω) and Disipated Power ($P$) in Watts."
+    ],
+    "methodology": "Resistencia R = V / I. Potencia P = V * I. Voltaje V = I * R. Corriente I = V / R.",
+    "methodology_en": "Resistance R = V / I. Power P = V * I. Voltage V = I * R. Current I = V / R."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Electrónica y Circuitos Eléctricos",
+    "role_en": "Electronics & Electrical Circuits Specialist Assistant",
+    "includeData": ["ohmsResistanceVal", "ohmsPowerWattsVal"],
+    "instructions": [
+      "Interpreta las magnitudes eléctricas calculadas y la potencia disipada.",
+      "Explica la relación proporcional entre voltaje e intensidad de corriente.",
+      "Advierte sobre la disipación de calor por efecto Joule en resistencias."
+    ],
+    "instructions_en": [
+      "Interpret calculated electrical values and dissipated power.",
+      "Explain proportional relationship between voltage and current intensity.",
+      "Warn about Joule heating effect dissipation in resistors."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ohm-guide",
+      "icon": "⚡",
+      "title": "Ohm's Law Formulas Triangle",
+      "title_es": "Triángulo de Fórmulas de la Ley de Ohm",
+      "content_html_en": "<p><b>Voltage (V):</b> V = I × R.</p><p><b>Current (I):</b> I = V / R.</p><p><b>Resistance (R):</b> R = V / I.</p><p><b>Power (P):</b> P = V × I = I² × R = V² / R.</p>",
+      "content_html": "<p><b>Voltaje (V):</b> V = I × R.</p><p><b>Corriente (I):</b> I = V / R.</p><p><b>Resistencia (R):</b> R = V / I.</p><p><b>Potencia (P):</b> P = V × I = I² × R = V² / R.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputVoltsV",
+      "label": "Voltaje (V - Voltios)",
+      "label_en": "Voltage (V - Volts)",
+      "type": "number",
+      "default": 12,
+      "min": 0.01,
+      "max": 10000,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "inputAmpsI",
+      "label": "Corriente / Intensidad (I - Amperios)",
+      "label_en": "Current / Intensity (I - Amps)",
+      "type": "number",
+      "default": 2.5,
+      "min": 0.001,
+      "max": 1000,
+      "step": 0.01,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "ohmsResistanceVal",
+      "label": "Resistencia Eléctrica (R - Ohmios Ω)",
+      "label_en": "Electrical Resistance (R - Ohms Ω)",
+      "expression": "inputAmpsI > 0 ? (inputVoltsV / inputAmpsI) : 0",
+      "unit": "Ω",
+      "unit_en": "Ω",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "ohmsResistanceVal", "op": ">=", "value": 0 }, "label": "Resistencia Obtenida", "label_en": "Resistance Computed", "tone": "success", "text": "Resistencia del circuito evaluada.", "text_en": "Circuit resistance evaluated." }
+      ]
+    },
+    {
+      "id": "ohmsPowerWattsVal",
+      "label": "Potencia Disipada (P - Vatios / Watts)",
+      "label_en": "Disipated Power (P - Watts)",
+      "expression": "inputVoltsV * inputAmpsI",
+      "unit": "W",
+      "unit_en": "W",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

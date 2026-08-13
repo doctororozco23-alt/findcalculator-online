@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "pension-calculator",
+    "title": "Calculadora de Pensiones y Anualidades de Retiro",
+    "title_en": "Pension & Annuity Retirement Calculator",
+    "slug": "pensiones-anualidades-retiro",
+    "category": "finance",
+    "subcategory": "retirement",
+    "tags": ["pension", "anualidad", "retiro"],
+    "tags_en": ["pension", "annuity", "retirement"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "ShieldCheck"
+  },
+  "content": {
+    "shortDescription": "Calcula el importe mensual estimado de la pensión o renta vitalicia garantizada al momento de tu jubilación.",
+    "shortDescription_en": "Calculate estimated monthly pension benefit income or lifetime guaranteed annuity income at retirement.",
+    "longDescription": "Estima la pensión mensual garantizada recibida tras la jubilación en función de tus años acumulados de servicio laboral y el salario medio de los últimos años trabajados.",
+    "longDescription_en": "Estimate guaranteed monthly pension income upon retirement based on total years of service and final average salary.",
+    "howToUse": [
+      "Ingresa el salario medio bruto de los últimos años.",
+      "Establece los años acumulados de servicio laboral.",
+      "Indica el porcentaje multiplicador de pensión por año (ej. 1.5% o 2.0%).",
+      "Consulta la pensión mensual fija garantizada al momento del retiro."
+    ],
+    "howToUse_en": [
+      "Enter final average gross salary and active currency.",
+      "Enter total completed years of service.",
+      "Set annual pension multiplier percentage (e.g. 1.5% or 2.0%).",
+      "View guaranteed monthly pension income payout."
+    ],
+    "methodology": "Fórmula Pensión: Pensión Anual = Salario Medio × (Años Servicio × Multiplicador / 100). Pensión Mensual = Pensión Anual / 12.",
+    "methodology_en": "Pension Formula: Annual Benefit = Final Average Salary × (Years Service × Multiplier / 100). Monthly Benefit = Annual / 12."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🏖️",
+      "title": "Defined Benefit Pension Plans",
+      "title_es": "Planes de Pensión de Prestación Definida",
+      "content_html_en": "<p>Defined benefit pensions guarantee a specific monthly income for life upon retirement, calculated based on salary history and tenure length.</p>",
+      "content_html": "<p>Los planes de prestación definida garantizan un ingreso mensual vitalicio basado en el historial salarial y la antigüedad laboral.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "averageSalary",
+      "label": "Salario medio anual final trabajados",
+      "label_en": "Final Average Annual Salary",
+      "type": "currency",
+      "default": 65000,
+      "min": 10000,
+      "max": 1000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [10000, 1000000], "message": "Salario entre 10.000 y 1.000.000", "message_en": "Salary between 10,000 and 1,000,000" }]
+    },
+    {
+      "id": "yearsOfService",
+      "label": "Años acumulados de servicio laboral",
+      "label_en": "Completed Years of Service",
+      "type": "slider",
+      "default": 25,
+      "min": 1,
+      "max": 45,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "multiplierPercent",
+      "label": "Porcentaje multiplicador por año de servicio (%)",
+      "label_en": "Annual Service Benefit Multiplier (%)",
+      "type": "number",
+      "default": 1.75,
+      "min": 0.5,
+      "max": 3.0,
+      "step": 0.05,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "replacementRatePercent",
+      "label": "Porcentaje de reemplazo salarial",
+      "label_en": "Total Salary Replacement Rate",
+      "expression": "yearsOfService * multiplierPercent",
+      "unit": "%",
+      "precision": 1,
+      "format": "percent",
+      "type": "secondary"
+    },
+    {
+      "id": "monthlyPensionIncome",
+      "label": "Pensión Mensual Vitalicia Garantizada",
+      "label_en": "Guaranteed Monthly Pension Income",
+      "expression": "(averageSalary * (replacementRatePercent / 100)) / 12",
+      "unit": { "follows": "averageSalary" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "monthlyPensionIncome", "op": ">", "value": 0 }, "label": "Pensión Calculada", "label_en": "Pension Benefit Calculated", "tone": "success", "text": "Renta mensual garantizada a partir de la edad de jubilación.", "text_en": "Guaranteed monthly income starting at retirement age." }
+      ]
+    },
+    {
+      "id": "annualPensionIncome",
+      "label": "Pensión anual total",
+      "label_en": "Total Annual Pension Benefit",
+      "expression": "monthlyPensionIncome * 12",
+      "unit": { "follows": "averageSalary" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "retirement-401k-calculator", "type": "static", "message": "Calcula tu fondo 401(k) complementario", "message_en": "Calculate complementary 401(k) nest egg", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Pensiones y Jubilación",
+    "role_en": "Pension & Retirement Benefit Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y orientador",
+    "includeData": ["monthlyPensionIncome", "replacementRatePercent", "annualPensionIncome", "averageSalary"],
+    "instructions": [
+      "Sintetiza la pensión mensual garantizada y el porcentaje de reemplazo salarial en 2 frases concisas.",
+      "Destaca cómo la antigüedad laboral incrementa directamente la tasa de reemplazo del sueldo."
+    ],
+    "instructions_en": [
+      "Summarize guaranteed monthly pension income and salary replacement percentage in 2 concise sentences.",
+      "Highlight how tenure length directly increases final salary replacement rate."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Pensiones y Anualidades de Retiro | CalculadoraHub",
+    "metaTitle_en": "Pension & Annuity Retirement Calculator | CalculadoraHub",
+    "metaDescription": "Calcula la pensión mensual estimada garantizada según salario y años trabajados. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate guaranteed monthly pension income benefit based on service years and salary. Free, instant results.",
+    "keywords": ["pension calculator", "calculadora pensiones", "jubilacion", "anualidad"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

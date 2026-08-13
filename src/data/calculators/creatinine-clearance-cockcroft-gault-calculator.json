@@ -1,0 +1,218 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "creatinine-clearance-cockcroft-gault-calculator",
+    "title": "Calculadora de Aclaramiento de Creatinina (Cockcroft-Gault & Peso Ideal)",
+    "title_en": "Creatinine Clearance Calculator (Cockcroft-Gault & Ideal Weight)",
+    "slug": "aclaramiento-creatinina-cockcroft-gault",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["aclaramiento-creatinina", "cockcroft-gault", "crcl", "farmacologia", "riñon"],
+    "tags_en": ["creatinine-clearance", "cockcroft-gault", "crcl", "pharmacology", "kidney"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula el Aclaramiento de Creatinina (CrCl) en mL/min según la fórmula de Cockcroft-Gault ajustada por peso ideal o peso real para dosificación de medicamentos.",
+    "shortDescription_en": "Calculate Creatinine Clearance (CrCl) in mL/min using the Cockcroft-Gault formula adjusted by ideal or actual weight for drug dosing.",
+    "longDescription": "Auditoría de farmacología clínica y función renal. La ecuación clásica de Cockcroft-Gault (1976) continúa siendo la fórmula exigida por la FDA y la EMA para ajustar la posología de antibióticos y fármacos de estrecho margen terapéutico.",
+    "longDescription_en": "Clinical pharmacology and renal audit. The classic Cockcroft-Gault equation (1976) remains the regulatory FDA/EMA standard for antibiotic and narrow therapeutic index drug dosing.",
+    "howToUse": [
+      "Selecciona el sexo biológico del paciente.",
+      "Ingresa la edad en años.",
+      "Ingresa el peso corporal actual en kg.",
+      "Ingresa la estatura del paciente en cm.",
+      "Ingresa la creatinina sérica en mg/dL.",
+      "Consulta el Aclaramiento de Creatinina (CrCl) en mL/min para el ajuste de fármacos."
+    ],
+    "howToUse_en": [
+      "Select patient biological sex.",
+      "Enter age in years.",
+      "Enter current body weight in kg.",
+      "Enter height in cm.",
+      "Enter serum creatinine level in mg/dL.",
+      "View calculated Creatinine Clearance (CrCl) in mL/min for medication adjustments."
+    ],
+    "methodology": "Ecuación Cockcroft-Gault (1976): CrCl (mL/min) = [(140 - Edad) × Peso_kg] / [72 × Creatinina_sérica_mg/dL] × (0.85 si es Mujer). Peso Ideal Devine: H = 50 + 2.3(Talla_in - 60), M = 45.5 + 2.3(Talla_in - 60).",
+    "methodology_en": "Cockcroft-Gault Formula (1976): CrCl (mL/min) = [(140 - Age) × Weight_kg] / [72 × Serum_Creatinine_mg/dL] × (0.85 if Female). Devine IBW: M = 50 + 2.3(Height_in - 60), F = 45.5 + 2.3(Height_in - 60)."
+  },
+  "guideSections": [
+    {
+      "id": "cockcroft-dosing-guide",
+      "icon": "💊",
+      "title": "FDA & EMA Drug Dosing Standards (CrCl vs eGFR)",
+      "title_es": "Estándares FDA y EMA para Posología Farmacológica",
+      "content_html_en": "<p><b>Unindexed CrCl (mL/min):</b> Used directly in renal dose adjustment tables for antibiotics (e.g. vancomycin, aminoglycosides, DOACs).</p><p><b>Obesity Adjustment:</b> In obese patients (Actual Weight > 120% Ideal Weight), using Adjusted Body Weight (AdjBW) avoids overestimating renal clearance.</p>",
+      "content_html": "<p><b>CrCl Absoluto (mL/min):</b> Utilizado directamente en las tablas de ajuste de dosis de antibióticos (ej. vancomicina, aminoglucósidos, ACOD).</p><p><b>Ajuste por Obesidad:</b> En pacientes obesos (Peso Real > 120% Peso Ideal), utilizar el Peso Ajustado evita sobreestimar la eliminación renal.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "gender",
+      "label": "Sexo biológico del paciente",
+      "label_en": "Patient Biological Sex",
+      "type": "select",
+      "default": "male",
+      "options": [
+        { "value": "male", "label": "Hombre", "label_en": "Male" },
+        { "value": "female", "label": "Mujer", "label_en": "Female" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "ageYears",
+      "label": "Edad del paciente",
+      "label_en": "Patient Age",
+      "type": "number",
+      "default": 60,
+      "min": 18,
+      "max": 110,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [18, 110], "message": "Edad entre 18 y 110 años", "message_en": "Age between 18 and 110 years" }]
+    },
+    {
+      "id": "weightKg",
+      "label": "Peso corporal actual",
+      "label_en": "Actual Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 35,
+      "max": 250,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [35, 250], "message": "Peso entre 35 y 250 kg", "message_en": "Weight between 35 and 250 kg" }]
+    },
+    {
+      "id": "heightCm",
+      "label": "Estatura",
+      "label_en": "Height",
+      "type": "number",
+      "default": 175,
+      "min": 130,
+      "max": 230,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [130, 230], "message": "Estatura entre 130 y 230 cm", "message_en": "Height between 130 and 230 cm" }]
+    },
+    {
+      "id": "serumCreatinineMgDl",
+      "label": "Creatinina sérica",
+      "label_en": "Serum Creatinine",
+      "type": "number",
+      "default": 1.2,
+      "min": 0.2,
+      "max": 18.0,
+      "step": 0.1,
+      "unit": "mg/dL",
+      "units": [
+        { "id": "mgdl", "label": "mg/dL", "toBase": 1 },
+        { "id": "umoll", "label": "µmol/L", "toBase": 0.011312 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.2, 18.0], "message": "Creatinina entre 0.2 y 18.0 mg/dL", "message_en": "Creatinine between 0.2 and 18.0 mg/dL" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "idealWeightKg",
+      "label": "Peso Ideal Estimado (Fórmula Devine)",
+      "label_en": "Ideal Body Weight (Devine Formula)",
+      "expression": "gender == 'male' ? (50 + 2.3 * ((heightCm / 2.54) - 60)) : (45.5 + 2.3 * ((heightCm / 2.54) - 60))",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "genderFactorVal",
+      "label": "Factor Corrector Femenino",
+      "label_en": "Female Correction Factor",
+      "expression": "gender == 'female' ? 0.85 : 1.00",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "crClActualWeight",
+      "label": "Aclaramiento de Creatinina (Peso Real)",
+      "label_en": "Creatinine Clearance (Actual Weight)",
+      "expression": "(((140 - ageYears) * weightKg) / (72 * serumCreatinineMgDl)) * genderFactorVal",
+      "unit": "mL/min",
+      "unit_en": "mL/min",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "crClActualWeight", "op": ">=", "value": 90 }, "label": "Aclaramiento Normal (≥ 90 mL/min)", "label_en": "Normal Clearance (≥ 90 mL/min)", "tone": "success", "text": "Aclaramiento renal adecuado. Sin necesidad de ajustar dosis.", "text_en": "Adequate renal clearance. Standard drug dosing applicable." },
+        { "when": { "field": "crClActualWeight", "op": "between", "value": [50, 89.9] }, "label": "Aclaramiento Moderado (50 - 89 mL/min)", "label_en": "Moderate Clearance (50 - 89 mL/min)", "tone": "info", "text": "Reducción leve de la eliminación renal. Verificar ficha técnica.", "text_en": "Mild reduction in renal clearance. Check prescribing guidelines." },
+        { "when": { "field": "crClActualWeight", "op": "<", "value": 50 }, "label": "Aclaramiento Reducido (< 50 mL/min)", "label_en": "Reduced Clearance (< 50 mL/min)", "tone": "warning", "text": "Disminución significativa. Ajustar dosis o intervalo farmacológico.", "text_en": "Significant reduction. Reduce drug dose or increase interval." }
+      ]
+    },
+    {
+      "id": "crClIdealWeight",
+      "label": "Aclaramiento de Creatinina (Peso Ideal Devine)",
+      "label_en": "Creatinine Clearance (Ideal Weight Devine)",
+      "expression": "(((140 - ageYears) * idealWeightKg) / (72 * serumCreatinineMgDl)) * genderFactorVal",
+      "unit": "mL/min",
+      "unit_en": "mL/min",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "egfr-ckd-epi-calculator", "type": "static", "message": "Calcula la filtración glomerular estandarizada CKD-EPI", "message_en": "Calculate standardized CKD-EPI eGFR", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Farmacólogo Clínico y Especialista en Función Renal",
+    "role_en": "Clinical Pharmacologist & Renal Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y clínico",
+    "includeData": ["crClActualWeight", "crClIdealWeight", "idealWeightKg", "weightKg", "serumCreatinineMgDl"],
+    "instructions": [
+      "Sintetiza el aclaramiento de creatinina CrCl en mL/min por peso real e ideal en 2 frases concisas.",
+      "Destaca que la FDA exige usar el CrCl de Cockcroft-Gault para el ajuste posológico de fármacos renales."
+    ],
+    "instructions_en": [
+      "Summarize Creatinine Clearance (CrCl) in mL/min by actual and ideal weight in 2 concise sentences.",
+      "Highlight that FDA guidelines specify Cockcroft-Gault CrCl for renal drug dose adjustments."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Aclaramiento de Creatinina (Cockcroft-Gault) | CalculadoraHub",
+    "metaTitle_en": "Creatinine Clearance Calculator (Cockcroft-Gault) | CalculadoraHub",
+    "metaDescription": "Calcula el Aclaramiento de Creatinina CrCl (mL/min) con la fórmula de Cockcroft-Gault ajustada por peso. Gratis.",
+    "metaDescription_en": "Calculate Creatinine Clearance CrCl (mL/min) using Cockcroft-Gault formula adjusted for weight. Free.",
+    "keywords": ["creatinine clearance calculator", "cockcroft gault", "aclaramiento creatinina", "crcl ajuste farmacos"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

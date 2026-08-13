@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "gpa-scale-converter-calculator",
+    "title": "Conversor de Escalas de Calificaciones (GPA 4.0, 5.0, 10 y 100)",
+    "title_en": "Global Grade Scale Converter (GPA 4.0, 5.0, 10 & 100 Scale)",
+    "slug": "conversor-de-escalas-de-calificaciones-gpa-4-0-5-0-10-100",
+    "category": "education",
+    "subcategory": "grades",
+    "tags": ["conversor-de-escalas", "escala-4-0", "escala-5-0", "escala-10", "escala-100", "homologacion-notas", "educacion"],
+    "tags_en": ["grade-scale-converter", "4-0-gpa", "5-0-gpa", "10-point-scale", "100-percent-scale", "education"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte calificaciones entre los sistemas de evaluación más usados: Escala GPA 4.0, GPA 5.0, Escala Decimal 0-10 y Porcentual 0-100%.",
+    "shortDescription_en": "Convert grades across global grading systems: 4.0 GPA Scale, 5.0 Weighted GPA, Decimal 0-10 Scale, and Percentage 0-100%.",
+    "longDescription": "Herramienta de homologación internacional de títulos y programas de intercambio estudiantil (Erasmus, Becas Fulbright). Traduce notas académicas entre países.",
+    "longDescription_en": "International degree equivalence and study abroad tool (Erasmus, Fulbright Scholarships). Translates academic grades across countries.",
+    "howToUse": [
+      "Ingresa el Valor de la Calificación a Convertir.",
+      "Selecciona la Escala de Origen (GPA 4.0, GPA 5.0, Decimal 10, Porcentual 100).",
+      "Consulta los Valores Equivalentes en todas las escalas académicas."
+    ],
+    "howToUse_en": [
+      "Enter Grade Value to Convert.",
+      "Select Source Scale (4.0 GPA, 5.0 GPA, 10 Decimal, 100 Percentage).",
+      "View Equivalent Values across all academic grading scales."
+    ],
+    "methodology": "Factor base en Porcentaje (0-100%): 100% = 1.0, GPA 4.0 = (Porcentaje / 100) * 4, Decimal 10 = (Porcentaje / 100) * 10.",
+    "methodology_en": "Base factor in Percentage (0-100%): 100% = 1.0, GPA 4.0 = (Percent / 100) * 4, Decimal 10 = (Percent / 100) * 10."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Homologación Internacional de Títulos Universitarios",
+    "role_en": "International Academic Equivalency & Degree Validation Specialist Assistant",
+    "includeData": ["gradeInGpa4Result", "gradeInDecimal10Result", "gradeInPercentResult"],
+    "instructions": [
+      "Interpreta la conversión de escala de calificaciones realizada.",
+      "Muestra equivalencias por países (España/Latam Escala 0-10, EE.UU. Escala 4.0, Alemania Escala 1-5 inversa donde 1 es la mejor nota).",
+      "Proporciona orientación para trámites de homologación de expediente académico."
+    ],
+    "instructions_en": [
+      "Interpret performed grade scale conversion.",
+      "Show country equivalences (Spain/LatAm 0-10 Scale, US 4.0 GPA Scale, Germany 1-5 Inverted Scale where 1 is highest).",
+      "Provide guidance for transcript evaluation procedures."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "gsc-guide",
+      "icon": "🌎",
+      "title": "International Grading Systems Benchmarks",
+      "title_es": "Equivalencias de Sistemas Internacionales",
+      "content_html_en": "<p><b>US System:</b> 4.0 GPA Scale</p><p><b>Spain & LatAm:</b> 0 to 10 Decimal Scale (Passing Grade = 5.0)</p><p><b>UK System:</b> First Class (&gt;70%), 2:1 (60-69%), 2:2 (50-59%)</p>",
+      "content_html": "<p><b>Sistema EE.UU.:</b> Escala GPA 4.0</p><p><b>España y LatAm:</b> Escala Decimal 0 a 10 (Aprobado = 5.0)</p><p><b>Sistema Reino Unido:</b> First Class (&gt;70%), 2:1 (60-69%), 2:2 (50-59%)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputGradeValueNum",
+      "label": "Valor de Calificación a Convertir",
+      "label_en": "Grade Value to Convert",
+      "type": "number",
+      "default": 3.6,
+      "min": 0,
+      "max": 100,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "inputGradeScaleSource",
+      "label": "Escala de Origen",
+      "label_en": "Source Scale",
+      "type": "select",
+      "default": "gpa4",
+      "options": [
+        { "value": "gpa4", "label": "GPA 4.0 (Escala EE.UU. 0.0 - 4.0)", "label_en": "GPA 4.0 (US Scale 0.0 - 4.0)" },
+        { "value": "decimal10", "label": "Decimal 10 (Escala LatAm/España 0.0 - 10.0)", "label_en": "Decimal 10 (LatAm/Spain 0.0 - 10.0)" },
+        { "value": "percent100", "label": "Porcentual (0 - 100%)", "label_en": "Percentage (0 - 100%)" },
+        { "value": "gpa5", "label": "GPA 5.0 (Ponderado AP/Honors 0.0 - 5.0)", "label_en": "GPA 5.0 (Weighted AP/Honors 0.0 - 5.0)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "gradeInPercentResult",
+      "label": "Equivalente Porcentual (0 - 100%)",
+      "label_en": "Equivalent Percentage (0 - 100%)",
+      "expression": "inputGradeScaleSource == 'gpa4' ? (inputGradeValueNum / 4.0) * 100 : (inputGradeScaleSource == 'decimal10' ? (inputGradeValueNum / 10.0) * 100 : (inputGradeScaleSource == 'gpa5' ? (inputGradeValueNum / 5.0) * 100 : inputGradeValueNum))",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "gradeInPercentResult", "op": ">=", "value": 0 }, "label": "Escala Convertida", "label_en": "Scale Converted", "tone": "success", "text": "Porcentaje equivalente cuantificado.", "text_en": "Equivalent percentage quantified." }
+      ]
+    },
+    {
+      "id": "gradeInGpa4Result",
+      "label": "Equivalente en Escala GPA 4.0 EE.UU.",
+      "label_en": "Equivalent in US 4.0 GPA Scale",
+      "expression": "(gradeInPercentResult / 100) * 4.0",
+      "unit": "GPA",
+      "unit_en": "GPA",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "gradeInDecimal10Result",
+      "label": "Equivalente en Escala Decimal 0-10",
+      "label_en": "Equivalent in Decimal 0-10 Scale",
+      "expression": "(gradeInPercentResult / 100) * 10.0",
+      "unit": "puntos",
+      "unit_en": "points",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

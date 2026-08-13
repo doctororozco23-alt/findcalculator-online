@@ -1,0 +1,227 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "time-duration-addition-calculator",
+    "title": "Calculadora de Suma y Resta de Horas, Minutos y Segundos (Hasta 3 Tiempos)",
+    "title_en": "Multi-Segment Time Duration Addition & Subtraction Calculator",
+    "slug": "calculadora-de-suma-y-resta-de-horas-minutos-segundos-3-tiempos",
+    "category": "datetime",
+    "subcategory": "time",
+    "tags": ["suma-de-horas", "resta-de-horas", "minutos", "segundos", "sistema-sexagesimal", "duracion", "tiempos-de-carrera", "fecha-y-tiempo"],
+    "tags_en": ["add-time", "subtract-time", "minutes", "seconds", "sexagesimal-time", "duration", "lap-times", "date-time"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.1.0",
+    "icon": "Clock"
+  },
+  "content": {
+    "shortDescription": "Suma o resta hasta 3 duraciones de tiempo en horas, minutos y segundos sexagesimales (HH:MM:SS) calculando el tiempo promedio.",
+    "shortDescription_en": "Add or subtract up to 3 time durations in sexagesimal hours, minutes, and seconds (HH:MM:SS) computing average lap time.",
+    "longDescription": "Herramienta de edición de vídeo, producción musical, podcasts y atletismo. Acumula tiempos parciales de vueltas o pistas de audio.",
+    "longDescription_en": "Video editing, music production, podcasting, and athletics tool. Accumulates split lap times or audio tracks.",
+    "howToUse": [
+      "Ingresa las Horas, Minutos y Segundos del Tiempo 1 (ej. Tramo 1 / Pista 1).",
+      "Ingresa las Horas, Minutos y Segundos del Tiempo 2 (ej. Tramo 2 / Pista 2).",
+      "Ingresa las Horas, Minutos y Segundos del Tiempo 3 (ej. Tramo 3 / Pista 3).",
+      "Selecciona la Operación para el Tiempo 3 (Sumar + o Restar -).",
+      "Consulta el Tiempo Acumulado Total, Minutos Totales y Promedio por Tramo."
+    ],
+    "howToUse_en": [
+      "Enter Hours, Minutes, and Seconds for Time 1 (e.g. Lap 1 / Track 1).",
+      "Enter Hours, Minutes, and Seconds for Time 2 (e.g. Lap 2 / Track 2).",
+      "Enter Hours, Minutes, and Seconds for Time 3 (e.g. Lap 3 / Track 3).",
+      "Select Operation for Time 3 (Add + or Subtract -).",
+      "View Total Accumulated Duration, Total Minutes, and Average Segment Duration."
+    ],
+    "methodology": "SegsTotales = (H1*3600 + M1*60 + S1) + (H2*3600 + M2*60 + S2) +/- (H3*3600 + M3*60 + S3). Horas = floor(Segs/3600), Promedio = SegsTotales / 3.",
+    "methodology_en": "TotalSecs = (H1*3600 + M1*60 + S1) + (H2*3600 + M2*60 + S2) +/- (H3*3600 + M3*60 + S3). Hours = floor(Secs/3600), Avg = TotalSecs / 3."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Aritmética Sexagesimal y Medición de Tiempo",
+    "role_en": "Sexagesimal Arithmetic & Time Measurement Specialist Assistant",
+    "includeData": ["totalDurationHoursResult", "totalDurationMinutesResult", "averageSegmentMinutesResult"],
+    "instructions": [
+      "Interpreta el resultado del tiempo total acumulado de las tres duraciones.",
+      "Muestra el promedio de tiempo por tramo/pista.",
+      "Explica la conversión a formato decimal de horas (ej. 1h 30m = 1.5h)."
+    ],
+    "instructions_en": [
+      "Interpret total accumulated time result across all three durations.",
+      "Show average time per segment/lap.",
+      "Explain decimal hours conversion (e.g. 1h 30m = 1.5h)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "tda-guide",
+      "icon": "⏳",
+      "title": "Audio & Video Timeline Addition Reference",
+      "title_es": "Referencia de Suma de Líneas de Tiempo Audio/Vídeo",
+      "content_html_en": "<p><b>Standard Base 60:</b> Every 60 seconds roll over into 1 minute, and 60 minutes into 1 hour.</p><p><b>Podcast / Video Tracks:</b> Summing segment durations to calculate exact total runtime.</p>",
+      "content_html": "<p><b>Base Sexagesimal 60:</b> Cada 60 segundos forman 1 minuto, y 60 minutos forman 1 hora.</p><p><b>Pistas de Podcast / Vídeo:</b> Suma de tramos para obtener la duración total de reproducción.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "duration1Hours",
+      "label": "Tiempo 1 - Horas",
+      "label_en": "Duration 1 - Hours",
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 10000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "duration1Minutes",
+      "label": "Tiempo 1 - Minutos (0-59)",
+      "label_en": "Duration 1 - Minutes (0-59)",
+      "type": "number",
+      "default": 45,
+      "min": 0,
+      "max": 59,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "duration1Seconds",
+      "label": "Tiempo 1 - Segundos (0-59)",
+      "label_en": "Duration 1 - Seconds (0-59)",
+      "type": "number",
+      "default": 30,
+      "min": 0,
+      "max": 59,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "duration2Hours",
+      "label": "Tiempo 2 - Horas",
+      "label_en": "Duration 2 - Hours",
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 10000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "duration2Minutes",
+      "label": "Tiempo 2 - Minutos (0-59)",
+      "label_en": "Duration 2 - Minutes (0-59)",
+      "type": "number",
+      "default": 35,
+      "min": 0,
+      "max": 59,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "duration2Seconds",
+      "label": "Tiempo 2 - Segundos (0-59)",
+      "label_en": "Duration 2 - Seconds (0-59)",
+      "type": "number",
+      "default": 15,
+      "min": 0,
+      "max": 59,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "time3OperationSign",
+      "label": "Operación para Tiempo 3",
+      "label_en": "Operation for Duration 3",
+      "type": "select",
+      "default": "1",
+      "options": [
+        { "value": "1", "label": "Sumar (+) Tiempo 3", "label_en": "Add (+) Duration 3" },
+        { "value": "-1", "label": "Restar (-) Tiempo 3", "label_en": "Subtract (-) Duration 3" }
+      ]
+    },
+    {
+      "id": "duration3Hours",
+      "label": "Tiempo 3 - Horas",
+      "label_en": "Duration 3 - Hours",
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 10000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "duration3Minutes",
+      "label": "Tiempo 3 - Minutos (0-59)",
+      "label_en": "Duration 3 - Minutes (0-59)",
+      "type": "number",
+      "default": 20,
+      "min": 0,
+      "max": 59,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "duration3Seconds",
+      "label": "Tiempo 3 - Segundos (0-59)",
+      "label_en": "Duration 3 - Seconds (0-59)",
+      "type": "number",
+      "default": 45,
+      "min": 0,
+      "max": 59,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalCalculatedSecondsVal",
+      "label": "Segundos Totales Resultantes",
+      "label_en": "Resulting Total Seconds",
+      "expression": "max(0, (duration1Hours * 3600 + duration1Minutes * 60 + duration1Seconds) + (duration2Hours * 3600 + duration2Minutes * 60 + duration2Seconds) + (time3OperationSign * (duration3Hours * 3600 + duration3Minutes * 60 + duration3Seconds)))",
+      "unit": "s",
+      "unit_en": "s",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalDurationHoursResult",
+      "label": "Horas Totales Decimales",
+      "label_en": "Total Decimal Hours",
+      "expression": "totalCalculatedSecondsVal / 3600",
+      "unit": "horas",
+      "unit_en": "hours",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalDurationHoursResult", "op": ">=", "value": 0 }, "label": "Tiempo Calculado", "label_en": "Time Computed", "tone": "success", "text": "Tiempo acumulado cuantificado.", "text_en": "Accumulated time quantified." }
+      ]
+    },
+    {
+      "id": "totalDurationMinutesResult",
+      "label": "Minutos Totales Acumulados",
+      "label_en": "Total Accumulated Minutes",
+      "expression": "totalCalculatedSecondsVal / 60",
+      "unit": "minutos",
+      "unit_en": "minutes",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "averageSegmentMinutesResult",
+      "label": "Promedio de Tiempo por Tramo",
+      "label_en": "Average Time per Segment",
+      "expression": "(totalCalculatedSecondsVal / 3) / 60",
+      "unit": "min/tramo",
+      "unit_en": "min/segment",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

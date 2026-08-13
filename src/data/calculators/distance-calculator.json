@@ -1,0 +1,167 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "distance-calculator",
+    "title": "Calculadora de Distancia entre 2 Puntos (Geometría 2D y 3D)",
+    "title_en": "Distance Between 2 Points Calculator (2D & 3D Geometry)",
+    "slug": "calculadora-de-distancia-entre-puntos-2d-3d",
+    "category": "math",
+    "subcategory": "geometry",
+    "tags": ["distancia", "puntos", "geometria-2d", "geometria-3d", "vector", "distancia-euclidiana"],
+    "tags_en": ["distance", "points", "2d-geometry", "3d-geometry", "vector", "euclidean-distance"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la Distancia Euclidiana en el plano 2D ($d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$) y en el espacio 3D entre dos puntos.",
+    "shortDescription_en": "Calculate Euclidean Distance in 2D plane ($d = \\sqrt{(x_2-x_1)^2 + (y_2-y_1)^2}$) and 3D space between two points.",
+    "longDescription": "Herramienta de geometría analítica y cálculo vectorial. Dados dos puntos en 2D $P_1(x_1, y_1)$ y $P_2(x_2, y_2)$ o en 3D $P_1(x_1, y_1, z_1)$ y $P_2(x_2, y_2, z_2)$, calcula la distancia recta de separación euclidiana y las coordenadas del Punto Medio.",
+    "longDescription_en": "Analytic geometry tool. Given two points in 2D $P_1(x_1, y_1)$ and $P_2(x_2, y_2)$ or 3D $P_1(x_1, y_1, z_1)$ and $P_2(x_2, y_2, z_2)$, computes straight line Euclidean distance and Midpoint coordinates.",
+    "howToUse": [
+      "Selecciona la Dimensión (2D Plano Cartesiano vs 3D Espacio Tridimensional).",
+      "Ingresa las coordenadas del Punto 1 ($x_1, y_1, z_1$).",
+      "Ingresa las coordenadas del Punto 2 ($x_2, y_2, z_2$).",
+      "Consulta la Distancia Euclidiana $d$ y las coordenadas del Punto Medio."
+    ],
+    "howToUse_en": [
+      "Select Dimension (2D Cartesian Plane vs 3D Spatial Space).",
+      "Enter coordinates for Point 1 ($x_1, y_1, z_1$).",
+      "Enter coordinates for Point 2 ($x_2, y_2, z_2$).",
+      "View Euclidean Distance $d$ and Midpoint coordinates."
+    ],
+    "methodology": "Distancia 2D: d = √((x2-x1)² + (y2-y1)²). Distancia 3D: d = √((x2-x1)² + (y2-y1)² + (z2-z1)²). Punto Medio: M = ((x1+x2)/2, (y1+y2)/2, (z1+z2)/2).",
+    "methodology_en": "2D Distance: d = √((x2-x1)² + (y2-y1)²). 3D Distance: d = √((x2-x1)² + (y2-y1)² + (z2-z1)²). Midpoint: M = ((x1+x2)/2, (y1+y2)/2, (z1+z2)/2)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Geometría Euclidiana y Vectores",
+    "role_en": "Euclidean Geometry & Vector Specialist Assistant",
+    "includeData": ["euclideanDistanceResult", "midpointX", "midpointY"],
+    "instructions": [
+      "Explica la aplicación del Teorema de Pitágoras generalizado en 2D y 3D.",
+      "Identifica las coordenadas del Punto Medio M((x1+x2)/2, (y1+y2)/2).",
+      "Analiza la diferencia en magnitud entre la distancia 2D y 3D."
+    ],
+    "instructions_en": [
+      "Explain generalized Pythagorean Theorem application in 2D and 3D.",
+      "Identify Midpoint coordinates M((x1+x2)/2, (y1+y2)/2).",
+      "Analyze magnitude difference between 2D and 3D distance."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "dist-guide",
+      "icon": "📍",
+      "title": "Euclidean Distance & Midpoint Formula",
+      "title_es": "Distancia Euclidiana y Fórmula del Punto Medio",
+      "content_html_en": "<p><b>2D Distance:</b> Derived from the Pythagorean Theorem: d² = (Δx)² + (Δy)².</p><p><b>3D Distance:</b> Generalization to 3 dimensions: d² = (Δx)² + (Δy)² + (Δz)².</p><p><b>Midpoint:</b> The point exactly halfway between P₁ and P₂.</p>",
+      "content_html": "<p><b>Distancia 2D:</b> Derivada del Teorema de Pitágoras: d² = (Δx)² + (Δy)².</p><p><b>Distancia 3D:</b> Generalización a 3 dimensiones: d² = (Δx)² + (Δy)² + (Δz)².</p><p><b>Punto Medio:</b> El punto que se encuentra exactamente a la mitad entre P₁ y P₂.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "dimensionMode",
+      "label": "Dimensión del Espacio",
+      "label_en": "Space Dimension",
+      "type": "select",
+      "default": "2d",
+      "options": [
+        { "value": "2d", "label": "Plano 2D (x, y)", "label_en": "2D Plane (x, y)" },
+        { "value": "3d", "label": "Espacio 3D (x, y, z)", "label_en": "3D Space (x, y, z)" }
+      ]
+    },
+    {
+      "id": "p1X",
+      "label": "Punto 1: x₁",
+      "label_en": "Point 1: x₁",
+      "type": "number",
+      "default": 1,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "p1Y",
+      "label": "Punto 1: y₁",
+      "label_en": "Point 1: y₁",
+      "type": "number",
+      "default": 2,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "p1Z",
+      "label": "Punto 1: z₁ (solo 3D)",
+      "label_en": "Point 1: z₁ (3D only)",
+      "type": "number",
+      "default": 0,
+      "step": 0.1,
+      "required": false
+    },
+    {
+      "id": "p2X",
+      "label": "Punto 2: x₂",
+      "label_en": "Point 2: x₂",
+      "type": "number",
+      "default": 4,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "p2Y",
+      "label": "Punto 2: y₂",
+      "label_en": "Point 2: y₂",
+      "type": "number",
+      "default": 6,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "p2Z",
+      "label": "Punto 2: z₂ (solo 3D)",
+      "label_en": "Point 2: z₂ (3D only)",
+      "type": "number",
+      "default": 0,
+      "step": 0.1,
+      "required": false
+    }
+  ],
+  "calculations": [
+    {
+      "id": "euclideanDistanceResult",
+      "label": "Distancia Euclidiana Calculada (d)",
+      "label_en": "Calculated Euclidean Distance (d)",
+      "expression": "dimensionMode == '2d' ? sqrt((p2X - p1X)^2 + (p2Y - p1Y)^2) : sqrt((p2X - p1X)^2 + (p2Y - p1Y)^2 + (p2Z - p1Z)^2)",
+      "unit": "unidades",
+      "unit_en": "units",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "euclideanDistanceResult", "op": ">=", "value": 0 }, "label": "Distancia Euclidiana Calculada", "label_en": "Euclidean Distance Computed", "tone": "success", "text": "Distancia recta en espacio euclidiano obtenida.", "text_en": "Straight line Euclidean distance evaluated." }
+      ]
+    },
+    {
+      "id": "midpointX",
+      "label": "Punto Medio: Coordenada x",
+      "label_en": "Midpoint: x coordinate",
+      "expression": "(p1X + p2X) / 2",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "midpointY",
+      "label": "Punto Medio: Coordenada y",
+      "label_en": "Midpoint: y coordinate",
+      "expression": "(p1Y + p2Y) / 2",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

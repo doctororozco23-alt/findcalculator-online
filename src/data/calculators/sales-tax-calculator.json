@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "sales-tax-calculator",
+    "title": "Calculadora de Impuesto de Ventas (IVA / Sales Tax)",
+    "title_en": "Sales Tax & VAT Calculator",
+    "slug": "impuesto-ventas-iva-sales-tax",
+    "category": "finance",
+    "subcategory": "taxes",
+    "tags": ["sales-tax", "iva", "impuestos-ventas"],
+    "tags_en": ["sales-tax", "vat", "sales-taxes"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Receipt"
+  },
+  "content": {
+    "shortDescription": "Calcula el impuesto de venta (IVA / Sales Tax) añadido a un producto o desglosa el precio neto sin impuesto.",
+    "shortDescription_en": "Calculate sales tax or VAT added to purchases or extract net price before tax.",
+    "longDescription": "Determina el precio total a pagar incluyendo el impuesto de ventas (Sales Tax / IVA / GST) o desglosa el precio neto original sin impuestos a partir de una suma final.",
+    "longDescription_en": "Determine final gross total cost including sales tax, VAT, or GST, or back out net price before taxes from a total receipt amount.",
+    "howToUse": [
+      "Ingresa el precio antes de impuestos.",
+      "Establece la tasa del impuesto de venta o IVA (%).",
+      "Consulta el monto exacto del impuesto y el total final a pagar."
+    ],
+    "howToUse_en": [
+      "Enter price before taxes and active currency.",
+      "Set local Sales Tax, VAT, or GST rate (%).",
+      "View exact tax amount added and final gross total price."
+    ],
+    "methodology": "Fórmula Impuesto Ventas: Impuesto = PrecioNeto × (Tasa / 100). PrecioTotal = PrecioNeto + Impuesto.",
+    "methodology_en": "Sales Tax Formula: Tax Amount = Net Price × (Tax Rate / 100). Total Price = Net Price + Tax Amount."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🧾",
+      "title": "Sales Tax vs Value Added Tax (VAT)",
+      "title_es": "Impuesto de Ventas vs Impuesto al Valor Agregado (IVA)",
+      "content_html_en": "<p>Sales Tax is added at the point of final consumer purchase, whereas VAT is assessed incrementally at each stage of the supply chain.</p>",
+      "content_html": "<p>El impuesto de ventas (Sales Tax) se añade en el punto de venta final al consumidor, mientras que el IVA recae en cada etapa de la cadena.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "beforeTaxPrice",
+      "label": "Precio antes de impuestos",
+      "label_en": "Price Before Tax",
+      "type": "currency",
+      "default": 150,
+      "min": 1,
+      "max": 1000000,
+      "step": 1,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "taxRatePercent",
+      "label": "Tasa del impuesto de venta / IVA (%)",
+      "label_en": "Sales Tax / VAT Rate (%)",
+      "type": "number",
+      "default": 8.5,
+      "min": 0,
+      "max": 40,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "taxAmount",
+      "label": "Monto del impuesto de venta",
+      "label_en": "Sales Tax / VAT Amount",
+      "expression": "beforeTaxPrice * (taxRatePercent / 100)",
+      "unit": { "follows": "beforeTaxPrice" },
+      "precision": 2,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "totalPriceWithTax",
+      "label": "Precio Total a Pagar (Con Impuestos)",
+      "label_en": "Total Final Price (Tax Included)",
+      "expression": "beforeTaxPrice + taxAmount",
+      "unit": { "follows": "beforeTaxPrice" },
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalPriceWithTax", "op": ">", "value": 0 }, "label": "Precio Final Total", "label_en": "Final Total Cost", "tone": "info", "text": "Suma total del producto más el recargo de impuesto de ventas local.", "text_en": "Total final purchase price including regional sales tax charge." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "salary-take-home-calculator", "type": "static", "message": "Calcula impuestos sobre tu salario", "message_en": "Calculate income tax deductions", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Impuestos sobre Ventas e IVA",
+    "role_en": "Sales Tax & VAT Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y directo",
+    "includeData": ["totalPriceWithTax", "taxAmount", "beforeTaxPrice", "taxRatePercent"],
+    "instructions": [
+      "Sintetiza el precio total con impuestos y la cantidad del impuesto en 2 frases concisas.",
+      "Destaca cómo la tasa impositiva modifica el costo final abonado en caja."
+    ],
+    "instructions_en": [
+      "Summarize final price including tax and tax currency amount in 2 concise sentences.",
+      "Highlight how tax rates impact total checkout cost."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Impuesto de Ventas (IVA / Sales Tax) | CalculadoraHub",
+    "metaTitle_en": "Sales Tax & VAT Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el impuesto de ventas (Sales Tax / IVA) y el precio total de tus compras. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate sales tax, VAT, or GST added to purchases. Free, instant results.",
+    "keywords": ["sales tax calculator", "impuesto ventas", "iva calculator", "vat calculator"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

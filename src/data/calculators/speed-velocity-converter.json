@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "speed-velocity-converter",
+    "title": "Conversor de Velocidad (km/h, m/s, mph, Nudos, Mach)",
+    "title_en": "Speed & Velocity Unit Converter (km/h, m/s, mph, Knots, Mach)",
+    "slug": "conversor-de-velocidad-kmh-ms-mph-nudos-mach",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["conversor-de-velocidad", "kmh", "mph", "ms", "nudos", "mach", "física", "conversores"],
+    "tags_en": ["speed-converter", "kmh", "mph", "ms", "knots", "mach", "physics", "converters"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte instantáneamente velocidades entre kilómetros por hora (km/h), metros por segundo (m/s), millas por hora (mph), Nudos náuticos y Mach.",
+    "shortDescription_en": "Instantly convert speed between kilometers per hour (km/h), meters per second (m/s), miles per hour (mph), Knots, and Mach.",
+    "longDescription": "Herramienta de física cinemática, aviación y navegación marítima. Permite convertir cualquier magnitud de velocidad entre sistemas de transporte.",
+    "longDescription_en": "Kinematic physics, aviation, and maritime navigation tool. Converts velocity units across transportation systems.",
+    "howToUse": [
+      "Ingresa el Valor de Velocidad a Convertir.",
+      "Selecciona la Unidad de Origen (ej. km/h, m/s, mph, Nudos).",
+      "Consulta los Resultados Equivalentes en m/s, km/h, mph y Nudos Náuticos."
+    ],
+    "howToUse_en": [
+      "Enter Speed Value to Convert.",
+      "Select Source Unit (e.g. km/h, m/s, mph, Knots).",
+      "View Equivalent Results in m/s, km/h, mph, and Nautical Knots."
+    ],
+    "methodology": "Factor base en m/s: 1 m/s = 1.0, 1 km/h = 1/3.6 = 0.277778, 1 mph = 0.44704, 1 knot = 0.514444, 1 Mach = 340.3.",
+    "methodology_en": "Base factor in m/s: 1 m/s = 1.0, 1 km/h = 1/3.6 = 0.277778, 1 mph = 0.44704, 1 knot = 0.514444, 1 Mach = 340.3."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Cinemática y Conversión de Velocidades",
+    "role_en": "Kinematics & Speed Units Conversion Specialist Assistant",
+    "includeData": ["speedMpsResult", "speedKmhResult", "speedMphResult"],
+    "instructions": [
+      "Interpreta la conversión de velocidad realizada.",
+      "Muestra equivalencias útiles (100 km/h ≈ 62.14 mph = 27.78 m/s = 53.99 nudos).",
+      "Explica la aplicación de los Nudos en aeronáutica y navegación marítima."
+    ],
+    "instructions_en": [
+      "Interpret performed speed conversion.",
+      "Show useful equivalences (100 km/h ≈ 62.14 mph = 27.78 m/s = 53.99 knots).",
+      "Explain Knots application in aeronautics and maritime navigation."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "svc-guide",
+      "icon": "⚡",
+      "title": "Speed Units Benchmarks",
+      "title_es": "Pautas de Velocidad",
+      "content_html_en": "<p><b>1 m/s:</b> 3.6 km/h = 2.23694 mph = 1.94384 Knots</p><p><b>1 Knot:</b> 1.852 km/h (1 Nautical Mile per hour)</p><p><b>1 Mach (at sea level):</b> ~340.3 m/s = 1,225 km/h = 761.2 mph</p>",
+      "content_html": "<p><b>1 m/s:</b> 3.6 km/h = 2.23694 mph = 1.94384 Nudos</p><p><b>1 Nudo:</b> 1.852 km/h (1 Milla Náutica por hora)</p><p><b>1 Mach (a nivel del mar):</b> ~340.3 m/s = 1,225 km/h = 761.2 mph</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputValueSpeed",
+      "label": "Velocidad a Convertir",
+      "label_en": "Speed to Convert",
+      "type": "number",
+      "default": 120,
+      "min": 0,
+      "max": 100000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "inputSpeedUnitFactor",
+      "label": "Unidad de Origen",
+      "label_en": "Source Unit",
+      "type": "select",
+      "default": "0.2777777778",
+      "options": [
+        { "value": "0.2777777778", "label": "Kilómetros por hora (km/h)", "label_en": "Kilometers per hour (km/h)" },
+        { "value": "0.44704", "label": "Millas por hora (mph)", "label_en": "Miles per hour (mph)" },
+        { "value": "1.0", "label": "Metros por segundo (m/s)", "label_en": "Meters per second (m/s)" },
+        { "value": "0.5144444444", "label": "Nudos Náuticos (kt)", "label_en": "Nautical Knots (kt)" },
+        { "value": "340.3", "label": "Mach (Velocidad del Sonido)", "label_en": "Mach (Speed of Sound)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "speedMpsResult",
+      "label": "Equivalente en Metros por Segundo (m/s)",
+      "label_en": "Equivalent in Meters per Second (m/s)",
+      "expression": "inputValueSpeed * inputSpeedUnitFactor",
+      "unit": "m/s",
+      "unit_en": "m/s",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "speedMpsResult", "op": ">=", "value": 0 }, "label": "Velocidad Calculada", "label_en": "Speed Computed", "tone": "success", "text": "Velocidad equivalente en m/s cuantificada.", "text_en": "Equivalent speed in m/s quantified." }
+      ]
+    },
+    {
+      "id": "speedKmhResult",
+      "label": "Equivalente en Kilómetros por Hora (km/h)",
+      "label_en": "Equivalent in Kilometers per Hour (km/h)",
+      "expression": "speedMpsResult * 3.6",
+      "unit": "km/h",
+      "unit_en": "km/h",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "speedMphResult",
+      "label": "Equivalente en Millas por Hora (mph)",
+      "label_en": "Equivalent in Miles per Hour (mph)",
+      "expression": "speedMpsResult / 0.44704",
+      "unit": "mph",
+      "unit_en": "mph",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "speedKnotsResult",
+      "label": "Equivalente en Nudos Náuticos (kt)",
+      "label_en": "Equivalent in Nautical Knots (kt)",
+      "expression": "speedMpsResult / 0.5144444444",
+      "unit": "kt",
+      "unit_en": "kt",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

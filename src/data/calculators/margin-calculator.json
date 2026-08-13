@@ -1,0 +1,153 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "margin-calculator",
+    "title": "Calculadora de Margen de Ganancia vs Markup",
+    "title_en": "Margin & Markup Calculator",
+    "slug": "margen-ganancia-markup",
+    "category": "finance",
+    "subcategory": "business",
+    "tags": ["margen", "markup", "precios"],
+    "tags_en": ["margin", "markup", "pricing"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Tag"
+  },
+  "content": {
+    "shortDescription": "Calcula la diferencia exacta entre el Margen de Ganancia Bruta (%) y el Markup (%) al fijar precios de venta.",
+    "shortDescription_en": "Calculate exact distinction between Gross Profit Margin (%) and Markup Percentage (%) when pricing products.",
+    "longDescription": "Resuelve la confusión habitual en el comercio entre Margen de Ganancia (Beneficio / Precio de Venta) y Markup (Beneficio / Costo de Adquisición).",
+    "longDescription_en": "Resolve common commercial confusion between Profit Margin (Profit / Selling Price) vs Markup (Profit / Cost) for retail pricing.",
+    "howToUse": [
+      "Ingresa el costo de compra o producción del producto.",
+      "Establece el precio de venta al público deseado.",
+      "Consulta la ganancia bruta en dinero, el Margen % y el Markup %."
+    ],
+    "howToUse_en": [
+      "Enter product purchase cost and active currency.",
+      "Set target selling price.",
+      "View gross profit cash amount, Gross Margin %, and Markup %."
+    ],
+    "methodology": "Fórmula Margen vs Markup: Ganancia = Precio - Costo. Margen (%) = (Ganancia / Precio) × 100. Markup (%) = (Ganancia / Costo) × 100.",
+    "methodology_en": "Margin vs Markup Formula: Profit = Price - Cost. Margin (%) = (Profit / Price) × 100. Markup (%) = (Profit / Cost) × 100."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🏷️",
+      "title": "Gross Profit Margin vs Markup Percentage",
+      "title_es": "Margen de Ganancia Bruta vs Porcentaje de Markup",
+      "content_html_en": "<p>Margin is profit expressed as a percentage of revenue (selling price), while Markup is profit expressed as a percentage of cost.</p>",
+      "content_html": "<p>El Margen expresa la ganancia como porcentaje de los ingresos de venta, mientras que el Markup mide la ganancia sobre el costo inicial.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "productCost",
+      "label": "Costo de adquisición o producción",
+      "label_en": "Product Cost Amount",
+      "type": "currency",
+      "default": 60,
+      "min": 1,
+      "max": 1000000,
+      "step": 5,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "sellingPrice",
+      "label": "Precio de venta final al público",
+      "label_en": "Final Selling Price",
+      "type": "currency",
+      "default": 100,
+      "min": 1,
+      "max": 1000000,
+      "step": 5,
+      "unit": { "follows": "productCost" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "grossProfitAmount",
+      "label": "Ganancia Bruta por Unidad",
+      "label_en": "Gross Profit Cash Amount per Unit",
+      "expression": "sellingPrice - productCost",
+      "unit": { "follows": "productCost" },
+      "precision": 2,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "profitMarginPercent",
+      "label": "Margen de Ganancia Bruta (%)",
+      "label_en": "Gross Profit Margin Rate (%)",
+      "expression": "(grossProfitAmount / sellingPrice) * 100",
+      "unit": "%",
+      "precision": 1,
+      "format": "percent",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "profitMarginPercent", "op": ">=", "value": 40 }, "label": "Margen Comercial Sólido", "label_en": "Strong Profit Margin", "tone": "success", "text": "Margen bruto saludable para absorción de gastos operativos.", "text_en": "Healthy gross margin rate to absorb operating overhead." }
+      ]
+    },
+    {
+      "id": "markupPercent",
+      "label": "Markup Aplicado sobre el Costo (%)",
+      "label_en": "Markup Percentage on Cost (%)",
+      "expression": "(grossProfitAmount / productCost) * 100",
+      "unit": "%",
+      "precision": 1,
+      "format": "percent",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "break-even-calculator", "type": "static", "message": "Calcula el punto de equilibrio de ventas", "message_en": "Calculate sales break-even volume", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Estrategias de Precios",
+    "role_en": "Commercial Pricing Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y didáctico",
+    "includeData": ["profitMarginPercent", "markupPercent", "grossProfitAmount", "sellingPrice"],
+    "instructions": [
+      "Sintetiza la diferencia entre el Margen % y el Markup % para el precio fijado en 2 frases concisas.",
+      "Destaca que el Markup siempre es numéricamente superior al Margen para un mismo precio."
+    ],
+    "instructions_en": [
+      "Summarize difference between Profit Margin % and Markup % for the selected price in 2 concise sentences.",
+      "Highlight that Markup % is always mathematically higher than Margin % for any item."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Margen de Ganancia vs Markup | CalculadoraHub",
+    "metaTitle_en": "Margin & Markup Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el margen de ganancia bruta % y el markup comercial de tus productos. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate gross profit margin % and commercial markup % on product pricing. Free, instant results.",
+    "keywords": ["margin calculator", "margen de ganancia", "markup calculator", "fijacion precios"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

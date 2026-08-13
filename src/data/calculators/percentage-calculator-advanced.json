@@ -1,0 +1,120 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "percentage-calculator-advanced",
+    "title": "Calculadora Avanzada de Porcentajes (Aumento, Descuento y Diferencia)",
+    "title_en": "Advanced Percentage Calculator (Increase, Discount & Difference)",
+    "slug": "calculadora-avanzada-de-porcentajes-aumento-descuento",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["porcentaje", "porcentajes", "porcentaje-avanzado", "descuentos", "aumentos", "variacion-porcentual"],
+    "tags_en": ["percentage", "percentages", "advanced-percentage", "discounts", "increases", "percentage-change"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Percent"
+  },
+  "content": {
+    "shortDescription": "Calcula el $X\\%$ de $Y$, qué porcentaje representa $X$ de $Y$, variación porcentual de aumento o descuento, y valor final.",
+    "shortDescription_en": "Compute $X\\%$ of $Y$, percentage $X$ is of $Y$, percent increase or discount change, and final value.",
+    "longDescription": "Herramienta completa de porcentajes. Resuelve tres escenarios clave: ¿Cuánto es el P% de V?, ¿Qué % es X de Y? y Cambios porcentuales de aumento o descuento.",
+    "longDescription_en": "Comprehensive percentage tool. Solves three main scenarios: What is P% of V?, What % is X of Y?, and Percent increase/decrease.",
+    "howToUse": [
+      "Selecciona la Modalidad de Cálculo (Porcentaje de una Cantidad, Porcentaje relativo, o Variación).",
+      "Ingresa el Porcentaje $P$ o Valor 1.",
+      "Ingresa el Valor $V$ o Valor 2.",
+      "Consulta el resultado exacto obtenido."
+    ],
+    "howToUse_en": [
+      "Select Calculation Mode (Percentage of Value, Relative %, or Percentage Change).",
+      "Enter Percentage $P$ or Value 1.",
+      "Enter Value $V$ or Value 2.",
+      "View exact calculated result."
+    ],
+    "methodology": "Caso 1: (P / 100) * V. Caso 2: (X / Y) * 100%. Caso 3: ((Final - Inicial) / Inicial) * 100%.",
+    "methodology_en": "Case 1: (P / 100) * V. Case 2: (X / Y) * 100%. Case 3: ((Final - Initial) / Initial) * 100%."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Porcentajes y Proporciones Comerciales",
+    "role_en": "Percentages & Commercial Proportions Specialist Assistant",
+    "includeData": ["calculatedPercentValue", "finalValueResult"],
+    "instructions": [
+      "Explica la proporcionalidad directa del porcentaje evaluado.",
+      "Demuestra la diferencia entre aumento (+%) y descuento (-%).",
+      "Analiza el impacto financiero o comercial en precios finales."
+    ],
+    "instructions_en": [
+      "Explain direct proportionality of evaluated percentage.",
+      "Demonstrate difference between increase (+%) and discount (-%).",
+      "Analyze commercial or financial impact on final prices."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "pct-guide",
+      "icon": "%",
+      "title": "Percentage Rules & Formulas",
+      "title_es": "Reglas de Porcentajes y Fórmulas",
+      "content_html_en": "<p><b>P% of V:</b> (P / 100) × V.</p><p><b>Percentage Change:</b> ((New Value - Old Value) / Old Value) × 100%.</p><p><b>Discount:</b> Final Price = Original × (1 - Discount / 100).</p>",
+      "content_html": "<p><b>P% de V:</b> (P / 100) × V.</p><p><b>Cambio Porcentual:</b> ((Nuevo Valor - Valor Anterior) / Valor Anterior) × 100%.</p><p><b>Descuento:</b> Precio Final = Original × (1 - Descuento / 100).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "modePct",
+      "label": "Modalidad de Cálculo",
+      "label_en": "Calculation Mode",
+      "type": "select",
+      "default": "pct_of_val",
+      "options": [
+        { "value": "pct_of_val", "label": "Calcular el P% de una cantidad V", "label_en": "Calculate P% of a value V" },
+        { "value": "rel_pct", "label": "Qué porcentaje representa X de Y", "label_en": "What % is X of Y" }
+      ]
+    },
+    {
+      "id": "valP",
+      "label": "Porcentaje (P %) / Valor X",
+      "label_en": "Percentage (P %) / Value X",
+      "type": "number",
+      "default": 15,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "valV",
+      "label": "Cantidad Base (V) / Valor Y",
+      "label_en": "Base Amount (V) / Value Y",
+      "type": "number",
+      "default": 200,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "calculatedPercentValue",
+      "label": "Resultado del Porcentaje",
+      "label_en": "Percentage Result",
+      "expression": "modePct == 'pct_of_val' ? ((valP / 100) * valV) : (valV != 0 ? ((valP / valV) * 100) : 0)",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "calculatedPercentValue", "op": ">=", "value": 0 }, "label": "Porcentaje Evaluado", "label_en": "Percentage Computed", "tone": "success", "text": "Proporción porcentual obtenida.", "text_en": "Percentage proportion evaluated." }
+      ]
+    },
+    {
+      "id": "finalValueResult",
+      "label": "Valor Final con Aumento (V + P%)",
+      "label_en": "Final Value with Increase (V + P%)",
+      "expression": "modePct == 'pct_of_val' ? (valV + calculatedPercentValue) : 0",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

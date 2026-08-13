@@ -1,0 +1,213 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "lean-body-mass-calculator",
+    "title": "Calculadora de Masa Corporal Magra (LBM - 3 Fórmulas Médicas)",
+    "title_en": "Lean Body Mass Calculator (LBM - 3 Medical Formulas)",
+    "slug": "masa-corporal-magra-lbm",
+    "category": "fitness",
+    "subcategory": "body-composition",
+    "tags": ["masa-magra", "lbm", "boer", "hume", "james"],
+    "tags_en": ["lean-body-mass", "lbm", "boer", "hume", "james"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula tu Masa Corporal Magra (LBM) libre de grasa comparando las 3 fórmulas médicas clínicas validadas (Boer, Hume y James).",
+    "shortDescription_en": "Calculate your fat-free Lean Body Mass (LBM) comparing 3 validated clinical medical equations (Boer, Hume, and James).",
+    "longDescription": "Auditoría médica de masa corporal magra. Mide con precisión el peso en kilogramos y libras de tus órganos, esqueleto, tejido muscular y agua corporal excluyendo el tejido adiposo sobrante.",
+    "longDescription_en": "Clinical medical lean body mass audit. Accurately measures fat-free body weight (LBM) including active skeletal muscle, bone density, organs, and body fluids.",
+    "howToUse": [
+      "Selecciona la fórmula médica de referencia (Boer, Hume o James).",
+      "Selecciona tu sexo biológico.",
+      "Ingresa tu peso corporal total y estatura.",
+      "Consulta tu masa magra en kg, el porcentaje sobre el peso total y el peso estimado de masa grasa."
+    ],
+    "howToUse_en": [
+      "Select preferred medical formula (Boer, Hume, or James).",
+      "Select biological sex.",
+      "Enter total body weight and height.",
+      "View calculated Lean Body Mass weight, LBM percentage, and estimated fat mass."
+    ],
+    "methodology": "Fórmulas Clínicas: 1. Boer (1984 - Estándar Farmacológico). 2. Hume (1966). 3. James (1976). La Masa Magra engloba músculo esquelético, tejido óseo, órganos y fluidos corporales.",
+    "methodology_en": "Clinical Formulas: 1. Boer (1984). 2. Hume (1966). 3. James (1976). Lean Body Mass comprises skeletal muscle, bone tissue, organs, and essential fluids."
+  },
+  "guideSections": [
+    {
+      "id": "lbm-formulas-guide",
+      "icon": "💪",
+      "title": "Clinical Applications of Lean Body Mass",
+      "title_es": "Aplicaciones Clínicas de la Masa Magra (LBM)",
+      "content_html_en": "<p><b>Boer Formula (1984):</b> Most accurate for calculating clinical medication dosages (e.g. chemotherapy, digoxin) to avoid overdosing in obese patients.</p><p><b>Hume Formula (1966):</b> Widely used in sports medicine and body composition tracking.</p>",
+      "content_html": "<p><b>Fórmula Boer (1984):</b> La más precisa para calcular dosis de fármacos clínicos para evitar sobredosificación en pacientes con sobrepeso.</p><p><b>Fórmula Hume (1966):</b> Ampliamente utilizada en medicina deportiva y seguimiento de hipertrofia.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "formulaChoice",
+      "label": "Fórmula médica clínica",
+      "label_en": "Clinical Medical Formula",
+      "type": "select",
+      "default": "boer",
+      "options": [
+        { "value": "boer", "label": "Fórmula Boer (1984 - Estándar Clínico Farmacológico)", "label_en": "Boer Formula (1984 - Clinical Pharmacology Standard)" },
+        { "value": "hume", "label": "Fórmula Hume (1966 - Medicina Deportiva)", "label_en": "Hume Formula (1966 - Sports Medicine Standard)" },
+        { "value": "james", "label": "Fórmula James (1976 - Sujetos Normopeso)", "label_en": "James Formula (1976 - Normal Weight)" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "gender",
+      "label": "Sexo biológico",
+      "label_en": "Biological Sex",
+      "type": "select",
+      "default": "male",
+      "options": [
+        { "value": "male", "label": "Hombre", "label_en": "Male" },
+        { "value": "female", "label": "Mujer", "label_en": "Female" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "weightKg",
+      "label": "Peso corporal total",
+      "label_en": "Total Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 30,
+      "max": 300,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "heightCm",
+      "label": "Estatura",
+      "label_en": "Height",
+      "type": "number",
+      "default": 178,
+      "min": 100,
+      "max": 230,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "boerLbmKg",
+      "label": "Masa Magra Boer (1984)",
+      "label_en": "Boer Lean Body Mass (1984)",
+      "expression": "gender == 'male' ? (0.407 * weightKg + 0.267 * heightCm - 19.2) : (0.252 * weightKg + 0.473 * heightCm - 48.3)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "humeLbmKg",
+      "label": "Masa Magra Hume (1966)",
+      "label_en": "Hume Lean Body Mass (1966)",
+      "expression": "gender == 'male' ? (0.32810 * weightKg + 0.33929 * heightCm - 29.5336) : (0.29569 * weightKg + 0.41813 * heightCm - 43.2933)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "jamesLbmKg",
+      "label": "Masa Magra James (1976)",
+      "label_en": "James Lean Body Mass (1976)",
+      "expression": "gender == 'male' ? (1.1 * weightKg - 128 * ((weightKg / heightCm) ^ 2)) : (1.07 * weightKg - 148 * ((weightKg / heightCm) ^ 2))",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "selectedLbmKg",
+      "label": "Masa Corporal Magra Calculada (LBM)",
+      "label_en": "Calculated Lean Body Mass (LBM)",
+      "expression": "formulaChoice == 'hume' ? humeLbmKg : (formulaChoice == 'james' ? jamesLbmKg : boerLbmKg)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "selectedLbmKg", "op": ">", "value": 0 }, "label": "Masa Libre de Grasa", "label_en": "Fat-Free Mass Level", "tone": "info", "text": "Peso total del tejido muscular, órganos, huesos y agua corporal.", "text_en": "Total weight of active muscle tissue, organs, bones, and body fluids." }
+      ]
+    },
+    {
+      "id": "lbmPercent",
+      "label": "Porcentaje de Masa Magra Corporal",
+      "label_en": "Lean Body Mass Percentage of Weight",
+      "expression": "(selectedLbmKg / weightKg) * 100",
+      "unit": "%",
+      "precision": 1,
+      "format": "percent",
+      "type": "primary"
+    },
+    {
+      "id": "estimatedFatMassKg",
+      "label": "Masa Grasa Estimada Asociada",
+      "label_en": "Associated Estimated Fat Mass",
+      "expression": "max(weightKg - selectedLbmKg, 0)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "body-fat-calculator", "type": "static", "message": "Calcula tu porcentaje de grasa por cinta métrica", "message_en": "Calculate body fat % by tape measure", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Especialista en Composición Corporal y Medicina Nutricional",
+    "role_en": "Body Composition & Clinical Nutritionist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y analítico",
+    "includeData": ["selectedLbmKg", "lbmPercent", "estimatedFatMassKg", "weightKg", "formulaChoice"],
+    "instructions": [
+      "Sintetiza la masa magra en kg, el porcentaje sobre el peso corporal y la masa grasa estimada en 2 frases concisas.",
+      "Destaca que la preservación de la masa magra es el indicador clave de salud metabólica durante la pérdida de peso."
+    ],
+    "instructions_en": [
+      "Summarize Lean Body Mass in kg, percentage share of weight, and estimated fat mass in 2 concise sentences.",
+      "Highlight that preserving Lean Body Mass is the key indicator of metabolic health during weight loss."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Masa Corporal Magra (LBM - 3 Fórmulas) | CalculadoraHub",
+    "metaTitle_en": "Lean Body Mass Calculator (LBM - 3 Formulas) | CalculadoraHub",
+    "metaDescription": "Calcula tu masa corporal magra (LBM) con las fórmulas Boer, Hume y James. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your Lean Body Mass (LBM) using Boer, Hume, and James clinical formulas. Free, instant results.",
+    "keywords": ["lean body mass calculator", "masa magra", "boer formula", "lbm calculator"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

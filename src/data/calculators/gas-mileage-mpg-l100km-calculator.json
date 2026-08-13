@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "gas-mileage-mpg-l100km-calculator",
+    "title": "Calculadora de Rendimiento Real de Gasolina (MPG y L/100km)",
+    "title_en": "Actual Gas Mileage & Fuel Consumption Calculator (MPG & L/100km)",
+    "slug": "calculadora-de-rendimiento-real-de-gasolina-mpg-l100km-consumo",
+    "category": "transport",
+    "subcategory": "fuel",
+    "tags": ["rendimiento-de-gasolina", "mpg", "litros-100km", "consumo-real", "eficiencia-de-combustible", "vehiculos", "transporte"],
+    "tags_en": ["gas-mileage", "mpg", "liters-100km", "actual-consumption", "fuel-efficiency", "vehicles", "transport"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el rendimiento real de tu coche en MPG y L/100km basándote en la distancia recorrida y los galones o litros repostados.",
+    "shortDescription_en": "Calculate your car's actual real-world MPG and L/100km fuel economy based on odometer trip distance and gas fill-up volume.",
+    "longDescription": "Herramienta de seguimiento de consumo automotriz. Permite auditar si el ordenador de a bordo del coche marca la eficiencia real o consume más de lo esperado.",
+    "longDescription_en": "Automotive fuel tracking tool. Audits if dashboard trip computer reflects real-world fuel economy or overestimates mileage.",
+    "howToUse": [
+      "Ingresa la Distancia Recorrida entre Repostajes (millas o km, ej. 320 millas).",
+      "Ingresa el Volumen de Combustible Repostado (galones US o litros, ej. 11.5 galones).",
+      "Consulta el Rendimiento Real Calculado en MPG US, L/100km y km/L."
+    ],
+    "howToUse_en": [
+      "Enter Odometer Trip Distance (miles or km, e.g. 320 miles).",
+      "Enter Fuel Volume Refilled (US gallons or liters, e.g. 11.5 gallons).",
+      "View Actual Computed Fuel Economy in US MPG, L/100km, and km/L."
+    ],
+    "methodology": "MPG = DistanciaMillas / Galones. L/100km = 235.215 / MPG. km/L = DistanciaKm / Litros.",
+    "methodology_en": "MPG = Miles / Gallons. L/100km = 235.215 / MPG. km/L = Kilometers / Liters."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Diagnóstico de Consumo y Eficiencia Automotriz",
+    "role_en": "Automotive Fuel Efficiency & Diagnostic Specialist Assistant",
+    "includeData": ["actualMpgResult", "actualL100kmResult"],
+    "instructions": [
+      "Interpreta el rendimiento real calculado en MPG y L/100km.",
+      "Clasifica la eficiencia del vehículo (Excelente > 35 MPG / < 6.7 L/100km, Normal 25-35 MPG / 6.7-9.4 L/100km, Elevado < 20 MPG / > 11.8 L/100km).",
+      "Señala posibles causas mecánicas de consumo elevado (inyectores sucios, filtro de aire obstruido, bujías desgastadas)."
+    ],
+    "instructions_en": [
+      "Interpret calculated actual fuel economy in MPG and L/100km.",
+      "Classify vehicle efficiency rating (Excellent > 35 MPG / < 6.7 L/100km, Average 25-35 MPG / 6.7-9.4 L/100km, High Consumption < 20 MPG / > 11.8 L/100km).",
+      "Point out mechanical diagnostic causes for high fuel consumption (clogged injectors, dirty air filter, worn spark plugs)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "gmm-guide",
+      "icon": "🚙",
+      "title": "Actual vs Dashboard MPG Differences",
+      "title_es": "Diferencia MPG Real vs Computadora de A bordo",
+      "content_html_en": "<p><b>Dashboard Display Margin:</b> Car trip computers often overestimate gas mileage by 3% to 7%.</p><p><b>Full Tank Method:</b> Fill tank completely, reset trip meter, drive, fill tank again to record exact gallons used.</p>",
+      "content_html": "<p><b>Margen del Tablero:</b> Los ordenadores de a bordo suelen sobreestimar el rendimiento un 3% a 7%.</p><p><b>Método de Tanque Lleno:</b> Llenar tanque, poner cuentakilómetros a cero, conducir y volver a llenar para registrar los galones exactos.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "odometerMilesDriven",
+      "label": "Distancia Recorrida del Tanque (millas)",
+      "label_en": "Odometer Miles Driven on Tank (miles)",
+      "type": "number",
+      "default": 320,
+      "min": 1,
+      "max": 5000,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "fuelGallonsRefilled",
+      "label": "Galones Repostados para Llenar (gal)",
+      "label_en": "Gallons Refilled to Top Off (gal)",
+      "type": "number",
+      "default": 11.5,
+      "min": 0.1,
+      "max": 200,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "actualMpgResult",
+      "label": "Rendimiento Real en MPG US",
+      "label_en": "Actual Real-World US MPG",
+      "expression": "fuelGallonsRefilled > 0 ? (odometerMilesDriven / fuelGallonsRefilled) : 0",
+      "unit": "MPG",
+      "unit_en": "MPG",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "actualMpgResult", "op": ">=", "value": 30 }, "label": "Eficiencia Excelente", "label_en": "Excellent Efficiency", "tone": "success", "text": "Coche muy económico de bajo consumo.", "text_en": "Highly efficient low-consumption vehicle." }
+      ]
+    },
+    {
+      "id": "actualL100kmResult",
+      "label": "Consumo Equivalente en Litros por 100 km (L/100km)",
+      "label_en": "Equivalent Consumption in Liters per 100 km (L/100km)",
+      "expression": "actualMpgResult > 0 ? (235.215 / actualMpgResult) : 0",
+      "unit": "L/100km",
+      "unit_en": "L/100km",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "actualKmlResult",
+      "label": "Rendimiento en Kilómetros por Litro (km/L)",
+      "label_en": "Mileage in Kilometers per Liter (km/L)",
+      "expression": "actualL100kmResult > 0 ? (100 / actualL100kmResult) : 0",
+      "unit": "km/L",
+      "unit_en": "km/L",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

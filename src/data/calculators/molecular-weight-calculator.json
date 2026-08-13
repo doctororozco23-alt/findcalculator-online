@@ -1,0 +1,117 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "molecular-weight-calculator",
+    "title": "Calculadora de Masa Molecular y Composición Porcentual",
+    "title_en": "Molecular Weight & Percent Composition Calculator",
+    "slug": "calculadora-de-masa-molecular-peso-molar-quimica",
+    "category": "chemistry",
+    "subcategory": "stoichiometry",
+    "tags": ["masa-molecular", "peso-molar", "compuestos-quimicos", "g-mol", "estequiometria", "quimica"],
+    "tags_en": ["molecular-weight", "molar-mass", "chemical-compounds", "g-mol", "stoichiometry", "chemistry"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la masa molecular / peso molar en $g/mol$ de compuestos químicos seleccionados y su composición porcentual elemental.",
+    "shortDescription_en": "Calculate molecular weight / molar mass in $g/mol$ of selected chemical compounds and elemental percent composition.",
+    "longDescription": "Herramienta de química estequiométrica y tabla periódica. Determina la masa molecular exacta en g/mol sumando las masas atómicas de cada elemento químico presente en el compuesto.",
+    "longDescription_en": "Stoichiometric chemistry tool. Determines exact molecular mass in g/mol adding atomic masses of constituent elements.",
+    "howToUse": [
+      "Selecciona el Compuesto Químico deseado de la lista (ej. Agua $H_2O$, Sal $NaCl$, Glucosa $C_6H_{12}O_6$).",
+      "Ingresa el Número de Moles (mol) de la muestra.",
+      "Consulta la Masa Molecular en g/mol y la Masa Total de la muestra en gramos."
+    ],
+    "howToUse_en": [
+      "Select Chemical Compound from the list (e.g. Water $H_2O$, Salt $NaCl$, Glucose $C_6H_{12}O_6$).",
+      "Enter Sample Number of Moles (mol).",
+      "View Molar Mass in g/mol and Total Sample Mass in grams."
+    ],
+    "methodology": "Masa Molecular MW = ∑(Atomos_i * PesoAtómico_i). Masa Total(g) = Moles * MW.",
+    "methodology_en": "Molecular Weight MW = ∑(Atoms_i * AtomicWeight_i). Total Mass(g) = Moles * MW."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Estequiometría y Masa Molar de Compuestos",
+    "role_en": "Stoichiometry & Compound Molar Mass Specialist Assistant",
+    "includeData": ["selectedCompoundMolarMass", "sampleTotalMassGrams"],
+    "instructions": [
+      "Interpreta la masa molar del compuesto químico seleccionado.",
+      "Muestra la composición porcentual en masa de cada elemento químico constituyente.",
+      "Explica la aplicación de la constante de Avogadro ($6.022 \\times 10^{23}$ moléculas/mol)."
+    ],
+    "instructions_en": [
+      "Interpret molar mass of selected chemical compound.",
+      "Show percent mass composition of constituent elements.",
+      "Explain application of Avogadro's constant ($6.022 \\times 10^{23}$ molecules/mol)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "mwg-guide",
+      "icon": "⚗️",
+      "title": "Molar Mass & Avogadro's Number",
+      "title_es": "Masa Molar y Número de Avogadro",
+      "content_html_en": "<p><b>Molar Mass Unit:</b> Expressed in grams per mole (g/mol).</p><p><b>Avogadro's Number:</b> 1 mole of any substance contains 6.022 × 10²³ molecules or formula units.</p>",
+      "content_html": "<p><b>Unidad de Masa Molar:</b> Expresada en gramos por mol (g/mol).</p><p><b>Número de Avogadro:</b> 1 mol de cualquier sustancia contiene 6.022 × 10²³ moléculas o unidades de fórmula.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "compoundMwGperMol",
+      "label": "Compuesto Químico",
+      "label_en": "Chemical Compound",
+      "type": "select",
+      "default": "18.015",
+      "options": [
+        { "value": "18.015", "label": "Agua (H₂O - 18.015 g/mol)", "label_en": "Water (H₂O - 18.015 g/mol)" },
+        { "value": "58.44", "label": "Cloruro de Sodio / Sal (NaCl - 58.44 g/mol)", "label_en": "Sodium Chloride / Salt (NaCl - 58.44 g/mol)" },
+        { "value": "44.01", "label": "Dióxido de Carbono (CO₂ - 44.01 g/mol)", "label_en": "Carbon Dioxide (CO₂ - 44.01 g/mol)" },
+        { "value": "180.16", "label": "Glucosa (C₆H₁₂O₆ - 180.16 g/mol)", "label_en": "Glucose (C₆H₁₂O₆ - 180.16 g/mol)" },
+        { "value": "98.07", "label": "Ácido Sulfúrico (H₂SO₄ - 98.07 g/mol)", "label_en": "Sulfuric Acid (H₂SO₄ - 98.07 g/mol)" },
+        { "value": "46.07", "label": "Etanol (C₂H₅OH - 46.07 g/mol)", "label_en": "Ethanol (C₂H₅OH - 46.07 g/mol)" }
+      ]
+    },
+    {
+      "id": "sampleMoles",
+      "label": "Cantidad de Moles Muestra (mol)",
+      "label_en": "Sample Amount in Moles (mol)",
+      "type": "number",
+      "default": 2.5,
+      "min": 0.01,
+      "max": 10000,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "selectedCompoundMolarMass",
+      "label": "Masa Molecular Molar (g/mol)",
+      "label_en": "Molar Molecular Weight (g/mol)",
+      "expression": "compoundMwGperMol",
+      "unit": "g/mol",
+      "unit_en": "g/mol",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "sampleTotalMassGrams",
+      "label": "Masa Total de la Muestra (gramos - g)",
+      "label_en": "Total Sample Mass (grams - g)",
+      "expression": "compoundMwGperMol * sampleMoles",
+      "unit": "g",
+      "unit_en": "g",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "sampleTotalMassGrams", "op": ">=", "value": 0 }, "label": "Masa de Muestra Calculada", "label_en": "Sample Mass Computed", "tone": "success", "text": "Masa total estequiométrica evaluada.", "text_en": "Total stoichiometric mass evaluated." }
+      ]
+    }
+  ]
+}

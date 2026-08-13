@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "down-payment-calculator",
+    "title": "Calculadora de Enganche Inicial y Ahorro para Vivienda",
+    "title_en": "Down Payment & Housing Savings Calculator",
+    "slug": "enganche-inicial-ahorro-vivienda",
+    "category": "finance",
+    "subcategory": "mortgages",
+    "tags": ["enganche", "ahorro", "vivienda"],
+    "tags_en": ["down-payment", "savings", "housing"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "PiggyBank"
+  },
+  "content": {
+    "shortDescription": "Calcula el importe del enganche inicial requerido y el tiempo necesario en meses para ahorrar la entrada de tu vivienda.",
+    "shortDescription_en": "Calculate the required target down payment amount and months needed to save for your home purchase.",
+    "longDescription": "Estima cuánto dinero necesitas acumular para el enganche inicial de tu casa (ej. 10%, 20%) y calcula el número de meses necesarios según tu ritmo de ahorro mensual.",
+    "longDescription_en": "Estimate total target cash needed for home down payment (e.g. 10%, 20%) and calculate months required based on monthly savings velocity.",
+    "howToUse": [
+      "Ingresa el precio estimado de compra de la vivienda.",
+      "Establece el porcentaje objetivo de enganche (%).",
+      "Indica tu ahorro actual guardado y tu capacidad de ahorro mensual.",
+      "Consulta los meses restantes requeridos para alcanzar la meta."
+    ],
+    "howToUse_en": [
+      "Enter estimated home purchase price and active currency.",
+      "Set target down payment percentage (%).",
+      "Enter current saved funds and monthly savings rate.",
+      "View remaining months required to reach down payment goal."
+    ],
+    "methodology": "Fórmula Enganche: Enganche Requerido = Precio × (Porcentaje / 100). Meses = (Enganche - Ahorro Actual) / Ahorro Mensual.",
+    "methodology_en": "Down Payment Formula: Target Payment = Price × (Percent / 100). Months = (Target - Current Saved) / Monthly Savings."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "💰",
+      "title": "Why 20% Down Payment Matters",
+      "title_es": "¿Por qué es Importante el 20% de Enganche?",
+      "content_html_en": "<p>Putting 20% down eliminates monthly private mortgage insurance (PMI), lowers your monthly payments, and secures better interest rates from lenders.</p>",
+      "content_html": "<p>Aportar un 20% de entrada elimina el seguro PMI mensual, reduce las cuotas y garantiza mejores tasas de interés bancarias.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "targetHomePrice",
+      "label": "Precio objetivo de la vivienda",
+      "label_en": "Target Home Purchase Price",
+      "type": "currency",
+      "default": 300000,
+      "min": 10000,
+      "max": 5000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [10000, 5000000], "message": "Precio entre 10.000 y 5.000.000", "message_en": "Price between 10,000 and 5,000,000" }]
+    },
+    {
+      "id": "downPaymentPercent",
+      "label": "Porcentaje objetivo de enganche (%)",
+      "label_en": "Target Down Payment Percentage (%)",
+      "type": "slider",
+      "default": 20,
+      "min": 3,
+      "max": 50,
+      "step": 1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "currentSaved",
+      "label": "Ahorro actual ya disponible para la entrada",
+      "label_en": "Current Saved Funds Available",
+      "type": "currency",
+      "default": 15000,
+      "min": 0,
+      "max": 1000000,
+      "step": 1000,
+      "unit": { "follows": "targetHomePrice" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "monthlySavingsRate",
+      "label": "Ahorro adicional guardado cada mes",
+      "label_en": "Additional Monthly Savings Deposited",
+      "type": "currency",
+      "default": 1000,
+      "min": 50,
+      "max": 50000,
+      "step": 50,
+      "unit": { "follows": "targetHomePrice" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "requiredDownPayment",
+      "label": "Importe Total Objetivo de Enganche",
+      "label_en": "Target Total Down Payment Amount",
+      "expression": "targetHomePrice * (downPaymentPercent / 100)",
+      "unit": { "follows": "targetHomePrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "requiredDownPayment", "op": ">", "value": 0 }, "label": "Meta de Enganche", "label_en": "Down Payment Goal", "tone": "info", "text": "Monto acumulado requerido para la entrada inicial.", "text_en": "Target cash amount required for home down payment." }
+      ]
+    },
+    {
+      "id": "remainingToSave",
+      "label": "Dinero pendiente por ahorrar",
+      "label_en": "Remaining Cash to Save",
+      "expression": "max(requiredDownPayment - currentSaved, 0)",
+      "unit": { "follows": "targetHomePrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "monthsToGoal",
+      "label": "Meses necesarios para alcanzar la meta",
+      "label_en": "Months Needed to Reach Goal",
+      "expression": "remainingToSave / monthlySavingsRate",
+      "unit": "meses",
+      "unit_en": "months",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "house-affordability-calculator", "type": "static", "message": "Calcula el precio máximo de vivienda", "message_en": "Calculate max home purchase budget", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Ahorro para Vivienda",
+    "role_en": "Home Savings Assistant",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "motivador y práctico",
+    "includeData": ["requiredDownPayment", "monthsToGoal", "remainingToSave", "currentSaved"],
+    "instructions": [
+      "Sintetiza el dinero total del enganche y los meses necesarios para ahorrar la meta en 2 frases concisas.",
+      "Destaca que incrementar el ahorro mensual acorta notablemente el tiempo hasta la compra."
+    ],
+    "instructions_en": [
+      "Summarize total required down payment cash and months needed in 2 concise sentences.",
+      "Emphasize that increasing monthly savings velocity significantly reduces time to homeownership."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Enganche Inicial y Ahorro para Vivienda | CalculadoraHub",
+    "metaTitle_en": "Down Payment & Housing Savings Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el dinero del enganche y los meses necesarios para ahorrar la entrada de tu casa. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate target down payment cash amount and months needed to save. Free, instant results.",
+    "keywords": ["down payment calculator", "enganche casa", "ahorro vivienda", "entrada hipoteca"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

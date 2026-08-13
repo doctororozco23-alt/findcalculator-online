@@ -1,0 +1,109 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "glasgow-coma-scale-gcs-calculator",
+    "title": "Calculadora de la Escala de Coma de Glasgow (GCS)",
+    "title_en": "Glasgow Coma Scale (GCS) Calculator",
+    "slug": "glasgow-coma-scale-gcs-nivel-consciencia",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["glasgow", "gcs", "escala-coma", "neurologia", "tce", "traumatismo", "uci"],
+    "tags_en": ["glasgow", "gcs", "coma-scale", "neurology", "tbi", "trauma", "icu"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula la puntuación total de la Escala de Coma de Glasgow (GCS 3 a 15) mediante las respuestas Ocular, Verbal y Motora en TCE y pacientes críticos.",
+    "shortDescription_en": "Calculate total Glasgow Coma Scale (GCS 3 to 15) using Eye, Verbal, and Motor responses for TBI and ICU patients.",
+    "longDescription": "Estándar neurológico universal (Teasdale & Jennett 1974 / BTF Guidelines). Evalúa Apertura Ocular (O: 1-4), Respuesta Verbal (V: 1-5) y Respuesta Motora (M: 1-6). Identifica el umbral de intubación de vía aérea (GCS ≤ 8).",
+    "longDescription_en": "Universal neurological standard. Evaluates Eye (1-4), Verbal (1-5), and Motor (1-6) responses. Identifies intubation threshold (GCS ≤ 8).",
+    "howToUse": [
+      "Selecciona la mejor Respuesta de Apertura Ocular (1 a 4 pts).",
+      "Selecciona la mejor Respuesta Verbal (1 a 5 pts).",
+      "Selecciona la mejor Respuesta Motora (1 a 6 pts).",
+      "Consulta el GCS total, la severidad del TCE y la alerta de manejo de vía aérea."
+    ],
+    "howToUse_en": [
+      "Select best Eye Opening Response (1-4 pts).",
+      "Select best Verbal Response (1-5 pts).",
+      "Select best Motor Response (1-6 pts).",
+      "View total GCS, TBI severity category, and airway management alert."
+    ],
+    "methodology": "GCS Total = Ocular (1-4) + Verbal (1-5) + Motor (1-6). Rango de 3 a 15 puntos. GCS 13-15: TCE Leve; GCS 9-12: TCE Moderado; GCS ≤ 8: TCE Grave (Intubación indicada).",
+    "methodology_en": "Total GCS = Eye (1-4) + Verbal (1-5) + Motor (1-6). Range 3 to 15 pts. GCS 13-15: Minor TBI; GCS 9-12: Moderate TBI; GCS ≤ 8: Severe TBI (Intubation indicated)."
+  },
+  "guideSections": [
+    {
+      "id": "gcs-guide",
+      "icon": "🧠",
+      "title": "TBI Severity & Airway Intubation Threshold",
+      "title_es": "Gravedad del TCE y Umbral de Intubación de Vía Aérea",
+      "content_html_en": "<p><b>GCS 13 - 15 (Minor TBI):</b> Intact consciousness. CT head indicated if high-risk features present (Canadian CT Head Rule).</p><p><b>GCS 9 - 12 (Moderate TBI):</b> Lethargy or confusion. Immediate CT head and neurosurgical consultation.</p><p><b>GCS ≤ 8 (Severe TBI):</b> Coma. ⚠️ Secure airway immediately via RSI intubation. High aspiration risk.</p>",
+      "content_html": "<p><b>GCS 13 - 15 (TCE Leve):</b> Consciencia conservada. TC craneal si hay criterios de riesgo (Regla Canadiense de TC).</p><p><b>GCS 9 - 12 (TCE Moderado):</b> Letargia o confusión. TC craneal urgente y evaluación neuroquirúrgica.</p><p><b>GCS ≤ 8 (TCE Grave):</b> Coma. ⚠️ Intubación e indicación de vía aérea avanzada inmediata (RSI). Alto riesgo de aspiración.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "eye_score",
+      "label": "Apertura Ocular (O)",
+      "label_en": "Eye Opening Response (E)",
+      "type": "select",
+      "default": 4,
+      "options": [
+        { "value": 4, "label": "4 — Espontánea (ojos abiertos sin estímulo)", "label_en": "4 — Spontaneous (eyes open)" },
+        { "value": 3, "label": "3 — Al orden verbal / sonido", "label_en": "3 — To verbal command" },
+        { "value": 2, "label": "2 — Al estímulo doloroso / presión", "label_en": "2 — To pain / pressure" },
+        { "value": 1, "label": "1 — Ninguna (sin apertura ocular)", "label_en": "1 — None" }
+      ]
+    },
+    {
+      "id": "verbal_score",
+      "label": "Respuesta Verbal (V)",
+      "label_en": "Verbal Response (V)",
+      "type": "select",
+      "default": 5,
+      "options": [
+        { "value": 5, "label": "5 — Orientado en tiempo, espacio y persona", "label_en": "5 — Oriented" },
+        { "value": 4, "label": "4 — Confuso (conversación desorientada)", "label_en": "4 — Confused" },
+        { "value": 3, "label": "3 — Palabras inapropiadas / sueltas", "label_en": "3 — Inappropriate words" },
+        { "value": 2, "label": "2 — Sonidos incomprensibles / gemidos", "label_en": "2 — Incomprehensible sounds" },
+        { "value": 1, "label": "1 — Ninguna (sin respuesta verbal)", "label_en": "1 — None" }
+      ]
+    },
+    {
+      "id": "motor_score",
+      "label": "Respuesta Motora (M)",
+      "label_en": "Motor Response (M)",
+      "type": "select",
+      "default": 6,
+      "options": [
+        { "value": 6, "label": "6 — Obedece órdenes verbales", "label_en": "6 — Obeys commands" },
+        { "value": 5, "label": "5 — Localiza el estímulo doloroso", "label_en": "5 — Localizes pain" },
+        { "value": 4, "label": "4 — Flexión normal / Retirada al dolor", "label_en": "4 — Normal flexion / Withdrawal" },
+        { "value": 3, "label": "3 — Flexión anormal (Rigidez de Decorticación)", "label_en": "3 — Abnormal flexion (Decorticate)" },
+        { "value": 2, "label": "2 — Extensión (Rigidez de Descerebración)", "label_en": "2 — Extension (Decerebrate)" },
+        { "value": 1, "label": "1 — Ninguna (flacidez motora completa)", "label_en": "1 — None" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "gcsTotal",
+      "label": "Puntuación Escala de Coma de Glasgow Total",
+      "label_en": "Total Glasgow Coma Scale Score",
+      "expression": "eye_score + verbal_score + motor_score",
+      "unit": "puntos",
+      "unit_en": "points",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "gcsTotal", "op": ">=", "value": 13 }, "label": "GCS 13-15: Traumatismo Craneoencefálico Leve", "label_en": "GCS 13-15: Minor Traumatic Brain Injury", "tone": "success", "text": "Consciencia conservada. Observación o TC si hay factores de riesgo.", "text_en": "Preserved consciousness. Observe or CT if risk factors." },
+        { "when": { "field": "gcsTotal", "op": "between", "value": [9, 12] }, "label": "GCS 9-12: Traumatismo Craneoencefálico Moderado", "label_en": "GCS 9-12: Moderate Traumatic Brain Injury", "tone": "info", "text": "Afectación moderada. TC urgente e ingreso neuroquirúrgico.", "text_en": "Moderate impairment. Urgent CT & neurosurgery consult." },
+        { "when": { "field": "gcsTotal", "op": "<=", "value": 8 }, "label": "GCS ≤ 8: Traumatismo Craneoencefálico Grave (Coma)", "label_en": "GCS ≤ 8: Severe Traumatic Brain Injury (Coma)", "tone": "warning", "text": "⚠️ GCS ≤ 8. Umbral de intubación oro-traqueal inmediata (RSI). Proteger vía aérea.", "text_en": "⚠️ GCS ≤ 8. Immediate RSI intubation indicated. Secure airway." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "resistor-calculator",
+    "title": "Calculadora del Código de Colores de Resistencias (4 Bandas)",
+    "title_en": "Resistor Color Code Calculator (4-Band)",
+    "slug": "calculadora-de-codigo-de-colores-de-resistencias-ohmios",
+    "category": "engineering",
+    "subcategory": "electrical",
+    "tags": ["resistencias", "codigo-de-colores", "ohmios", "bandas-de-resistencia", "tolerancia", "electronica"],
+    "tags_en": ["resistor", "color-code", "ohms", "resistor-bands", "tolerance", "electronics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el valor en Ohmios (Ω) y la tolerancia de una resistencia axial según el código de colores de sus 4 bandas.",
+    "shortDescription_en": "Compute resistance value in Ohms (Ω) and tolerance of an axial resistor using 4-band color coding.",
+    "longDescription": "Herramienta de electrónica analógica y prototipado. Decodifica las bandas de color internacionales (IEC 60062) para determinar el valor de ohmiaje y tolerancia.",
+    "longDescription_en": "Analog electronics and prototyping tool. Decodes international color bands (IEC 60062) to compute resistance and tolerance.",
+    "howToUse": [
+      "Selecciona el color de la Banda 1 (Primer Dígito).",
+      "Selecciona el color de la Banda 2 (Segundo Dígito).",
+      "Selecciona el color de la Banda 3 (Multiplicador).",
+      "Selecciona el color de la Banda 4 (Tolerancia).",
+      "Consulta el Valor Nominal en Ohmios (Ω) y el Rango Min/Máx por tolerancia."
+    ],
+    "howToUse_en": [
+      "Select Color for Band 1 (First Digit).",
+      "Select Color for Band 2 (Second Digit).",
+      "Select Color for Band 3 (Multiplier).",
+      "Select Color for Band 4 (Tolerance).",
+      "View Nominal Resistance in Ohms (Ω) and Min/Max Range."
+    ],
+    "methodology": "Valor (Ω) = (Dígito1 * 10 + Dígito2) * Multiplicador. Rango = Valor ± (Valor * Tolerancia / 100).",
+    "methodology_en": "Value (Ω) = (Digit1 * 10 + Digit2) * Multiplier. Range = Value ± (Value * Tolerance / 100)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Componentes Electrónicos y Decodificación IEC",
+    "role_en": "Electronic Components & IEC Code Specialist Assistant",
+    "includeData": ["resistorOhmsValue", "resistorTolerancePercent"],
+    "instructions": [
+      "Interpreta el valor de resistencia nominal obtenido en Kilo-Ohmios (kΩ) o Mega-Ohmios (MΩ).",
+      "Explica la función de la banda de tolerancia (Dorada ±5%, Plateada ±10%).",
+      "Recomienda valores estándar E12/E24 comerciales más cercanos."
+    ],
+    "instructions_en": [
+      "Interpret nominal resistance value in Kilo-Ohms (kΩ) or Mega-Ohms (MΩ).",
+      "Explain tolerance band function (Gold ±5%, Silver ±10%).",
+      "Recommend nearest commercial E12/E24 standard values."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "res-guide",
+      "icon": "🎨",
+      "title": "IEC 60062 Color Code Table",
+      "title_es": "Tabla del Código de Colores IEC 60062",
+      "content_html_en": "<p><b>Black:</b> 0 | <b>Brown:</b> 1 | <b>Red:</b> 2 | <b>Orange:</b> 3 | <b>Yellow:</b> 4</p><p><b>Green:</b> 5 | <b>Blue:</b> 6 | <b>Violet:</b> 7 | <b>Grey:</b> 8 | <b>White:</b> 9</p><p><b>Gold:</b> ×0.1 (±5% Tolerance) | <b>Silver:</b> ×0.01 (±10% Tolerance)</p>",
+      "content_html": "<p><b>Negro:</b> 0 | <b>Marrón:</b> 1 | <b>Rojo:</b> 2 | <b>Naranja:</b> 3 | <b>Amarillo:</b> 4</p><p><b>Verde:</b> 5 | <b>Azul:</b> 6 | <b>Violeta:</b> 7 | <b>Gris:</b> 8 | <b>Blanco:</b> 9</p><p><b>Dorado:</b> ×0.1 (Tolerancia ±5%) | <b>Plateado:</b> ×0.01 (Tolerancia ±10%)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "band1Digit",
+      "label": "Banda 1 (Primer Dígito)",
+      "label_en": "Band 1 (First Digit)",
+      "type": "select",
+      "default": "4",
+      "options": [
+        { "value": "1", "label": "Marrón (1)", "label_en": "Brown (1)" },
+        { "value": "2", "label": "Rojo (2)", "label_en": "Red (2)" },
+        { "value": "3", "label": "Naranja (3)", "label_en": "Orange (3)" },
+        { "value": "4", "label": "Amarillo (4)", "label_en": "Yellow (4)" },
+        { "value": "5", "label": "Verde (5)", "label_en": "Green (5)" },
+        { "value": "6", "label": "Azul (6)", "label_en": "Blue (6)" },
+        { "value": "7", "label": "Violeta (7)", "label_en": "Violet (7)" }
+      ]
+    },
+    {
+      "id": "band2Digit",
+      "label": "Banda 2 (Segundo Dígito)",
+      "label_en": "Band 2 (Second Digit)",
+      "type": "select",
+      "default": "7",
+      "options": [
+        { "value": "0", "label": "Negro (0)", "label_en": "Black (0)" },
+        { "value": "1", "label": "Marrón (1)", "label_en": "Brown (1)" },
+        { "value": "2", "label": "Rojo (2)", "label_en": "Red (2)" },
+        { "value": "3", "label": "Naranja (3)", "label_en": "Orange (3)" },
+        { "value": "4", "label": "Amarillo (4)", "label_en": "Yellow (4)" },
+        { "value": "5", "label": "Verde (5)", "label_en": "Green (5)" },
+        { "value": "6", "label": "Azul (6)", "label_en": "Blue (6)" },
+        { "value": "7", "label": "Violeta (7)", "label_en": "Violet (7)" }
+      ]
+    },
+    {
+      "id": "band3Multiplier",
+      "label": "Banda 3 (Multiplicador)",
+      "label_en": "Band 3 (Multiplier)",
+      "type": "select",
+      "default": "100",
+      "options": [
+        { "value": "1", "label": "Negro (x1)", "label_en": "Black (x1)" },
+        { "value": "10", "label": "Marrón (x10)", "label_en": "Brown (x10)" },
+        { "value": "100", "label": "Rojo (x100)", "label_en": "Red (x100)" },
+        { "value": "1000", "label": "Naranja (x1,000 / 1k)", "label_en": "Orange (x1,000 / 1k)" },
+        { "value": "10000", "label": "Amarillo (x10,000 / 10k)", "label_en": "Yellow (x10,000 / 10k)" },
+        { "value": "100000", "label": "Verde (x100,000 / 100k)", "label_en": "Green (x100,000 / 100k)" }
+      ]
+    },
+    {
+      "id": "resistorTolerancePercent",
+      "label": "Banda 4 (Tolerancia)",
+      "label_en": "Band 4 (Tolerance)",
+      "type": "select",
+      "default": "5",
+      "options": [
+        { "value": "1", "label": "Marrón (±1%)", "label_en": "Brown (±1%)" },
+        { "value": "2", "label": "Rojo (±2%)", "label_en": "Red (±2%)" },
+        { "value": "5", "label": "Dorado (±5%)", "label_en": "Gold (±5%)" },
+        { "value": "10", "label": "Plateado (±10%)", "label_en": "Silver (±10%)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "resistorOhmsValue",
+      "label": "Valor Nominal de Resistencia (Ω)",
+      "label_en": "Nominal Resistance Value (Ω)",
+      "expression": "(band1Digit * 10 + band2Digit) * band3Multiplier",
+      "unit": "Ω",
+      "unit_en": "Ω",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "resistorOhmsValue", "op": ">=", "value": 0 }, "label": "Resistencia Obtenida", "label_en": "Resistance Value Computed", "tone": "success", "text": "Valor de ohmiaje decodificado.", "text_en": "Ohmic value decoded." }
+      ]
+    },
+    {
+      "id": "minResistanceRange",
+      "label": "Límite Mínimo por Tolerancia (Ω)",
+      "label_en": "Minimum Tolerance Limit (Ω)",
+      "expression": "resistorOhmsValue - (resistorOhmsValue * (resistorTolerancePercent / 100))",
+      "unit": "Ω",
+      "unit_en": "Ω",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "maxResistanceRange",
+      "label": "Límite Máximo por Tolerancia (Ω)",
+      "label_en": "Maximum Tolerance Limit (Ω)",
+      "expression": "resistorOhmsValue + (resistorOhmsValue * (resistorTolerancePercent / 100))",
+      "unit": "Ω",
+      "unit_en": "Ω",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

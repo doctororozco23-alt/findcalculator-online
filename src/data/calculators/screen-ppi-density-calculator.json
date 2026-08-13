@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "screen-ppi-density-calculator",
+    "title": "Calculadora de Densidad de Píxeles por Pulgada (PPI / DPI)",
+    "title_en": "Screen Pixels Per Inch (PPI / DPI) & Resolution Calculator",
+    "slug": "calculadora-de-densidad-de-pixeles-por-pulgada-ppi-dpi-pantallas",
+    "category": "technology",
+    "subcategory": "internet",
+    "tags": ["ppi", "dpi", "densidad-de-pixeles", "pantallas", "resolucion", "monitores", "smartphones", "tecnologia"],
+    "tags_en": ["ppi", "dpi", "pixel-density", "screens", "resolution", "monitors", "smartphones", "technology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la densidad de píxeles por pulgada ($PPI = \\frac{\\sqrt{w^2 + h^2}}{diagonal}$) y el tamaño físico de píxel en pantallas de monitores o móviles.",
+    "shortDescription_en": "Calculate pixels per inch ($PPI = \\frac{\\sqrt{w^2 + h^2}}{diagonal}$) and physical dot pitch for monitors and mobile screens.",
+    "longDescription": "Herramienta de hardware, diseño UI/UX y monitores. Determina la nitidez visual de paneles 4K, 1440p, 1080p y móviles Retina.",
+    "longDescription_en": "Hardware, UI/UX design, and display panel tool. Computes visual sharpness of 4K, 1440p, 1080p, and mobile Retina displays.",
+    "howToUse": [
+      "Ingresa o Selecciona la Resolución Horizontal ($w$ píxeles, ej. 3840 para 4K).",
+      "Ingresa o Selecciona la Resolución Vertical ($h$ píxeles, ej. 2160 para 4K).",
+      "Ingresa la Diagonal de la Pantalla (pulgadas, ej. 27 pulgadas).",
+      "Consulta la Densidad PPI Calculada, Total de Píxeles (Megapíxeles) y Tamaño de Píxel (Dot Pitch)."
+    ],
+    "howToUse_en": [
+      "Enter or Select Horizontal Resolution ($w$ pixels, e.g. 3840 for 4K).",
+      "Enter or Select Vertical Resolution ($h$ pixels, e.g. 2160 for 4K).",
+      "Enter Display Diagonal Size (inches, e.g. 27 inches).",
+      "View Calculated PPI Density, Total Pixels (Megapixels), and Dot Pitch (mm)."
+    ],
+    "methodology": "Diagonal Píxeles = sqrt(width² + height²). PPI = DiagonalPíxeles / DiagonalPulgadas. Dot Pitch (mm) = 25.4 / PPI.",
+    "methodology_en": "Diagonal Pixels = sqrt(width² + height²). PPI = DiagonalPixels / DiagonalInches. Dot Pitch (mm) = 25.4 / PPI."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Tecnología de Pantallas y Diseño Visual UI/UX",
+    "role_en": "Display Screen Technology & UI/UX Visual Design Specialist Assistant",
+    "includeData": ["screenPpiDensityResult", "totalMegapixelsResult"],
+    "instructions": [
+      "Interpreta la densidad PPI obtenida (ej. >300 PPI para móviles Retina, ~110 PPI dulce para monitores de escritorio).",
+      "Explica la distancia de visión recomendada en relación con el límite de agudeza visual del ojo humano (~1 minuto de arco).",
+      "Muestra las implicaciones para el escalado de interfaz gráfica (DPI scaling 100% vs 150% en Windows/macOS)."
+    ],
+    "instructions_en": [
+      "Interpret calculated PPI density (e.g. >300 PPI mobile Retina rating, ~110 PPI desktop sweet spot).",
+      "Explain viewing distance recommendation relative to human eye visual acuity limit (~1 arcminute).",
+      "Show implications for UI scale factor (DPI scaling 100% vs 150% in OS settings)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "spd-guide",
+      "icon": "🖥️",
+      "title": "Display PPI Sharpness Benchmarks",
+      "title_es": "Pautas de Nitidez PPI en Pantallas",
+      "content_html_en": "<p><b>24\" 1080p Monitor:</b> ~92 PPI (Standard desktop sharpness).</p><p><b>27\" 1440p Monitor:</b> ~109 PPI (Ideal desktop sweet spot).</p><p><b>27\" 4K Monitor:</b> ~163 PPI (Ultra-sharp, requires OS scaling).</p><p><b>6.1\" Smartphone 1170p:</b> ~460 PPI (Retina sharp).</p>",
+      "content_html": "<p><b>Monitor 24\" 1080p:</b> ~92 PPI (Nitidez escritorio estándar).</p><p><b>Monitor 27\" 1440p:</b> ~109 PPI (Punto dulce ideal de escritorio).</p><p><b>Monitor 27\" 4K:</b> ~163 PPI (Ultra nítido, requiere escalado SO).</p><p><b>Móvil 6.1\" 1170p:</b> ~460 PPI (Nitidez Retina).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "resWidthPixels",
+      "label": "Resolución Horizontal (píxeles)",
+      "label_en": "Horizontal Resolution (pixels)",
+      "type": "number",
+      "default": 2560,
+      "min": 100,
+      "max": 16000,
+      "step": 10,
+      "required": true
+    },
+    {
+      "id": "resHeightPixels",
+      "label": "Resolución Vertical (píxeles)",
+      "label_en": "Vertical Resolution (pixels)",
+      "type": "number",
+      "default": 1440,
+      "min": 100,
+      "max": 16000,
+      "step": 10,
+      "required": true
+    },
+    {
+      "id": "screenDiagonalInches",
+      "label": "Diagonal de la Pantalla (pulgadas)",
+      "label_en": "Screen Diagonal (inches)",
+      "type": "number",
+      "default": 27.0,
+      "min": 1,
+      "max": 200,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "diagonalPixelsVal",
+      "label": "Diagonal en Píxeles",
+      "label_en": "Diagonal in Pixels",
+      "expression": "sqrt((resWidthPixels ^ 2) + (resHeightPixels ^ 2))",
+      "unit": "px",
+      "unit_en": "px",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "screenPpiDensityResult",
+      "label": "Densidad de Píxeles Calculada (PPI / DPI)",
+      "label_en": "Calculated Pixel Density (PPI / DPI)",
+      "expression": "screenDiagonalInches > 0 ? (diagonalPixelsVal / screenDiagonalInches) : 0",
+      "unit": "PPI",
+      "unit_en": "PPI",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "screenPpiDensityResult", "op": ">=", "value": 0 }, "label": "Densidad PPI Calculada", "label_en": "PPI Density Computed", "tone": "success", "text": "Densidad de píxeles por pulgada cuantificada.", "text_en": "Pixels per inch density quantified." }
+      ]
+    },
+    {
+      "id": "totalMegapixelsResult",
+      "label": "Total de Píxeles (Megapíxeles - MP)",
+      "label_en": "Total Pixels (Megapixels - MP)",
+      "expression": "(resWidthPixels * resHeightPixels) / 1000000",
+      "unit": "MP",
+      "unit_en": "MP",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

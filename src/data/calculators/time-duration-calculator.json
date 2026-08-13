@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "time-duration-calculator",
+    "title": "Calculadora de Duración de Tiempo entre Fechas y Horas",
+    "title_en": "Time Duration Calculator (Between Dates & Times)",
+    "slug": "calculadora-de-duracion-de-tiempo-fechas-horas",
+    "category": "datetime",
+    "subcategory": "time",
+    "tags": ["duracion", "tiempo-transcurrido", "calculadora-de-duracion", "lapso-de-tiempo", "minutos-totales"],
+    "tags_en": ["duration", "elapsed-time", "duration-calculator", "time-span", "total-minutes"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Clock"
+  },
+  "content": {
+    "shortDescription": "Calcula el lapso exacto de tiempo transcurrido en días, horas y minutos entre un momento de inicio y uno de fin.",
+    "shortDescription_en": "Compute exact elapsed time span in days, hours, and minutes between a start moment and an end moment.",
+    "longDescription": "Herramienta de precisión temporal. Calcula la duración entre dos eventos determinados por fecha y hora, desglosando el resultado en total de días, horas y minutos.",
+    "longDescription_en": "Time precision tool. Computes duration between two events specified by date and time, breaking down result into days, hours, and minutes.",
+    "howToUse": [
+      "Selecciona la Fecha de Inicio y la Hora de Inicio.",
+      "Selecciona la Fecha de Fin y la Hora de Fin.",
+      "Consulta la Duración Total en días, horas acumuladas y minutos totales."
+    ],
+    "howToUse_en": [
+      "Select Start Date and Start Time.",
+      "Select End Date and End Time.",
+      "View Total Duration in days, accumulated hours, and total minutes."
+    ],
+    "methodology": "Duración = (daysBetween(startDate, endDate) * 24) + hoursBetweenTimes(startTime, endTime).",
+    "methodology_en": "Duration = (daysBetween(startDate, endDate) * 24) + hoursBetweenTimes(startTime, endTime)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Lapsos y Duración Temporal",
+    "role_en": "Time Span & Duration Specialist Assistant",
+    "includeData": ["totalDurationHours", "totalDurationDays", "totalDurationMins"],
+    "instructions": [
+      "Interpreta la duración total transcurrida en días y horas.",
+      "Expresa el resultado en semanas si la duración supera los 7 días.",
+      "Muestra la conversión a minutos totales acumulados."
+    ],
+    "instructions_en": [
+      "Interpret total elapsed duration in days and hours.",
+      "Express result in weeks if duration exceeds 7 days.",
+      "Show conversion to total accumulated minutes."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "dur-guide",
+      "icon": "⏱️",
+      "title": "Understanding Time Duration",
+      "title_es": "Comprensión de la Duración Temporal",
+      "content_html_en": "<p><b>Elapsed Time:</b> Continuous duration between start and end timestamps taking into account date changes and daylight savings.</p>",
+      "content_html": "<p><b>Tiempo Transcurrido:</b> Duración continua entre marcas de tiempo inicial y final considerando cambios de fecha.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "startDate",
+      "label": "Fecha de Inicio",
+      "label_en": "Start Date",
+      "type": "date",
+      "default": "2026-08-01",
+      "required": true
+    },
+    {
+      "id": "startTime",
+      "label": "Hora de Inicio (HH:MM)",
+      "label_en": "Start Time (HH:MM)",
+      "type": "select",
+      "default": "08:00",
+      "options": [
+        { "value": "00:00", "label": "12:00 AM (Medianoche)", "label_en": "12:00 AM (Midnight)" },
+        { "value": "08:00", "label": "08:00 AM", "label_en": "08:00 AM" },
+        { "value": "12:00", "label": "12:00 PM (Mediodía)", "label_en": "12:00 PM (Noon)" },
+        { "value": "18:00", "label": "06:00 PM", "label_en": "06:00 PM" }
+      ]
+    },
+    {
+      "id": "endDate",
+      "label": "Fecha de Fin",
+      "label_en": "End Date",
+      "type": "date",
+      "default": "2026-08-05",
+      "required": true
+    },
+    {
+      "id": "endTime",
+      "label": "Hora de Fin (HH:MM)",
+      "label_en": "End Time (HH:MM)",
+      "type": "select",
+      "default": "14:30",
+      "options": [
+        { "value": "08:00", "label": "08:00 AM", "label_en": "08:00 AM" },
+        { "value": "14:30", "label": "02:30 PM", "label_en": "02:30 PM" },
+        { "value": "18:00", "label": "06:00 PM", "label_en": "06:00 PM" },
+        { "value": "23:59", "label": "11:59 PM", "label_en": "11:59 PM" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "rawDays",
+      "label": "Días de Calendario",
+      "label_en": "Calendar Days",
+      "expression": "daysBetween(startDate, endDate)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalDurationHours",
+      "label": "Horas Totales Transcurridas",
+      "label_en": "Total Elapsed Hours",
+      "expression": "max(0, rawDays * 24 + hoursBetweenTimes(startTime, endTime))",
+      "unit": "hrs",
+      "unit_en": "hrs",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalDurationHours", "op": ">=", "value": 0 }, "label": "Duración Evaluada", "label_en": "Duration Evaluated", "tone": "success", "text": "Lapso de tiempo transcurrido calculado.", "text_en": "Elapsed time duration computed." }
+      ]
+    },
+    {
+      "id": "totalDurationDays",
+      "label": "Días Equivalentes (Horas / 24)",
+      "label_en": "Equivalent Days (Hours / 24)",
+      "expression": "totalDurationHours / 24",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalDurationMins",
+      "label": "Minutos Totales Transcurridos",
+      "label_en": "Total Elapsed Minutes",
+      "expression": "totalDurationHours * 60",
+      "unit": "min",
+      "unit_en": "min",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

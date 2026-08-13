@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "charles-law-calculator",
+    "title": "Calculadora de Ley de Charles (V₁ / T₁ = V₂ / T₂)",
+    "title_en": "Charles's Law Calculator (V₁ / T₁ = V₂ / T₂)",
+    "slug": "calculadora-de-ley-de-charles-volumen-temperatura",
+    "category": "chemistry",
+    "subcategory": "gas-laws",
+    "tags": ["ley-de-charles", "volumen", "temperatura", "expansion-termica", "gases", "isobara", "quimica"],
+    "tags_en": ["charles-law", "volume", "temperature", "thermal-expansion", "gases", "isobaric", "chemistry"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la expansión o contracción volumétrica de un gas ($V_1 / T_1 = V_2 / T_2$) al variar la temperatura absoluta a presión constante.",
+    "shortDescription_en": "Calculate gas volumetric expansion or contraction ($V_1 / T_1 = V_2 / T_2$) with varying absolute temperature at constant pressure.",
+    "longDescription": "Herramienta de fisicoquímica de procesos isobáricos. Demuestra la proporcionalidad directa entre el volumen ocupado y la temperatura en Kelvin.",
+    "longDescription_en": "Isobaric physical chemistry tool. Demonstrates direct proportionality between volume occupied and absolute temperature in Kelvin.",
+    "howToUse": [
+      "Ingresa el Volumen Inicial ($V_1$ en Litros).",
+      "Ingresa la Temperatura Inicial ($T_1$ en Kelvin - K).",
+      "Ingresa la Temperatura Final ($T_2$ en Kelvin - K).",
+      "Consulta el Volumen Final Resultante ($V_2$ en Litros) a presión constante."
+    ],
+    "howToUse_en": [
+      "Enter Initial Volume ($V_1$ in Liters).",
+      "Enter Initial Temperature ($T_1$ in Kelvin - K).",
+      "Enter Final Temperature ($T_2$ in Kelvin - K).",
+      "View Resulting Final Volume ($V_2$ in Liters) at constant pressure."
+    ],
+    "methodology": "Ley de Charles: V1 / T1 = V2 / T2  ⇒  V2 = (V1 * T2) / T1 (Proceso Isobárico).",
+    "methodology_en": "Charles's Law: V1 / T1 = V2 / T2  ⇒  V2 = (V1 * T2) / T1 (Isobaric Process)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Fisicoquímica y Procesos Isobáricos",
+    "role_en": "Physical Chemistry & Isobaric Processes Specialist Assistant",
+    "includeData": ["finalVolumeV2CharlesResult"],
+    "instructions": [
+      "Interpreta la variación de volumen causada por la expansión o contracción térmica.",
+      "Explica la dependencia directa con la temperatura absoluta en Kelvin ($K = °C + 273.15$).",
+      "Muestra ejemplos cotidianos en globos aerostáticos y neumáticos sometidos al calor."
+    ],
+    "instructions_en": [
+      "Interpret volume change caused by thermal expansion or contraction.",
+      "Explain direct dependence on absolute temperature in Kelvin ($K = °C + 273.15$).",
+      "Show everyday examples in hot air balloons and tires exposed to heat."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "chr-guide",
+      "icon": "🎈",
+      "title": "Charles's Law Isobaric Principle",
+      "title_es": "Principio Isobárico de la Ley de Charles",
+      "content_html_en": "<p><b>Formula:</b> V₁ / T₁ = V₂ / T₂</p><p><b>Condition:</b> Pressure (P) and moles (n) remain strictly constant. Temperature MUST be in Kelvin.</p>",
+      "content_html": "<p><b>Fórmula:</b> V₁ / T₁ = V₂ / T₂</p><p><b>Condición:</b> La Presión (P) y los moles (n) se mantienen estrictamente constantes. La temperatura DEBE expresarse en Kelvin.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "initialVolumeV1Charles",
+      "label": "Volumen Inicial (V₁ en Litros)",
+      "label_en": "Initial Volume (V₁ in Liters)",
+      "type": "number",
+      "default": 4.0,
+      "min": 0.01,
+      "max": 10000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "initialTempT1Kelvin",
+      "label": "Temperatura Inicial (T₁ en Kelvin - K)",
+      "label_en": "Initial Temperature (T₁ in Kelvin - K)",
+      "type": "number",
+      "default": 293.15,
+      "min": 1,
+      "max": 3000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "finalTempT2Kelvin",
+      "label": "Temperatura Final (T₂ en Kelvin - K)",
+      "label_en": "Final Temperature (T₂ in Kelvin - K)",
+      "type": "number",
+      "default": 373.15,
+      "min": 1,
+      "max": 3000,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "finalVolumeV2CharlesResult",
+      "label": "Volumen Final Resultante (V₂ en Litros)",
+      "label_en": "Resulting Final Volume (V₂ in Liters)",
+      "expression": "initialTempT1Kelvin > 0 ? ((initialVolumeV1Charles * finalTempT2Kelvin) / initialTempT1Kelvin) : 0",
+      "unit": "L",
+      "unit_en": "L",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "finalVolumeV2CharlesResult", "op": ">=", "value": 0 }, "label": "Volumen Calculado", "label_en": "Volume Computed", "tone": "success", "text": "Volumen por expansión/contracción isobárica evaluado.", "text_en": "Isobaric expansion/contraction volume evaluated." }
+      ]
+    }
+  ]
+}

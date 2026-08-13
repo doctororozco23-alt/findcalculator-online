@@ -1,0 +1,228 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "one-rep-max-calculator",
+    "title": "Calculadora de Repetición Máxima (1RM - 7 Fórmulas Deportivas)",
+    "title_en": "One Rep Max Calculator (1RM - 7 Sports Formulas)",
+    "slug": "1rm-repeticion-maxima",
+    "category": "fitness",
+    "subcategory": "training",
+    "tags": ["1rm", "repeticion-maxima", "epley", "brzycki", "fuerza"],
+    "tags_en": ["1rm", "one-rep-max", "epley", "brzycki", "strength"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula tu fuerza máxima teórica de 1 repetición (1RM) y tus porcentajes de carga de entrenamiento mediante 7 fórmulas validadas en ciencias del deporte.",
+    "shortDescription_en": "Calculate your theoretical maximum strength (1RM) and workout intensity percentages using 7 validated sports science formulas.",
+    "longDescription": "Auditoría de fuerza máxima y periodización del entrenamiento. Estima tu peso máximo de 1 repetición (1RM) a partir de submáximas (de 1 a 10 repeticiones) comparando las ecuaciones de Epley, Brzycki, Lander, Lombardi, Mayhew, O'Conner y Wathan.",
+    "longDescription_en": "Maximum strength and workout periodization audit. Estimate 1-Repetition Maximum (1RM) from submaximal lifts (1-10 reps) comparing Epley, Brzycki, Lander, Lombardi, Mayhew, O'Conner, and Wathan equations.",
+    "howToUse": [
+      "Ingresa el peso levantado en el ejercicio (press banca, sentadilla, peso muerto, etc.).",
+      "Ingresa el número de repeticiones completadas con técnica correcta (entre 1 y 10 repeticiones).",
+      "Selecciona la fórmula deportiva de tu preferencia (Epley o Brzycki).",
+      "Consulta tu 1RM estimado y la tabla de porcentajes de carga (95%, 85%, 75%, 70%)."
+    ],
+    "howToUse_en": [
+      "Enter weight lifted during exercise (bench press, squat, deadlift, overhead press).",
+      "Enter number of completed repetitions with proper form (between 1 and 10 reps).",
+      "Select your preferred sports science formula (Epley or Brzycki).",
+      "View estimated 1RM and percentage load training chart (95%, 85%, 75%, 70%)."
+    ],
+    "methodology": "Fórmulas de Ciencias del Deporte: 1. Epley: 1RM = Peso × (1 + Reps/30). 2. Brzycki: 1RM = Peso × (36 / (37 - Reps)). 3. Lander: 1RM = (100×Peso) / (101.3 - 2.67×Reps). Ecuaciones validadas para sub-máximas de 1 a 10 reps.",
+    "methodology_en": "Sports Science Formulas: 1. Epley: 1RM = Weight × (1 + Reps/30). 2. Brzycki: 1RM = Weight × (36 / (37 - Reps)). 3. Lander: 1RM = (100×Weight) / (101.3 - 2.67×Reps)."
+  },
+  "guideSections": [
+    {
+      "id": "1rm-percentages-guide",
+      "icon": "🏋️",
+      "title": "Training Zones Based on % 1RM",
+      "title_es": "Zonas de Entrenamiento según el % de 1RM",
+      "content_html_en": "<p><b>Maximal Strength (90-100% 1RM):</b> 1-3 Reps. Neural adaptation and maximal strength capacity.</p><p><b>Hypertrophy Zone (75-85% 1RM):</b> 6-12 Reps. Optimal mechanical tension and metabolic stress for muscle growth.</p><p><b>Muscular Endurance (60-70% 1RM):</b> 15-20 Reps. Capillary density and metabolic fatigue resistance.</p>",
+      "content_html": "<p><b>Fuerza Máxima (90-100% 1RM):</b> 1-3 Repeticiones. Reclutamiento neuromuscular y fuerza máxima.</p><p><b>Zona de Hipertrofia (75-85% 1RM):</b> 6-12 Repeticiones. Tensión mecánica óptima para crecimiento muscular.</p><p><b>Resistencia Muscular (60-70% 1RM):</b> 15-20 Repeticiones. Densidad capilar y tolerancia al lactato.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "liftedWeight",
+      "label": "Peso levantado en el ejercicio",
+      "label_en": "Weight Lifted in Exercise",
+      "type": "number",
+      "default": 100,
+      "min": 5,
+      "max": 600,
+      "step": 2.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [5, 600], "message": "Peso entre 5 y 600", "message_en": "Weight between 5 and 600" }]
+    },
+    {
+      "id": "repsCompleted",
+      "label": "Repeticiones completadas (1 a 10 reps)",
+      "label_en": "Repetitions Completed (1 to 10 reps)",
+      "type": "slider",
+      "default": 5,
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "reps",
+      "unit_en": "reps",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "formulaChoice",
+      "label": "Fórmula deportiva de estimación",
+      "label_en": "Sports Estimation Formula",
+      "type": "select",
+      "default": "epley",
+      "options": [
+        { "value": "epley", "label": "Fórmula Epley (1985 - Estándar General de Fuerza)", "label_en": "Epley Formula (1985 - General Strength Standard)" },
+        { "value": "brzycki", "label": "Fórmula Brzycki (1993 - Submáxima Precisa)", "label_en": "Brzycki Formula (1993 - Accurate Submaximal)" },
+        { "value": "lander", "label": "Fórmula Lander (1985)", "label_en": "Lander Formula (1985)" },
+        { "value": "lombardi", "label": "Fórmula Lombardi (1989)", "label_en": "Lombardi Formula (1989)" }
+      ],
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "epley1rm",
+      "label": "1RM Epley",
+      "label_en": "Epley 1RM",
+      "expression": "liftedWeight * (1 + (repsCompleted / 30))",
+      "unit": { "follows": "liftedWeight" },
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "brzycki1rm",
+      "label": "1RM Brzycki",
+      "label_en": "Brzycki 1RM",
+      "expression": "liftedWeight * (36 / (37 - repsCompleted))",
+      "unit": { "follows": "liftedWeight" },
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "lander1rm",
+      "label": "1RM Lander",
+      "label_en": "Lander 1RM",
+      "expression": "(100 * liftedWeight) / (101.3 - (2.67123 * repsCompleted))",
+      "unit": { "follows": "liftedWeight" },
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "lombardi1rm",
+      "label": "1RM Lombardi",
+      "label_en": "Lombardi 1RM",
+      "expression": "liftedWeight * (repsCompleted ^ 0.10)",
+      "unit": { "follows": "liftedWeight" },
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "selected1RM",
+      "label": "Fuerza Máxima Teórica Calculada (1RM)",
+      "label_en": "Calculated 1-Repetition Maximum (1RM)",
+      "expression": "formulaChoice == 'brzycki' ? brzycki1rm : (formulaChoice == 'lander' ? lander1rm : (formulaChoice == 'lombardi' ? lombardi1rm : epley1rm))",
+      "unit": { "follows": "liftedWeight" },
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "selected1RM", "op": ">", "value": 0 }, "label": "Capacidad de Fuerza Máxima", "label_en": "Maximal Strength Capacity", "tone": "success", "text": "Peso teórico máximo para 1 repetición completa con técnica estricta.", "text_en": "Theoretical maximum weight for 1 single repetition with strict form." }
+      ]
+    },
+    {
+      "id": "weight95Percent",
+      "label": "95% 1RM (Fuerza Máxima / 2 Reps)",
+      "label_en": "95% 1RM (Max Strength / 2 Reps Target)",
+      "expression": "selected1RM * 0.95",
+      "unit": { "follows": "liftedWeight" },
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "weight85Percent",
+      "label": "85% 1RM (Hipertrofia Pesada / 6 Reps)",
+      "label_en": "85% 1RM (Heavy Hypertrophy / 6 Reps Target)",
+      "expression": "selected1RM * 0.85",
+      "unit": { "follows": "liftedWeight" },
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "weight75Percent",
+      "label": "75% 1RM (Hipertrofia Estándar / 10 Reps)",
+      "label_en": "75% 1RM (Standard Hypertrophy / 10 Reps Target)",
+      "expression": "selected1RM * 0.75",
+      "unit": { "follows": "liftedWeight" },
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "weight70Percent",
+      "label": "70% 1RM (Resistencia Muscular / 12 Reps)",
+      "label_en": "70% 1RM (Muscular Endurance / 12 Reps Target)",
+      "expression": "selected1RM * 0.70",
+      "unit": { "follows": "liftedWeight" },
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "protein-calculator", "type": "static", "message": "Calcula la proteína necesaria para hipertrofia", "message_en": "Calculate protein targets for hypertrophy", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Entrenador de Fuerza y Ciencias del Deporte",
+    "role_en": "Strength & Conditioning Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "entusiasta y motivador",
+    "includeData": ["selected1RM", "weight85Percent", "weight75Percent", "liftedWeight", "repsCompleted"],
+    "instructions": [
+      "Sintetiza la repetición máxima 1RM estimada, la carga recomendada para 6 reps (85% 1RM) y 10 reps (75% 1RM) en 2 frases concisas.",
+      "Destaca la importancia de calentar progresivamente antes de intentar cargas cercanas al 90-100% de 1RM."
+    ],
+    "instructions_en": [
+      "Summarize estimated 1RM, recommended load for 6 reps (85% 1RM), and 10 reps (75% 1RM) in 2 concise sentences.",
+      "Highlight the importance of thorough warm-up sets prior to working with loads near 90-100% 1RM."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Repetición Máxima (1RM - 7 Fórmulas) | CalculadoraHub",
+    "metaTitle_en": "One Rep Max Calculator (1RM - 7 Sports Formulas) | CalculadoraHub",
+    "metaDescription": "Calcula tu 1RM de fuerza máxima con Epley, Brzycki y Lander. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your 1-Repetition Maximum (1RM) using Epley, Brzycki, and Lander formulas. Free, instant results.",
+    "keywords": ["1rm calculator", "repeticion maxima", "epley formula", "brzycki 1rm", "fuerza maxima"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

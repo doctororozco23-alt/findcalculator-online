@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "log-calculator",
+    "title": "Calculadora de Logaritmos (Base 10, Natural ln y Base b)",
+    "title_en": "Logarithm Calculator (Base 10, Natural ln & Base b)",
+    "slug": "calculadora-de-logaritmos-base-10-natural-ln",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["logaritmos", "ln", "log10", "base-logaritmica", "matematicas", "algebra"],
+    "tags_en": ["logarithms", "ln", "log10", "log-base", "math", "algebra"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el logaritmo común ( $\\log_{10}$ ), el logaritmo natural ( $\\ln$ ) y logaritmos en cualquier base $b$ ( $\\log_b(x)$ ).",
+    "shortDescription_en": "Calculate common logarithm ( $\\log_{10}$ ), natural logarithm ( $\\ln$ ), and logarithm to any custom base $b$ ( $\\log_b(x)$ ).",
+    "longDescription": "Herramienta matemática para la resolución de funciones logarítmicas. Aplica la fórmula de cambio de base $\\log_b(x) = \\ln(x) / \\ln(b)$ para evaluar logaritmos de cualquier argumento positivo.",
+    "longDescription_en": "Mathematical tool for solving logarithmic functions. Applies the change of base formula $\\log_b(x) = \\ln(x) / \\ln(b)$ for any positive argument.",
+    "howToUse": [
+      "Ingresa el Argumento positivo ($x > 0$).",
+      "Ingresa la Base del logaritmo ($b > 0, b \\neq 1$) para la base personalizada.",
+      "Consulta el logaritmo en base $b$ calculado, el logaritmo natural ($\\ln$) y el logaritmo común en base 10 ($\\log_{10}$)."
+    ],
+    "howToUse_en": [
+      "Enter positive Argument ($x > 0$).",
+      "Enter Logarithm Base ($b > 0, b \\neq 1$) for custom base evaluation.",
+      "View calculated log base $b$, natural log ($\\ln$), and common log base 10 ($\\log_{10}$)."
+    ],
+    "methodology": "Definición: log_b(x) = y  <=>  b^y = x. Cambio de base: log_b(x) = ln(x) / ln(b). Logaritmo Natural: ln(x) = log_e(x).",
+    "methodology_en": "Definition: log_b(x) = y  <=>  b^y = x. Change of base: log_b(x) = ln(x) / ln(b). Natural log: ln(x) = log_e(x)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Funciones Logarítmicas",
+    "role_en": "Logarithmic Functions Specialist Assistant",
+    "includeData": ["logBaseBResult", "naturalLn", "commonLog10"],
+    "instructions": [
+      "Explica la regla de cambio de base aplicada (log_b(x) = ln(x) / ln(b)).",
+      "Verifica que el argumento x sea positivo (x > 0) y la base b != 1.",
+      "Muestra la equivalencia en potencia exponencial (b^y = x)."
+    ],
+    "instructions_en": [
+      "Explain the applied change of base rule (log_b(x) = ln(x) / ln(b)).",
+      "Verify argument x > 0 and base b != 1.",
+      "Show equivalent exponential power form (b^y = x)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "log-guide",
+      "icon": "📜",
+      "title": "Logarithm Rules & Change of Base",
+      "title_es": "Reglas de los Logaritmos y Cambio de Base",
+      "content_html_en": "<p><b>Product Rule:</b> log_b(x · y) = log_b(x) + log_b(y)</p><p><b>Quotient Rule:</b> log_b(x / y) = log_b(x) - log_b(y)</p><p><b>Power Rule:</b> log_b(xᵖ) = p · log_b(x)</p><p><b>Change of Base:</b> log_b(x) = ln(x) / ln(b)</p>",
+      "content_html": "<p><b>Regla del Producto:</b> log_b(x · y) = log_b(x) + log_b(y)</p><p><b>Regla del Cociente:</b> log_b(x / y) = log_b(x) - log_b(y)</p><p><b>Regla de la Potencia:</b> log_b(xᵖ) = p · log_b(x)</p><p><b>Cambio de Base:</b> log_b(x) = ln(x) / ln(b)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "argX",
+      "label": "Argumento del Logaritmo (x)",
+      "label_en": "Logarithm Argument (x)",
+      "type": "number",
+      "default": 100,
+      "min": 0.00001,
+      "max": 1000000000,
+      "step": 0.01,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.00001, 1000000000], "message": "El argumento debe ser mayor a cero (x > 0)", "message_en": "Argument must be greater than zero (x > 0)" }]
+    },
+    {
+      "id": "baseB",
+      "label": "Base del Logaritmo (b)",
+      "label_en": "Logarithm Base (b)",
+      "type": "number",
+      "default": 10,
+      "min": 0.00001,
+      "max": 1000,
+      "step": 0.1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.00001, 1000], "message": "La base debe ser mayor a cero y distinta de 1", "message_en": "Base must be > 0 and ≠ 1" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "logBaseBResult",
+      "label": "Logaritmo en Base b (log_b(x))",
+      "label_en": "Logarithm Base b (log_b(x))",
+      "expression": "(argX > 0 && baseB > 0 && baseB != 1) ? (log(argX) / log(baseB)) : 0",
+      "unit": "",
+      "precision": 6,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "logBaseBResult", "op": ">=", "value": 0 }, "label": "Logaritmo Evaluado", "label_en": "Logarithm Evaluated", "tone": "success", "text": "Evaluación logarítmica realizada con éxito.", "text_en": "Logarithmic evaluation completed successfully." }
+      ]
+    },
+    {
+      "id": "naturalLn",
+      "label": "Logaritmo Natural (ln(x) = log_e(x))",
+      "label_en": "Natural Logarithm (ln(x))",
+      "expression": "argX > 0 ? log(argX) : 0",
+      "unit": "",
+      "precision": 6,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "commonLog10",
+      "label": "Logaritmo Común (log10(x))",
+      "label_en": "Common Logarithm (log10(x))",
+      "expression": "argX > 0 ? (log(argX) / log(10)) : 0",
+      "unit": "",
+      "precision": 6,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

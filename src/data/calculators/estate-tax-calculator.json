@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "estate-tax-calculator",
+    "title": "Calculadora de Impuestos de Herencia y Patrimonio",
+    "title_en": "Estate Tax & Inheritance Calculator",
+    "slug": "impuestos-herencia-patrimonio",
+    "category": "finance",
+    "subcategory": "taxes",
+    "tags": ["herencia", "patrimonio", "impuestos"],
+    "tags_en": ["estate-tax", "inheritance", "taxes"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Scale"
+  },
+  "content": {
+    "shortDescription": "Calcula los impuestos sobre la herencia y el patrimonio aplicables según el valor bruto de los activos transmitidos.",
+    "shortDescription_en": "Calculate estimated estate tax liabilities and net inherited asset distribution value.",
+    "longDescription": "Estima los impuestos federales o estatales aplicables a la transmisión de un patrimonio o herencia basándote en la exención fiscal legal (ej. 13.61M USD) y el tipo impositivo marginal.",
+    "longDescription_en": "Estimate estate and inheritance tax liabilities on asset transfers after applying individual federal lifetime exemption thresholds.",
+    "howToUse": [
+      "Ingresa el valor bruto total del patrimonio o herencia.",
+      "Ingresa la exención fiscal aplicable (ej. exención legal estándar).",
+      "Establece el tipo impositivo marginal aplicable (%).",
+      "Consulta el impuesto a pagar y el patrimonio neto transmitido."
+    ],
+    "howToUse_en": [
+      "Enter total gross estate asset value and active currency.",
+      "Enter lifetime tax exemption allowance threshold.",
+      "Set marginal estate tax rate (%).",
+      "View estimated tax owed and net inheritance distributed."
+    ],
+    "methodology": "Fórmula Impuesto Herencia: Base Imponible = max(Patrimonio - Exención, 0). Impuesto = Base Imponible × (Tasa / 100).",
+    "methodology_en": "Estate Tax Formula: Taxable Estate = max(Gross Estate - Exemption, 0). Tax Owed = Taxable Estate × (Rate / 100)."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "📜",
+      "title": "Estate Tax Exemption Thresholds",
+      "title_es": "Umbrales de Exención en Impuestos de Herencia",
+      "content_html_en": "<p>Estate taxes only apply to the portion of an estate that exceeds the federal lifetime exemption limit, protecting small and medium family inheritances.</p>",
+      "content_html": "<p>Los impuestos sobre la herencia solo se aplican a la fracción del patrimonio que supera el umbral de exención legal fijado por la ley.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "grossEstateValue",
+      "label": "Valor bruto total del patrimonio / herencia",
+      "label_en": "Total Gross Estate Assets Value",
+      "type": "currency",
+      "default": 1500000,
+      "min": 10000,
+      "max": 100000000,
+      "step": 50000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "taxExemptionLimit",
+      "label": "Umbral de exención fiscal de la ley",
+      "label_en": "Lifetime Tax Exemption Threshold",
+      "type": "currency",
+      "default": 1000000,
+      "min": 0,
+      "max": 50000000,
+      "step": 50000,
+      "unit": { "follows": "grossEstateValue" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "estateTaxRate",
+      "label": "Tipo impositivo marginal sobre excedente (%)",
+      "label_en": "Marginal Estate Tax Rate (%)",
+      "type": "slider",
+      "default": 40,
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "taxableEstateAmount",
+      "label": "Base Imponible Sujeta a Impuestos",
+      "label_en": "Taxable Estate Value",
+      "expression": "max(grossEstateValue - taxExemptionLimit, 0)",
+      "unit": { "follows": "grossEstateValue" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "estimatedEstateTax",
+      "label": "Impuesto sobre Herencia Estimado a Pagar",
+      "label_en": "Estimated Estate Tax Owed",
+      "expression": "taxableEstateAmount * (estateTaxRate / 100)",
+      "unit": { "follows": "grossEstateValue" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "estimatedEstateTax", "op": ">", "value": 0 }, "label": "Impuesto Calculado", "label_en": "Estate Tax Liability", "tone": "info", "text": "Monto tributario adeudado sobre la porción que excede la exención.", "text_en": "Estimated tax liability owed on net portion exceeding legal exemption." }
+      ]
+    },
+    {
+      "id": "netInheritedValue",
+      "label": "Patrimonio Neto Transmitido a Herederos",
+      "label_en": "Net Assets Distributed to Heirs",
+      "expression": "grossEstateValue - estimatedEstateTax",
+      "unit": { "follows": "grossEstateValue" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "salary-take-home-calculator", "type": "static", "message": "Calcula impuestos sobre salario", "message_en": "Calculate income tax take-home pay", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Impuestos de Herencia y Patrimonio",
+    "role_en": "Estate & Inheritance Tax Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["estimatedEstateTax", "netInheritedValue", "taxableEstateAmount", "grossEstateValue"],
+    "instructions": [
+      "Sintetiza el impuesto sobre herencia a pagar y el patrimonio neto transmitido en 2 frases concisas.",
+      "Destaca que la exención fiscal protege los patrimonios por debajo del límite legal."
+    ],
+    "instructions_en": [
+      "Summarize estimated estate tax owed and net inheritance distributed in 2 concise sentences.",
+      "Highlight that the lifetime exemption shields estates below statutory thresholds from tax."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Impuestos de Herencia y Patrimonio | CalculadoraHub",
+    "metaTitle_en": "Estate Tax & Inheritance Calculator | CalculadoraHub",
+    "metaDescription": "Calcula los impuestos sobre transmisiones patrimoniales y herencias. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate estate tax liabilities and net inherited value distributed. Free, instant results.",
+    "keywords": ["estate tax calculator", "impuesto herencia", "patrimonio", "exencion fiscal"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

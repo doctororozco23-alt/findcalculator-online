@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "horsepower-calculator",
+    "title": "Calculadora de Caballos de Fuerza (HP por Torque y RPM)",
+    "title_en": "Horsepower Calculator (HP from Torque & RPM)",
+    "slug": "calculadora-de-caballos-de-fuerza-hp-torque-rpm",
+    "category": "transport",
+    "subcategory": "fuel",
+    "tags": ["caballos-de-fuerza", "hp", "torque", "rpm", "potencia-motor", "automotriz", "mecanica"],
+    "tags_en": ["horsepower", "hp", "torque", "rpm", "engine-power", "automotive", "mechanics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula los Caballos de Fuerza ($HP$) de un motor a partir del torque en lb-ft y las revoluciones por minuto ($RPM$).",
+    "shortDescription_en": "Compute engine Horsepower ($HP$) from torque in lb-ft and revolutions per minute ($RPM$).",
+    "longDescription": "Herramienta de ingeniería mecánica y automotriz. Aplica la constante fundamental $5252$ para determinar la potencia entregada por el cigüeñal del motor.",
+    "longDescription_en": "Mechanical and automotive engineering tool. Applies the fundamental constant $5252$ to determine crankshaft power output.",
+    "howToUse": [
+      "Ingresa el Torque del Motor en libras-pie (lb-ft) o N·m.",
+      "Ingresa las Revoluciones por Minuto (RPM) a las que se mide el torque.",
+      "Consulta la Potencia Estimada en Caballos de Fuerza ($HP$) y en Kilovatios ($kW$)."
+    ],
+    "howToUse_en": [
+      "Enter Engine Torque in pound-feet (lb-ft) or N·m.",
+      "Enter Engine Revolutions per Minute (RPM).",
+      "View Estimated Power Output in Horsepower ($HP$) and Kilowatts ($kW$)."
+    ],
+    "methodology": "HP = (Torque_lbft * RPM) / 5252. Potencia kW = HP * 0.7457.",
+    "methodology_en": "HP = (Torque_lbft * RPM) / 5252. Power kW = HP * 0.7457."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Ingeniería Mecánica y Potencia de Motores",
+    "role_en": "Mechanical Engineering & Engine Power Specialist Assistant",
+    "includeData": ["horsepowerResultHp", "powerKilowattsKw"],
+    "instructions": [
+      "Interpreta los caballos de fuerza calculados en la curva de rendimiento del motor.",
+      "Explica por qué las curvas de torque y HP siempre se cruzan a 5,252 RPM.",
+      "Muestra la diferencia entre HP al cigüeñal (BHP) y HP a las ruedas (WHP)."
+    ],
+    "instructions_en": [
+      "Interpret calculated horsepower in the engine performance curve.",
+      "Explain why torque and HP curves always cross at 5,252 RPM.",
+      "Show difference between crankshaft HP (BHP) and wheel HP (WHP)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "hps-guide",
+      "icon": "🏎️",
+      "title": "Torque vs Horsepower Math Constant 5252",
+      "title_es": "Constante Matemática 5252 en Torque y Caballos de Fuerza",
+      "content_html_en": "<p><b>The 5252 Constant:</b> Derived from (33,000 ft-lb/min per HP) / (2π radians per revolution).</p><p><b>1 HP Conversion:</b> Equal to 0.7457 kW or 1.0139 Metric PS/CV.</p>",
+      "content_html": "<p><b>La Constante 5252:</b> Derivada de (33,000 ft-lb/min por HP) / (2π radianes por revolución).</p><p><b>Conversión de 1 HP:</b> Equivale a 0.7457 kW o 1.0139 CV / PS métrico.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "torqueLbFt",
+      "label": "Torque del Motor (lb-ft)",
+      "label_en": "Engine Torque (lb-ft)",
+      "type": "number",
+      "default": 300,
+      "min": 10,
+      "max": 3000,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "engineRpm",
+      "label": "Revoluciones por Minuto (RPM)",
+      "label_en": "Revolutions per Minute (RPM)",
+      "type": "number",
+      "default": 5500,
+      "min": 500,
+      "max": 20000,
+      "step": 100,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "horsepowerResultHp",
+      "label": "Potencia Calculada en Caballos de Fuerza (HP)",
+      "label_en": "Calculated Power in Horsepower (HP)",
+      "expression": "(torqueLbFt * engineRpm) / 5252",
+      "unit": "HP",
+      "unit_en": "HP",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "horsepowerResultHp", "op": ">=", "value": 0 }, "label": "Potencia Mecánica Calculada", "label_en": "Engine Horsepower Computed", "tone": "success", "text": "Potencia del motor evaluada.", "text_en": "Engine power output evaluated." }
+      ]
+    },
+    {
+      "id": "powerKilowattsKw",
+      "label": "Equivalente en Kilovatios (kW)",
+      "label_en": "Kilowatts Equivalent (kW)",
+      "expression": "horsepowerResultHp * 0.7457",
+      "unit": "kW",
+      "unit_en": "kW",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

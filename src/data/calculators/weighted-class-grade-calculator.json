@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "weighted-class-grade-calculator",
+    "title": "Calculadora de Nota de Curso Ponderada por Porcentajes de Tareas y Exámenes",
+    "title_en": "Weighted Syllabus Course Grade Calculator",
+    "slug": "calculadora-de-nota-de-curso-ponderada-porcentajes-tareas-examenes",
+    "category": "education",
+    "subcategory": "grades",
+    "tags": ["nota-ponderada", "porcentaje-tareas", "examenes", "syllabus", "nota-final-curso", "educacion"],
+    "tags_en": ["weighted-course-grade", "assignment-weights", "exams", "syllabus", "final-course-grade", "education"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la nota acumulada de una asignatura ponderando según los porcentajes asignados en el programa (syllabus) para tareas, quizes y exámenes.",
+    "shortDescription_en": "Calculate overall course grade weighting categories (homework, quizzes, exams) according to syllabus percentage allocation.",
+    "longDescription": "Herramienta de seguimiento académico continuo. Combina evaluaciones parciales con sus respectivos pesos sobre la nota final del curso.",
+    "longDescription_en": "Continuous academic tracking tool. Combines category grades with syllabus weight percentages.",
+    "howToUse": [
+      "Ingresa la Calificación Promedio de Tareas / Trabajos (0-100%) y su Peso (ej. 20%).",
+      "Ingresa la Calificación Promedio de Quizzes / Parciales (0-100%) y su Peso (ej. 30%).",
+      "Ingresa la Calificación del Examen Final (0-100%) y su Peso (ej. 50%).",
+      "Consulta la Nota Final Acumulada del Curso."
+    ],
+    "howToUse_en": [
+      "Enter Homework / Assignments Average Grade (0-100%) and Weight (e.g. 20%).",
+      "Enter Quizzes / Midterms Average Grade (0-100%) and Weight (e.g. 30%).",
+      "Enter Final Exam Grade (0-100%) and Weight (e.g. 50%).",
+      "View Overall Accumulated Final Course Grade."
+    ],
+    "methodology": "NotaFinal = (NotaTareas * (PesoTareas/100)) + (NotaQuizzes * (PesoQuizzes/100)) + (NotaExamen * (PesoExamen/100)).",
+    "methodology_en": "FinalGrade = (HwGrade * (HwWeight/100)) + (QuizGrade * (QuizWeight/100)) + (ExamGrade * (ExamWeight/100))."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Ponderación de Evaluaciones Académicas",
+    "role_en": "Academic Assessment Weighting Specialist Assistant",
+    "includeData": ["accumulatedWeightedCourseGradeResult", "totalCategoryWeightsSum"],
+    "instructions": [
+      "Interpreta la nota final ponderada obtenida según los porcentajes del programa (syllabus).",
+      "Verifica que la suma de pesos alcance el 100%.",
+      "Muestra recomendaciones para subir la calificación promedio en las categorías con mayor peso en el desglose final."
+    ],
+    "instructions_en": [
+      "Interpret calculated weighted final course grade according to syllabus percentages.",
+      "Verify that sum of category weights equals 100%.",
+      "Show recommendations to boost grade average in categories carrying higher syllabus weights."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "wcg-guide",
+      "icon": "📐",
+      "title": "Syllabus Breakdown Examples",
+      "title_es": "Ejemplo de Desglose de Syllabus",
+      "content_html_en": "<p><b>Homework / Lab:</b> 20%</p><p><b>Midterm Exams:</b> 30%</p><p><b>Final Exam / Project:</b> 50%</p><p><b>Total Weight Sum:</b> 100%</p>",
+      "content_html": "<p><b>Tareas / Laboratorio:</b> 20%</p><p><b>Exámenes Parciales:</b> 30%</p><p><b>Examen Final / Proyecto:</b> 50%</p><p><b>Suma de Pesos Total:</b> 100%</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "hwCategoryGradeVal",
+      "label": "Nota Promedio Tareas / Trabajos (0-100%)",
+      "label_en": "Homework / Assignments Grade (0-100%)",
+      "type": "number",
+      "default": 90,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "hwCategoryWeightPercent",
+      "label": "Peso de Tareas en el Syllabus (%)",
+      "label_en": "Homework Weight in Syllabus (%)",
+      "type": "number",
+      "default": 20,
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "quizCategoryGradeVal",
+      "label": "Nota Promedio Parciales / Quizzes (0-100%)",
+      "label_en": "Quizzes / Midterms Grade (0-100%)",
+      "type": "number",
+      "default": 80,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "quizCategoryWeightPercent",
+      "label": "Peso de Parciales en el Syllabus (%)",
+      "label_en": "Quizzes Weight in Syllabus (%)",
+      "type": "number",
+      "default": 30,
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "examCategoryGradeVal",
+      "label": "Nota de Examen Final (0-100%)",
+      "label_en": "Final Exam Grade (0-100%)",
+      "type": "number",
+      "default": 85,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "examCategoryWeightPercent",
+      "label": "Peso del Examen Final en el Syllabus (%)",
+      "label_en": "Final Exam Weight in Syllabus (%)",
+      "type": "number",
+      "default": 50,
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalCategoryWeightsSum",
+      "label": "Suma de Porcentajes del Syllabus (%)",
+      "label_en": "Sum of Syllabus Category Weights (%)",
+      "expression": "hwCategoryWeightPercent + quizCategoryWeightPercent + examCategoryWeightPercent",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "accumulatedWeightedCourseGradeResult",
+      "label": "Nota Final Ponderada del Curso (0-100%)",
+      "label_en": "Overall Weighted Course Grade (0-100%)",
+      "expression": "totalCategoryWeightsSum > 0 ? (((hwCategoryGradeVal * (hwCategoryWeightPercent / 100)) + (quizCategoryGradeVal * (quizCategoryWeightPercent / 100)) + (examCategoryGradeVal * (examCategoryWeightPercent / 100))) / (totalCategoryWeightsSum / 100)) : 0",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "accumulatedWeightedCourseGradeResult", "op": ">=", "value": 70 }, "label": "Curso Aprobado", "label_en": "Course Passed", "tone": "success", "text": "Nota final ponderada por encima del mínimo de aprobación.", "text_en": "Overall weighted grade above passing threshold." }
+      ]
+    }
+  ]
+}

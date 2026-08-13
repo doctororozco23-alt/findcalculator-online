@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "btu-calculator",
+    "title": "Calculadora de BTU para Aire Acondicionado y Climatización",
+    "title_en": "BTU Calculator for Air Conditioners & HVAC",
+    "slug": "calculadora-de-btu-aire-acondicionado-climatizacion",
+    "category": "engineering",
+    "subcategory": "electrical",
+    "tags": ["btu", "aire-acondicionado", "climatizacion", "hvac", "capacidad-de-enfriamiento", "ingenieria", "habitacion"],
+    "tags_en": ["btu", "air-conditioner", "hvac", "cooling-capacity", "engineering", "room", "climate"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la capacidad de enfriamiento requerida en BTU/h para acondicionar una habitación según su superficie y ocupación.",
+    "shortDescription_en": "Calculate required cooling capacity in BTU/h for air conditioning based on room area and occupancy.",
+    "longDescription": "Herramienta de ingeniería HVAC y climatización residencial. Determina los BTU/h (British Thermal Units por hora) necesarios para enfriar eficientemente un recinto.",
+    "longDescription_en": "HVAC engineering tool. Determines required BTU/h (British Thermal Units per hour) to efficiently cool a room based on space dimensions.",
+    "howToUse": [
+      "Ingresa el Largo de la habitación (pies).",
+      "Ingresa el Ancho de la habitación (pies).",
+      "Ingresa el Número de Ocupantes habituales.",
+      "Consulta la Capacidad Recomendada en BTU/h y las Toneladas de Refrigeración equivalentes."
+    ],
+    "howToUse_en": [
+      "Enter Room Length (feet).",
+      "Enter Room Width (feet).",
+      "Enter Number of Regular Occupants.",
+      "View Recommended Capacity in BTU/h and equivalent Tons of Refrigeration."
+    ],
+    "methodology": "BTU Base = Área(ft²) * 25 BTU/ft². Ajuste Ocupantes = max(0, Ocupantes - 2) * 600 BTU.",
+    "methodology_en": "Base BTU = Area(ft²) * 25 BTU/ft². Occupants Adjustment = max(0, Occupants - 2) * 600 BTU."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Climatización e Ingeniería HVAC",
+    "role_en": "HVAC Engineering & Air Conditioning Specialist Assistant",
+    "includeData": ["totalBTURequired", "tonsRefrigeration", "roomAreaSqFt"],
+    "instructions": [
+      "Interpreta la capacidad de enfriamiento en BTU/h recomendada para el espacio.",
+      "Muestra la equivalencia en Toneladas de Refrigeración (1 Tonelada = 12,000 BTU/h).",
+      "Aconseja añadir 10% extra de capacidad si la habitación recibe luz solar directa constante."
+    ],
+    "instructions_en": [
+      "Interpret recommended cooling capacity in BTU/h for the room.",
+      "Show equivalence in Tons of Refrigeration (1 Ton = 12,000 BTU/h).",
+      "Advise adding 10% extra capacity if the room is heavily shaded or sunny."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "btu-guide",
+      "icon": "❄️",
+      "title": "BTU/h & Ton of Refrigeration Rules",
+      "title_es": "Reglas de BTU/h y Toneladas de Refrigeración",
+      "content_html_en": "<p><b>1 Ton of Refrigeration:</b> Equal to 12,000 BTU per hour.</p><p><b>Standard Cooling Rule:</b> ~25 BTU per square foot of living space.</p><p><b>Occupancy:</b> Add 600 BTU for each additional person beyond 2 people.</p>",
+      "content_html": "<p><b>1 Tonelada de Refrigeración:</b> Equivale a 12,000 BTU por hora.</p><p><b>Regla Estándar:</b> ~25 BTU por pie cuadrado de espacio habitable.</p><p><b>Ocupación:</b> Añadir 600 BTU por cada persona adicional a partir de 2 ocupantes.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "roomLenFt",
+      "label": "Largo de la Habitación (pies)",
+      "label_en": "Room Length (feet)",
+      "type": "number",
+      "default": 15,
+      "min": 5,
+      "max": 200,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "roomWidFt",
+      "label": "Ancho de la Habitación (pies)",
+      "label_en": "Room Width (feet)",
+      "type": "number",
+      "default": 12,
+      "min": 5,
+      "max": 200,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "peopleCount",
+      "label": "Número de Ocupantes",
+      "label_en": "Number of Occupants",
+      "type": "number",
+      "default": 2,
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "roomAreaSqFt",
+      "label": "Área de la Habitación (ft²)",
+      "label_en": "Room Area (ft²)",
+      "expression": "roomLenFt * roomWidFt",
+      "unit": "ft²",
+      "unit_en": "ft²",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalBTURequired",
+      "label": "Capacidad Recomendada (BTU/h)",
+      "label_en": "Recommended Capacity (BTU/h)",
+      "expression": "(roomAreaSqFt * 25) + (max(0, peopleCount - 2) * 600)",
+      "unit": "BTU/h",
+      "unit_en": "BTU/h",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalBTURequired", "op": ">=", "value": 0 }, "label": "Capacidad BTU Calculada", "label_en": "BTU Capacity Computed", "tone": "success", "text": "Requerimiento térmico cuantificado.", "text_en": "Thermal cooling requirement quantified." }
+      ]
+    },
+    {
+      "id": "tonsRefrigeration",
+      "label": "Toneladas de Refrigeración Equivalentes",
+      "label_en": "Tons of Refrigeration Equivalent",
+      "expression": "totalBTURequired / 12000",
+      "unit": "Tons",
+      "unit_en": "Tons",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

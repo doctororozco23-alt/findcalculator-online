@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "led-resistor-calculator",
+    "title": "Calculadora de Resistencia Limitadora para LEDs",
+    "title_en": "Current Limiting LED Series Resistor Calculator",
+    "slug": "calculadora-de-resistencia-limitadora-para-leds-ohmios-vatios",
+    "category": "technology",
+    "subcategory": "electrical",
+    "tags": ["resistencia-led", "led", "ley-de-ohm", "electronica", "diodo-led", "vatios-resistencia", "tecnologia"],
+    "tags_en": ["led-resistor", "led", "ohms-law", "electronics", "led-diode", "resistor-power", "technology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el valor en Ohmios (Ω) y la potencia disipada en Vatios (W) de la resistencia limitadora para diodos LED.",
+    "shortDescription_en": "Calculate resistance value in Ohms (Ω) and power dissipation in Watts (W) for LED current limiting resistor.",
+    "longDescription": "Herramienta de electrónica de circuitos y diseño de hardware. Protege los diodos LED de sobrecorrientes aplicando la Ley de Ohm ($R = \\frac{V_s - V_f}{I_f}$).",
+    "longDescription_en": "Circuit electronics and hardware design tool. Protects LED diodes from overcurrent using Ohm's Law ($R = \\frac{V_s - V_f}{I_f}$).",
+    "howToUse": [
+      "Ingresa el Voltaje de Alimentación del Circuito ($V_s$ en Volts, ej. 5V o 12V).",
+      "Selecciona el Tipo / Color de LED (Voltaje Directo $V_f$, ej. Rojo = 2.0V, Azul/Blanco = 3.2V).",
+      "Ingresa la Corriente Deseada del LED ($I_f$ en miliamperios - mA, ej. 20 mA).",
+      "Consulta la Resistencia Mínima Calculada (Ω), el Valor Comercial Estándar E12 y la Potencia Disipada (W)."
+    ],
+    "howToUse_en": [
+      "Enter Supply Voltage ($V_s$ in Volts, e.g. 5V or 12V).",
+      "Select LED Type / Color (Forward Voltage $V_f$, e.g. Red = 2.0V, Blue/White = 3.2V).",
+      "Enter Desired LED Forward Current ($I_f$ in milliamps - mA, e.g. 20 mA).",
+      "View Calculated Resistance (Ω), Nearest E12 Commercial Value, and Power Dissipation (W)."
+    ],
+    "methodology": "Resistencia R = (Vs - Vf) / (If / 1000). Potencia P = (Vs - Vf) * (If / 1000). Usar resistencia clasificable al doble de P.",
+    "methodology_en": "Resistor R = (Vs - Vf) / (If / 1000). Power P = (Vs - Vf) * (If / 1000). Use resistor rated at 2x P."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Diseño de Circuitos Electrónicos y Diodos LED",
+    "role_en": "Electronic Circuit Design & LED Diodes Specialist Assistant",
+    "includeData": ["ledResistorOhmsResult", "resistorPowerWattsResult"],
+    "instructions": [
+      "Interpreta el valor de resistencia limitadora en Ohmios y la potencia disipada.",
+      "Recomienda el valor comercial estándar más cercano de la serie E12 / E24 hacia arriba.",
+      "Advierte sobre la potencia nominal de la resistencia (usar 1/4 W o 1/2 W para evitar sobrecalentamiento)."
+    ],
+    "instructions_en": [
+      "Interpret calculated current limiting resistor value in Ohms and power dissipation.",
+      "Recommend nearest higher standard commercial E12 / E24 resistor value.",
+      "Warn on resistor power rating (use 1/4 W or 1/2 W rating to prevent thermal burnout)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "lrc-guide",
+      "icon": "💡",
+      "title": "Standard LED Forward Voltages (Vf)",
+      "title_es": "Voltajes Directos Estándar de LEDs (Vf)",
+      "content_html_en": "<p><b>Red / Orange LED:</b> Vf ≈ 1.8V - 2.1V</p><p><b>Yellow / Green LED:</b> Vf ≈ 2.0V - 2.2V</p><p><b>Blue / White / UV LED:</b> Vf ≈ 3.0V - 3.4V</p><p><b>Standard Current (If):</b> 20 mA (0.02 A)</p>",
+      "content_html": "<p><b>LED Rojo / Naranja:</b> Vf ≈ 1.8V - 2.1V</p><p><b>LED Amarillo / Verde:</b> Vf ≈ 2.0V - 2.2V</p><p><b>LED Azul / Blanco / UV:</b> Vf ≈ 3.0V - 3.4V</p><p><b>Corriente Estándar (If):</b> 20 mA (0.02 A)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "supplyVoltageVs",
+      "label": "Voltaje de Alimentación (Vₛ en Volts)",
+      "label_en": "Supply Voltage (Vₛ in Volts)",
+      "type": "number",
+      "default": 12,
+      "min": 1,
+      "max": 240,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "ledForwardVoltageVf",
+      "label": "Voltaje Directo del LED (V_f en Volts)",
+      "label_en": "LED Forward Voltage (V_f in Volts)",
+      "type": "select",
+      "default": "2.0",
+      "options": [
+        { "value": "2.0", "label": "LED Rojo / Naranja (Vf = 2.0 V)", "label_en": "Red / Orange LED (Vf = 2.0 V)" },
+        { "value": "2.2", "label": "LED Verde / Amarillo (Vf = 2.2 V)", "label_en": "Green / Yellow LED (Vf = 2.2 V)" },
+        { "value": "3.2", "label": "LED Azul / Blanco Brillante (Vf = 3.2 V)", "label_en": "Blue / Bright White LED (Vf = 3.2 V)" }
+      ]
+    },
+    {
+      "id": "ledForwardCurrentMa",
+      "label": "Corriente Directa Deseada (I_f en mA)",
+      "label_en": "Desired Forward Current (I_f in mA)",
+      "type": "number",
+      "default": 20,
+      "min": 1,
+      "max": 1000,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "voltageDropResistorVolts",
+      "label": "Caída de Voltaje en la Resistencia (V_R)",
+      "label_en": "Voltage Drop Across Resistor (V_R)",
+      "expression": "max(0, supplyVoltageVs - ledForwardVoltageVf)",
+      "unit": "V",
+      "unit_en": "V",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "ledResistorOhmsResult",
+      "label": "Resistencia Limitadora Calculada (R en Ohmios - Ω)",
+      "label_en": "Calculated Limiting Resistor (R in Ohms - Ω)",
+      "expression": "ledForwardCurrentMa > 0 ? (voltageDropResistorVolts / (ledForwardCurrentMa / 1000)) : 0",
+      "unit": "Ω",
+      "unit_en": "Ω",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "ledResistorOhmsResult", "op": ">=", "value": 0 }, "label": "Resistencia Calculada", "label_en": "Resistor Computed", "tone": "success", "text": "Valor de resistencia limitadora cuantificado.", "text_en": "Limiting resistor value quantified." }
+      ]
+    },
+    {
+      "id": "resistorPowerWattsResult",
+      "label": "Potencia Disipada en la Resistencia (P en Watts - W)",
+      "label_en": "Resistor Power Dissipation (P in Watts - W)",
+      "expression": "voltageDropResistorVolts * (ledForwardCurrentMa / 1000)",
+      "unit": "W",
+      "unit_en": "W",
+      "precision": 3,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

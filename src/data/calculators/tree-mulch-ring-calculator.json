@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "tree-mulch-ring-calculator",
+    "title": "Calculadora de Mantillo / Mulch para Árboles y Jardines",
+    "title_en": "Tree Ring & Garden Bed Mulch Calculator",
+    "slug": "calculadora-de-mantillo-mulch-corteza-arboles-arriates",
+    "category": "home",
+    "subcategory": "gardening",
+    "tags": ["mulch", "mantillo", "corteza-de-pino", "jardineria", "arboles", "arriates", "hogar"],
+    "tags_en": ["mulch", "tree-ring", "pine-bark", "gardening", "landscape-beds", "home"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula los metros cúbicos ($m^3$), yardas cúbicas y bolsas de mantillo / mulch / corteza de pino para anillos de árboles y arriates.",
+    "shortDescription_en": "Calculate cubic meters ($m^3$), cubic yards, and bags of mulch / bark for tree rings and garden beds.",
+    "longDescription": "Herramienta de paisajismo y protección de suelo del hogar. Cuantifica la cantidad de acolchado orgánico necesario para conservar la humedad y suprimir malas hierbas.",
+    "longDescription_en": "Home landscaping and soil conservation tool. Quantifies organic mulch required to conserve moisture and suppress weeds.",
+    "howToUse": [
+      "Ingresa el Diámetro del Anillo del Árbol o Área del Arriate (metros o pies).",
+      "Ingresa la Espesor de la Capa de Mulch (cm o pulgadas, recomendada 7.5 cm / 3 pulgadas).",
+      "Consulta los Metros Cúbicos (m³), Yardas Cúbicas (yd³) y Bolsas de 50 Litros requeridas."
+    ],
+    "howToUse_en": [
+      "Enter Tree Ring Diameter or Bed Surface Area (meters or feet).",
+      "Enter Mulch Layer Thickness (cm or inches, recommended 7.5 cm / 3 in).",
+      "View Cubic Meters (m³), Cubic Yards (yd³), and 50-Liter Bags Count."
+    ],
+    "methodology": "Área Anillo = (π * (Diámetro/2)²). Volumen (m³) = Área * (EspesorCm / 100). Bolsas 50L = ceil((Volumenm³ * 1000) / 50).",
+    "methodology_en": "Ring Area = (π * (Diameter/2)²). Volume (m³) = Area * (ThicknessCm / 100). 50L Bags = ceil((Volumem³ * 1000) / 50)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Acolchado Orgánico y Mulching de Jardines",
+    "role_en": "Organic Mulching & Landscape Beds Specialist Assistant",
+    "includeData": ["mulchVolumeM3Result", "mulch50lBagsCountResult"],
+    "instructions": [
+      "Interpreta el volumen de mantillo / mulch y sacos de 50 litros requeridos.",
+      "Advierte contra el 'efecto volcán' (nunca amontonar mulch directo sobre el tronco del árbol para evitar pudrición del cuello).",
+      "Explica la profundidad recomendada (5 a 8 cm de mulch para evitar asfixiar las raíces)."
+    ],
+    "instructions_en": [
+      "Interpret calculated mulch volume and 50-liter bags count.",
+      "Warn against 'mulch volcanoes' (never pile mulch touching tree trunk bark to prevent collar rot).",
+      "Explain recommended depth (5 to 8 cm / 2 to 3 in to avoid root suffocation)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "tmr-guide",
+      "icon": "🌳",
+      "title": "Mulch Layer Thickness Guide",
+      "title_es": "Guía de Espesor de Capa de Mulch",
+      "content_html_en": "<p><b>Recommended Depth:</b> 3 inches (7.5 cm) for optimal weed suppression & moisture retaining.</p><p><b>1 Cubic Yard:</b> Covers 108 sq ft at 3 inches deep.</p>",
+      "content_html": "<p><b>Espesor Recomendado:</b> 7.5 cm (3 pulgadas) para supresión óptima de malezas y retención de humedad.</p><p><b>1 Yarda Cúbica:</b> Cubre ~10 m² a 7.5 cm de profundidad.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "treeRingDiameterMeters",
+      "label": "Diámetro del Anillo del Árbol (metros)",
+      "label_en": "Tree Ring Diameter (meters)",
+      "type": "number",
+      "default": 2.5,
+      "min": 0.5,
+      "max": 50,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "mulchThicknessCm",
+      "label": "Espesor Deseado del Mulch (cm)",
+      "label_en": "Desired Mulch Depth (cm)",
+      "type": "number",
+      "default": 7.5,
+      "min": 1,
+      "max": 25,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "mulchAreaM2Result",
+      "label": "Área del Anillo de Jardín (m²)",
+      "label_en": "Garden Ring Area (m²)",
+      "expression": "pi * ((treeRingDiameterMeters / 2) ^ 2)",
+      "unit": "m²",
+      "unit_en": "m²",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "mulchVolumeM3Result",
+      "label": "Volumen de Mantillo / Mulch (m³)",
+      "label_en": "Mulch Volume (m³)",
+      "expression": "mulchAreaM2Result * (mulchThicknessCm / 100)",
+      "unit": "m³",
+      "unit_en": "m³",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "mulchVolumeM3Result", "op": ">=", "value": 0 }, "label": "Volumen Calculado", "label_en": "Volume Computed", "tone": "success", "text": "Volumen de mulch cuantificado.", "text_en": "Mulch volume quantified." }
+      ]
+    },
+    {
+      "id": "mulch50lBagsCountResult",
+      "label": "Bolsas de Mulch / Corteza de 50 Litros Requeridas",
+      "label_en": "Required 50-Liter Mulch / Bark Bags",
+      "expression": "ceil(((mulchVolumeM3Result * 1000) / 50) * 1.05)",
+      "unit": "bolsas",
+      "unit_en": "bags",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

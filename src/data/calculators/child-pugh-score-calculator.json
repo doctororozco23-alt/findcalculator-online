@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "child-pugh-score-calculator",
+    "title": "Calculadora del Score de Child-Pugh para Reserva Hepática en Cirrosis",
+    "title_en": "Child-Pugh Score Calculator for Liver Cirrhosis",
+    "slug": "child-pugh-score-cirrosis-hepatica-supervivencia",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["child-pugh", "cirrosis", "hic", "higado", "hepatologia", "ascitis", "encefalopatia"],
+    "tags_en": ["child-pugh", "cirrhosis", "liver", "hepatology", "ascites", "encephalopathy"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula el Score de Child-Pugh (Clases A, B y C) para evaluar la severidad funcional de la cirrosis hepática y estimar la supervivencia a 1 y 2 años.",
+    "shortDescription_en": "Calculate Child-Pugh Score (Classes A, B, C) to evaluate liver cirrhosis functional severity and 1- and 2-year survival.",
+    "longDescription": "Clasificación clínica esencial en Hepatología (Pugh et al.). Evalúa 5 variables: Bilirrubina total, Albúmina sérica, INR/Tiempo de Protrombina, Ascitis y grado de Encefalopatía Hepática.",
+    "longDescription_en": "Essential hepatology classification. Evaluates Total Bilirubin, Albumin, INR, Ascites, and Hepatic Encephalopathy grade.",
+    "howToUse": [
+      "Selecciona el rango de Bilirrubina total sérica (mg/dL).",
+      "Selecciona el rango de Albúmina sérica (g/dL).",
+      "Selecciona el rango de INR / Tiempo de Protrombina.",
+      "Indica el grado de Ascitis (Ausente, Leve/Controlada o Severa/Refractaria).",
+      "Indica el grado de Encefalopatía Hepática (Grado 0 a IV)."
+    ],
+    "howToUse_en": [
+      "Select Total Bilirubin range.",
+      "Select Serum Albumin range.",
+      "Select INR / Prothrombin Time range.",
+      "Select Ascites severity.",
+      "Select Hepatic Encephalopathy grade."
+    ],
+    "methodology": "Score Child-Pugh: Bilirrubina (<2: 1pt, 2-3: 2pts, >3: 3pts), Albúmina (>3.5: 1pt, 2.8-3.5: 2pts, <2.8: 3pts), INR (<1.7: 1pt, 1.7-2.3: 2pts, >2.3: 3pts), Ascitis (Ausente: 1pt, Leve: 2pts, Moderada/Severa: 3pts), Encefalopatía (Ausente: 1pt, Grado I-II: 2pts, Grado III-IV: 3pts). Total 5-15 puntos.",
+    "methodology_en": "Child-Pugh Score: 5 parameters scored 1 to 3 points. Total range 5-15 points. Class A (5-6), Class B (7-9), Class C (10-15)."
+  },
+  "guideSections": [
+    {
+      "id": "cp-guide",
+      "icon": "🫀",
+      "title": "Child-Pugh Classes & Survival Estimates",
+      "title_es": "Clases de Child-Pugh y Estimación de Supervivencia",
+      "content_html_en": "<p><b>Class A (5 - 6 pts):</b> Well-compensated cirrhosis. 1-year survival ~100%, 2-year ~85%. Low surgical mortality (10%).</p><p><b>Class B (7 - 9 pts):</b> Significant functional compromise. 1-year survival ~80%, 2-year ~60%. Moderate surgical mortality (30%).</p><p><b>Class C (10 - 15 pts):</b> Decompensated cirrhosis. 1-year survival ~45%, 2-year ~35%. High surgical mortality (≥ 76%).</p>",
+      "content_html": "<p><b>Clase A (5 - 6 pts):</b> Cirrosis bien compensada. Supervivencia a 1 año ~100%, 2 años ~85%. Bajo riesgo quirúrgico (10%).</p><p><b>Clase B (7 - 9 pts):</b> Compromiso funcional significativo. Supervivencia a 1 año ~80%, 2 años ~60%. Riesgo quirúrgico moderado (30%).</p><p><b>Clase C (10 - 15 pts):</b> Cirrosis descompensada. Supervivencia a 1 año ~45%, 2 años ~35%. Alto riesgo quirúrgico (≥ 76%).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "bili_pts",
+      "label": "Bilirrubina Total Sérica",
+      "label_en": "Serum Total Bilirubin",
+      "type": "select",
+      "default": 1,
+      "options": [
+        { "value": 1, "label": "Menor de 2.0 mg/dL (1 pt)", "label_en": "Under 2.0 mg/dL (1 pt)" },
+        { "value": 2, "label": "2.0 a 3.0 mg/dL (2 pts)", "label_en": "2.0 to 3.0 mg/dL (2 pts)" },
+        { "value": 3, "label": "Mayor de 3.0 mg/dL (3 pts)", "label_en": "Greater than 3.0 mg/dL (3 pts)" }
+      ]
+    },
+    {
+      "id": "alb_pts",
+      "label": "Albúmina Sérica",
+      "label_en": "Serum Albumin",
+      "type": "select",
+      "default": 1,
+      "options": [
+        { "value": 1, "label": "Mayor de 3.5 g/dL (1 pt)", "label_en": "Greater than 3.5 g/dL (1 pt)" },
+        { "value": 2, "label": "2.8 a 3.5 g/dL (2 pts)", "label_en": "2.8 to 3.5 g/dL (2 pts)" },
+        { "value": 3, "label": "Menor de 2.8 g/dL (3 pts)", "label_en": "Under 2.8 g/dL (3 pts)" }
+      ]
+    },
+    {
+      "id": "inr_pts",
+      "label": "INR / Tiempo de Protrombina",
+      "label_en": "INR / Prothrombin Time",
+      "type": "select",
+      "default": 1,
+      "options": [
+        { "value": 1, "label": "INR < 1.7 (1 pt)", "label_en": "INR < 1.7 (1 pt)" },
+        { "value": 2, "label": "INR 1.7 a 2.3 (2 pts)", "label_en": "INR 1.7 to 2.3 (2 pts)" },
+        { "value": 3, "label": "INR > 2.3 (3 pts)", "label_en": "INR > 2.3 (3 pts)" }
+      ]
+    },
+    {
+      "id": "ascites_pts",
+      "label": "Presencia de Ascitis",
+      "label_en": "Ascites",
+      "type": "select",
+      "default": 1,
+      "options": [
+        { "value": 1, "label": "Ausente (1 pt)", "label_en": "None (1 pt)" },
+        { "value": 2, "label": "Leve / Controlada con diuréticos (2 pts)", "label_en": "Mild / Medically controlled (2 pts)" },
+        { "value": 3, "label": "Moderada a Severa / Refractaria (3 pts)", "label_en": "Moderate to Severe / Refractory (3 pts)" }
+      ]
+    },
+    {
+      "id": "enceph_pts",
+      "label": "Encefalopatía Hepática (Grado West Haven)",
+      "label_en": "Hepatic Encephalopathy",
+      "type": "select",
+      "default": 1,
+      "options": [
+        { "value": 1, "label": "Ausente — Grado 0 (1 pt)", "label_en": "None — Grade 0 (1 pt)" },
+        { "value": 2, "label": "Leve — Grado I a II (2 pts)", "label_en": "Mild — Grade I-II (2 pts)" },
+        { "value": 3, "label": "Severa — Grado III a IV (3 pts)", "label_en": "Severe — Grade III-IV (3 pts)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "childPughTotal",
+      "label": "Score de Child-Pugh Total",
+      "label_en": "Total Child-Pugh Score",
+      "expression": "bili_pts + alb_pts + inr_pts + ascites_pts + enceph_pts",
+      "unit": "puntos",
+      "unit_en": "points",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "childPughTotal", "op": "<=", "value": 6 }, "label": "Clase A: Cirrosis Bien Compensada (5-6 pts)", "label_en": "Class A: Well-Compensated Cirrhosis (5-6 pts)", "tone": "success", "text": "Supervivencia a 1 año 100%, 2 años 85%. Bajo riesgo perioperatorio.", "text_en": "1-yr survival 100%, 2-yr 85%. Low perioperative mortality risk." },
+        { "when": { "field": "childPughTotal", "op": "between", "value": [7, 9] }, "label": "Clase B: Compromiso Funcional Significativo (7-9 pts)", "label_en": "Class B: Significant Functional Compromise (7-9 pts)", "tone": "info", "text": "Supervivencia a 1 año 80%, 2 años 60%. Evaluar para trasplante hepático.", "text_en": "1-yr survival 80%, 2-yr 60%. Evaluate for liver transplantation." },
+        { "when": { "field": "childPughTotal", "op": ">=", "value": 10 }, "label": "Clase C: Cirrosis Descompensada (10-15 pts)", "label_en": "Class C: Decompensated Cirrhosis (10-15 pts)", "tone": "warning", "text": "Supervivencia a 1 año 45%, 2 años 35%. Prioridad urgente para trasplante.", "text_en": "1-yr survival 45%, 2-yr 35%. Urgent transplant listing priority." }
+      ]
+    }
+  ]
+}

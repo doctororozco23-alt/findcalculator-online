@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "prime-factorization-calculator",
+    "title": "Calculadora de Factorización Prima y Test de Primalidad",
+    "title_en": "Prime Factorization & Primality Test Calculator",
+    "slug": "calculadora-de-factorizacion-prima-numeros-primos",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["factorizacion-prima", "numeros-primos", "primalidad", "factores-primos", "teoria-de-numeros"],
+    "tags_en": ["prime-factorization", "prime-numbers", "primality", "prime-factors", "number-theory"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Descompone cualquier entero positivo en su producto único de factores primos y evalúa si el número es primo o compuesto.",
+    "shortDescription_en": "Decompose any positive integer into its unique prime factors product and test if the number is prime or composite.",
+    "longDescription": "Basado en el Teorema Fundamental de la Aritmética: todo número entero mayor que 1 es primo o se puede representar como un producto único de factores primos, salvo el orden.",
+    "longDescription_en": "Based on the Fundamental Theorem of Arithmetic: every integer > 1 is either a prime number itself or can be represented as a unique product of prime factors.",
+    "howToUse": [
+      "Ingresa el Número entero positivo a descomponer.",
+      "Consulta el resultado del test de primalidad (Primo vs Compuesto)."
+    ],
+    "howToUse_en": [
+      "Enter the positive integer to decompose.",
+      "View primality test result (Prime vs Composite)."
+    ],
+    "methodology": "Teorema Fundamental de la Aritmética: N = p₁^a₁ × p₂^a₂ × ... × pₖ^aₖ.",
+    "methodology_en": "Fundamental Theorem of Arithmetic: N = p₁^a₁ × p₂^a₂ × ... × pₖ^aₖ."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Experto en Números Primos y Criptografía",
+    "role_en": "Prime Numbers & Cryptography Specialist Assistant",
+    "includeData": ["isPrimeResult"],
+    "instructions": [
+      "Explica el Teorema Fundamental de la Aritmética.",
+      "Analiza la clasificación del número (Primo o Compuesto).",
+      "Detalla la importancia de la factorización prima en la criptografía RSA."
+    ],
+    "instructions_en": [
+      "Explain the Fundamental Theorem of Arithmetic.",
+      "Analyze number classification (Prime or Composite).",
+      "Detail the importance of prime factorization in RSA cryptography."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "prime-guide",
+      "icon": "⭐",
+      "title": "Fundamental Theorem of Arithmetic",
+      "title_es": "Teorema Fundamental de la Aritmética",
+      "content_html_en": "<p><b>Prime Number:</b> An integer greater than 1 that has no positive divisors other than 1 and itself (e.g. 2, 3, 5, 7, 11, 13...).</p><p><b>Composite Number:</b> An integer greater than 1 that has positive divisors other than 1 and itself.</p>",
+      "content_html": "<p><b>Número Primo:</b> Un entero mayor que 1 que solo es divisible entre 1 y sí mismo (ej. 2, 3, 5, 7, 11, 13...).</p><p><b>Número Compuesto:</b> Un entero mayor que 1 que posee más de dos divisores positivos.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "numVal",
+      "label": "Número entero (N)",
+      "label_en": "Integer Number (N)",
+      "type": "number",
+      "default": 360,
+      "min": 2,
+      "max": 100000,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [2, 100000], "message": "Ingresa un número entre 2 y 100,000", "message_en": "Enter a number between 2 and 100,000" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "isPrimeResult",
+      "label": "Resultado del Test de Primalidad",
+      "label_en": "Primality Test Result",
+      "expression": "isPrime(numVal) ? 1 : 0",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "isPrimeResult", "op": "==", "value": 1 }, "label": "Número PRIMO", "label_en": "PRIME Number", "tone": "success", "text": "El número es primo. No se puede descomponer en factores menores.", "text_en": "The number is prime. It cannot be factored into smaller integers." },
+        { "when": { "field": "isPrimeResult", "op": "==", "value": 0 }, "label": "Número COMPUESTO", "label_en": "COMPOSITE Number", "tone": "info", "text": "El número es compuesto. Se descompone en un producto único de factores primos.", "text_en": "The number is composite. It can be factored into prime numbers." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "combustion-stoichiometric-calculator",
+    "title": "Calculadora de Combustión Completa y Emisión de CO₂",
+    "title_en": "Hydrocarbon Complete Combustion & CO₂ Emission Calculator",
+    "slug": "calculadora-de-combustion-de-hidrocarburos-emision-co2-oxigeno",
+    "category": "chemistry",
+    "subcategory": "stoichiometry",
+    "tags": ["combustion", "emision-co2", "hidrocarburos", "oxigeno-requerido", "estequiometria", "quimica-ambiental"],
+    "tags_en": ["combustion", "co2-emissions", "hydrocarbons", "required-oxygen", "stoichiometry", "environmental-chemistry"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el consumo de oxígeno ($O_2$) y las emisiones de dióxido de carbono ($CO_2$) producidas por la combustión de hidrocarburos ($C_n H_m$).",
+    "shortDescription_en": "Calculate oxygen demand ($O_2$) and carbon dioxide emissions ($CO_2$) produced by hydrocarbon combustion ($C_n H_m$).",
+    "longDescription": "Herramienta de estequiometría termoquímica y química ambiental. Balancea la ecuación general de combustión completa $C_n H_m + (n + \\frac{m}{4}) O_2 \\to n CO_2 + \\frac{m}{2} H_2 O$.",
+    "longDescription_en": "Thermochemical stoichiometry and environmental chemistry tool. Balances complete combustion equation $C_n H_m + (n + \\frac{m}{4}) O_2 \\to n CO_2 + \\frac{m}{2} H_2 O$.",
+    "howToUse": [
+      "Selecciona el Combustible Hidrocarburo (ej. Metano $CH_4$, Propano $C_3H_8$, Octano $C_8H_{18}$).",
+      "Ingresa la Masa de Combustible Quemado (kg).",
+      "Consulta las Emisiones de $CO_2$ generadas (kg) y el Consumo de Oxígeno ($O_2$)."
+    ],
+    "howToUse_en": [
+      "Select Hydrocarbon Fuel (e.g. Methane $CH_4$, Propane $C_3H_8$, Octane $C_8H_{18}$).",
+      "Enter Fuel Mass Burned (kg).",
+      "View Generated $CO_2$ Emissions (kg) and Oxygen ($O_2$) Demand."
+    ],
+    "methodology": "Combustión Metano: CH4 + 2 O2 -> CO2 + 2 H2O (16 g CH4 produce 44 g CO2 ➔ 1 kg CH4 produce 2.75 kg CO2).",
+    "methodology_en": "Methane Combustion: CH4 + 2 O2 -> CO2 + 2 H2O (16 g CH4 produces 44 g CO2 ➔ 1 kg CH4 produces 2.75 kg CO2)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Termoquímica y Química de la Combustión",
+    "role_en": "Thermochemistry & Combustion Chemistry Specialist Assistant",
+    "includeData": ["co2EmissionsKgResult", "o2DemandKgResult"],
+    "instructions": [
+      "Interpreta la cantidad de dióxido de carbono ($CO_2$) emitido a la atmósfera.",
+      "Explica por qué la masa de $CO_2$ generada supera la masa original del combustible (debido a la adición del oxígeno molecular).",
+      "Muestra la diferencia entre combustión completa (exceso de $O_2$) e incompleta (generación de Monóxido de Carbono $CO$ tóxico)."
+    ],
+    "instructions_en": [
+      "Interpret amount of carbon dioxide ($CO_2$) emitted to the atmosphere.",
+      "Explain why generated $CO_2$ mass exceeds original fuel mass (due to added molecular oxygen).",
+      "Show difference between complete combustion (excess $O_2$) vs incomplete combustion (toxic Carbon Monoxide $CO$ generation)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "cmb-guide",
+      "icon": "🔥",
+      "title": "Complete Combustion Equation",
+      "title_es": "Ecuación de Combustión Completa",
+      "content_html_en": "<p><b>Methane (CH₄):</b> 1 kg fuel produces 2.75 kg CO₂</p><p><b>Propane (C₃H₈):</b> 1 kg fuel produces 2.99 kg CO₂</p><p><b>Octane / Gasoline (C₈H₁₈):</b> 1 kg fuel produces 3.09 kg CO₂</p>",
+      "content_html": "<p><b>Metano (CH₄):</b> 1 kg combustible produce 2.75 kg CO₂</p><p><b>Propano (C₃H₈):</b> 1 kg combustible produce 2.99 kg CO₂</p><p><b>Octano / Gasolina (C₈H₁₈):</b> 1 kg combustible produce 3.09 kg CO₂</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "fuelCo2FactorCoeff",
+      "label": "Tipo de Combustible Hidrocarburo",
+      "label_en": "Hydrocarbon Fuel Type",
+      "type": "select",
+      "default": "2.75",
+      "options": [
+        { "value": "2.75", "label": "Metano / Gas Natural (CH₄ - 2.75 kg CO₂/kg)", "label_en": "Methane / Natural Gas (CH₄ - 2.75 kg CO₂/kg)" },
+        { "value": "2.99", "label": "Propano (C₃H₈ - 2.99 kg CO₂/kg)", "label_en": "Propane (C₃H₈ - 2.99 kg CO₂/kg)" },
+        { "value": "3.09", "label": "Gasolina / Octano (C₈H₁₈ - 3.09 kg CO₂/kg)", "label_en": "Gasoline / Octane (C₈H₁₈ - 3.09 kg CO₂/kg)" },
+        { "value": "3.16", "label": "Diésel (C₁₂H₂₃ - 3.16 kg CO₂/kg)", "label_en": "Diesel (C₁₂H₂₃ - 3.16 kg CO₂/kg)" }
+      ]
+    },
+    {
+      "id": "fuelMassKgBurned",
+      "label": "Masa de Combustible Quemado (kg)",
+      "label_en": "Burned Fuel Mass (kg)",
+      "type": "number",
+      "default": 10,
+      "min": 0.1,
+      "max": 100000,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "co2EmissionsKgResult",
+      "label": "Emisiones de Dióxido de Carbono (CO₂ en kg)",
+      "label_en": "Carbon Dioxide Emissions (CO₂ in kg)",
+      "expression": "fuelMassKgBurned * fuelCo2FactorCoeff",
+      "unit": "kg CO₂",
+      "unit_en": "kg CO₂",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "co2EmissionsKgResult", "op": ">=", "value": 0 }, "label": "Emisiones Calculadas", "label_en": "Emissions Computed", "tone": "success", "text": "Masa de dióxido de carbono de combustión cuantificada.", "text_en": "Combustion carbon dioxide mass quantified." }
+      ]
+    },
+    {
+      "id": "o2DemandKgResult",
+      "label": "Consumo Mínimo de Oxígeno (O₂ en kg)",
+      "label_en": "Minimum Oxygen Demand (O₂ in kg)",
+      "expression": "co2EmissionsKgResult * 0.9",
+      "unit": "kg O₂",
+      "unit_en": "kg O₂",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

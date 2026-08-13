@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "voltage-drop-calculator",
+    "title": "Calculadora de Caída de Tensión Eléctrica (Voltage Drop AWG)",
+    "title_en": "Voltage Drop Calculator (AWG Cable & Distance)",
+    "slug": "calculadora-de-caida-de-tension-electrica-awg-distancia",
+    "category": "engineering",
+    "subcategory": "electrical",
+    "tags": ["caida-de-tension", "voltage-drop", "awg", "cables-electricos", "distancia", "electricidad", "amperios"],
+    "tags_en": ["voltage-drop", "awg", "electric-cables", "distance", "electricity", "amps", "engineering"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la pérdida de voltaje en voltios y porcentaje (%) en instalaciones eléctricas según la distancia y calibre de cable AWG.",
+    "shortDescription_en": "Calculate voltage loss in volts and percentage (%) for electrical wiring based on distance and AWG wire gauge.",
+    "longDescription": "Herramienta de ingeniería eléctrica e instalaciones residenciales e industriales. Evalúa el cumplimiento del Código Eléctrico Nacional (NEC) que exige limitar la caída de tensión al 3% para circuitos derivados.",
+    "longDescription_en": "Electrical engineering tool. Evaluates National Electrical Code (NEC) compliance requiring voltage drop limit of 3% for branch circuits.",
+    "howToUse": [
+      "Selecciona el Calibre del Cable AWG (AWG 14, 12, 10, 8, 6, 4).",
+      "Ingresa el Voltaje Nominal del Circuito (ej. 120V o 240V).",
+      "Ingresa la Corriente de Carga (Amperios).",
+      "Ingresa la Distancia de Un Solo Sentido del Cable (en pies).",
+      "Consulta la Caída de Tensión en Voltios, el Porcentaje (%) y el Voltaje Final en la carga."
+    ],
+    "howToUse_en": [
+      "Select Wire Gauge AWG (AWG 14, 12, 10, 8, 6, 4).",
+      "Enter Circuit Nominal Voltage (e.g. 120V or 240V).",
+      "Enter Load Current (Amperes).",
+      "Enter One-Way Wire Distance (in feet).",
+      "View Voltage Drop in Volts, Percentage (%), and Final Delivered Voltage."
+    ],
+    "methodology": "Vdrop = (2 * ResistenciaCable/1000 * Amperios * DistanciaPies) / 1000. % Drop = (Vdrop / Vnominal) * 100.",
+    "methodology_en": "Vdrop = (2 * CableResistance/1000 * Amps * DistanceFeet) / 1000. % Drop = (Vdrop / Vnominal) * 100."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Ingeniería Eléctrica y Código NEC",
+    "role_en": "Electrical Engineering & NEC Code Specialist Assistant",
+    "includeData": ["voltageDropPercent", "voltageDropVolts", "finalDeliveredVoltage"],
+    "instructions": [
+      "Interpreta si la caída de tensión cumple con la norma NEC (< 3% para circuitos derivados, < 5% total).",
+      "Recomienda aumentar el calibre del cable AWG si la caída excede el 3%.",
+      "Explica los riesgos de sobrecalentamiento y bajo rendimiento de motores por caída de voltaje."
+    ],
+    "instructions_en": [
+      "Interpret if voltage drop meets NEC code recommendation (< 3% for branch circuits, < 5% total).",
+      "Recommend increasing wire AWG gauge if drop exceeds 3%.",
+      "Explain risks of overheating and motor underperformance caused by excessive voltage drop."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "vld-guide",
+      "icon": "⚡",
+      "title": "NEC Voltage Drop Rules & AWG Resistance",
+      "title_es": "Reglas NEC de Caída de Tensión y Resistencia AWG",
+      "content_html_en": "<p><b>NEC Recommendation:</b> Maximum 3% voltage drop on branch circuits for optimal efficiency.</p><p><b>Copper Cable Resistance (Ω/1000ft):</b> AWG 14 = 3.07Ω, AWG 12 = 1.93Ω, AWG 10 = 1.24Ω, AWG 8 = 0.778Ω.</p>",
+      "content_html": "<p><b>Recomendación NEC:</b> Caída de tensión máxima del 3% en circuitos derivados para eficiencia óptima.</p><p><b>Resistencia del Cable de Cobre (Ω/1000ft):</b> AWG 14 = 3.07Ω, AWG 12 = 1.93Ω, AWG 10 = 1.24Ω, AWG 8 = 0.778Ω.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "awgGaugeRes",
+      "label": "Calibre del Cable (AWG)",
+      "label_en": "Wire Gauge (AWG)",
+      "type": "select",
+      "default": "1.93",
+      "options": [
+        { "value": "3.07", "label": "AWG 14 (Resistencia 3.07 Ω/1000ft - 15A)", "label_en": "AWG 14 (Resistance 3.07 Ω/1000ft - 15A)" },
+        { "value": "1.93", "label": "AWG 12 (Resistencia 1.93 Ω/1000ft - 20A)", "label_en": "AWG 12 (Resistance 1.93 Ω/1000ft - 20A)" },
+        { "value": "1.24", "label": "AWG 10 (Resistencia 1.24 Ω/1000ft - 30A)", "label_en": "AWG 10 (Resistance 1.24 Ω/1000ft - 30A)" },
+        { "value": "0.778", "label": "AWG 8 (Resistencia 0.778 Ω/1000ft - 40A)", "label_en": "AWG 8 (Resistance 0.778 Ω/1000ft - 40A)" },
+        { "value": "0.491", "label": "AWG 6 (Resistencia 0.491 Ω/1000ft - 55A)", "label_en": "AWG 6 (Resistance 0.491 Ω/1000ft - 55A)" }
+      ]
+    },
+    {
+      "id": "nominalVoltage",
+      "label": "Voltaje Nominal del Circuito (Voltios)",
+      "label_en": "Nominal Circuit Voltage (Volts)",
+      "type": "number",
+      "default": 120,
+      "min": 12,
+      "max": 600,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "loadAmps",
+      "label": "Corriente de Carga (Amperios)",
+      "label_en": "Load Current (Amperes)",
+      "type": "number",
+      "default": 15,
+      "min": 0.5,
+      "max": 200,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "wireDistanceFt",
+      "label": "Distancia de Cable de Un Sentido (pies)",
+      "label_en": "One-Way Wire Distance (feet)",
+      "type": "number",
+      "default": 100,
+      "min": 1,
+      "max": 5000,
+      "step": 5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "voltageDropVolts",
+      "label": "Caída de Tensión Total (Voltios)",
+      "label_en": "Total Voltage Drop (Volts)",
+      "expression": "(2 * awgGaugeRes * loadAmps * wireDistanceFt) / 1000",
+      "unit": "V",
+      "unit_en": "V",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "voltageDropPercent",
+      "label": "Porcentaje de Caída de Tensión (%)",
+      "label_en": "Percentage Voltage Drop (%)",
+      "expression": "nominalVoltage > 0 ? ((voltageDropVolts / nominalVoltage) * 100) : 0",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "voltageDropPercent", "op": "<=", "value": 3.0 }, "label": "Cumple Norma NEC (≤ 3.0%)", "label_en": "NEC Compliant (≤ 3.0%)", "tone": "success", "text": "Caída de tensión excelente y eficiente.", "text_en": "Excellent and efficient voltage drop." },
+        { "when": { "field": "voltageDropPercent", "op": "between", "value": [3.01, 5.0] }, "label": "Aceptable Mínimo (3% - 5%)", "label_en": "Acceptable Minimum (3% - 5%)", "tone": "info", "text": "Aceptable para circuitos totales pero al límite.", "text_en": "Acceptable for total circuits but on the limit." },
+        { "when": { "field": "voltageDropPercent", "op": ">", "value": 5.0 }, "label": "Caída Excesiva (> 5%)", "label_en": "Excessive Drop (> 5%)", "tone": "warning", "text": "Se recomienda aumentar el calibre del cable AWG.", "text_en": "Increasing wire AWG gauge is recommended." }
+      ]
+    },
+    {
+      "id": "finalDeliveredVoltage",
+      "label": "Voltaje Final Entregado en la Carga",
+      "label_en": "Final Delivered Load Voltage",
+      "expression": "max(0, nominalVoltage - voltageDropVolts)",
+      "unit": "V",
+      "unit_en": "V",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

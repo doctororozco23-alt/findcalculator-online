@@ -1,0 +1,212 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "fha-loan-calculator",
+    "title": "Calculadora de Préstamo Hipotecario FHA",
+    "title_en": "FHA Loan Calculator",
+    "slug": "prestamo-hipotecario-fha",
+    "category": "finance",
+    "subcategory": "mortgages",
+    "tags": ["fha", "hipoteca", "seguro-mip"],
+    "tags_en": ["fha", "mortgage", "mip-insurance"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "ShieldCheck"
+  },
+  "content": {
+    "shortDescription": "Calcula el pago mensual de tu préstamo FHA incluyendo prima de seguro hipotecario (MIP) inicial y mensual.",
+    "shortDescription_en": "Calculate your FHA mortgage payment including upfront and annual Mortgage Insurance Premium (MIP).",
+    "longDescription": "Estima el costo mensual de financiar una vivienda bajo el programa hipotecario FHA (Federal Housing Administration). Incorpora el enganche mínimo del 3.5% y la prima de seguro hipotecario (Upfront MIP y Annual MIP).",
+    "longDescription_en": "Estimate monthly cost of financing home purchase under Federal Housing Administration (FHA) loan program. Factors in 3.5% min down payment, upfront MIP, and annual MIP insurance.",
+    "howToUse": [
+      "Ingresa el precio de la propiedad y la divisa activa.",
+      "Establece el porcentaje de enganche (mínimo 3.5%).",
+      "Indica la tasa de interés anual (%) y el plazo en años.",
+      "Consulta el pago mensual total con seguro MIP incluido."
+    ],
+    "howToUse_en": [
+      "Enter property price and active currency.",
+      "Set down payment percentage (minimum 3.5%).",
+      "Enter interest rate (%) and loan term in years.",
+      "View total monthly FHA payment including MIP insurance fees."
+    ],
+    "methodology": "Cálculo FHA: Financiación = (Precio - Enganche) + Upfront MIP (1.75%). Pago mensual = Cuota Base + Annual MIP (0.55% / 12).",
+    "methodology_en": "FHA Calculation: Financed Amount = (Price - Down Payment) + Upfront MIP (1.75%). Monthly Payment = Base + Annual MIP (0.55% / 12)."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🏛️",
+      "title": "FHA Loan Program Basics",
+      "title_es": "Fundamentos del Programa Hipotecario FHA",
+      "content_html_en": "<p>FHA loans are government-backed mortgages designed for first-time buyers or buyers with lower credit scores, requiring a minimum down payment of just 3.5%.</p>",
+      "content_html": "<p>Los préstamos FHA están respaldados por el gobierno y exigen una entrada mínima del 3.5%, facilitando el acceso a compradores primerizos.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "homePrice",
+      "label": "Precio de compra de la propiedad",
+      "label_en": "Home Purchase Price",
+      "type": "currency",
+      "default": 250000,
+      "min": 10000,
+      "max": 3000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [10000, 3000000], "message": "Precio entre 10.000 y 3.000.000", "message_en": "Price between 10,000 and 3,000,000" }]
+    },
+    {
+      "id": "downPaymentPercent",
+      "label": "Porcentaje de enganche inicial (%)",
+      "label_en": "Down Payment Percentage (%)",
+      "type": "slider",
+      "default": 3.5,
+      "min": 3.5,
+      "max": 50,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "interestRate",
+      "label": "Tasa de interés anual (%)",
+      "label_en": "Annual Interest Rate (%)",
+      "type": "number",
+      "default": 4.5,
+      "min": 0.1,
+      "max": 15,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "loanYears",
+      "label": "Plazo del préstamo (años)",
+      "label_en": "Loan Term (years)",
+      "type": "slider",
+      "default": 30,
+      "min": 15,
+      "max": 30,
+      "step": 15,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "baseLoan",
+      "label": "Monto inicial del préstamo (sin MIP)",
+      "label_en": "Base Loan Amount (Before MIP)",
+      "expression": "homePrice * (1 - downPaymentPercent / 100)",
+      "unit": { "follows": "homePrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "upfrontMip",
+      "label": "Seguro inicial Upfront MIP (1.75%)",
+      "label_en": "Upfront MIP Fee (1.75%)",
+      "expression": "baseLoan * 0.0175",
+      "unit": { "follows": "homePrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "totalFhaLoan",
+      "label": "Monto Total Financiado con MIP",
+      "label_en": "Total Financed FHA Loan Amount",
+      "expression": "baseLoan + upfrontMip",
+      "unit": { "follows": "homePrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "monthlyBasePayment",
+      "label": "Cuota principal e interés mensual",
+      "label_en": "Monthly Principal & Interest Payment",
+      "expression": "totalFhaLoan * (interestRate / 1200) / (1 - (1 + interestRate / 1200) ^ -(loanYears * 12))",
+      "unit": { "follows": "homePrice" },
+      "precision": 2,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "monthlyMipFee",
+      "label": "Seguro MIP mensual estimado (0.55%)",
+      "label_en": "Estimated Monthly MIP Premium (0.55%)",
+      "expression": "(totalFhaLoan * 0.0055) / 12",
+      "unit": { "follows": "homePrice" },
+      "precision": 2,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "totalMonthlyFhaPayment",
+      "label": "Pago Mensual Total FHA (con Seguro MIP)",
+      "label_en": "Total Monthly FHA Payment (With MIP)",
+      "expression": "monthlyBasePayment + monthlyMipFee",
+      "unit": { "follows": "homePrice" },
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalMonthlyFhaPayment", "op": ">", "value": 0 }, "label": "Cuota FHA Calculada", "label_en": "FHA Payment Calculated", "tone": "info", "text": "Incluye cuota principal, intereses y prima de seguro MIP anual.", "text_en": "Includes principal, interest, and annual MIP insurance premium." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "mortgage-calculator", "type": "static", "message": "Compara con una hipoteca convencional", "message_en": "Compare with conventional mortgage", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Préstamos Hipotecarios FHA",
+    "role_en": "FHA Mortgage Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y orientador",
+    "includeData": ["totalMonthlyFhaPayment", "monthlyBasePayment", "monthlyMipFee", "totalFhaLoan"],
+    "instructions": [
+      "Sintetiza la cuota total mensual FHA y el costo del seguro MIP en 2 frases concisas.",
+      "Menciona la ventaja del enganche reducido del 3.5% para compradores iniciales."
+    ],
+    "instructions_en": [
+      "Summarize total FHA monthly payment and monthly MIP fee cost in 2 concise sentences.",
+      "Highlight benefit of low 3.5% down payment for qualifying home buyers."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Préstamo Hipotecario FHA | CalculadoraHub",
+    "metaTitle_en": "FHA Loan Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el pago mensual de tu hipoteca FHA con prima de seguro MIP. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate monthly FHA mortgage payments including upfront and annual MIP fees. Free, instant results.",
+    "keywords": ["fha loan calculator", "hipoteca fha", "seguro mip", "enganche 3.5"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

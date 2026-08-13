@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "keto-calculator",
+    "title": "Calculadora Cetogénica (Macros Keto 75/20/5 & Ratio Cetonas)",
+    "title_en": "Ketogenic Macro Calculator (Keto 75/20/5 & Ketosis Ratio)",
+    "slug": "calculadora-cetogenica-keto-macros",
+    "category": "food",
+    "subcategory": "diets",
+    "tags": ["keto", "cetogenica", "cetonas", "cetosis", "baja-en-carbos"],
+    "tags_en": ["keto", "ketogenic", "ketones", "ketosis", "low-carb"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Utensils"
+  },
+  "content": {
+    "shortDescription": "Calcula el desglose exacto de macronutrientes cetogénicos (75% grasas, 20% proteína y 5% carbohidratos netos) para inducir y mantener la cetosis nutricional.",
+    "shortDescription_en": "Calculate exact ketogenic macronutrient targets (75% fat, 20% protein, 5% net carbs) to induce and sustain nutritional ketosis.",
+    "longDescription": "Auditoría de nutrición cetogénica y beta-hidroxibutirato. Determina los gramos exactos de grasas saludables, proteínas y el límite máximo de carbohidratos netos para cambiar el combustible metabólico de glucosa a cuerpos cetónicos.",
+    "longDescription_en": "Ketogenic nutrition and beta-hydroxybutyrate audit. Determines exact grams of healthy fats, protein, and net carbohydrate limits to shift metabolic fuel from glucose to ketone bodies.",
+    "howToUse": [
+      "Ingresa tu peso corporal y tu presupuesto calórico objetivo.",
+      "Selecciona tu nivel de restricción cetogénica (Keto Estándar 75/20/5 o Keto Alta Proteína 60/35/5).",
+      "Consulta los gramos de grasa, proteína y el límite máximo de carbohidratos netos para entrar en cetosis."
+    ],
+    "howToUse_en": [
+      "Enter body weight and target daily calorie budget.",
+      "Select ketogenic ratio protocol (Standard Keto 75/20/5 or High Protein Keto 60/35/5).",
+      "View target fat grams, protein grams, and maximum net carbohydrate ceiling to enter ketosis."
+    ],
+    "methodology": "Protocolo Cetogénico Estándar (SKD): 75% Grasas (9 kcal/g), 20% Proteínas (4 kcal/g), 5% Carbohidratos Netos (4 kcal/g, máximo 20-30g/día). Ratio Cetogénico = Grasas_g / (Proteínas_g + Carbos_g).",
+    "methodology_en": "Standard Ketogenic Protocol (SKD): 75% Fat (9 kcal/g), 20% Protein (4 kcal/g), 5% Net Carbs (4 kcal/g, max 20-30g/day). Ketogenic Ratio = Fat_g / (Protein_g + Carbs_g)."
+  },
+  "guideSections": [
+    {
+      "id": "ketosis-mechanisms-guide",
+      "icon": "🥑",
+      "title": "Biological Mechanisms of Nutritional Ketosis",
+      "title_es": "Mecanismos Biológicos de la Cetosis Nutricional",
+      "content_html_en": "<p><b>Net Carbs Ceiling (≤ 25g/day):</b> Depletes liver glycogen within 24-48 hours, signaling hepatic mitochondria to oxidize fatty acids into acetoacetate and beta-hydroxybutyrate (BOHB).</p><p><b>Protein Moderation:</b> Excessive protein intake (> 2.5 g/kg) can trigger gluconeogenesis, reducing circulating blood ketone levels.</p>",
+      "content_html": "<p><b>Límite de Carbohidratos Netos (≤ 25g/día):</b> Vacía el glucógeno hepático en 24-48 horas, activando la beta-oxidación para producir acetoacetato y beta-hidroxibutirato (BOHB).</p><p><b>Moderación Proteica:</b> El exceso de proteína (> 2.5 g/kg) puede activar la gluconeogénesis, reduciendo los niveles de cuerpos cetónicos en sangre.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "weightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 40,
+      "max": 220,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [40, 220], "message": "Peso entre 40 y 220 kg", "message_en": "Weight between 40 and 220 kg" }]
+    },
+    {
+      "id": "targetCalories",
+      "label": "Presupuesto calórico diario objetivo",
+      "label_en": "Target Daily Calorie Budget",
+      "type": "number",
+      "default": 2000,
+      "min": 1200,
+      "max": 5000,
+      "step": 50,
+      "unit": "kcal",
+      "unit_en": "kcal",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1200, 5000], "message": "Calorías entre 1200 y 5000", "message_en": "Calories between 1200 and 5000" }]
+    },
+    {
+      "id": "ketoProtocol",
+      "label": "Protocolo y distribución cetogénica",
+      "label_en": "Ketogenic Ratio Protocol",
+      "type": "select",
+      "default": "standard",
+      "options": [
+        { "value": "standard", "label": "Keto Estándar (75% Grasa, 20% Proteína, 5% Carbos Netos - Recomendado)", "label_en": "Standard Keto (75% Fat, 20% Protein, 5% Net Carbs - Recommended)" },
+        { "value": "high_protein", "label": "Keto Alta Proteína Culturismo (60% Grasa, 35% Proteína, 5% Carbos)", "label_en": "High Protein Bodybuilding Keto (60% Fat, 35% Protein, 5% Carbs)" }
+      ],
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "ketoFatGrams",
+      "label": "Grasas Diarias Objetivo",
+      "label_en": "Target Daily Fat Grams",
+      "expression": "round((targetCalories * (ketoProtocol == 'high_protein' ? 0.60 : 0.75)) / 9)",
+      "unit": "g/día",
+      "unit_en": "g/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "ketoFatGrams", "op": ">", "value": 0 }, "label": "Combustible Principal Cetogénico", "label_en": "Primary Ketogenic Fuel Target", "tone": "success", "text": "Gramos de grasas saludables para aportar el 75% de la energía diaria.", "text_en": "Target daily healthy fat grams providing 75% of total caloric intake." }
+      ]
+    },
+    {
+      "id": "ketoProteinGrams",
+      "label": "Proteínas Diarias Objetivo",
+      "label_en": "Target Daily Protein Grams",
+      "expression": "round((targetCalories * (ketoProtocol == 'high_protein' ? 0.35 : 0.20)) / 4)",
+      "unit": "g/día",
+      "unit_en": "g/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "ketoNetCarbGrams",
+      "label": "Límite Máximo de Carbohidratos Netos",
+      "label_en": "Maximum Net Carbohydrate Limit",
+      "expression": "min(round((targetCalories * 0.05) / 4), 25)",
+      "unit": "g/día",
+      "unit_en": "g/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "ketosisRatioVal",
+      "label": "Ratio Cetogénico Estimado (Grasas / [Proteína + Carbos])",
+      "label_en": "Estimated Ketogenic Ratio (Fat / [Protein + Carbs])",
+      "expression": "round(ketoFatGrams / (ketoProteinGrams + ketoNetCarbGrams), 2)",
+      "unit": ": 1",
+      "unit_en": ": 1",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "fat-intake-calculator", "type": "static", "message": "Calcula fuentes de grasas saludables mono/poliinsaturadas", "message_en": "Calculate healthy MUFA/PUFA fat sources", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Nutricionista Cetogénico y Especialista en Cetosis Nutricional",
+    "role_en": "Ketogenic Nutritionist & Nutritional Ketosis Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y orientador",
+    "includeData": ["ketoFatGrams", "ketoProteinGrams", "ketoNetCarbGrams", "ketosisRatioVal", "targetCalories"],
+    "instructions": [
+      "Sintetiza los gramos objetivos de grasa, proteína y el límite máximo de carbohidratos netos en 2 frases concisas.",
+      "Enfatiza la necesidad de consumir electrolitos (sodio, potasio, magnesio) durante las primeras semanas para prevenir la gripe keto (keto flu)."
+    ],
+    "instructions_en": [
+      "Summarize target fat grams, protein grams, and net carb ceiling in 2 concise sentences.",
+      "Emphasize adequate electrolyte intake (sodium, potassium, magnesium) during initial weeks to prevent keto flu symptoms."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora Cetogénica (Macros Keto 75/20/5) | CalculadoraHub",
+    "metaTitle_en": "Ketogenic Macro Calculator (Keto 75/20/5) | CalculadoraHub",
+    "metaDescription": "Calcula tus macros exactos para la dieta cetogénica (grasas, proteínas y carbohidratos netos). Gratis e instantáneo.",
+    "metaDescription_en": "Calculate exact ketogenic macros (fats, protein, and net carbs) to enter ketosis. Free, instant results.",
+    "keywords": ["keto calculator", "calculadora cetogenica", "macros keto 75 20 5", "carbos netos cetosis"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

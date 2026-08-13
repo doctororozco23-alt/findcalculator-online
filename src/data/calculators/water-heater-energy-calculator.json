@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "water-heater-energy-calculator",
+    "title": "Calculadora de Consumo Energético de Calentadores de Agua",
+    "title_en": "Water Heater Energy Usage & Heating Cost Calculator",
+    "slug": "calculadora-de-consumo-energetico-de-calentadores-de-agua-termos",
+    "category": "home",
+    "subcategory": "energy",
+    "tags": ["calentador-de-agua", "termo-electrico", "calentador-de-gas", "ducha", "eficiencia-energetica", "costo-agua-caliente", "hogar"],
+    "tags_en": ["water-heater", "electric-tank", "gas-water-heater", "shower", "energy-efficiency", "hot-water-cost", "home"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula los kilovatios-hora (kWh) y el costo mensual de calentar agua sanitaria según el número de duchas y temperatura.",
+    "shortDescription_en": "Calculate kilowatt-hours (kWh) and monthly cost for heating domestic hot water based on shower count and temp rise.",
+    "longDescription": "Herramienta de consumo energético del hogar. Cuantifica la energía requerida para elevar la temperatura del agua fría de red (15°C) a temperatura de confort (45°C).",
+    "longDescription_en": "Home energy consumption tool. Quantifies energy required to raise cold inlet water temperature (15°C) to comfortable shower temperature (45°C).",
+    "howToUse": [
+      "Ingresa el Número de Personas en la Vivienda.",
+      "Ingresa el Duración Media de la Ducha por Persona (minutos/día).",
+      "Ingresa el Caudal de la Alcachofa / Regadera de Ducha (Litros/minuto, ej. 9 L/min).",
+      "Ingresa la Tarifa Eléctrica ($/kWh, ej. 0.20 $/kWh).",
+      "Consulta el Consumo Mensual de Energía (kWh) y el Costo de Agua Caliente Sanitaria ($/mes)."
+    ],
+    "howToUse_en": [
+      "Enter Number of Occupants in Household.",
+      "Enter Average Daily Shower Duration per Person (minutes/day).",
+      "Enter Showerhead Flow Rate (Liters/minute, e.g. 9 L/min).",
+      "Enter Electricity Rate ($/kWh, e.g. 0.20 $/kWh).",
+      "View Monthly Energy Consumption (kWh) and Hot Water Heating Cost ($/month)."
+    ],
+    "methodology": "LitrosDiarios = Personas * Minutos * CaudalLpm. Energía kWh = (LitrosDiarios * 4.184 * 30°C) / 3600. CostoMensual = kWhMensuales * TarifakWh.",
+    "methodology_en": "Daily Liters = People * Mins * FlowLpm. Energy kWh = (DailyLiters * 4.184 * 30°C) / 3600. Monthly Cost = MonthlykWh * RatekWh."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Fontanería y Eficiencia en Agua Caliente Sanitaria (ACS)",
+    "role_en": "Plumbing & Domestic Hot Water (DHW) Efficiency Specialist Assistant",
+    "includeData": ["waterHeaterMonthlyKwhResult", "waterHeaterMonthlyCostResult"],
+    "instructions": [
+      "Interpreta el consumo energético mensual para agua caliente sanitaria calculado.",
+      "Compara la eficiencia entre termo eléctrico estándar (COP = 1) vs bomba de calor aerotérmica para ACS (COP = 3.5).",
+      "Muestra el ahorro potencial al reducir el tiempo de ducha o instalar aireadores de bajo consumo."
+    ],
+    "instructions_en": [
+      "Interpret calculated monthly domestic hot water energy usage.",
+      "Compare efficiency between electric resistance tank (COP = 1) vs heat pump water heater (COP = 3.5).",
+      "Show potential savings from shortening shower time or installing low-flow aerators."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "whe-guide",
+      "icon": "🚿",
+      "title": "Domestic Hot Water Energy Physics",
+      "title_es": "Física de Energía en Agua Caliente Sanitaria",
+      "content_html_en": "<p><b>Energy Requirement:</b> Heating 100 Liters of water by 30°C requires ~3.5 kWh of thermal energy.</p><p><b>Low-Flow Showerhead:</b> Reduces water usage from 12 L/min to 6 L/min (50% energy savings).</p>",
+      "content_html": "<p><b>Requerimiento Energético:</b> Calentar 100 Litros de agua en 30°C requiere ~3.5 kWh de energía térmica.</p><p><b>Regadera Eficiente:</b> Reduce el caudal de 12 L/min a 6 L/min (50% de ahorro energético).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "householdPeopleCount",
+      "label": "Personas en la Vivienda",
+      "label_en": "People in Household",
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "showerMinutesPerPersonDay",
+      "label": "Minutos de Ducha Diaria por Persona",
+      "label_en": "Daily Shower Minutes per Person",
+      "type": "number",
+      "default": 8,
+      "min": 1,
+      "max": 60,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "showerheadLpmFlowRate",
+      "label": "Caudal de la Regadera de Ducha (L/min)",
+      "label_en": "Showerhead Flow Rate (L/min)",
+      "type": "number",
+      "default": 9.0,
+      "min": 3,
+      "max": 30,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "dhwElectricityRateCost",
+      "label": "Tarifa Eléctrica ($/kWh)",
+      "label_en": "Electricity Rate ($/kWh)",
+      "type": "number",
+      "default": 0.20,
+      "min": 0.01,
+      "max": 2.0,
+      "step": 0.01,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "dailyHotWaterLitersResult",
+      "label": "Consumo Diario de Agua Caliente (Litros)",
+      "label_en": "Daily Hot Water Consumption (Liters)",
+      "expression": "householdPeopleCount * showerMinutesPerPersonDay * showerheadLpmFlowRate",
+      "unit": "L/día",
+      "unit_en": "L/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "waterHeaterMonthlyKwhResult",
+      "label": "Consumo de Energía Mensual Estimado (kWh/mes)",
+      "label_en": "Estimated Monthly Energy Consumption (kWh/month)",
+      "expression": "((dailyHotWaterLitersResult * 4.184 * 30) / 3600) * 30",
+      "unit": "kWh",
+      "unit_en": "kWh",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "waterHeaterMonthlyKwhResult", "op": ">=", "value": 0 }, "label": "Energía Calculada", "label_en": "Energy Computed", "tone": "success", "text": "Energía consumida al mes para calentar agua sanitaria cuantificada.", "text_en": "Monthly energy consumed for domestic hot water quantified." }
+      ]
+    },
+    {
+      "id": "waterHeaterMonthlyCostResult",
+      "label": "Costo Estimado Mensual de Agua Caliente ($/mes)",
+      "label_en": "Estimated Monthly Hot Water Cost ($/month)",
+      "expression": "waterHeaterMonthlyKwhResult * dhwElectricityRateCost",
+      "unit": "$",
+      "unit_en": "$",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

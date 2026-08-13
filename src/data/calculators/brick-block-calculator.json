@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "brick-block-calculator",
+    "title": "Calculadora de Ladrillos, Bloques de Hormigón y Mortero",
+    "title_en": "Bricks, Concrete Blocks & Mortar Calculator",
+    "slug": "calculadora-de-ladrillos-bloques-de-hormigon-mortero-muros",
+    "category": "construction",
+    "subcategory": "materials",
+    "tags": ["ladrillos", "bloques-de-hormigon", "mortero", "muros-de-albañileria", "materiales", "construccion"],
+    "tags_en": ["bricks", "concrete-blocks", "mortar", "masonry-walls", "materials", "construction"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el número de ladrillos o bloques de hormigón y bolsas de mortero requeridas para construir muros de albañilería.",
+    "shortDescription_en": "Calculate number of bricks or concrete blocks and mortar bags needed to build masonry walls.",
+    "longDescription": "Herramienta de albañilería y edificación. Considera el grosor de las juntas de mortero (10 mm) y el desperdicio por roturas o ajustes.",
+    "longDescription_en": "Masonry and building construction tool. Accounts for 10 mm mortar joint thickness and breakage/cutting waste.",
+    "howToUse": [
+      "Ingresa el Área Total del Muro de Albañilería (m²).",
+      "Selecciona el Tipo de Unidad (Ladrillo Común, Ladrillo Hueco o Bloque de Hormigón 15x20x40 cm).",
+      "Consulta el Número de Unidades Requeridas (con 5% de desperdicio) y el Volumen de Mortero."
+    ],
+    "howToUse_en": [
+      "Enter Total Masonry Wall Area (m²).",
+      "Select Unit Type (Standard Brick, Hollow Brick, or Concrete Block 15x20x40 cm).",
+      "View Required Units Count (with 5% waste) and Mortar Volume."
+    ],
+    "methodology": "Unidades/m² (Bloque 20x40) ≈ 12.5 bloques/m². Ladrillo Común ≈ 55 unidades/m². Desperdicio = +5%.",
+    "methodology_en": "Units/m² (20x40 Block) ≈ 12.5 blocks/m². Standard Brick ≈ 55 units/m². Waste = +5%."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Albañilería y Materiales de Construcción",
+    "role_en": "Masonry & Building Materials Specialist Assistant",
+    "includeData": ["bricksBlocksCountResult", "mortarBagsCountResult"],
+    "instructions": [
+      "Interpreta la cantidad de unidades de albañilería y sacos de mortero calculados.",
+      "Explica la importancia de humedecer los ladrillos de arcilla antes de la colocación para evitar la absorción del agua del mortero.",
+      "Muestra la estimación de bolsas de mortero seco preparado (25 kg cada una)."
+    ],
+    "instructions_en": [
+      "Interpret calculated masonry units count and mortar bags.",
+      "Explain importance of wetting clay bricks before laying to prevent sucking water from mortar.",
+      "Show pre-mixed dry mortar bags estimate (25 kg each)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "bbk-guide",
+      "icon": "🧱",
+      "title": "Masonry Units Per Square Meter",
+      "title_es": "Unidades de Albañilería por Metro Cuadrado",
+      "content_html_en": "<p><b>Concrete Block (20 x 40 cm face):</b> ~12.5 blocks / m².</p><p><b>Standard Red Clay Brick:</b> ~50 to 60 bricks / m² depending on joint width.</p>",
+      "content_html": "<p><b>Bloque de Hormigón (cara 20 x 40 cm):</b> ~12.5 bloques / m².</p><p><b>Ladrillo Común de Arcilla:</b> ~50 a 60 ladrillos / m² según junta.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "masonryWallAreaM2",
+      "label": "Área Total del Muro (m²)",
+      "label_en": "Total Wall Area (m²)",
+      "type": "number",
+      "default": 35,
+      "min": 1,
+      "max": 10000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "unitTypeCoveragePerM2",
+      "label": "Tipo de Unidad de Albañilería",
+      "label_en": "Masonry Unit Type",
+      "type": "select",
+      "default": "12.5",
+      "options": [
+        { "value": "12.5", "label": "Bloque de Hormigón Estándar (12.5 bloques / m²)", "label_en": "Standard Concrete Block (12.5 blocks / m²)" },
+        { "value": "55.0", "label": "Ladrillo Común de Arcilla (55 ladrillos / m²)", "label_en": "Standard Red Clay Brick (55 bricks / m²)" },
+        { "value": "35.0", "label": "Ladrillo Hueco Cerámico (35 ladrillos / m²)", "label_en": "Hollow Structural Clay Tile (35 bricks / m²)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "bricksBlocksCountResult",
+      "label": "Total de Unidades Requeridas (con 5% desperdicio)",
+      "label_en": "Total Required Units (with 5% waste)",
+      "expression": "ceil((masonryWallAreaM2 * unitTypeCoveragePerM2) * 1.05)",
+      "unit": "unidades",
+      "unit_en": "units",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "bricksBlocksCountResult", "op": ">=", "value": 0 }, "label": "Unidades Calculadas", "label_en": "Units Computed", "tone": "success", "text": "Cantidad total de bloques/ladrillos cuantificada.", "text_en": "Total block/brick quantity quantified." }
+      ]
+    },
+    {
+      "id": "mortarBagsCountResult",
+      "label": "Bolsas de Mortero Preparado (25 kg cada una)",
+      "label_en": "Pre-mixed Mortar Bags (25 kg each)",
+      "expression": "ceil((masonryWallAreaM2 * 0.6) * 1.05)",
+      "unit": "bolsas",
+      "unit_en": "bags",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

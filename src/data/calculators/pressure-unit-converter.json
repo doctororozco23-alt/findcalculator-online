@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "pressure-unit-converter",
+    "title": "Conversor de Presión (bar, PSI, Pa, kPa, atm, mmHg)",
+    "title_en": "Pressure Unit Converter (bar, PSI, Pa, kPa, atm, mmHg)",
+    "slug": "conversor-de-presion-bar-psi-pascales-atmosferas-mmhg",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["conversor-de-presion", "bar", "psi", "pascales", "atmosferas", "mmhg", "neumatica", "hidraulica", "conversores"],
+    "tags_en": ["pressure-converter", "bar", "psi", "pascals", "atmospheres", "mmhg", "pneumatics", "hydraulics", "converters"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte instantáneamente lecturas de presión entre bar, PSI (libras por pulgada²), Pascales (Pa), kPa, atmósferas y mmHg.",
+    "shortDescription_en": "Instantly convert pressure readings between bar, PSI (lbs/in²), Pascals (Pa), kPa, atmospheres, and mmHg.",
+    "longDescription": "Herramienta de física de fluidos, neumática e ingeniería mecánica. Facilita la conversión de presión de neumáticos, calderas y compresores.",
+    "longDescription_en": "Fluid physics, pneumatics, and mechanical engineering tool. Facilitates pressure conversion for tires, boilers, and compressors.",
+    "howToUse": [
+      "Ingresa el Valor de Presión a Convertir.",
+      "Selecciona la Unidad de Origen (ej. bar, PSI, atm, kPa).",
+      "Consulta los Resultados Equivalentes en bar, PSI, Pascales (Pa), kPa y atmósferas."
+    ],
+    "howToUse_en": [
+      "Enter Pressure Value to Convert.",
+      "Select Source Unit (e.g. bar, PSI, atm, kPa).",
+      "View Equivalent Results in bar, PSI, Pascals (Pa), kPa, and atmospheres."
+    ],
+    "methodology": "Factor base en bar: 1 bar = 1.0, 1 PSI = 0.0689475729, 1 Pa = 0.00001, 1 kPa = 0.01, 1 atm = 1.01325, 1 mmHg = 0.00133322.",
+    "methodology_en": "Base factor in bar: 1 bar = 1.0, 1 PSI = 0.0689475729, 1 Pa = 0.00001, 1 kPa = 0.01, 1 atm = 1.01325, 1 mmHg = 0.00133322."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Mecánica de Fluidos y Presión Industrial",
+    "role_en": "Fluid Mechanics & Industrial Pressure Specialist Assistant",
+    "includeData": ["pressureInBarResult", "pressureInPsiResult", "pressureInKpaResult"],
+    "instructions": [
+      "Interpreta la conversión de presión realizada.",
+      "Muestra equivalencias comunes de taller (1 bar ≈ 14.5038 PSI, 1 atm = 101.325 kPa = 760 mmHg).",
+      "Explica la diferencia entre presión manométrica (gauge pressure) vs presión absoluta."
+    ],
+    "instructions_en": [
+      "Interpret performed pressure conversion.",
+      "Show common workshop equivalences (1 bar ≈ 14.5038 PSI, 1 atm = 101.325 kPa = 760 mmHg).",
+      "Explain difference between gauge pressure vs absolute pressure."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "puc-guide",
+      "icon": "🎈",
+      "title": "Pressure Units Benchmarks",
+      "title_es": "Pautas de Unidades de Presión",
+      "content_html_en": "<p><b>1 bar:</b> 14.5038 PSI = 100,000 Pa = 100 kPa</p><p><b>1 Standard Atmosphere (atm):</b> 1.01325 bar = 14.6959 PSI = 760 mmHg</p><p><b>Standard Car Tire Pressure:</b> ~32 to 35 PSI (2.2 to 2.4 bar)</p>",
+      "content_html": "<p><b>1 bar:</b> 14.5038 PSI = 100,000 Pa = 100 kPa</p><p><b>1 Atmósfera Estándar (atm):</b> 1.01325 bar = 14.6959 PSI = 760 mmHg</p><p><b>Presión Estándar Neumático de Coche:</b> ~32 a 35 PSI (2.2 a 2.4 bar)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputValuePressure",
+      "label": "Valor a Convertir",
+      "label_en": "Value to Convert",
+      "type": "number",
+      "default": 32,
+      "min": 0,
+      "max": 1000000000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "inputPressureUnitFactor",
+      "label": "Unidad de Origen",
+      "label_en": "Source Unit",
+      "type": "select",
+      "default": "0.0689475729",
+      "options": [
+        { "value": "0.0689475729", "label": "PSI (libras/pulgada²)", "label_en": "PSI (lbs/sq in)" },
+        { "value": "1.0", "label": "bar", "label_en": "bar" },
+        { "value": "0.01", "label": "Kilopascales (kPa)", "label_en": "Kilopascals (kPa)" },
+        { "value": "1.01325", "label": "Atmósferas Estándar (atm)", "label_en": "Standard Atmospheres (atm)" },
+        { "value": "0.00001", "label": "Pascales (Pa)", "label_en": "Pascals (Pa)" },
+        { "value": "0.00133322", "label": "Milímetros de Mercurio (mmHg)", "label_en": "Millimeters of Mercury (mmHg)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "pressureInBarResult",
+      "label": "Equivalente en bar",
+      "label_en": "Equivalent in bar",
+      "expression": "inputValuePressure * inputPressureUnitFactor",
+      "unit": "bar",
+      "unit_en": "bar",
+      "precision": 3,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "pressureInBarResult", "op": ">=", "value": 0 }, "label": "Presión Calculada", "label_en": "Pressure Computed", "tone": "success", "text": "Presión equivalente en bar cuantificada.", "text_en": "Equivalent pressure in bar quantified." }
+      ]
+    },
+    {
+      "id": "pressureInPsiResult",
+      "label": "Equivalente en PSI",
+      "label_en": "Equivalent in PSI",
+      "expression": "pressureInBarResult / 0.0689475729",
+      "unit": "PSI",
+      "unit_en": "PSI",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "pressureInKpaResult",
+      "label": "Equivalente en Kilopascales (kPa)",
+      "label_en": "Equivalent in Kilopascals (kPa)",
+      "expression": "pressureInBarResult * 100",
+      "unit": "kPa",
+      "unit_en": "kPa",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "pressureInAtmResult",
+      "label": "Equivalente en Atmósferas (atm)",
+      "label_en": "Equivalent in Atmospheres (atm)",
+      "expression": "pressureInBarResult / 1.01325",
+      "unit": "atm",
+      "unit_en": "atm",
+      "precision": 3,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

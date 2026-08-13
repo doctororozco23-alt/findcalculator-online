@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "fraction-calculator",
+    "title": "Calculadora de Fracciones (Suma, Resta, Multiplicación y División)",
+    "title_en": "Fraction Calculator (Add, Subtract, Multiply & Divide)",
+    "slug": "calculadora-de-fracciones-suma-resta-multiplicacion-division",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["fracciones", "numerador", "denominador", "suma-de-fracciones", "aritmetica", "matematicas"],
+    "tags_en": ["fractions", "numerator", "denominator", "fraction-addition", "arithmetic", "math"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula suma, resta, multiplicación y división de dos fracciones, simplificando al Mínimo Común Denominador y mostrando resultado decimal y número mixto.",
+    "shortDescription_en": "Calculate addition, subtraction, multiplication, and division of two fractions with GCD reduction and mixed number output.",
+    "longDescription": "Herramienta aritmética para resolver operaciones entre fracciones $a/b$ y $c/d$. Simplifica la fracción resultante dividiendo numerador y denominador entre su Máximo Común Divisor (MCD).",
+    "longDescription_en": "Arithmetic tool for solving operations between fractions $a/b$ and $c/d$. Simplifies the output using the Greatest Common Divisor (GCD).",
+    "howToUse": [
+      "Ingresa el Numerador 1 y Denominador 1 de la primera fracción.",
+      "Selecciona la Operación (+, -, ×, ÷).",
+      "Ingresa el Numerador 2 y Denominador 2 de la segunda fracción.",
+      "Consulta el resultado en fracción irreducible, valor decimal y número mixto."
+    ],
+    "howToUse_en": [
+      "Enter Numerator 1 and Denominator 1 for the first fraction.",
+      "Select Operation (+, -, ×, ÷).",
+      "Enter Numerator 2 and Denominator 2 for the second fraction.",
+      "View result as simplified fraction, decimal value, and mixed number."
+    ],
+    "methodology": "Suma: (a*d + b*c)/(b*d). Resta: (a*d - b*c)/(b*d). Multiplicación: (a*c)/(b*d). División: (a*d)/(b*c). Simplificación dividiendo entre MCD.",
+    "methodology_en": "Addition: (a*d + b*c)/(b*d). Subtraction: (a*d - b*c)/(b*d). Multiplication: (a*c)/(b*d). Division: (a*d)/(b*c). Simplified via GCD."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Matemático Experto en Aritmética",
+    "role_en": "Expert Arithmetic Math Assistant",
+    "includeData": ["decimalResult", "gcdValue", "resNum", "resDenom"],
+    "instructions": [
+      "Explica la simplificación por el Máximo Común Divisor (MCD).",
+      "Muestra la conversión entre fracción impropia, número mixto y valor decimal.",
+      "Verifica que el denominador no sea cero."
+    ],
+    "instructions_en": [
+      "Explain simplification using the Greatest Common Divisor (GCD).",
+      "Show conversion between improper fraction, mixed number, and decimal value.",
+      "Verify that the denominator is not zero."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "fraction-guide",
+      "icon": "➕",
+      "title": "Fraction Operations & Simplification Rules",
+      "title_es": "Operaciones con Fracciones y Reglas de Simplificación",
+      "content_html_en": "<p><b>Addition / Subtraction:</b> Find common denominator: (a/b) ± (c/d) = (ad ± bc) / (bd).</p><p><b>Multiplication:</b> Multiply straight across: (a/b) × (c/d) = (ac) / (bd).</p><p><b>Division:</b> Multiply by reciprocal: (a/b) ÷ (c/d) = (a/b) × (d/c) = (ad) / (bc).</p>",
+      "content_html": "<p><b>Suma / Resta:</b> Buscar denominador común: (a/b) ± (c/d) = (ad ± bc) / (bd).</p><p><b>Multiplicación:</b> Multiplicar en línea recta: (a/b) × (c/d) = (ac) / (bd).</p><p><b>División:</b> Multiplicar por el recíproco: (a/b) ÷ (c/d) = (a/b) × (d/c) = (ad) / (bc).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "num1",
+      "label": "Numerador 1",
+      "label_en": "Numerator 1",
+      "type": "number",
+      "default": 3,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "den1",
+      "label": "Denominador 1",
+      "label_en": "Denominator 1",
+      "type": "number",
+      "default": 4,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [-10000, 10000], "message": "El denominador no puede ser cero", "message_en": "Denominator cannot be zero" }]
+    },
+    {
+      "id": "operator",
+      "label": "Operación",
+      "label_en": "Operation",
+      "type": "select",
+      "default": "add",
+      "options": [
+        { "value": "add", "label": "Suma (+)", "label_en": "Addition (+)" },
+        { "value": "subtract", "label": "Resta (-)", "label_en": "Subtraction (-)" },
+        { "value": "multiply", "label": "Multiplicación (×)", "label_en": "Multiplication (×)" },
+        { "value": "divide", "label": "División (÷)", "label_en": "Division (÷)" }
+      ]
+    },
+    {
+      "id": "num2",
+      "label": "Numerador 2",
+      "label_en": "Numerator 2",
+      "type": "number",
+      "default": 1,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "den2",
+      "label": "Denominador 2",
+      "label_en": "Denominator 2",
+      "type": "number",
+      "default": 2,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [-10000, 10000], "message": "El denominador no puede ser cero", "message_en": "Denominator cannot be zero" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "rawNum",
+      "label": "Numerador Bruto",
+      "label_en": "Raw Numerator",
+      "expression": "operator == 'add' ? (num1 * den2 + num2 * den1) : (operator == 'subtract' ? (num1 * den2 - num2 * den1) : (operator == 'multiply' ? (num1 * num2) : (num1 * den2)))",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "rawDen",
+      "label": "Denominador Bruto",
+      "label_en": "Raw Denominator",
+      "expression": "operator == 'add' || operator == 'subtract' || operator == 'multiply' ? (den1 * den2) : (den1 * num2)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "gcdValue",
+      "label": "MCD de Simplificación",
+      "label_en": "Simplification GCD",
+      "expression": "gcd(rawNum, rawDen)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "resNum",
+      "label": "Numerador Simplificado",
+      "label_en": "Simplified Numerator",
+      "expression": "gcdValue != 0 ? (rawNum / gcdValue) : 0",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "resDenom",
+      "label": "Denominador Simplificado",
+      "label_en": "Simplified Denominator",
+      "expression": "gcdValue != 0 ? (rawDen / gcdValue) : 1",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "decimalResult",
+      "label": "Resultado Decimal Exacto",
+      "label_en": "Exact Decimal Result",
+      "expression": "rawDen != 0 ? (rawNum / rawDen) : 0",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "decimalResult", "op": ">=", "value": 0 }, "label": "Fracción Evaluada Correctamente", "label_en": "Fraction Evaluated Successfully", "tone": "success", "text": "Operación de fracciones resuelta y simplificada.", "text_en": "Fraction operation solved and simplified." }
+      ]
+    }
+  ]
+}

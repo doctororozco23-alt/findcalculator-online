@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "hydraulic-cylinder-force-calculator",
+    "title": "Calculadora de Fuerza en Cilindros Hidráulicos y Neumáticos (F = P A)",
+    "title_en": "Hydraulic & Pneumatic Cylinder Force Calculator (F = P A)",
+    "slug": "calculadora-de-fuerza-en-cilindros-hidraulicos-neumaticos",
+    "category": "engineering",
+    "subcategory": "mechanics",
+    "tags": ["cilindros-hidraulicos", "neumatica", "fuerza-de-empuje", "presion-hidraulica", "embolo", "ingenieria-mecanica", "oleohidraulica"],
+    "tags_en": ["hydraulic-cylinders", "pneumatics", "push-force", "hydraulic-pressure", "piston", "mechanical-engineering", "fluid-power"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la fuerza de empuje (extensión) y tracción (retracción) en Newtons y toneladas para cilindros hidráulicos o neumáticos ($F = P \\cdot A$).",
+    "shortDescription_en": "Calculate push (extension) and pull (retraction) forces in Newtons and tons for hydraulic or pneumatic cylinders ($F = P \\cdot A$).",
+    "longDescription": "Herramienta de oleohidráulica y automatización industrial. Cuantifica la capacidad de elevación o prensado de actuadores lineales según el diámetro del pistón y del vástago.",
+    "longDescription_en": "Fluid power and industrial automation tool. Quantifies lifting or pressing capacity of linear actuators based on piston and rod diameters.",
+    "howToUse": [
+      "Ingresa la Presión de Trabajo del Sistema ($P$ en bar o PSI, ej. 200 bar).",
+      "Ingresa el Diámetro Interno del Pistón/Émbolo ($D$ en mm).",
+      "Ingresa el Diámetro del Vástago ($d$ en mm).",
+      "Consulta la Fuerza de Empuje (Extensión) y Fuerza de Tracción (Retracción) en Newtons (N) y Toneladas Métrica."
+    ],
+    "howToUse_en": [
+      "Enter System Working Pressure ($P$ in bar, e.g. 200 bar).",
+      "Enter Internal Piston Diameter ($D$ in mm).",
+      "Enter Rod Diameter ($d$ in mm).",
+      "View Push (Extension) Force and Pull (Retraction) Force in Newtons (N) and Metric Tons."
+    ],
+    "methodology": "Área Émbolo A_push = (π * D²) / 4. Área Anular A_pull = π * (D² - d²) / 4. Fuerza = Presión * Área. 1 bar = 100,000 Pa = 0.1 N/mm².",
+    "methodology_en": "Piston Area A_push = (π * D²) / 4. Annular Area A_pull = π * (D² - d²) / 4. Force = Pressure * Area. 1 bar = 100,000 Pa = 0.1 N/mm²."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Oleohidráulica y Automática Industrial",
+    "role_en": "Fluid Power & Industrial Automation Specialist Assistant",
+    "includeData": ["pushForceNewtonsResult", "pushForceTonsResult"],
+    "instructions": [
+      "Interpreta la fuerza de empuje y tracción del cilindro hidráulico.",
+      "Explica la diferencia entre el área total del émbolo en avance y el área anular reducida en retroceso.",
+      "Muestra la selección práctica de bombas hidráulicas y mangueras clasificadas para la presión requerida."
+    ],
+    "instructions_en": [
+      "Interpret hydraulic cylinder push and pull output forces.",
+      "Explain difference between full piston area during extension vs reduced annular area during retraction.",
+      "Show practical selection of hydraulic pumps and hoses rated for required working pressure."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "hcf-guide",
+      "icon": "🚜",
+      "title": "Hydraulic Actuator Force Equations",
+      "title_es": "Ecuaciones de Fuerza en Actuadores Hidráulicos",
+      "content_html_en": "<p><b>Push Force (Extension):</b> F_push = P × (π × D² / 4)</p><p><b>Pull Force (Retraction):</b> F_pull = P × (π × (D² - d²) / 4)</p><p><b>1 Metric Ton Force:</b> Approximately 9,806.65 Newtons.</p>",
+      "content_html": "<p><b>Fuerza de Empuje (Avance):</b> F_empuje = P × (π × D² / 4)</p><p><b>Fuerza de Tracción (Retroceso):</b> F_retroceso = P × (π × (D² - d²) / 4)</p><p><b>1 Tonelada Fuerza:</b> Aproximadamente 9,806.65 Newtons.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "workingPressureBar",
+      "label": "Presión de Trabajo (P en bar)",
+      "label_en": "Working Pressure (P in bar)",
+      "type": "number",
+      "default": 180,
+      "min": 1,
+      "max": 1000,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "pistonDiameterMm",
+      "label": "Diámetro del Pistón / Émbolo (D en mm)",
+      "label_en": "Piston Diameter (D in mm)",
+      "type": "number",
+      "default": 80,
+      "min": 10,
+      "max": 1000,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "rodDiameterMm",
+      "label": "Diámetro del Vástago (d en mm)",
+      "label_en": "Rod Diameter (d in mm)",
+      "type": "number",
+      "default": 45,
+      "min": 5,
+      "max": 800,
+      "step": 5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "pushForceNewtonsResult",
+      "label": "Fuerza de Empuje / Avance (Newtons - N)",
+      "label_en": "Push / Extension Force (Newtons - N)",
+      "expression": "(workingPressureBar * 0.1) * ((pi * (pistonDiameterMm ^ 2)) / 4)",
+      "unit": "N",
+      "unit_en": "N",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "pushForceNewtonsResult", "op": ">=", "value": 0 }, "label": "Fuerza de Empuje Calculada", "label_en": "Push Force Computed", "tone": "success", "text": "Capacidad de fuerza de avance evaluada.", "text_en": "Extension force capacity evaluated." }
+      ]
+    },
+    {
+      "id": "pushForceTonsResult",
+      "label": "Fuerza de Empuje en Toneladas (t)",
+      "label_en": "Push Force in Metric Tons (t)",
+      "expression": "pushForceNewtonsResult / 9806.65",
+      "unit": "t",
+      "unit_en": "t",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "pullForceNewtonsResult",
+      "label": "Fuerza de Tracción / Retroceso (N)",
+      "label_en": "Pull / Retraction Force (N)",
+      "expression": "max(0, (workingPressureBar * 0.1) * ((pi * ((pistonDiameterMm ^ 2) - (rodDiameterMm ^ 2))) / 4))",
+      "unit": "N",
+      "unit_en": "N",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

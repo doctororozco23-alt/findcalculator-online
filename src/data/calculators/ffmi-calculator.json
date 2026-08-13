@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "ffmi-calculator",
+    "title": "Calculadora de FFMI (Índice de Masa Libre de Grasa Ajustado)",
+    "title_en": "FFMI Calculator (Normalized Fat-Free Mass Index)",
+    "slug": "ffmi-indice-masa-libre-grasa",
+    "category": "fitness",
+    "subcategory": "body-composition",
+    "tags": ["ffmi", "masa-magra", "kouri", "limite-natural", "culturismo"],
+    "tags_en": ["ffmi", "fat-free-mass", "kouri", "natural-limit", "bodybuilding"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula tu Índice de Masa Libre de Grasa (FFMI) y tu FFMI normalizado por estatura para evaluar tu potencial muscular natural según el estudio de Kouri et al.",
+    "shortDescription_en": "Calculate your Fat-Free Mass Index (FFMI) and height-normalized FFMI to evaluate your natural muscular potential based on Kouri et al.",
+    "longDescription": "Auditoría de desarrollo muscular natural y composición corporal. El FFMI es el indicador estándar en ciencias del deporte para medir la cantidad de masa muscular en relación con la estatura, independiente del porcentaje de grasa corporal.",
+    "longDescription_en": "Natural muscle development and body composition audit. FFMI is the sports science gold standard for measuring total muscle mass relative to height, independent of body fat.",
+    "howToUse": [
+      "Ingresa tu peso corporal total.",
+      "Ingresa tu estatura exacta.",
+      "Ingresa tu porcentaje estimado de grasa corporal (mediante cinta métrica o plicómetro).",
+      "Consulta tu FFMI sin ajustar, tu FFMI normalizado a 1.80m y la interpretación del potencial natural."
+    ],
+    "howToUse_en": [
+      "Enter total body weight.",
+      "Enter exact height.",
+      "Enter estimated body fat percentage.",
+      "View raw FFMI, height-normalized FFMI, and natural potential classification."
+    ],
+    "methodology": "Estudio Kouri et al. (1995): FFMI = Masa Magra (kg) / Estatura (m)². FFMI Normalizado = FFMI + 6.1 × (1.80 - Estatura_m). Límite Natural Máximo Aceptado = 25.0.",
+    "methodology_en": "Kouri et al. Study (1995): FFMI = Fat Free Mass (kg) / Height (m)². Normalized FFMI = FFMI + 6.1 × (1.80 - Height_m). Accepted Natural Limit = 25.0."
+  },
+  "guideSections": [
+    {
+      "id": "ffmi-kouri-guide",
+      "icon": "🏆",
+      "title": "FFMI Categories & Natural Muscular Limits",
+      "title_es": "Categorías de FFMI y Límites Musculares Naturales",
+      "content_html_en": "<p><b>18 - 19:</b> Average untrained adult.</p><p><b>20 - 21:</b> Average natural weightlifter.</p><p><b>22 - 23:</b> Excellent natural muscular build (top 5%).</p><p><b>24 - 25:</b> Near upper limit of natural human genetic potential.</p><p><b>> 25:</b> Statistically exceeds natural building baseline (commonly associated with anabolic enhancement or exceptional genetics).</p>",
+      "content_html": "<p><b>18 - 19:</b> Adulto promedio no entrenado.</p><p><b>20 - 21:</b> Atleta natural intermedio.</p><p><b>22 - 23:</b> Desarrollo muscular natural excelente (top 5%).</p><p><b>24 - 25:</b> Límite máximo del potencial genético humano natural.</p><p><b>> 25:</b> Excede estadísticamente el límite natural (asociado a fármacos o genética excepcional).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "weightKg",
+      "label": "Peso corporal total",
+      "label_en": "Total Body Weight",
+      "type": "number",
+      "default": 80,
+      "min": 40,
+      "max": 250,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [40, 250], "message": "Peso entre 40 y 250 kg", "message_en": "Weight between 40 and 250 kg" }]
+    },
+    {
+      "id": "heightCm",
+      "label": "Estatura",
+      "label_en": "Height",
+      "type": "number",
+      "default": 178,
+      "min": 130,
+      "max": 230,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [130, 230], "message": "Estatura entre 130 y 230 cm", "message_en": "Height between 130 and 230 cm" }]
+    },
+    {
+      "id": "bodyFatPercent",
+      "label": "Porcentaje de grasa corporal",
+      "label_en": "Body Fat Percentage",
+      "type": "number",
+      "default": 15,
+      "min": 3,
+      "max": 55,
+      "step": 0.5,
+      "unit": "%",
+      "unit_en": "%",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [3, 55], "message": "Grasa entre 3% y 55%", "message_en": "Body fat between 3% and 55%" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "fatFreeMassKg",
+      "label": "Masa Magra Libre de Grasa Total",
+      "label_en": "Total Fat-Free Mass",
+      "expression": "weightKg * (1 - (bodyFatPercent / 100))",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "ffmiVal",
+      "label": "Índice de Masa Magra (FFMI Sin Ajustar)",
+      "label_en": "Fat-Free Mass Index (Raw FFMI)",
+      "expression": "fatFreeMassKg / ((heightCm / 100) ^ 2)",
+      "unit": "kg/m²",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "normalizedFfmiVal",
+      "label": "FFMI Normalizado por Estatura (a 1.80 m)",
+      "label_en": "Height-Normalized FFMI (to 1.80 m)",
+      "expression": "ffmiVal + (6.1 * (1.80 - (heightCm / 100)))",
+      "unit": "kg/m²",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "normalizedFfmiVal", "op": "<", "value": 20 }, "label": "Promedio Inicial / Desarrollando", "label_en": "Average / Developing Phase", "tone": "info", "text": "Masa muscular dentro del rango promedio poblacional.", "text_en": "Muscular development within population average range." },
+        { "when": { "field": "normalizedFfmiVal", "op": "between", "value": [20, 22.9] }, "label": "Desarrollo Muscular Excelente (Atleta)", "label_en": "Excellent Muscular Development (Athletic)", "tone": "success", "text": "Desarrollo muscular avanzado significativamente superior al promedio.", "text_en": "Advanced muscular development significantly above average." },
+        { "when": { "field": "normalizedFfmiVal", "op": "between", "value": [23, 24.9] }, "label": "Cercano al Límite Genético Natural", "label_en": "Near Natural Genetic Limit", "tone": "success", "text": "Nivel muscular en la cúspide del potencial humano natural según Kouri et al.", "text_en": "Muscular level near the pinnacle of natural human potential." },
+        { "when": { "field": "normalizedFfmiVal", "op": ">=", "value": 25 }, "label": "Supera el Límite Natural (FFMI ≥ 25)", "label_en": "Exceeds Natural Baseline (FFMI ≥ 25)", "tone": "warning", "text": "Nivel de masa magra excepcionalmente alto que excede el límite natural promedio.", "text_en": "Exceptionally high fat-free mass index exceeding natural baseline." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "one-rep-max-calculator", "type": "static", "message": "Calcula tu fuerza máxima 1RM", "message_en": "Calculate 1RM maximum strength", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Fisiólogo del Culturismo y Composición Corporal",
+    "role_en": "Bodybuilding Physiologist & Body Composition Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y analítico",
+    "includeData": ["normalizedFfmiVal", "ffmiVal", "fatFreeMassKg", "weightKg", "bodyFatPercent"],
+    "instructions": [
+      "Sintetiza el FFMI normalizado a 1.80m, la masa magra en kg y la clasificación del potencial muscular en 2 frases concisas.",
+      "Destaca que el FFMI permite medir la ganancia muscular real desestimando las variaciones por retención de agua o grasa."
+    ],
+    "instructions_en": [
+      "Summarize height-normalized FFMI, total fat-free mass in kg, and muscular potential tier in 2 concise sentences.",
+      "Highlight that FFMI tracks true muscle gains independent of body fat fluctuations."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de FFMI (Índice de Masa Magra Kouri) | CalculadoraHub",
+    "metaTitle_en": "Normalized FFMI Calculator (Fat-Free Mass Index) | CalculadoraHub",
+    "metaDescription": "Calcula tu FFMI normalizado y evalúa tu potencial muscular natural según Kouri et al. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your normalized Fat-Free Mass Index (FFMI) and natural limit under Kouri et al. Free, instant results.",
+    "keywords": ["ffmi calculator", "indice de masa libre de grasa", "ffmi kouri", "limite muscular natural"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

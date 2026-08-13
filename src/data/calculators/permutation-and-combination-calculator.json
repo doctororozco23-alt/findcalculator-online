@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "permutation-and-combination-calculator",
+    "title": "Calculadora de Permutaciones y Combinaciones (nPr y nCr)",
+    "title_en": "Permutations & Combinations Calculator (nPr & nCr)",
+    "slug": "calculadora-de-permutaciones-y-combinaciones-npr-ncr",
+    "category": "statistics",
+    "subcategory": "probability",
+    "tags": ["permutaciones", "combinaciones", "npr", "ncr", "combinatoria", "factorial"],
+    "tags_en": ["permutations", "combinations", "npr", "ncr", "combinatorics", "factorial"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "BarChart3"
+  },
+  "content": {
+    "shortDescription": "Calcula el número de Combinaciones ( $nCr = \\frac{n!}{r!(n-r)!}$ ) y Permutaciones ( $nPr = \\frac{n!}{(n-r)!}$ ) de $n$ elementos tomados de $r$ en $r$.",
+    "shortDescription_en": "Compute Combinations ( $nCr = \\frac{n!}{r!(n-r)!}$ ) and Permutations ( $nPr = \\frac{n!}{(n-r)!}$ ) for $n$ items chosen $r$ at a time.",
+    "longDescription": "Herramienta de análisis combinatorio. Distingue entre orden relevante (Permutaciones $nPr$) e irrelevante (Combinaciones $nCr$).",
+    "longDescription_en": "Combinatorics analysis tool. Distinguishes when order matters (Permutations $nPr$) from when order does not matter (Combinations $nCr$).",
+    "howToUse": [
+      "Ingresa el número total de elementos ($n$).",
+      "Ingresa el número de elementos elegidos ($r \\le n$).",
+      "Consulta las Combinaciones $nCr$ (sin orden) y Permutaciones $nPr$ (con orden)."
+    ],
+    "howToUse_en": [
+      "Enter total number of items ($n$).",
+      "Enter number of chosen items ($r \\le n$).",
+      "View Combinations $nCr$ (order ignored) and Permutations $nPr$ (order matters)."
+    ],
+    "methodology": "Combinaciones: nCr = n! / (r! * (n - r)!). Permutaciones: nPr = n! / ((n - r)!).",
+    "methodology_en": "Combinations: nCr = n! / (r! * (n - r)!). Permutations: nPr = n! / ((n - r)!)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Análisis Combinatorio",
+    "role_en": "Combinatorics Analysis Specialist Assistant",
+    "includeData": ["combinationsResult", "permutationsResult"],
+    "instructions": [
+      "Explica por qué nPr >= nCr (el orden añade factor r!).",
+      "Muestra un ejemplo práctico para nCr (equipos/comités) vs nPr (posiciones/posios).",
+      "Verifica las condiciones de validez 0 <= r <= n."
+    ],
+    "instructions_en": [
+      "Explain why nPr >= nCr (order adds factor r!).",
+      "Show practical example for nCr (teams/committees) vs nPr (positions/podiums).",
+      "Verify validity conditions 0 <= r <= n."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "perm-guide",
+      "icon": "🔀",
+      "title": "Permutations vs Combinations Rule",
+      "title_es": "Regla de Permutaciones vs Combinaciones",
+      "content_html_en": "<p><b>Permutations (nPr):</b> ORDER MATTERS. (e.g. Lock code 1-2-3 is different from 3-2-1).</p><p><b>Combinations (nCr):</b> ORDER DOES NOT MATTER. (e.g. Selecting a 3-fruit salad).</p>",
+      "content_html": "<p><b>Permutaciones (nPr):</b> EL ORDEN SÍ IMPORTA. (ej. La clave 1-2-3 es distinta de 3-2-1).</p><p><b>Combinaciones (nCr):</b> EL ORDEN NO IMPORTA. (ej. Elegir un equipo o ensalada de frutas).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "totalN",
+      "label": "Total de Elementos (n)",
+      "label_en": "Total Items (n)",
+      "type": "number",
+      "default": 10,
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1, 100], "message": "Ingresa n entre 1 y 100", "message_en": "Enter n between 1 and 100" }]
+    },
+    {
+      "id": "chosenR",
+      "label": "Elementos Elegidos (r)",
+      "label_en": "Chosen Items (r)",
+      "type": "number",
+      "default": 3,
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0, 100], "message": "r debe ser ≤ n", "message_en": "r must be ≤ n" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "combinationsResult",
+      "label": "Combinaciones (nCr = Sin Orden Importante)",
+      "label_en": "Combinations (nCr = Order Doesn't Matter)",
+      "expression": "totalN >= chosenR ? (factorial(totalN) / (factorial(chosenR) * factorial(totalN - chosenR))) : 0",
+      "unit": "maneras",
+      "unit_en": "ways",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "combinationsResult", "op": ">=", "value": 1 }, "label": "Combinaciones Calculadas", "label_en": "Combinations Computed", "tone": "success", "text": "Número total de agrupaciones sin considerar orden.", "text_en": "Total un-ordered groupings calculated." }
+      ]
+    },
+    {
+      "id": "permutationsResult",
+      "label": "Permutaciones (nPr = Con Orden Importante)",
+      "label_en": "Permutations (nPr = Order Matters)",
+      "expression": "totalN >= chosenR ? (factorial(totalN) / factorial(totalN - chosenR)) : 0",
+      "unit": "maneras",
+      "unit_en": "ways",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "engine-horsepower-calculator",
+    "title": "Calculadora de HP por Cuarto de Milla y Peso del Vehículo",
+    "title_en": "Quarter-Mile Horsepower Calculator (HP from ET & Weight)",
+    "slug": "calculadora-de-hp-por-cuarto-de-milla-peso-vehiculo",
+    "category": "transport",
+    "subcategory": "fuel",
+    "tags": ["hp-cuarto-de-milla", "drag-racing", "tiempo-transcurrido", "peso-vehiculo", "hp-estimado", "potencia-real"],
+    "tags_en": ["quarter-mile-hp", "drag-racing", "elapsed-time", "vehicle-weight", "estimated-hp", "wheel-power"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Estima los caballos de fuerza reales del motor a partir del tiempo transcurrido (ET en segundos) en 1/4 de milla y el peso total del auto.",
+    "shortDescription_en": "Estimate actual engine horsepower based on 1/4 mile elapsed time (ET in seconds) and total vehicle weight.",
+    "longDescription": "Herramienta de tuning y deportes de motor. Aplica las fórmulas de física de arrastre de Fox y Hale para estimar los HP efectivos a las ruedas o al volante.",
+    "longDescription_en": "Motorsports and performance tuning tool. Applies Fox and Hale drag racing physics formulas to estimate wheel HP from quarter-mile runs.",
+    "howToUse": [
+      "Ingresa el Peso Total del Vehículo con Conductor (en lbs).",
+      "Ingresa el Tiempo Transcurrido (ET) en el 1/4 de milla (en segundos).",
+      "Consulta los Caballos de Fuerza Estimados a la rueda ($WHP$) y la Velocidad Final estimada."
+    ],
+    "howToUse_en": [
+      "Enter Total Vehicle Weight with Driver (in lbs).",
+      "Enter 1/4 Mile Elapsed Time - ET (in seconds).",
+      "View Estimated Wheel Horsepower ($WHP$) and Estimated Trap Speed."
+    ],
+    "methodology": "HP = Peso * (5.825 / ET)^3.",
+    "methodology_en": "HP = Weight * (5.825 / ET)^3."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Tuning y Física de Carreras de Arrastre",
+    "role_en": "Motorsports & Drag Racing Physics Assistant",
+    "includeData": ["estimatedQuarterMileHp", "estimatedTrapSpeedMph"],
+    "instructions": [
+      "Interpreta la potencia estimada necesaria para lograr ese tiempo en 1/4 de milla.",
+      "Explica el impacto de la tracción, los neumáticos slick y las pérdidas de transmisión (15% en RWD/FWD, 22% en AWD).",
+      "Analiza la velocidad de trampa estimada (Trap Speed)."
+    ],
+    "instructions_en": [
+      "Interpret estimated horsepower required to achieve that 1/4 mile ET.",
+      "Explain impact of traction, drag slicks, and drivetrain power loss (15% RWD/FWD, 22% AWD).",
+      "Analyze estimated trap speed."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ehp-guide",
+      "icon": "🚦",
+      "title": "Drag Racing Physics & ET Formulas",
+      "title_es": "Física de Carreras de Arrastre y Fórmulas ET",
+      "content_html_en": "<p><b>ET Formula (Hale):</b> HP = Weight × (5.825 / ET)³.</p><p><b>Trap Speed Formula:</b> Speed (mph) = 234 × (HP / Weight)^(1/3).</p>",
+      "content_html": "<p><b>Fórmula ET (Hale):</b> HP = Peso × (5.825 / ET)³.</p><p><b>Fórmula de Velocidad Final:</b> Velocidad (mph) = 234 × (HP / Peso)^(1/3).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "vehicleWeightLbs",
+      "label": "Peso Total del Auto + Conductor (lbs)",
+      "label_en": "Total Vehicle + Driver Weight (lbs)",
+      "type": "number",
+      "default": 3400,
+      "min": 500,
+      "max": 15000,
+      "step": 50,
+      "required": true
+    },
+    {
+      "id": "elapsedTimeSec",
+      "label": "Tiempo Transcurrido 1/4 Milla (segundos)",
+      "label_en": "1/4 Mile Elapsed Time - ET (seconds)",
+      "type": "number",
+      "default": 13.2,
+      "min": 5,
+      "max": 30,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "estimatedQuarterMileHp",
+      "label": "Potencia Estimada a la Rueda (WHP)",
+      "label_en": "Estimated Wheel Horsepower (WHP)",
+      "expression": "elapsedTimeSec > 0 ? (vehicleWeightLbs * (5.825 / elapsedTimeSec)^3) : 0",
+      "unit": "HP",
+      "unit_en": "HP",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "estimatedQuarterMileHp", "op": ">=", "value": 0 }, "label": "Potencia de Pista Calculada", "label_en": "Track Horsepower Computed", "tone": "success", "text": "Potencia efectiva de trampa cuantificada.", "text_en": "Effective trap power quantified." }
+      ]
+    },
+    {
+      "id": "estimatedTrapSpeedMph",
+      "label": "Velocidad Final Estimada en Trampa (mph)",
+      "label_en": "Estimated Trap Speed (mph)",
+      "expression": "estimatedQuarterMileHp > 0 ? (234 * (estimatedQuarterMileHp / vehicleWeightLbs)^(1/3)) : 0",
+      "unit": "mph",
+      "unit_en": "mph",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

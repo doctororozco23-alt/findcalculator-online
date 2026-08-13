@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "half-life-calculator",
+    "title": "Calculadora de Vida Media y Desintegración Radiactiva",
+    "title_en": "Half-Life & Radioactive Decay Calculator",
+    "slug": "calculadora-de-vida-media-desintegracion-radiactiva-isotopos",
+    "category": "chemistry",
+    "subcategory": "stoichiometry",
+    "tags": ["vida-media", "desintegracion-radiactiva", "isotopos", "carbono-14", "radioquimica", "nucleo", "quimica"],
+    "tags_en": ["half-life", "radioactive-decay", "isotopes", "carbon-14", "radiochemistry", "nucleus", "chemistry"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la cantidad remanente de sustancia ($N(t) = N_0 \\cdot (1/2)^{t / t_{1/2}}$) tras un tiempo de desintegración exponencial.",
+    "shortDescription_en": "Calculate remaining substance ($N(t) = N_0 \\cdot (1/2)^{t / t_{1/2}}$) after exponential decay over time.",
+    "longDescription": "Herramienta de radioquímica y física nuclear. Determina la degradación exponencial de isótopos radiactivos o fármacos en farmacocinética.",
+    "longDescription_en": "Radiochemistry and nuclear physics tool. Computes exponential decay of radioactive isotopes or pharmacokinetic drug clearance.",
+    "howToUse": [
+      "Ingresa la Cantidad Inicial de Sustancia ($N_0$ en gramos o Bq).",
+      "Ingresa el Período de Vida Media ($t_{1/2}$ en años, días u horas).",
+      "Ingresa el Tiempo Transcurrido ($t$ en la misma unidad).",
+      "Consulta la Cantidad Remanente ($N(t)$) y el Porcentaje de Decaimiento acumulado."
+    ],
+    "howToUse_en": [
+      "Enter Initial Substance Amount ($N_0$ in grams or Bq).",
+      "Enter Half-Life Period ($t_{1/2}$ in years, days, or hours).",
+      "Enter Elapsed Time ($t$ in same unit).",
+      "View Remaining Amount ($N(t)$) and Percentage Decayed."
+    ],
+    "methodology": "Ecuación de Decaimiento: N(t) = N0 * (0.5)^(t / t_half). Constante λ = ln(2) / t_half.",
+    "methodology_en": "Decay Equation: N(t) = N0 * (0.5)^(t / t_half). Constant λ = ln(2) / t_half."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Radioquímica y Físico-Química Nuclear",
+    "role_en": "Radiochemistry & Nuclear Physical Chemistry Specialist Assistant",
+    "includeData": ["remainingAmountResult", "decayedPercentageResult"],
+    "instructions": [
+      "Interpreta la cantidad remanente de isótopo tras el tiempo transcurrido.",
+      "Explica la aplicación en datación por Carbono-14 ($t_{1/2} = 5,730$ años) para arqueología o vida media de fármacos en medicina.",
+      "Muestra el número de vidas medias completadas transcurridas ($n = t / t_{1/2}$)."
+    ],
+    "instructions_en": [
+      "Interpret remaining isotope amount after elapsed time.",
+      "Explain application in Carbon-14 dating ($t_{1/2} = 5,730$ years) for archaeology or drug half-life in medicine.",
+      "Show completed half-lives count ($n = t / t_{1/2}$)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "hlf-guide",
+      "icon": "☢️",
+      "title": "Exponential Radioactive Decay Law",
+      "title_es": "Ley de Decaimiento Radiactivo Exponencial",
+      "content_html_en": "<p><b>Formula:</b> N(t) = N₀ × (½)^(t / t_half)</p><p><b>Carbon-14 (C-14):</b> t_half = 5,730 years</p><p><b>Iodine-131 (I-131):</b> t_half = 8.02 days</p>",
+      "content_html": "<p><b>Fórmula:</b> N(t) = N₀ × (½)^(t / t_mitad)</p><p><b>Carbono-14 (C-14):</b> t_mitad = 5,730 años</p><p><b>Yodo-131 (I-131):</b> t_mitad = 8.02 días</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "initialSubstanceAmount",
+      "label": "Cantidad Inicial (N₀)",
+      "label_en": "Initial Amount (N₀)",
+      "type": "number",
+      "default": 100,
+      "min": 0.001,
+      "max": 1000000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "halfLifePeriodThalf",
+      "label": "Vida Media del Isótopo (t_mitad)",
+      "label_en": "Isotope Half-Life (t_half)",
+      "type": "number",
+      "default": 5.73,
+      "min": 0.001,
+      "max": 1000000,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "elapsedTimeDecay",
+      "label": "Tiempo Transcurrido (t)",
+      "label_en": "Elapsed Time (t)",
+      "type": "number",
+      "default": 11.46,
+      "min": 0,
+      "max": 1000000,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "remainingAmountResult",
+      "label": "Cantidad Remanente de Sustancia (N(t))",
+      "label_en": "Remaining Substance Amount (N(t))",
+      "expression": "halfLifePeriodThalf > 0 ? (initialSubstanceAmount * (0.5 ^ (elapsedTimeDecay / halfLifePeriodThalf))) : 0",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "remainingAmountResult", "op": ">=", "value": 0 }, "label": "Cantidad Remanente Calculada", "label_en": "Remaining Amount Computed", "tone": "success", "text": "Masa radioactiva o concentración no degradada cuantificada.", "text_en": "Quantified non-decayed radioactive mass or concentration." }
+      ]
+    },
+    {
+      "id": "decayedPercentageResult",
+      "label": "Porcentaje de Sustancia Desintegrada (%)",
+      "label_en": "Percentage of Substance Decayed (%)",
+      "expression": "initialSubstanceAmount > 0 ? (((initialSubstanceAmount - remainingAmountResult) / initialSubstanceAmount) * 100) : 0",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "sofa-score-sepsis-calculator",
+    "title": "Calculadora del Score SOFA y qSOFA para Sepsis (Criterios Sepsis-3)",
+    "title_en": "SOFA & qSOFA Score Calculator for Sepsis (Sepsis-3 Criteria)",
+    "slug": "sofa-qsofa-score-sepsis-disfuncion-organica",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["sofa", "qsofa", "sepsis", "sepsis-3", "disfuncion-organica", "uci", "shock-septico"],
+    "tags_en": ["sofa", "qsofa", "sepsis", "sepsis-3", "organ-failure", "icu", "septic-shock"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula el score SOFA (0 a 24 puntos) y el cribado rápido qSOFA según el consenso Sepsis-3 para evaluar la gravedad de la disfunción orgánica.",
+    "shortDescription_en": "Calculate total SOFA score (0 to 24) and quick SOFA (qSOFA) per Sepsis-3 criteria to evaluate organ failure severity and mortality.",
+    "longDescription": "Consenso Sepsis-3 (Singer et al. JAMA 2016). Evalúa 6 sistemas: Respiratorio, Coagulación, Hepático, Cardiovascular, SNC y Renal. Un incremento agudo en SOFA ≥ 2 indica sepsis.",
+    "longDescription_en": "Sepsis-3 Consensus (Singer et al. JAMA). Evaluates 6 systems: Respiration, Coagulation, Liver, Cardiovascular, CNS, and Renal. Acute SOFA increase ≥ 2 defines sepsis.",
+    "howToUse": [
+      "Selecciona el puntaje Respiratorio según la relación PaO₂/FiO₂.",
+      "Selecciona el puntaje de Coagulación por recuento de Plaquetas.",
+      "Selecciona el puntaje Hepático por Bilirrubina total.",
+      "Selecciona el puntaje Cardiovascular por tensión arterial o dosis de vasopresores.",
+      "Selecciona el puntaje de SNC según la Escala de Coma de Glasgow.",
+      "Selecciona el puntaje Renal por Creatinina o diuresis."
+    ],
+    "howToUse_en": [
+      "Select Respiratory score based on PaO₂/FiO₂ ratio.",
+      "Select Coagulation score based on Platelet count.",
+      "Select Liver score based on Total Bilirubin.",
+      "Select Cardiovascular score based on BP or vasopressor dose.",
+      "Select CNS score based on Glasgow Coma Scale.",
+      "Select Renal score based on Creatinine or urine output."
+    ],
+    "methodology": "SOFA Score evalúa 6 sistemas orgánicos de 0 a 4 puntos cada uno. Puntuación total 0 a 24 puntos. Incremento agudo ≥ 2 puntos = Criterio de Sepsis-3.",
+    "methodology_en": "SOFA Score evaluates 6 organ systems from 0 to 4 points each. Total score range 0 to 24. Acute change ≥ 2 = Sepsis-3 criteria."
+  },
+  "guideSections": [
+    {
+      "id": "sofa-guide",
+      "icon": "🦠",
+      "title": "Sepsis-3 Clinical Definition & Mortality",
+      "title_es": "Definición Clínica Sepsis-3 y Mortalidad",
+      "content_html_en": "<p><b>SOFA &lt; 2:</b> Low organ dysfunction risk.</p><p><b>SOFA ≥ 2 points (Acute increase):</b> Meets Sepsis-3 criteria for infection-induced organ failure. In-hospital mortality &gt; 10%.</p><p><b>SOFA ≥ 12 points:</b> High organ failure severity. In-hospital mortality &gt; 50%.</p>",
+      "content_html": "<p><b>SOFA &lt; 2:</b> Bajo riesgo de disfunción orgánica.</p><p><b>SOFA ≥ 2 puntos (Incremento agudo):</b> Cumple criterios Sepsis-3 de disfunción orgánica secundaria a infección. Mortalidad intrahospitalaria &gt; 10%.</p><p><b>SOFA ≥ 12 puntos:</b> Elevada gravedad de fallo multiorgánico. Mortalidad intrahospitalaria &gt; 50%.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "resp_pts",
+      "label": "Respiratorio: Relación PaO₂ / FiO₂ (mmHg)",
+      "label_en": "Respiratory: PaO₂ / FiO₂ ratio (mmHg)",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "≥ 400 mmHg (0 pts)", "label_en": "≥ 400 mmHg (0 pts)" },
+        { "value": 1, "label": "< 400 mmHg (1 pt)", "label_en": "< 400 mmHg (1 pt)" },
+        { "value": 2, "label": "< 300 mmHg (2 pts)", "label_en": "< 300 mmHg (2 pts)" },
+        { "value": 3, "label": "< 200 mmHg con Ventilación Mecánica (3 pts)", "label_en": "< 200 mmHg with Mech Vent (3 pts)" },
+        { "value": 4, "label": "< 100 mmHg con Ventilación Mecánica (4 pts)", "label_en": "< 100 mmHg with Mech Vent (4 pts)" }
+      ]
+    },
+    {
+      "id": "coag_pts",
+      "label": "Coagulación: Plaquetas (×10³/µL)",
+      "label_en": "Coagulation: Platelets (×10³/µL)",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "≥ 150 ×10³/µL (0 pts)", "label_en": "≥ 150 ×10³/µL (0 pts)" },
+        { "value": 1, "label": "< 150 ×10³/µL (1 pt)", "label_en": "< 150 ×10³/µL (1 pt)" },
+        { "value": 2, "label": "< 100 ×10³/µL (2 pts)", "label_en": "< 100 ×10³/µL (2 pts)" },
+        { "value": 3, "label": "< 50 ×10³/µL (3 pts)", "label_en": "< 50 ×10³/µL (3 pts)" },
+        { "value": 4, "label": "< 20 ×10³/µL (4 pts)", "label_en": "< 20 ×10³/µL (4 pts)" }
+      ]
+    },
+    {
+      "id": "liver_pts",
+      "label": "Hepático: Bilirrubina Total (mg/dL)",
+      "label_en": "Liver: Total Bilirubin (mg/dL)",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "< 1.2 mg/dL (0 pts)", "label_en": "< 1.2 mg/dL (0 pts)" },
+        { "value": 1, "label": "1.2 a 1.9 mg/dL (1 pt)", "label_en": "1.2 to 1.9 mg/dL (1 pt)" },
+        { "value": 2, "label": "2.0 a 5.9 mg/dL (2 pts)", "label_en": "2.0 to 5.9 mg/dL (2 pts)" },
+        { "value": 3, "label": "6.0 a 11.9 mg/dL (3 pts)", "label_en": "6.0 to 11.9 mg/dL (3 pts)" },
+        { "value": 4, "label": "≥ 12.0 mg/dL (4 pts)", "label_en": "≥ 12.0 mg/dL (4 pts)" }
+      ]
+    },
+    {
+      "id": "cardio_pts",
+      "label": "Cardiovascular: Hipotensión / Vasopresores",
+      "label_en": "Cardiovascular: Hypotension / Vasopressors",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "PAM ≥ 70 mmHg (0 pts)", "label_en": "MAP ≥ 70 mmHg (0 pts)" },
+        { "value": 1, "label": "PAM < 70 mmHg (1 pt)", "label_en": "MAP < 70 mmHg (1 pt)" },
+        { "value": 2, "label": "Dopamina ≤ 5 µg/kg/min o Dobutamina cualquier dosis (2 pts)", "label_en": "Dopamine ≤ 5 or Dobutamine any dose (2 pts)" },
+        { "value": 3, "label": "Dopamina > 5 o Noradrenalina ≤ 0.1 µg/kg/min (3 pts)", "label_en": "Dopamine > 5 or Norepinephrine ≤ 0.1 µg/kg/min (3 pts)" },
+        { "value": 4, "label": "Dopamina > 15 o Noradrenalina > 0.1 µg/kg/min (4 pts)", "label_en": "Dopamine > 15 or Norepinephrine > 0.1 µg/kg/min (4 pts)" }
+      ]
+    },
+    {
+      "id": "cns_pts",
+      "label": "SNC: Escala de Coma de Glasgow",
+      "label_en": "CNS: Glasgow Coma Scale",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "GCS 15 (0 pts)", "label_en": "GCS 15 (0 pts)" },
+        { "value": 1, "label": "GCS 13 a 14 (1 pt)", "label_en": "GCS 13 to 14 (1 pt)" },
+        { "value": 2, "label": "GCS 10 a 12 (2 pts)", "label_en": "GCS 10 to 12 (2 pts)" },
+        { "value": 3, "label": "GCS 6 a 9 (3 pts)", "label_en": "GCS 6 to 9 (3 pts)" },
+        { "value": 4, "label": "GCS < 6 (4 pts)", "label_en": "GCS < 6 (4 pts)" }
+      ]
+    },
+    {
+      "id": "renal_pts",
+      "label": "Renal: Creatinina (mg/dL) o Diuresis",
+      "label_en": "Renal: Creatinine (mg/dL) or Urine output",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "Cr < 1.2 mg/dL (0 pts)", "label_en": "Cr < 1.2 mg/dL (0 pts)" },
+        { "value": 1, "label": "Cr 1.2 a 1.9 mg/dL (1 pt)", "label_en": "Cr 1.2 to 1.9 mg/dL (1 pt)" },
+        { "value": 2, "label": "Cr 2.0 a 3.4 mg/dL (2 pts)", "label_en": "Cr 2.0 to 3.4 mg/dL (2 pts)" },
+        { "value": 3, "label": "Cr 3.5 a 4.9 mg/dL O Diuresis < 500 mL/día (3 pts)", "label_en": "Cr 3.5 to 4.9 mg/dL OR Urine < 500 mL/day (3 pts)" },
+        { "value": 4, "label": "Cr ≥ 5.0 mg/dL O Diuresis < 200 mL/día (4 pts)", "label_en": "Cr ≥ 5.0 mg/dL OR Urine < 200 mL/day (4 pts)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "sofaTotal",
+      "label": "Score SOFA Total",
+      "label_en": "Total SOFA Score",
+      "expression": "resp_pts + coag_pts + liver_pts + cardio_pts + cns_pts + renal_pts",
+      "unit": "puntos",
+      "unit_en": "points",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "sofaTotal", "op": "<", "value": 2 }, "label": "SOFA < 2: Bajo Riesgo de Disfunción Orgánica", "label_en": "SOFA < 2: Low Organ Dysfunction Risk", "tone": "success", "text": "Sin criterio de disfunción orgánica aguda por Sepsis-3.", "text_en": "No acute organ dysfunction per Sepsis-3." },
+        { "when": { "field": "sofaTotal", "op": "between", "value": [2, 6] }, "label": "SOFA 2-6: Criterio POSITIVO de Sepsis (Mortalidad ~10%)", "label_en": "SOFA 2-6: POSITIVE Sepsis Criteria (Mortality ~10%)", "tone": "warning", "text": "Cumple criterios Sepsis-3. Iniciar paquete de tratamiento de 1 hora.", "text_en": "Meets Sepsis-3 criteria. Start 1-hour sepsis bundle." },
+        { "when": { "field": "sofaTotal", "op": "between", "value": [7, 11] }, "label": "SOFA 7-11: Disfunción Orgánica Severa (Mortalidad 20-33%)", "label_en": "SOFA 7-11: Severe Organ Dysfunction (Mortality 20-33%)", "tone": "warning", "text": "Fallo multiorgánico severo. Soporte intensivo en UCI.", "text_en": "Severe multi-organ failure. ICU intensive support." },
+        { "when": { "field": "sofaTotal", "op": ">=", "value": 12 }, "label": "SOFA ≥ 12: Fallo Multiorgánico Muy Grave (Mortalidad > 50%)", "label_en": "SOFA ≥ 12: Critical Multi-Organ Failure (Mortality > 50%)", "tone": "warning", "text": "Elevadísima mortalidad intrahospitalaria. Soporte vital avanzado.", "text_en": "Very high in-hospital mortality. Advanced life support." }
+      ]
+    }
+  ]
+}

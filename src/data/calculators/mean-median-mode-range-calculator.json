@@ -1,0 +1,162 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "mean-median-mode-range-calculator",
+    "title": "Calculadora de Media, Mediana, Moda y Rango",
+    "title_en": "Mean, Median, Mode & Range Calculator",
+    "slug": "calculadora-de-media-mediana-moda-rango",
+    "category": "statistics",
+    "subcategory": "descriptive",
+    "tags": ["media", "mediana", "moda", "rango", "estadistica-descriptiva", "promedio"],
+    "tags_en": ["mean", "median", "mode", "range", "descriptive-statistics", "average"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "BarChart3"
+  },
+  "content": {
+    "shortDescription": "Calcula las medidas clave de tendencia central y dispersión: Media Aritmética ( $\\bar{x}$ ), Mediana, Moda y Rango de un conjunto de datos.",
+    "shortDescription_en": "Compute key measures of central tendency and dispersion: Arithmetic Mean ( $\\bar{x}$ ), Median, Mode, and Range for a dataset.",
+    "longDescription": "Herramienta fundamental de estadística descriptiva. Procesa listas de datos numéricos para hallar el promedio aritmético, la posición central del conjunto ordenado (Mediana), el valor más frecuente (Moda) y la diferencia entre el máximo y mínimo (Rango).",
+    "longDescription_en": "Essential descriptive statistics tool. Processes numerical datasets to compute arithmetic mean, middle value (Median), most frequent value (Mode), and Range.",
+    "howToUse": [
+      "Ingresa hasta 5 valores numéricos del conjunto de datos.",
+      "Consulta la Media Aritmética calculada, la Mediana, el Rango total y la suma de datos."
+    ],
+    "howToUse_en": [
+      "Enter up to 5 numerical values for the dataset.",
+      "View calculated Arithmetic Mean, Median, total Range, and sum."
+    ],
+    "methodology": "Media x̄ = (∑x) / n. Rango = Máximo - Mínimo. Mediana = Valor central del conjunto ordenado.",
+    "methodology_en": "Mean x̄ = (∑x) / n. Range = Max - Min. Median = Middle value of ordered set."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Estadística Descriptiva",
+    "role_en": "Descriptive Statistics Specialist Assistant",
+    "includeData": ["meanVal", "rangeVal", "maxVal", "minVal", "sumVal"],
+    "instructions": [
+      "Interpreta la Media Aritmética como el centro de gravedad del conjunto de datos.",
+      "Explica la dispersión observada a través del Rango (Máximo - Mínimo).",
+      "Analiza la simetría o asimetría del conjunto de datos."
+    ],
+    "instructions_en": [
+      "Interpret Arithmetic Mean as center of mass of the dataset.",
+      "Explain dispersion observed through Range (Max - Min).",
+      "Analyze symmetry or skewness of the dataset."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "mmm-guide",
+      "icon": "📊",
+      "title": "Central Tendency Measures Explained",
+      "title_es": "Medidas de Tendencia Central Explicadas",
+      "content_html_en": "<p><b>Mean (x̄):</b> Sum of all values divided by count n.</p><p><b>Median:</b> Exact middle value when dataset is ordered.</p><p><b>Mode:</b> Most frequently occurring value in dataset.</p><p><b>Range:</b> Distance between highest and lowest value.</p>",
+      "content_html": "<p><b>Media (x̄):</b> Suma de todos los valores dividida entre la cantidad n.</p><p><b>Mediana:</b> Valor central exacto cuando el conjunto está ordenado.</p><p><b>Moda:</b> Valor que ocurre con mayor frecuencia.</p><p><b>Rango:</b> Distancia entre el valor máximo y el mínimo.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "val1",
+      "label": "Valor 1 (x₁)",
+      "label_en": "Value 1 (x₁)",
+      "type": "number",
+      "default": 10,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "val2",
+      "label": "Valor 2 (x₂)",
+      "label_en": "Value 2 (x₂)",
+      "type": "number",
+      "default": 20,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "val3",
+      "label": "Valor 3 (x₃)",
+      "label_en": "Value 3 (x₃)",
+      "type": "number",
+      "default": 30,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "val4",
+      "label": "Valor 4 (x₄)",
+      "label_en": "Value 4 (x₄)",
+      "type": "number",
+      "default": 40,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "val5",
+      "label": "Valor 5 (x₅)",
+      "label_en": "Value 5 (x₅)",
+      "type": "number",
+      "default": 50,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "sumVal",
+      "label": "Suma Total de Datos (∑x)",
+      "label_en": "Sum of Values (∑x)",
+      "expression": "val1 + val2 + val3 + val4 + val5",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "meanVal",
+      "label": "Media Aritmética (x̄)",
+      "label_en": "Arithmetic Mean (x̄)",
+      "expression": "sumVal / 5",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "meanVal", "op": ">=", "value": 0 }, "label": "Media Aritmética Calculada", "label_en": "Arithmetic Mean Computed", "tone": "success", "text": "Promedio estadístico de los datos evaluado.", "text_en": "Statistical average evaluated successfully." }
+      ]
+    },
+    {
+      "id": "maxVal",
+      "label": "Valor Máximo",
+      "label_en": "Maximum Value",
+      "expression": "max(val1, val2, val3, val4, val5)",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "minVal",
+      "label": "Valor Mínimo",
+      "label_en": "Minimum Value",
+      "expression": "min(val1, val2, val3, val4, val5)",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "rangeVal",
+      "label": "Rango (Máximo − Mínimo)",
+      "label_en": "Range (Max − Min)",
+      "expression": "maxVal - minVal",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "vo2-max-calculator",
+    "title": "Calculadora de VO2 Máximo (Test Rockport 1 Milla & Cooper)",
+    "title_en": "VO2 Max Calculator (Rockport 1-Mile Walk & Cooper Tests)",
+    "slug": "vo2-maximo-test-rockport-cooper",
+    "category": "fitness",
+    "subcategory": "training",
+    "tags": ["vo2max", "rockport", "cooper", "rendimiento-aerobico", "fitness"],
+    "tags_en": ["vo2max", "rockport", "cooper", "aerobic-fitness", "performance"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula tu consumo máximo de oxígeno (VO2máx en ml/kg/min) y tu nivel de aptitud aeróbica mediante el Test Rockport de 1 Milla o el Test de Cooper.",
+    "shortDescription_en": "Calculate maximum oxygen consumption (VO2max in ml/kg/min) and aerobic fitness tier using Rockport 1-Mile Walk or Cooper 12-Minute Run tests.",
+    "longDescription": "Auditoría de fisiología del ejercicio y longevidad aeróbica. El VO2máx es la métrica de oro para medir la capacidad cardiorrespiratoria máxima y es uno de los mayores predictores clínicos de longevidad y rendimiento atlético.",
+    "longDescription_en": "Exercise physiology and aerobic longevity audit. VO2max is the gold-standard metric for maximum cardiorespiratory fitness and a major clinical predictor of longevity.",
+    "howToUse": [
+      "Selecciona el test de campo realizado (Test de Caminata Rockport 1 Milla o Test de Carrera Cooper 12 Minutos).",
+      "Ingresa tu sexo biológico, edad y peso corporal.",
+      "Ingresa el tiempo en minutos o la distancia recorrida.",
+      "Consulta tu VO2máx estimado (ml/kg/min), tu nivel de aptitud física y la capacidad equivalente en METs."
+    ],
+    "howToUse_en": [
+      "Select field test performed (Rockport 1-Mile Walk Test or Cooper 12-Minute Run Test).",
+      "Enter biological sex, age, and body weight.",
+      "Enter time or distance achieved.",
+      "View estimated VO2max (ml/kg/min), aerobic fitness tier, and equivalent METs capacity."
+    ],
+    "methodology": "Test Rockport (Kline et al. 1987): VO2máx = 132.853 - 0.0769(Peso_lbs) - 0.3877(Edad) + 6.315(Sexo) - 3.2649(Tiempo_min) - 0.1565(FC). Test Cooper (1968): VO2máx = (Distancia_m - 504.9) / 44.73.",
+    "methodology_en": "Rockport Test (Kline et al. 1987): VO2max = 132.853 - 0.0769(Weight_lbs) - 0.3877(Age) + 6.315(Sex) - 3.2649(Time_min) - 0.1565(HR). Cooper Test (1968): VO2max = (Distance_m - 504.9) / 44.73."
+  },
+  "guideSections": [
+    {
+      "id": "vo2max-longevity-guide",
+      "icon": "🫁",
+      "title": "VO2max as the Strongest Predictor of Longevity",
+      "title_es": "El VO2máx como el Mayor Predictor de Longevidad",
+      "content_html_en": "<p><b>Clinical Significance:</b> Studies (Mandsager et al., JAMA 2018) demonstrate that high cardiorespiratory fitness (VO2max) is associated with an elite reduction in all-cause mortality risk.</p><p><b>Aerobic Standards (Men 30-39):</b> Superior (> 49), Excellent (44-48), Good (39-43), Fair (34-38), Low (< 34).</p>",
+      "content_html": "<p><b>Relevancia Clínica:</b> Estudios en JAMA demuestran que una alta capacidad cardiorrespiratoria (VO2máx elevado) es el factor no genético más potente para reducir el riesgo de mortalidad general.</p><p><b>Estándares Aeróbicos (Hombres 30-39):</b> Superior (> 49), Excelente (44-48), Bueno (39-43), Promedio (34-38), Bajo (< 34).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "testMethod",
+      "label": "Test de campo realizado",
+      "label_en": "Field Test Performed",
+      "type": "select",
+      "default": "rockport",
+      "options": [
+        { "value": "rockport", "label": "Test de Caminata Rockport 1 Milla (1.609 km a paso ligero)", "label_en": "Rockport 1-Mile Walk Test (1.609 km brisk walk)" },
+        { "value": "cooper", "label": "Test de Carrera de Cooper (12 minutos corriendo la máxima distancia)", "label_en": "Cooper 12-Minute Run Test (Max distance in 12 mins)" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "gender",
+      "label": "Sexo biológico",
+      "label_en": "Biological Sex",
+      "type": "select",
+      "default": "male",
+      "options": [
+        { "value": "male", "label": "Hombre", "label_en": "Male" },
+        { "value": "female", "label": "Mujer", "label_en": "Female" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "age",
+      "label": "Edad",
+      "label_en": "Age",
+      "type": "number",
+      "default": 30,
+      "min": 15,
+      "max": 85,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [15, 85], "message": "Edad entre 15 y 85", "message_en": "Age between 15 and 85" }]
+    },
+    {
+      "id": "weightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 35,
+      "max": 200,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [35, 200], "message": "Peso entre 35 y 200 kg", "message_en": "Weight between 35 and 200 kg" }]
+    },
+    {
+      "id": "walkTimeMinutes",
+      "label": "Tiempo total en la milla (Test Rockport - minutos)",
+      "label_en": "Total 1-Mile Walk Time (Rockport Test - minutes)",
+      "type": "number",
+      "default": 14.5,
+      "min": 8,
+      "max": 30,
+      "step": 0.1,
+      "unit": "min",
+      "unit_en": "min",
+      "required": false,
+      "validation": []
+    },
+    {
+      "id": "heartRateEndBpm",
+      "label": "Pulsaciones al finalizar la milla (Test Rockport - ppm)",
+      "label_en": "Heart Rate Upon Finishing Walk (Rockport Test - bpm)",
+      "type": "number",
+      "default": 130,
+      "min": 70,
+      "max": 200,
+      "step": 1,
+      "unit": "ppm",
+      "unit_en": "bpm",
+      "required": false,
+      "validation": []
+    },
+    {
+      "id": "cooperDistanceMeters",
+      "label": "Distancia recorrida en 12 minutos (Test Cooper - metros)",
+      "label_en": "Distance Covered in 12 Minutes (Cooper Test - meters)",
+      "type": "number",
+      "default": 2400,
+      "min": 800,
+      "max": 4500,
+      "step": 50,
+      "unit": "m",
+      "unit_en": "m",
+      "required": false,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "rockportVo2Max",
+      "label": "VO2máx por Test Rockport",
+      "label_en": "Rockport Test VO2max",
+      "expression": "132.853 - (0.0769 * (weightKg / 0.453592)) - (0.3877 * age) + (gender == 'male' ? 6.315 : 0) - (3.2649 * walkTimeMinutes) - (0.1565 * heartRateEndBpm)",
+      "unit": "ml/kg/min",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "cooperVo2Max",
+      "label": "VO2máx por Test Cooper",
+      "label_en": "Cooper Test VO2max",
+      "expression": "(cooperDistanceMeters - 504.9) / 44.73",
+      "unit": "ml/kg/min",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "vo2MaxVal",
+      "label": "Consumo Máximo de Oxígeno Calculado (VO2máx)",
+      "label_en": "Calculated Maximum Oxygen Uptake (VO2max)",
+      "expression": "testMethod == 'cooper' ? max(cooperVo2Max, 15) : max(rockportVo2Max, 15)",
+      "unit": "ml/kg/min",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "vo2MaxVal", "op": "<", "value": 35 }, "label": "Aptitud Aeróbica Baja / Promedio Bajo", "label_en": "Low Aerobic Fitness Tier", "tone": "warning", "text": "Capacidad cardiorrespiratoria por debajo del promedio poblacional.", "text_en": "Cardiorespiratory fitness is below population average." },
+        { "when": { "field": "vo2MaxVal", "op": "between", "value": [35, 45] }, "label": "Aptitud Aeróbica Buena", "label_en": "Good Aerobic Fitness Tier", "tone": "success", "text": "Capacidad cardiorrespiratoria saludable dentro del promedio activo.", "text_en": "Healthy cardiorespiratory fitness within active average range." },
+        { "when": { "field": "vo2MaxVal", "op": ">=", "value": 45.1 }, "label": "Aptitud Aeróbica Excelente / Atleta", "label_en": "Excellent / Athletic Aerobic Tier", "tone": "success", "text": "Capacidad aeróbica máxima elevada asociada a alta longevidad.", "text_en": "High maximum aerobic capacity associated with athletic endurance and longevity." }
+      ]
+    },
+    {
+      "id": "metsCapacityEquivalent",
+      "label": "Capacidad Metabólica Equivalente en METs",
+      "label_en": "Equivalent Metabolic Capacity in METs",
+      "expression": "vo2MaxVal / 3.5",
+      "unit": "METs",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "target-heart-rate-calculator", "type": "static", "message": "Calcula tus zonas de pulso para mejorar tu VO2máx", "message_en": "Calculate pulse zones to improve VO2max", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Fisiólogo del Ejercicio y Rendimiento Cardiorrespiratorio",
+    "role_en": "Exercise Physiologist & Cardiorespiratory Performance Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y motivador",
+    "includeData": ["vo2MaxVal", "metsCapacityEquivalent", "age", "gender", "testMethod"],
+    "instructions": [
+      "Sintetiza el valor de VO2máx en ml/kg/min, la capacidad equivalente en METs y la categoría aeróbica en 2 frases concisas.",
+      "Recomienda incluir entrenamientos en Zona 2 aeróbica e intervalos de alta intensidad (HIIT) para elevar el VO2máx."
+    ],
+    "instructions_en": [
+      "Summarize VO2max value in ml/kg/min, equivalent METs capacity, and fitness tier in 2 concise sentences.",
+      "Recommend incorporating Zone 2 aerobic volume and high-intensity interval training (HIIT) to boost VO2max."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de VO2 Máximo (Rockport & Cooper) | CalculadoraHub",
+    "metaTitle_en": "VO2 Max Calculator (Rockport Walk & Cooper Tests) | CalculadoraHub",
+    "metaDescription": "Calcula tu consumo máximo de oxígeno (VO2máx en ml/kg/min) con el Test Rockport o Cooper. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your maximum oxygen uptake (VO2max in ml/kg/min) using Rockport or Cooper tests. Free, instant results.",
+    "keywords": ["vo2 max calculator", "vo2max rockport", "test cooper 12 minutos", "capacidad aerobica"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

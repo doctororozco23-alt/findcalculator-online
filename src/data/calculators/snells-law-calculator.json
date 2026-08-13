@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "snells-law-calculator",
+    "title": "Calculadora de Refracción Óptica y Ley de Snell (n₁ sin θ₁ = n₂ sin θ₂)",
+    "title_en": "Snell's Law & Optical Refraction Calculator (n₁ sin θ₁ = n₂ sin θ₂)",
+    "slug": "calculadora-de-ley-de-snell-refraccion-optica-angulo-critico",
+    "category": "physics",
+    "subcategory": "optics",
+    "tags": ["ley-de-snell", "refraccion", "optica", "indice-de-refraccion", "angulo-critico", "luz", "fisica"],
+    "tags_en": ["snells-law", "refraction", "optics", "refractive-index", "critical-angle", "light", "physics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el ángulo de refracción ($\u03b8_2$) de la luz al cruzar la interfaz entre dos medios materiales según la Ley de Snell.",
+    "shortDescription_en": "Calculate light refraction angle ($\u03b8_2$) crossing the interface between two media using Snell's Law.",
+    "longDescription": "Herramienta de óptica geométrica y física ondulatoria. Determina la desviación de un rayo luminoso al pasar del medio 1 al medio 2 con diferentes índices de refracción.",
+    "longDescription_en": "Geometric optics and wave physics tool. Computes light ray bending transitioning from medium 1 to medium 2 with differing refractive indices.",
+    "howToUse": [
+      "Ingresa o Selecciona el Índice de Refracción del Medio 1 ($n_1$, ej. Aire = 1.0003).",
+      "Ingresa el Ángulo de Incidencia ($\u03b8_1$ en grados °).",
+      "Ingresa o Selecciona el Índice de Refracción del Medio 2 ($n_2$, ej. Agua = 1.333, Vidrio = 1.50).",
+      "Consulta el Ángulo de Refracción Calculado ($\u03b8_2$) y el Ángulo Crítico de reflexión interna total."
+    ],
+    "howToUse_en": [
+      "Enter or Select Medium 1 Refractive Index ($n_1$, e.g. Air = 1.0003).",
+      "Enter Incident Angle ($\u03b8_1$ in degrees °).",
+      "Enter or Select Medium 2 Refractive Index ($n_2$, e.g. Water = 1.333, Glass = 1.50).",
+      "View Calculated Refracted Angle ($\u03b8_2$) and Critical Angle for total internal reflection."
+    ],
+    "methodology": "Ley de Snell: n1 * sin(θ1) = n2 * sin(θ2)  ⇒  θ2 = asin((n1 * sin(θ1)) / n2). Ángulo Crítico θ_c = asin(n2 / n1) si n1 > n2.",
+    "methodology_en": "Snell's Law: n1 * sin(θ1) = n2 * sin(θ2)  ⇒  θ2 = asin((n1 * sin(θ1)) / n2). Critical Angle θ_c = asin(n2 / n1) if n1 > n2."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Óptica Geométrica y Fotónica",
+    "role_en": "Geometric Optics & Photonics Specialist Assistant",
+    "includeData": ["refractedAngleDegreesResult", "criticalAngleDegreesResult"],
+    "instructions": [
+      "Interpreta la desviación del rayo de luz según los índices de refracción.",
+      "Explica la reflexión interna total que ocurre cuando el ángulo de incidencia supera el ángulo crítico ($n_1 > n_2$).",
+      "Muestra aplicaciones prácticas en fibra óptica, lentes refractivas y espejismos."
+    ],
+    "instructions_en": [
+      "Interpret light ray bending based on refractive indices.",
+      "Explain total internal reflection occurring when incident angle exceeds critical angle ($n_1 > n_2$).",
+      "Show practical applications in fiber optics, corrective lenses, and mirages."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "snl-guide",
+      "icon": "🌈",
+      "title": "Refractive Indices & Snell's Law",
+      "title_es": "Índices de Refracción y Ley de Snell",
+      "content_html_en": "<p><b>Air:</b> n ≈ 1.00</p><p><b>Water:</b> n ≈ 1.33</p><p><b>Crown Glass:</b> n ≈ 1.52</p><p><b>Diamond:</b> n ≈ 2.42</p>",
+      "content_html": "<p><b>Aire:</b> n ≈ 1.00</p><p><b>Agua:</b> n ≈ 1.33</p><p><b>Vidrio Crown:</b> n ≈ 1.52</p><p><b>Diamante:</b> n ≈ 2.42</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "n1RefractiveIndex",
+      "label": "Índice de Refracción Medio 1 (n₁)",
+      "label_en": "Medium 1 Refractive Index (n₁)",
+      "type": "number",
+      "default": 1.0,
+      "min": 1.0,
+      "max": 5.0,
+      "step": 0.01,
+      "required": true
+    },
+    {
+      "id": "theta1IncidentDegrees",
+      "label": "Ángulo de Incidencia (θ₁ en grados °)",
+      "label_en": "Incident Angle (θ₁ in degrees °)",
+      "type": "number",
+      "default": 30,
+      "min": 0,
+      "max": 89.9,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "n2RefractiveIndex",
+      "label": "Índice de Refracción Medio 2 (n₂)",
+      "label_en": "Medium 2 Refractive Index (n₂)",
+      "type": "number",
+      "default": 1.333,
+      "min": 1.0,
+      "max": 5.0,
+      "step": 0.01,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "refractedAngleDegreesResult",
+      "label": "Ángulo de Refracción Calculado (θ₂ en grados °)",
+      "label_en": "Calculated Refracted Angle (θ₂ in degrees °)",
+      "expression": "asin((n1RefractiveIndex * sin(theta1IncidentDegrees * deg)) / n2RefractiveIndex) / deg",
+      "unit": "°",
+      "unit_en": "°",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "refractedAngleDegreesResult", "op": ">=", "value": 0 }, "label": "Refracción Calculada", "label_en": "Refraction Computed", "tone": "success", "text": "Desviación angular de rayo luminoso evaluada.", "text_en": "Light ray angular bending evaluated." }
+      ]
+    },
+    {
+      "id": "criticalAngleDegreesResult",
+      "label": "Ángulo Crítico (si n₁ > n₂)",
+      "label_en": "Critical Angle (if n₁ > n₂)",
+      "expression": "n1RefractiveIndex > n2RefractiveIndex ? (asin(n2RefractiveIndex / n1RefractiveIndex) / deg) : 90",
+      "unit": "°",
+      "unit_en": "°",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

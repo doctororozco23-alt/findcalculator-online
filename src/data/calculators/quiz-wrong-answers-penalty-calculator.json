@@ -1,0 +1,152 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "quiz-wrong-answers-penalty-calculator",
+    "title": "Calculadora de Nota de Examen Tipo Test con Penalización por Fallos",
+    "title_en": "Multiple-Choice Quiz Penalty Score Calculator",
+    "slug": "calculadora-de-nota-de-examen-tipo-test-penalizacion-por-fallos",
+    "category": "education",
+    "subcategory": "grades",
+    "tags": ["examen-tipo-test", "penalizacion-por-fallos", "preguntas-opcion-multiple", "aciertos-y-errores", "oposiciones", "educacion"],
+    "tags_en": ["multiple-choice-test", "wrong-answer-penalty", "test-score", "quiz-calculator", "education"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la nota neta en exámenes de opción múltiple aplicando la penalización estándar por respuestas incorrectas (ej. resta 1/3 o 1/4 por fallo).",
+    "shortDescription_en": "Calculate net score on multiple-choice tests applying standard wrong answer penalty formulas (e.g. subtracts 1/3 or 1/4 point per error).",
+    "longDescription": "Herramienta de preparación de exámenes de oposición, SAT y certificaciones. Evalúa el riesgo de responder al azar ante la penalización por error.",
+    "longDescription_en": "Competitive exam prep, SAT, and certification testing tool. Evaluates guessing risk against wrong-answer penalty discounts.",
+    "howToUse": [
+      "Ingresa el Total de Preguntas del Examen (ej. 100 preguntas).",
+      "Ingresa el Número de Aciertos / Preguntas Correctas (ej. 75 aciertos).",
+      "Ingresa el Número de Errores / Fallos (ej. 15 fallos).",
+      "Selecciona la Penalización por Fallo (ej. 3 fallos restan 1 acierto, 4 fallos restan 1 acierto).",
+      "Consulta los Aciertos Netos y la Nota Final en Escala 10 y Porcentual."
+    ],
+    "howToUse_en": [
+      "Enter Total Test Questions Count (e.g. 100 questions).",
+      "Enter Number of Correct Answers (e.g. 75 correct).",
+      "Enter Number of Wrong Answers / Errors (e.g. 15 errors).",
+      "Select Wrong Answer Penalty (e.g. 3 errors deduct 1 correct answer, 4 errors deduct 1 correct answer).",
+      "View Net Score Points, Final Grade on a 10-Point Scale, and Percentage Score."
+    ],
+    "methodology": "AciertosNetos = max(0, Aciertos - (Fallos * FactorPenalización)). NotaEscala10 = (AciertosNetos / TotalPreguntas) * 10.",
+    "methodology_en": "NetScorePoints = max(0, Correct - (Errors * PenaltyFactor)). GradeScale10 = (NetScorePoints / TotalQuestions) * 10."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Estrategia de Exámenes de Opción Múltiple y Oposiciones",
+    "role_en": "Multiple-Choice Test Strategy & Competitive Exams Specialist Assistant",
+    "includeData": ["netScorePointsResult", "finalGradeOnScale10Result"],
+    "instructions": [
+      "Interpreta la nota neta final obtenida tras aplicar el descuento por penalización de fallos.",
+      "Explica si matemáticamente conviene responder al azar cuando se pueden descartar opciones de respuesta.",
+      "Muestra el impacto total de las preguntas dejadas en blanco frente a los errores cometidos."
+    ],
+    "instructions_en": [
+      "Interpret final net test score after applying wrong answer penalty deduction.",
+      "Explain whether blind guessing is mathematically favorable when eliminating incorrect choices.",
+      "Show total score impact of blank/unanswered questions versus wrong answers."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "qwa-guide",
+      "icon": "🎯",
+      "title": "Multiple-Choice Penalty Formulas Reference",
+      "title_es": "Fórmulas de Penalización en Exámenes Tipo Test",
+      "content_html_en": "<p><b>Penalty 3 to 1 (1/3 deduction):</b> 3 Wrong answers deduct 1 Correct answer.</p><p><b>Penalty 4 to 1 (1/4 deduction):</b> 4 Wrong answers deduct 1 Correct answer (Standard SAT).</p><p><b>Blank Answers:</b> 0 points added, 0 points deducted.</p>",
+      "content_html": "<p><b>Penalización 3 a 1 (1/3 descuentada):</b> 3 Respuestas incorrectas restan 1 Acierto.</p><p><b>Penalización 4 a 1 (1/4 descuentada):</b> 4 Respuestas incorrectas restan 1 Acierto (Estándar SAT).</p><p><b>Respuestas en Blanco:</b> 0 puntos sumados, 0 puntos restados.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "quizTotalQuestionsCount",
+      "label": "Número Total de Preguntas",
+      "label_en": "Total Number of Test Questions",
+      "type": "number",
+      "default": 100,
+      "min": 1,
+      "max": 1000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "correctAnswersCountNum",
+      "label": "Número de Aciertos",
+      "label_en": "Number of Correct Answers",
+      "type": "number",
+      "default": 75,
+      "min": 0,
+      "max": 1000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "wrongAnswersCountNum",
+      "label": "Número de Fallos / Errores",
+      "label_en": "Number of Wrong Answers / Errors",
+      "type": "number",
+      "default": 15,
+      "min": 0,
+      "max": 1000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "penaltyFactorType",
+      "label": "Regla de Penalización por Fallo",
+      "label_en": "Wrong Answer Penalty Rule",
+      "type": "select",
+      "default": "0.3333333333",
+      "options": [
+        { "value": "0.3333333333", "label": "Resta 1/3 por fallo (3 fallos restan 1 acierto)", "label_en": "Deduct 1/3 per error (3 errors deduct 1 correct)" },
+        { "value": "0.25", "label": "Resta 1/4 por fallo (4 fallos restan 1 acierto - SAT)", "label_en": "Deduct 1/4 per error (4 errors deduct 1 correct - SAT)" },
+        { "value": "0.5", "label": "Resta 1/2 por fallo (2 fallos restan 1 acierto)", "label_en": "Deduct 1/2 per error (2 errors deduct 1 correct)" },
+        { "value": "0.0", "label": "Sin penalización (0 puntos por fallo)", "label_en": "No penalty (0 points per error)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "netScorePointsResult",
+      "label": "Aciertos Netos Ponderados Tras Penalización",
+      "label_en": "Net Score Points After Penalty Deduction",
+      "expression": "max(0, correctAnswersCountNum - (wrongAnswersCountNum * penaltyFactorType))",
+      "unit": "puntos",
+      "unit_en": "points",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "netScorePointsResult", "op": ">=", "value": 0 }, "label": "Puntos Netos Calculados", "label_en": "Net Points Computed", "tone": "success", "text": "Puntuación neta ponderada cuantificada.", "text_en": "Net weighted score quantified." }
+      ]
+    },
+    {
+      "id": "finalGradeOnScale10Result",
+      "label": "Nota Final Neta (Escala 0 a 10)",
+      "label_en": "Final Net Grade (0 to 10 Scale)",
+      "expression": "quizTotalQuestionsCount > 0 ? ((netScorePointsResult / quizTotalQuestionsCount) * 10) : 0",
+      "unit": "/10",
+      "unit_en": "/10",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "netScorePercentageResult",
+      "label": "Porcentaje de Nota Neta Final (%)",
+      "label_en": "Final Net Percentage Score (%)",
+      "expression": "quizTotalQuestionsCount > 0 ? ((netScorePointsResult / quizTotalQuestionsCount) * 100) : 0",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

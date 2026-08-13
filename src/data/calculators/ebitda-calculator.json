@@ -1,0 +1,158 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "ebitda-calculator",
+    "title": "Calculadora de Valoración de Empresas (EBITDA)",
+    "title_en": "Business Valuation & EBITDA Calculator",
+    "slug": "valoracion-empresas-ebitda",
+    "category": "finance",
+    "subcategory": "business",
+    "tags": ["ebitda", "valoracion-empresa", "multiplos"],
+    "tags_en": ["ebitda", "business-valuation", "multiples"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Building"
+  },
+  "content": {
+    "shortDescription": "Calcula el EBITDA operativo de una empresa y proyecta el Valor de Empresa (Enterprise Value) usando múltiplos del sector.",
+    "shortDescription_en": "Calculate operating EBITDA and project Enterprise Value (EV) using industry valuation multiples.",
+    "longDescription": "Estima el beneficio antes de intereses, impuestos, depreciación y amortización (EBITDA) y calcula la valoración de mercado estimada (EV) aplicando múltiplos sectoriales (ej. 4x a 10x).",
+    "longDescription_en": "Estimate Earnings Before Interest, Taxes, Depreciation, and Amortization (EBITDA) and project estimated Enterprise Value (EV) applying industry EBITDA valuation multiples (e.g. 4x to 10x).",
+    "howToUse": [
+      "Ingresa los ingresos de venta totales anuales de la empresa.",
+      "Ingresa el beneficio operativo bruto o EBITDA.",
+      "Establece el múltiplo sectorial aplicable (ej. 5x o 8x).",
+      "Consulta el Valor de Empresa (EV) proyectado."
+    ],
+    "howToUse_en": [
+      "Enter total annual business revenues and active currency.",
+      "Enter operating profit / EBITDA amount.",
+      "Set applicable industry EBITDA multiple (e.g. 5x or 8x).",
+      "View estimated Enterprise Value (EV) market valuation."
+    ],
+    "methodology": "Fórmula Valoración EBITDA: Enterprise Value (EV) = EBITDA × MúltiploSectorial. Margen EBITDA = (EBITDA / Ingresos) × 100.",
+    "methodology_en": "EBITDA Valuation Formula: Enterprise Value (EV) = EBITDA × Multiple. EBITDA Margin = (EBITDA / Revenue) × 100."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "📊",
+      "title": "Role of EBITDA in Business Sales & M&A",
+      "title_es": "El Rol del EBITDA en Fusiones y Adquisiciones (M&A)",
+      "content_html_en": "<p>EBITDA measures pure core operating cash generation, allowing buyers to compare company valuations across different capital and tax structures.</p>",
+      "content_html": "<p>El EBITDA mide la capacidad operativa pura de generar caja, permitiendo comparar valoraciones de empresas independientes de su deuda o impuestos.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "annualRevenue",
+      "label": "Ingresos anuales totales de la empresa",
+      "label_en": "Total Annual Business Revenue",
+      "type": "currency",
+      "default": 2000000,
+      "min": 10000,
+      "max": 100000000,
+      "step": 50000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "ebitdaAmount",
+      "label": "EBITDA operativo anual de la empresa",
+      "label_en": "Annual Operating EBITDA Amount",
+      "type": "currency",
+      "default": 350000,
+      "min": 1000,
+      "max": 50000000,
+      "step": 10000,
+      "unit": { "follows": "annualRevenue" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "industryMultiple",
+      "label": "Múltiplo de valoración sectorial (EV / EBITDA)",
+      "label_en": "Industry Valuation Multiple (EV / EBITDA)",
+      "type": "slider",
+      "default": 6.0,
+      "min": 2.0,
+      "max": 20.0,
+      "step": 0.5,
+      "unit": "x",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "ebitdaMarginPercent",
+      "label": "Margen EBITDA de Operación",
+      "label_en": "Operating EBITDA Margin Rate",
+      "expression": "(ebitdaAmount / annualRevenue) * 100",
+      "unit": "%",
+      "precision": 1,
+      "format": "percent",
+      "type": "secondary"
+    },
+    {
+      "id": "enterpriseValue",
+      "label": "Valoración Estimada de Empresa (Enterprise Value EV)",
+      "label_en": "Estimated Enterprise Value (EV Market Cap)",
+      "expression": "ebitdaAmount * industryMultiple",
+      "unit": { "follows": "annualRevenue" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "enterpriseValue", "op": ">", "value": 0 }, "label": "Valoración de Mercado", "label_en": "Business Valuation Result", "tone": "success", "text": "Valor de empresa estimado basado en múltiplos EBITDA de mercado.", "text_en": "Estimated enterprise valuation based on sector EBITDA market multiple." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "dcf-calculator", "type": "static", "message": "Valora la empresa por flujos descontados (DCF)", "message_en": "Value company using Discounted Cash Flows (DCF)", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Valoración de Empresas M&A",
+    "role_en": "Business Valuation & M&A Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y ejecutivo",
+    "includeData": ["enterpriseValue", "ebitdaMarginPercent", "ebitdaAmount", "industryMultiple"],
+    "instructions": [
+      "Sintetiza la valoración de empresa EV proyectada y el margen EBITDA % en 2 frases concisas.",
+      "Destaca cómo la expansión del EBITDA genera un efecto multiplicador directo sobre la valoración."
+    ],
+    "instructions_en": [
+      "Summarize projected Enterprise Value (EV) and EBITDA margin % in 2 concise sentences.",
+      "Highlight how expanding EBITDA creates a direct compounding multiplier effect on company valuation."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Valoración de Empresas (EBITDA) | CalculadoraHub",
+    "metaTitle_en": "Business Valuation & EBITDA Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el EBITDA y la valoración de mercado Enterprise Value (EV) de una empresa. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate operating EBITDA and Enterprise Value (EV) market valuation multiples. Free, instant results.",
+    "keywords": ["ebitda calculator", "valoracion de empresas", "enterprise value", "multiplos ebitda"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

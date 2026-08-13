@@ -1,0 +1,233 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "pregnancy-ultrasound-calculator",
+    "title": "Calculadora de Embarazo por Ecografía / Ultrasonido (USG)",
+    "title_en": "Pregnancy Due Date & Age by Ultrasound Calculator (USG)",
+    "slug": "embarazo-por-ultrasonido-ecografia",
+    "category": "health",
+    "subcategory": "pregnancy",
+    "tags": ["ultrasonido", "ecografia", "usg", "crl", "embarazo"],
+    "tags_en": ["ultrasound", "sonogram", "usg", "crl", "due-date"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Baby"
+  },
+  "content": {
+    "shortDescription": "Calcula tu fecha estimada de parto (FPP) y semanas gestacionales exactas basadas en la ecografía / ultrasonido del 1º, 2º o 3º trimestre.",
+    "shortDescription_en": "Calculate your estimated due date (EDD) and exact gestational age based on 1st, 2nd, or 3rd trimester ultrasound (USG) scan.",
+    "longDescription": "Calculadora médica obstétrica para fechado de embarazo por ecografía. Utiliza la biometría fetal por Longitud Céfalo-Caudal (CRL / LCC en 1º trimestre) o la edad gestacional asignada por el ecografista para determinar la fecha exacta de parto.",
+    "longDescription_en": "Clinical obstetric calculator for pregnancy ultrasound dating. Uses Crown-Rump Length (CRL in 1st trimester) or ultrasound scan gestational age to determine exact delivery due date (EDD).",
+    "howToUse": [
+      "Selecciona el tipo de ecografía (Por Edad Gestacional asignada en USG o por Longitud Céfalo-Caudal CRL).",
+      "Ingresa la fecha en la que se realizó la ecografía / ultrasonido.",
+      "Ingresa las semanas y días de gestación que figuraban en el informe ecográfico.",
+      "Consulta tu edad gestacional exacta al día de hoy, la fecha de parto por ecografía y los días restantes."
+    ],
+    "howToUse_en": [
+      "Select ultrasound method (Ultrasound Gestational Age or Crown-Rump Length CRL).",
+      "Select the date the ultrasound scan was performed.",
+      "Enter the gestational weeks and days stated on the sonogram report.",
+      "View exact current gestational age today, ultrasound due date (EDD), and remaining days countdown."
+    ],
+    "methodology": "Criterios ACOG de Fechado Ecográfico: La ecografía de 1º trimestre (CRL hasta sem 14) es el método médico más preciso (margen ±5-7 días). FPP USG = Fecha Ecografía + (280 - (SemanasUSG × 7 + DíasUSG)).",
+    "methodology_en": "ACOG Ultrasound Dating Guidelines: 1st Trimester CRL ultrasound is the gold standard for gestational age assignment (±5-7 days error margin). EDD = Scan Date + (280 - (ScanWeeks × 7 + ScanDays))."
+  },
+  "guideSections": [
+    {
+      "id": "acog-guidelines",
+      "icon": "🩺",
+      "title": "ACOG Ultrasound Dating Accuracy",
+      "title_es": "Precisión de la Ecografía según la ACOG",
+      "content_html_en": "<p><b>1st Trimester (CRL ≤ 14 weeks):</b> Most accurate clinical dating method (±5 to 7 days). If USG differs from LMP by > 5 days, the ultrasound due date replaces the LMP due date.</p><p><b>2nd Trimester (14-22 weeks):</b> Accuracy within ±7 to 10 days (BPD, HC, AC, FL biometry).</p><p><b>3rd Trimester (22+ weeks):</b> Accuracy within ±21 days due to natural fetal growth variations.</p>",
+      "content_html": "<p><b>1º Trimestre (CRL ≤ 14 semanas):</b> Método médico más preciso (margen ±5 a 7 días). Si la ecografía difiere de la regla por > 5 días, prevalece la fecha de ecografía.</p><p><b>2º Trimestre (14-22 semanas):</b> Margen de precisión de ±7 a 10 días (diámetro biparietal y longitud del fémur).</p><p><b>3º Trimestre (22+ semanas):</b> Margen de precisión de ±21 días debido a variaciones naturales de crecimiento.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "usgMethod",
+      "label": "Método de datos de la ecografía / ultrasonido",
+      "label_en": "Ultrasound Data Method",
+      "type": "select",
+      "default": "age_input",
+      "options": [
+        { "value": "age_input", "label": "Edad gestacional del informe de la ecografía (Semanas + Días)", "label_en": "Gestational Age from Ultrasound Report (Weeks + Days)" },
+        { "value": "crl_mm", "label": "Longitud Céfalo-Caudal Fetal (CRL / LCC en mm - 1º Trimestre)", "label_en": "Crown-Rump Length (CRL in mm - 1st Trimester)" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "scanDate",
+      "label": "Fecha en la que te hicieron la ecografía",
+      "label_en": "Date Ultrasound Scan Was Performed",
+      "type": "date",
+      "default": "2026-07-01",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "usgWeeks",
+      "label": "Semanas gestacionales en el informe ecográfico",
+      "label_en": "Gestational Weeks Stated on Ultrasound Report",
+      "type": "slider",
+      "default": 12,
+      "min": 4,
+      "max": 38,
+      "step": 1,
+      "unit": "semanas",
+      "unit_en": "weeks",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "usgDays",
+      "label": "Días adicionales en el informe ecográfico (+0 a +6 días)",
+      "label_en": "Additional Days on Ultrasound Report (+0 to +6 days)",
+      "type": "slider",
+      "default": 3,
+      "min": 0,
+      "max": 6,
+      "step": 1,
+      "unit": "días",
+      "unit_en": "days",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "crlValueMm",
+      "label": "Longitud Céfalo-Caudal (CRL en mm para 1º trimestre)",
+      "label_en": "Crown-Rump Length (CRL in mm for 1st trimester)",
+      "type": "number",
+      "default": 55,
+      "min": 5,
+      "max": 95,
+      "step": 1,
+      "unit": "mm",
+      "unit_en": "mm",
+      "required": false,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "effectiveUsgDaysAtScan",
+      "label": "Días Gestacionales al Momento de la Ecografía",
+      "label_en": "Gestational Days at Scan Date",
+      "expression": "usgMethod == 'crl_mm' ? (crlValueMm + 42) : (usgWeeks * 7 + usgDays)",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "daysElapsedSinceScan",
+      "label": "Días Transcurridos desde la Ecografía hasta Hoy",
+      "label_en": "Days Elapsed Since Ultrasound Date",
+      "expression": "max(daysBetween(scanDate, todayDate()), 0)",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalGestationalDaysToday",
+      "label": "Días Gestacionales Totales Hoy",
+      "label_en": "Total Gestational Days Today",
+      "expression": "effectiveUsgDaysAtScan + daysElapsedSinceScan",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "gestationalWeeksToday",
+      "label": "Semanas de Gestación Actuales por Ecografía",
+      "label_en": "Current Gestational Age by Ultrasound",
+      "expression": "floor(totalGestationalDaysToday / 7)",
+      "unit": "semanas",
+      "unit_en": "weeks",
+      "precision": 0,
+      "format": "primary",
+      "interpretation": [
+        { "when": { "field": "gestationalWeeksToday", "op": "<=", "value": 13 }, "label": "Primer Trimestre", "label_en": "First Trimester", "tone": "info", "text": "Etapa inicial de organogénesis confirmada por ultrasonido.", "text_en": "Initial stage confirmed by ultrasound sonogram." },
+        { "when": { "field": "gestationalWeeksToday", "op": "between", "value": [14, 27] }, "label": "Segundo Trimestre", "label_en": "Second Trimester", "tone": "success", "text": "Etapa de desarrollo anatómico y crecimiento fetal.", "text_en": "Anatomical development and growth stage." },
+        { "when": { "field": "gestationalWeeksToday", "op": ">=", "value": 28 }, "label": "Tercer Trimestre", "label_en": "Third Trimester", "tone": "warning", "text": "Etapa final de preparación para el nacimiento.", "text_en": "Final stage preparing for birth." }
+      ]
+    },
+    {
+      "id": "gestationalExtraDaysToday",
+      "label": "Días Adicionales de la Semana Actual",
+      "label_en": "Extra Days into Current Week",
+      "expression": "totalGestationalDaysToday % 7",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "estimatedDueDateUSG",
+      "label": "Fecha Estimada de Parto por Ecografía (FPP USG)",
+      "label_en": "Estimated Due Date by Ultrasound (USG EDD)",
+      "expression": "addDays(scanDate, 280 - effectiveUsgDaysAtScan)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "daysRemainingToDeliveryUSG",
+      "label": "Días Faltantes para el Nacimiento",
+      "label_en": "Remaining Days Until Delivery",
+      "expression": "max(daysBetween(todayDate(), estimatedDueDateUSG), 0)",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "pregnancy-calculator", "type": "static", "message": "Compara con la fecha por última regla (LMP)", "message_en": "Compare with Last Period date (LMP)", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Especialista en Ecografía y Medicina Materno-Fetal",
+    "role_en": "Ultrasound & Maternal-Fetal Medicine Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "cálido y profesional",
+    "includeData": ["gestationalWeeksToday", "gestationalExtraDaysToday", "estimatedDueDateUSG", "daysRemainingToDeliveryUSG"],
+    "instructions": [
+      "Sintetiza la edad gestacional actual por ecografía en semanas y días, la fecha estimada de parto (FPP USG) y los días faltantes en 2 frases concisas.",
+      "Explica por qué la ecografía de primer trimestre es el estándar médico definitivo para determinar la fecha de parto."
+    ],
+    "instructions_en": [
+      "Summarize current ultrasound gestational age in weeks and days, ultrasound EDD, and remaining days in 2 concise sentences.",
+      "Explain why 1st trimester ultrasound is the medical gold standard for establishing pregnancy due dates."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Embarazo por Ecografía / Ultrasonido (USG) | CalculadoraHub",
+    "metaTitle_en": "Pregnancy Due Date & Age by Ultrasound Calculator (USG) | CalculadoraHub",
+    "metaDescription": "Calcula tu fecha de parto y semanas de embarazo según tu ecografía o ultrasonido (CRL). Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your due date (EDD) and exact pregnancy weeks based on ultrasound scan or CRL. Free, instant results.",
+    "keywords": ["pregnancy ultrasound calculator", "embarazo ecografia", "fpp ecografia", "crl ultrasonido"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "auto-lease-calculator",
+    "title": "Calculadora de Arrendamiento de Auto (Auto Lease)",
+    "title_en": "Auto Lease Calculator",
+    "slug": "arrendamiento-auto-leasing",
+    "category": "finance",
+    "subcategory": "loans",
+    "tags": ["auto", "leasing", "arrendamiento"],
+    "tags_en": ["auto", "leasing", "lease"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Car"
+  },
+  "content": {
+    "shortDescription": "Calcula el pago mensual de arrendamiento (Lease) de un vehículo incorporando valor residual y factor de dinero.",
+    "shortDescription_en": "Calculate monthly car lease payments factoring in capitalized cost, residual value, and money factor.",
+    "longDescription": "Estima la cuota mensual de arrendamiento de un auto nuevo basándote en el precio acordado del vehículo, enganche inicial, valor residual al finalizar el contrato y factor de dinero (tasa de interés).",
+    "longDescription_en": "Estimate monthly car lease payment incorporating agreed vehicle price, down payment, residual value at lease end, and money factor financing rate.",
+    "howToUse": [
+      "Ingresa el precio negociado del auto (Cap Cost).",
+      "Indica el pago inicial o enganche.",
+      "Establece el valor residual estimado (%) y la tasa de interés en Money Factor.",
+      "Consulta la cuota mensual de arrendamiento sin impuestos."
+    ],
+    "howToUse_en": [
+      "Enter agreed vehicle price (Gross Cap Cost) and active currency.",
+      "Enter down payment or cap reduction.",
+      "Set estimated residual value (%) and money factor rate.",
+      "View monthly lease payment."
+    ],
+    "methodology": "Fórmula Lease: Cargo Depreciación = (Cap Cost Neto - Valor Residual) / Meses. Cargo Financiero = (Cap Cost Neto + Valor Residual) × Money Factor.",
+    "methodology_en": "Lease Formula: Depreciation Charge = (Net Cap Cost - Residual) / Months. Rent Charge = (Net Cap Cost + Residual) × Money Factor."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🚗",
+      "title": "How Auto Leases Work",
+      "title_es": "Cómo Funciona el Arrendamiento (Leasing) de Autos",
+      "content_html_en": "<p>Leasing a car means paying for the vehicle's expected depreciation during the lease term plus financing interest (money factor) and taxes, rather than buying the whole vehicle.</p>",
+      "content_html": "<p>Arrendar un coche (leasing) implica pagar únicamente por la depreciación estimada que sufre el auto durante el contrato más cargos financieros.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "vehiclePrice",
+      "label": "Precio acordado del auto (Gross Cap Cost)",
+      "label_en": "Agreed Vehicle Price (Gross Cap Cost)",
+      "type": "currency",
+      "default": 32000,
+      "min": 5000,
+      "max": 300000,
+      "step": 500,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "capReduction",
+      "label": "Pago inicial o enganche (Cap Reduction)",
+      "label_en": "Down Payment (Cap Reduction)",
+      "type": "currency",
+      "default": 3000,
+      "min": 0,
+      "max": 100000,
+      "step": 500,
+      "unit": { "follows": "vehiclePrice" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "residualPercent",
+      "label": "Valor residual al final del contrato (%)",
+      "label_en": "End of Lease Residual Value (%)",
+      "type": "slider",
+      "default": 55,
+      "min": 20,
+      "max": 80,
+      "step": 1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "leaseMonths",
+      "label": "Duración del contrato (meses)",
+      "label_en": "Lease Term (months)",
+      "type": "slider",
+      "default": 36,
+      "min": 12,
+      "max": 60,
+      "step": 12,
+      "unit": "meses",
+      "unit_en": "months",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "netCapCost",
+      "label": "Costo Capitalizado Neto",
+      "label_en": "Net Capitalized Cost",
+      "expression": "max(vehiclePrice - capReduction, 0)",
+      "unit": { "follows": "vehiclePrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "residualValue",
+      "label": "Valor Residual Final del Auto",
+      "label_en": "End Residual Value Amount",
+      "expression": "vehiclePrice * (residualPercent / 100)",
+      "unit": { "follows": "vehiclePrice" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "monthlyDepreciation",
+      "label": "Cargo por depreciación mensual",
+      "label_en": "Monthly Depreciation Charge",
+      "expression": "(netCapCost - residualValue) / leaseMonths",
+      "unit": { "follows": "vehiclePrice" },
+      "precision": 2,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "monthlyLeasePayment",
+      "label": "Cuota Mensual Estimada de Lease",
+      "label_en": "Estimated Monthly Lease Payment",
+      "expression": "monthlyDepreciation + ((netCapCost + residualValue) * 0.0021)",
+      "unit": { "follows": "vehiclePrice" },
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "monthlyLeasePayment", "op": ">", "value": 0 }, "label": "Cuota Lease Calculada", "label_en": "Lease Payment Calculated", "tone": "info", "text": "Basado en cargo por depreciación más intereses financieros.", "text_en": "Based on depreciation charge plus finance rent charge." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "auto-loan-calculator", "type": "static", "message": "Compara con un préstamo de auto tradicional", "message_en": "Compare with traditional auto loan", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Arrendamiento Automotriz",
+    "role_en": "Auto Lease Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["monthlyLeasePayment", "monthlyDepreciation", "residualValue", "netCapCost"],
+    "instructions": [
+      "Sintetiza la cuota mensual de arrendamiento y la depreciación acumulada en 2 frases concisas.",
+      "Destaca que un valor residual más alto disminuye la cuota mensual de lease."
+    ],
+    "instructions_en": [
+      "Summarize monthly lease payment and depreciation charge in 2 concise sentences.",
+      "Highlight that higher residual percentage lowers monthly lease payment."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Arrendamiento de Auto (Auto Lease) | CalculadoraHub",
+    "metaTitle_en": "Auto Lease Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el pago mensual de lease de un coche según precio, valor residual y plazo. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate monthly car lease payment based on cap cost, residual value, and term. Free, instant results.",
+    "keywords": ["auto lease calculator", "leasing auto", "arrendamiento coche", "cap cost"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

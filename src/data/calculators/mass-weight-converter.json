@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "mass-weight-converter",
+    "title": "Conversor Universal de Masa y Peso (kg, lbs, oz, g)",
+    "title_en": "Universal Mass & Weight Converter (kg, lbs, oz, g)",
+    "slug": "conversor-universal-de-masa-peso-kilogramos-libras-onzas",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["conversor-de-peso", "kilogramos", "libras", "onzas", "gramos", "toneladas", "conversores"],
+    "tags_en": ["weight-converter", "kilograms", "pounds", "ounces", "grams", "tons", "converters"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte instantáneamente entre kilogramos, gramos, miligramos, libras, onzas y toneladas.",
+    "shortDescription_en": "Instantly convert between kilograms, grams, milligrams, pounds, ounces, and metric/US tons.",
+    "longDescription": "Herramienta de conversión de peso comercial y científica. Permite convertir cualquier unidad de masa entre el sistema métrico e imperial.",
+    "longDescription_en": "Commercial and scientific weight conversion tool. Enables converting any mass unit between metric and imperial systems.",
+    "howToUse": [
+      "Ingresa el Valor de la Masa / Peso a Convertir.",
+      "Selecciona la Unidad de Origen (ej. Kilogramos, Libras, Onzas).",
+      "Consulta los Resultados Equivalentes en Kilogramos, Libras (lbs), Onzas (oz) y Gramos."
+    ],
+    "howToUse_en": [
+      "Enter Mass / Weight Value to Convert.",
+      "Select Source Unit (e.g. Kilograms, Pounds, Ounces).",
+      "View Equivalent Results in Kilograms, Pounds (lbs), Ounces (oz), and Grams."
+    ],
+    "methodology": "Factor base en Kilogramos: 1 kg = 1.0, 1 g = 0.001, 1 mg = 0.000001, 1 lb = 0.45359237, 1 oz = 0.0283495231, 1 t = 1000.",
+    "methodology_en": "Base factor in Kilograms: 1 kg = 1.0, 1 g = 0.001, 1 mg = 0.000001, 1 lb = 0.45359237, 1 oz = 0.0283495231, 1 t = 1000."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Conversión de Unidades de Masa y Peso",
+    "role_en": "Mass & Weight Unit Conversion Specialist Assistant",
+    "includeData": ["massInKgResult", "massInLbsResult"],
+    "instructions": [
+      "Interpreta la conversión de masa realizada.",
+      "Muestra equivalencias cotidianas útiles (1 libra = 16 onzas = 453.59 gramos).",
+      "Explica la diferencia técnica entre masa (cantidad de materia) vs peso (fuerza gravitatoria)."
+    ],
+    "instructions_en": [
+      "Interpret performed mass unit conversion.",
+      "Show useful everyday equivalences (1 pound = 16 ounces = 453.59 grams).",
+      "Explain technical difference between mass (matter quantity) vs weight (gravitational force)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "mwc-guide",
+      "icon": "⚖️",
+      "title": "Mass Conversion Constants",
+      "title_es": "Constantes de Conversión de Masa",
+      "content_html_en": "<p><b>1 Kilogram:</b> 2.20462 Pounds (lbs) = 35.274 Ounces (oz)</p><p><b>1 Pound:</b> 0.453592 Kilograms = 453.592 Grams</p><p><b>1 Ounce:</b> 28.3495 Grams</p>",
+      "content_html": "<p><b>1 Kilogramo:</b> 2.20462 Libras (lbs) = 35.274 Onzas (oz)</p><p><b>1 Libra:</b> 0.453592 Kilogramos = 453.592 Gramos</p><p><b>1 Onza:</b> 28.3495 Gramos</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputValueMass",
+      "label": "Valor a Convertir",
+      "label_en": "Value to Convert",
+      "type": "number",
+      "default": 10,
+      "min": 0,
+      "max": 1000000000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "inputMassUnitFactor",
+      "label": "Unidad de Origen",
+      "label_en": "Source Unit",
+      "type": "select",
+      "default": "1.0",
+      "options": [
+        { "value": "1.0", "label": "Kilogramos (kg)", "label_en": "Kilograms (kg)" },
+        { "value": "0.45359237", "label": "Libras (lbs)", "label_en": "Pounds (lbs)" },
+        { "value": "0.0283495231", "label": "Onzas (oz)", "label_en": "Ounces (oz)" },
+        { "value": "0.001", "label": "Gramos (g)", "label_en": "Grams (g)" },
+        { "value": "0.000001", "label": "Miligramos (mg)", "label_en": "Milligrams (mg)" },
+        { "value": "1000.0", "label": "Toneladas Métricas (t)", "label_en": "Metric Tons (t)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "massInKgResult",
+      "label": "Equivalente en Kilogramos (kg)",
+      "label_en": "Equivalent in Kilograms (kg)",
+      "expression": "inputValueMass * inputMassUnitFactor",
+      "unit": "kg",
+      "unit_en": "kg",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "massInKgResult", "op": ">=", "value": 0 }, "label": "Conversión Calculada", "label_en": "Conversion Computed", "tone": "success", "text": "Masa equivalente en kilogramos cuantificada.", "text_en": "Equivalent mass in kilograms quantified." }
+      ]
+    },
+    {
+      "id": "massInLbsResult",
+      "label": "Equivalente en Libras (lbs)",
+      "label_en": "Equivalent in Pounds (lbs)",
+      "expression": "massInKgResult / 0.45359237",
+      "unit": "lbs",
+      "unit_en": "lbs",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "massInOzResult",
+      "label": "Equivalente en Onzas (oz)",
+      "label_en": "Equivalent in Ounces (oz)",
+      "expression": "massInKgResult / 0.0283495231",
+      "unit": "oz",
+      "unit_en": "oz",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "massInGramsResult",
+      "label": "Equivalente en Gramos (g)",
+      "label_en": "Equivalent in Grams (g)",
+      "expression": "massInKgResult * 1000",
+      "unit": "g",
+      "unit_en": "g",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

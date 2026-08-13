@@ -1,0 +1,204 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "water-intake-calculator",
+    "title": "Calculadora de Ingesta Diaria de Agua (Estándar EFSA & NASEM)",
+    "title_en": "Daily Water Intake Calculator (EFSA & NASEM Standards)",
+    "slug": "ingesta-diaria-agua-hidratacion",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["agua", "hidratacion", "efsa", "nasem", "salud"],
+    "tags_en": ["water", "hydration", "efsa", "nasem", "health"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Droplet"
+  },
+  "content": {
+    "shortDescription": "Calcula tus necesidades diarias de agua e hidratación en litros y vasos según tu peso, sexo, minutos de ejercicio y clima.",
+    "shortDescription_en": "Calculate daily recommended water intake in liters and cups based on weight, sex, workout minutes, and climate.",
+    "longDescription": "Auditoría clínica de hidratación y balance hídrico. Determina la ingesta recomendada de líquidos de la Autoridad Europea de Seguridad Alimentaria (EFSA) y las Sociedades Académicas de Medicina de EE. UU. (NASEM).",
+    "longDescription_en": "Clinical hydration and fluid balance audit determining baseline and workout fluid intake requirements according to EFSA and NASEM guidelines.",
+    "howToUse": [
+      "Selecciona tu sexo biológico y peso corporal.",
+      "Ingresa los minutos de ejercicio físico diario realizado.",
+      "Selecciona el clima o temperatura ambiente habitual (Templado o Caluroso).",
+      "Consulta los litros diarios totales de agua recomendados y la meta en vasos de 250 ml."
+    ],
+    "howToUse_en": [
+      "Select biological sex and body weight.",
+      "Enter daily workout duration in minutes.",
+      "Select climate conditions (Temperate or Hot/Humid).",
+      "View total recommended daily water intake in liters and 250ml cups."
+    ],
+    "methodology": "Pautas EFSA / NASEM: Hidratación Basal = 35 ml/kg (hombres) o 31 ml/kg (mujeres). Reposición por Ejercicio = +500 ml por cada 30 min de actividad intensa. Ajuste por clima caluroso = +500 ml.",
+    "methodology_en": "EFSA / NASEM Guidelines: Baseline Fluid = 35 ml/kg (males) or 31 ml/kg (females). Exercise Addition = +500 ml per 30 mins of exercise. Hot Climate Adjustment = +500 ml."
+  },
+  "guideSections": [
+    {
+      "id": "hydration-benefits-guide",
+      "icon": "💧",
+      "title": "Clinical Hydration & Osmoregulation",
+      "title_es": "Hidratación Clínica y Osmorregulación",
+      "content_html_en": "<p><b>Cognitive & Physical Impact:</b> Dehydration of just 2% body mass impairs concentration, endurance performance, and thermoregulation.</p><p><b>Fluid Sources:</b> ~80% of total fluid intake comes from plain water/beverages, and ~20% from water-rich foods (fruits, vegetables, soups).</p>",
+      "content_html": "<p><b>Impacto Físico y Cognitivo:</b> Una deshidratación del 2% del peso corporal reduce el rendimiento físico, la memoria y la termorregulación.</p><p><b>Fuentes de Líquido:</b> El ~80% proviene del agua y bebidas directas, y el ~20% restante de alimentos (frutas, verduras, caldos).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "gender",
+      "label": "Sexo biológico",
+      "label_en": "Biological Sex",
+      "type": "select",
+      "default": "male",
+      "options": [
+        { "value": "male", "label": "Hombre", "label_en": "Male" },
+        { "value": "female", "label": "Mujer", "label_en": "Female" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "weightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 30,
+      "max": 250,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [30, 250], "message": "Peso entre 30 y 250 kg", "message_en": "Weight between 30 and 250 kg" }]
+    },
+    {
+      "id": "exerciseMinutes",
+      "label": "Minutos de ejercicio físico diario",
+      "label_en": "Daily Workout Duration in Minutes",
+      "type": "slider",
+      "default": 45,
+      "min": 0,
+      "max": 180,
+      "step": 15,
+      "unit": "minutos",
+      "unit_en": "minutes",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "climate",
+      "label": "Clima o temperatura ambiente",
+      "label_en": "Climate / Environmental Temperature",
+      "type": "select",
+      "default": "temperate",
+      "options": [
+        { "value": "temperate", "label": "Clima Templado / Normal", "label_en": "Temperate / Normal Climate" },
+        { "value": "hot", "label": "Clima Caluroso / Húmedo (+500 ml)", "label_en": "Hot / Humid Climate (+500 ml)" }
+      ],
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "baselineWaterLiters",
+      "label": "Hidratación Basal Diaria en Reposo",
+      "label_en": "Baseline Daily Resting Hydration",
+      "expression": "gender == 'male' ? (weightKg * 0.035) : (weightKg * 0.031)",
+      "unit": "litros/día",
+      "unit_en": "liters/day",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "exerciseAdditionLiters",
+      "label": "Reposición de Agua por Ejercicio",
+      "label_en": "Exercise Fluid Replacement Addition",
+      "expression": "(exerciseMinutes / 30) * 0.35",
+      "unit": "litros",
+      "unit_en": "liters",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "waterLitersDaily",
+      "label": "Ingesta Total Diaria de Agua Recomendada",
+      "label_en": "Total Recommended Daily Water Intake",
+      "expression": "baselineWaterLiters + exerciseAdditionLiters + (climate == 'hot' ? 0.5 : 0)",
+      "unit": "litros/día",
+      "unit_en": "liters/day",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "waterLitersDaily", "op": ">", "value": 0 }, "label": "Balance Hídrico Óptimo", "label_en": "Optimal Hydration Target", "tone": "success", "text": "Litros de líquidos totales necesarios para mantener la osmorregulación.", "text_en": "Total daily liters required for proper osmoregulation and cell hydration." }
+      ]
+    },
+    {
+      "id": "waterCupsDaily",
+      "label": "Equivalente en Vasos de Agua (250 ml)",
+      "label_en": "Equivalent in Standard 250ml Glasses",
+      "expression": "round(waterLitersDaily * 4)",
+      "unit": "vasos/día",
+      "unit_en": "glasses/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "waterOuncesDaily",
+      "label": "Equivalente en Onzas Fluidas (fl oz)",
+      "label_en": "Equivalent in Fluid Ounces (fl oz)",
+      "expression": "round(waterLitersDaily * 33.814)",
+      "unit": "fl oz",
+      "unit_en": "fl oz",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "calories-burned-calculator", "type": "static", "message": "Calcula el gasto calórico de tu sesión de ejercicio", "message_en": "Calculate calories burned during workout", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Fisiólogo de la Hidratación y Medicina Nefrológica",
+    "role_en": "Hydration Physiologist & Nephrology Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "cálido y educativo",
+    "includeData": ["waterLitersDaily", "waterCupsDaily", "baselineWaterLiters", "exerciseAdditionLiters", "weightKg"],
+    "instructions": [
+      "Sintetiza los litros de agua totales recomendados, la meta en vasos de 250 ml y la adición por ejercicio en 2 frases concisas.",
+      "Aconseja distribuir la ingesta de agua uniformemente a lo largo del día en lugar de beber grandes volúmenes de golpe."
+    ],
+    "instructions_en": [
+      "Summarize total daily water intake in liters, target in 250ml glasses, and exercise fluid addition in 2 concise sentences.",
+      "Advise spreading fluid intake evenly throughout the day rather than drinking large volumes at once."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Ingesta Diaria de Agua (EFSA & NASEM) | CalculadoraHub",
+    "metaTitle_en": "Daily Water Intake Calculator (EFSA & NASEM) | CalculadoraHub",
+    "metaDescription": "Calcula cuánta agua debes beber al día en litros y vasos según tu peso y ejercicio. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate how much water you should drink daily in liters and cups based on weight and exercise. Free, instant results.",
+    "keywords": ["water intake calculator", "cuanta agua beber al dia", "ingesta diaria de agua", "litros agua efsa"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

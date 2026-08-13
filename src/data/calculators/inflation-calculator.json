@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "inflation-calculator",
+    "title": "Calculadora de Inflación y Poder Adquisitivo",
+    "title_en": "Inflation & Purchasing Power Calculator",
+    "slug": "inflacion-poder-adquisitivo",
+    "category": "finance",
+    "subcategory": "business",
+    "tags": ["inflacion", "poder-adquisitivo", "precios"],
+    "tags_en": ["inflation", "purchasing-power", "cpi"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "TrendingDown"
+  },
+  "content": {
+    "shortDescription": "Calcula el impacto acumulado de la inflación y la pérdida de poder adquisitivo del dinero a lo largo del tiempo.",
+    "shortDescription_en": "Calculate the impact of annual inflation rate erosion on future purchasing power of money.",
+    "longDescription": "Determina cuánto dinero necesitarás en el futuro para comprar la misma cesta de bienes equivalente a una suma actual basándote en la tasa de inflación media esperada (%).",
+    "longDescription_en": "Determine future money required to purchase an equivalent current basket of goods based on expected annual inflation rate (%).",
+    "howToUse": [
+      "Ingresa el monto de dinero actual.",
+      "Establece la tasa de inflación anual estimada (%).",
+      "Indica los años transcurridos en el futuro.",
+      "Consulta el poder adquisitivo futuro equivalente y la pérdida porcentual de valor."
+    ],
+    "howToUse_en": [
+      "Enter starting money amount today and active currency.",
+      "Set estimated annual inflation rate (%).",
+      "Enter number of future years.",
+      "View equivalent future money needed and purchasing power loss percentage."
+    ],
+    "methodology": "Fórmula Inflación: Precio Futuro Equivalente = MontoActual × (1 + Inflación / 100)^Años. Poder Adquisitivo Real = MontoActual / (1 + Inflación / 100)^Años.",
+    "methodology_en": "Inflation Formula: Future Equivalent Price = CurrentAmount × (1 + Inflation / 100)^Years. Real Purchasing Power = CurrentAmount / (1 + Inflation / 100)^Years."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "📉",
+      "title": "Understanding Purchasing Power Erosion",
+      "title_es": "Comprendiendo la Erosión del Poder Adquisitivo",
+      "content_html_en": "<p>Inflation is the silent erosion of money value. An annual inflation rate of 3% halves your purchasing power in roughly 24 years.</p>",
+      "content_html": "<p>La inflación reduce progresivamente el valor real del dinero. Una inflación del 3% anual reduce a la mitad tu poder de compra en 24 años.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "initialMoneyAmount",
+      "label": "Monto de dinero actual",
+      "label_en": "Starting Money Amount Today",
+      "type": "currency",
+      "default": 10000,
+      "min": 100,
+      "max": 10000000,
+      "step": 500,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "inflationRate",
+      "label": "Tasa de inflación anual estimada (%)",
+      "label_en": "Estimated Annual Inflation Rate (%)",
+      "type": "number",
+      "default": 3.0,
+      "min": 0.1,
+      "max": 50,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "yearsInFuture",
+      "label": "Número de años en el futuro",
+      "label_en": "Number of Future Years",
+      "type": "slider",
+      "default": 10,
+      "min": 1,
+      "max": 40,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "futureEquivalentAmount",
+      "label": "Dinero futuro necesario para la misma compra",
+      "label_en": "Future Money Needed for Equivalent Purchase",
+      "expression": "initialMoneyAmount * ((1 + inflationRate / 100) ^ yearsInFuture)",
+      "unit": { "follows": "initialMoneyAmount" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "futureEquivalentAmount", "op": ">", "value": 0 }, "label": "Efecto de la Inflación", "label_en": "Inflation Cost Impact", "tone": "warning", "text": "Monto requerido en el futuro para comprar exactamente lo mismo que hoy.", "text_en": "Future currency amount needed to maintain identical purchasing power." }
+      ]
+    },
+    {
+      "id": "realPurchasingPower",
+      "label": "Poder adquisitivo real de tu dinero actual",
+      "label_en": "Real Purchasing Power of Current Money",
+      "expression": "initialMoneyAmount / ((1 + inflationRate / 100) ^ yearsInFuture)",
+      "unit": { "follows": "initialMoneyAmount" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "purchasingPowerLossPercent",
+      "label": "Pérdida porcentual de poder adquisitivo",
+      "label_en": "Percentage Loss of Purchasing Power",
+      "expression": "(1 - (realPurchasingPower / initialMoneyAmount)) * 100",
+      "unit": "%",
+      "precision": 1,
+      "format": "percent",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "compound-interest-calculator", "type": "static", "message": "Protege tu dinero con interés compuesto", "message_en": "Shield money using compound interest growth", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Inflación y Poder Adquisitivo",
+    "role_en": "Inflation & Purchasing Power Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y didáctico",
+    "includeData": ["futureEquivalentAmount", "realPurchasingPower", "purchasingPowerLossPercent", "inflationRate"],
+    "instructions": [
+      "Sintetiza el dinero futuro necesario y la pérdida de poder adquisitivo en 2 frases concisas.",
+      "Destaca que invertir a una tasa superior a la inflación es indispensable para preservar patrimonio."
+    ],
+    "instructions_en": [
+      "Summarize future money required to match buying power and percentage value loss in 2 concise sentences.",
+      "Emphasize that investing above annual inflation is mandatory to prevent purchasing power loss."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Inflación y Poder Adquisitivo | CalculadoraHub",
+    "metaTitle_en": "Inflation & Purchasing Power Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el impacto de la inflación en el valor futuro de tu dinero. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate purchasing power loss and future equivalent money cost from inflation. Free, instant results.",
+    "keywords": ["inflation calculator", "calculadora inflacion", "poder adquisitivo", "ipc"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

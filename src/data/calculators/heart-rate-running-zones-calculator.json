@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "heart-rate-running-zones-calculator",
+    "title": "Calculadora de Zonas de Running por Umbral de Lactato (LTHR Joe Friel)",
+    "title_en": "Running Heart Rate Zones Calculator (LTHR Joe Friel Method)",
+    "slug": "zonas-running-umbral-lactato-lthr",
+    "category": "fitness",
+    "subcategory": "running",
+    "tags": ["lthr", "running", "umbral-lactato", "joe-friel", "zonas-pulso"],
+    "tags_en": ["lthr", "running", "lactate-threshold", "joe-friel", "pulse-zones"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula tus zonas de pulsaciones específicas para running basadas en tu Umbral de Lactato (LTHR) según el método oficial de Joe Friel.",
+    "shortDescription_en": "Calculate running-specific pulse zones based on your Lactate Threshold Heart Rate (LTHR) using Joe Friel's official methodology.",
+    "longDescription": "Auditoría de fisiología del running y zonas de frecuencia cardíaca. El método por Umbral de Lactato (LTHR de Joe Friel) es significativamente más preciso que el cálculo por FCmáx para maratonistas y corredores de fondo.",
+    "longDescription_en": "Running physiology and heart rate zone audit. The Lactate Threshold Heart Rate (LTHR Joe Friel) method provides far superior accuracy than HRmax for marathoners and distance runners.",
+    "howToUse": [
+      "Ingresa tu Frecuencia Cardíaca de Umbral de Lactato (LTHR en ppm / bpm), obtenida en un test de 30 minutos a ritmo de competición.",
+      "Consulta el desglose exacto de pulsaciones para tus 7 Zonas de Running de Joe Friel.",
+      "Identifica tu rango de pulsaciones objetivo para los rodajes suaves en Zona 2 y las series en Zona 5."
+    ],
+    "howToUse_en": [
+      "Enter your Lactate Threshold Heart Rate (LTHR in bpm), measured from a 30-minute race-pace time trial.",
+      "View exact heart rate target ranges for Joe Friel's 7 Running Zones.",
+      "Identify target pulse ranges for Zone 2 easy long runs and Zone 5 interval sessions."
+    ],
+    "methodology": "Método Joe Friel LTHR: Zona 1 Recuperación (< 85% LTHR), Zona 2 Aeróbica (85-89%), Zona 3 Tempo (90-94%), Zona 4 Sub-Umbral (95-99%), Zona 5a Umbral Lactato (100-102%), Zona 5b Capacidad VO2máx (103-106%).",
+    "methodology_en": "Joe Friel LTHR Method: Zone 1 Recovery (< 85% LTHR), Zone 2 Aerobic (85-89%), Zone 3 Tempo (90-94%), Zone 4 Sub-Threshold (95-99%), Zone 5a Lactate Threshold (100-102%), Zone 5b VO2max (103-106%)."
+  },
+  "guideSections": [
+    {
+      "id": "lthr-friel-guide",
+      "icon": "🏃‍♂️",
+      "title": "Why LTHR is Superior to HRmax for Runners",
+      "title_es": "Por Qué el LTHR es Superior a la FCmáx para Corredores",
+      "content_html_en": "<p><b>Lactate Threshold Anchor:</b> LTHR marks the exact heart rate where blood lactate production exceeds clearance rate.</p><p><b>Zone 2 Running:</b> Training between 85% and 89% of LTHR builds capillary density and mitochondrial density without accumulating metabolic fatigue.</p>",
+      "content_html": "<p><b>Anclaje de Lactato:</b> El LTHR marca la frecuencia cardíaca exacta donde la producción de lactato en sangre supera la tasa de aclaramiento.</p><p><b>Rodajes en Zona 2:</b> Entrenar entre el 85% y el 89% del LTHR desarrolla densidad capilar y mitocondrial sin acumular fatiga metabólica.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "lthrBpm",
+      "label": "Frecuencia Cardíaca de Umbral de Lactato (LTHR)",
+      "label_en": "Lactate Threshold Heart Rate (LTHR)",
+      "type": "number",
+      "default": 165,
+      "min": 110,
+      "max": 205,
+      "step": 1,
+      "unit": "ppm / bpm",
+      "unit_en": "bpm",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [110, 205], "message": "LTHR entre 110 y 205 bpm", "message_en": "LTHR between 110 and 205 bpm" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "zone1UpperBpm",
+      "label": "Zona 1 Recuperación Activa (< 85% LTHR)",
+      "label_en": "Zone 1 Active Recovery (< 85% LTHR)",
+      "expression": "round(lthrBpm * 0.85)",
+      "unit": "ppm",
+      "unit_en": "bpm",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "zone2UpperBpm",
+      "label": "Zona 2 Rodaje Aeróbico Ligerísimo (85% - 89% LTHR)",
+      "label_en": "Zone 2 Easy Aerobic Run (85% - 89% LTHR)",
+      "expression": "round(lthrBpm * 0.89)",
+      "unit": "ppm",
+      "unit_en": "bpm",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "zone2UpperBpm", "op": ">", "value": 0 }, "label": "Límite Superior Zona 2 Rodaje", "label_en": "Zone 2 Easy Run Upper Limit", "tone": "success", "text": "Pulsaciones máximas recomendadas para tiradas largas de resistencia aeróbica.", "text_en": "Maximum recommended heart rate for aerobic endurance long runs." }
+      ]
+    },
+    {
+      "id": "zone3UpperBpm",
+      "label": "Zona 3 Ritmo Tempo Aeróbico (90% - 94% LTHR)",
+      "label_en": "Zone 3 Aerobic Tempo Pace (90% - 94% LTHR)",
+      "expression": "round(lthrBpm * 0.94)",
+      "unit": "ppm",
+      "unit_en": "bpm",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "zone4UpperBpm",
+      "label": "Zona 4 Sub-Umbral Anaeróbico (95% - 99% LTHR)",
+      "label_en": "Zone 4 Sub-Lactate Threshold (95% - 99% LTHR)",
+      "expression": "round(lthrBpm * 0.99)",
+      "unit": "ppm",
+      "unit_en": "bpm",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "zone5aThresholdBpm",
+      "label": "Zona 5a Umbral de Lactato Exacto (100% - 102% LTHR)",
+      "label_en": "Zone 5a Peak Lactate Threshold (100% - 102% LTHR)",
+      "expression": "round(lthrBpm * 1.02)",
+      "unit": "ppm",
+      "unit_en": "bpm",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "pace-calculator", "type": "static", "message": "Calcula tus ritmos por kilómetro y milla", "message_en": "Calculate min/km and min/mile running pace", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Entrenador de Maratón y Fisiólogo del Running",
+    "role_en": "Marathon Coach & Running Physiologist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "entusiasta y motivador",
+    "includeData": ["zone2UpperBpm", "zone5aThresholdBpm", "zone1UpperBpm", "lthrBpm"],
+    "instructions": [
+      "Sintetiza las pulsaciones límite para la Zona 2 Aeróbica y la Zona 5a Umbral en 2 frases concisas.",
+      "Enfatiza que no se debe superar la Zona 2 durante el 80% de los kilómetros semanales acumulados."
+    ],
+    "instructions_en": [
+      "Summarize upper pulse limits for Zone 2 Aerobic and Zone 5a Threshold in 2 concise sentences.",
+      "Emphasize keeping 80% of weekly running volume within Zone 2."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Zonas de Running (LTHR Joe Friel) | CalculadoraHub",
+    "metaTitle_en": "Running Heart Rate Zones Calculator (LTHR) | CalculadoraHub",
+    "metaDescription": "Calcula tus zonas de pulsaciones para correr basadas en el Umbral de Lactato de Joe Friel. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate running heart rate zones based on Joe Friel's Lactate Threshold method. Free, instant results.",
+    "keywords": ["running heart rate zones calculator", "zonas running lthr", "umbral de lactato friel", "zonas pulso maraton"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

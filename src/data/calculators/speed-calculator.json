@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "speed-calculator",
+    "title": "Calculadora de Velocidad, Distancia y Tiempo",
+    "title_en": "Speed, Distance & Time Calculator",
+    "slug": "calculadora-de-velocidad-distancia-tiempo-fisica",
+    "category": "physics",
+    "subcategory": "mechanics",
+    "tags": ["velocidad", "distancia", "tiempo", "km-por-hora", "millas-por-hora", "ritmo", "cinematica"],
+    "tags_en": ["speed", "distance", "time", "kmh", "mph", "pace", "kinematics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la velocidad media ($v = d / t$), distancia recorrida ($d = v \\cdot t$) o tiempo de viaje a partir de las demás variables.",
+    "shortDescription_en": "Calculate average speed ($v = d / t$), distance traveled ($d = v \\cdot t$), or travel time from known variables.",
+    "longDescription": "Herramienta de cinemática básica y física del movimiento. Calcula la velocidad lineal en km/h, mph y m/s a partir del espacio recorrido y la duración del desplazamiento.",
+    "longDescription_en": "Kinematics and movement physics tool. Computes linear velocity in km/h, mph, and m/s based on distance traveled and elapsed time.",
+    "howToUse": [
+      "Ingresa la Distancia Recorrida (en km o millas).",
+      "Ingresa el Tiempo de Transcurso en horas (o decimales de hora, ej. 1.5 h).",
+      "Consulta la Velocidad Media en km/h, mph y m/s."
+    ],
+    "howToUse_en": [
+      "Enter Distance Traveled (in km or miles).",
+      "Enter Elapsed Time in hours (e.g. 1.5 hours).",
+      "View Average Speed in km/h, mph, and m/s."
+    ],
+    "methodology": "Velocidad = Distancia / Tiempo. Conversión m/s = km/h / 3.6.",
+    "methodology_en": "Speed = Distance / Time. Conversion m/s = km/h / 3.6."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Cinemática y Física del Movimiento",
+    "role_en": "Kinematics & Movement Physics Specialist Assistant",
+    "includeData": ["speedKmhResult", "speedMphResult", "speedMpsResult"],
+    "instructions": [
+      "Interpreta la velocidad media calculada.",
+      "Compara la velocidad con límites de tráfico habituales o velocidades de referencia.",
+      "Proporciona la conversión a metros por segundo (m/s) útil para cálculos físicos."
+    ],
+    "instructions_en": [
+      "Interpret calculated average speed.",
+      "Compare speed against common traffic speed limits or reference velocities.",
+      "Provide meters per second (m/s) conversion useful for physics calculations."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "spd-guide",
+      "icon": "🏎️",
+      "title": "Speed, Distance & Time Kinematics Formula",
+      "title_es": "Fórmula Cinemática de Velocidad, Distancia y Tiempo",
+      "content_html_en": "<p><b>Speed:</b> v = d / t.</p><p><b>Distance:</b> d = v × t.</p><p><b>Time:</b> t = d / v.</p><p><b>Unit Conversion:</b> 1 m/s = 3.6 km/h = 2.237 mph.</p>",
+      "content_html": "<p><b>Velocidad:</b> v = d / t.</p><p><b>Distancia:</b> d = v × t.</p><p><b>Tiempo:</b> t = d / v.</p><p><b>Conversión de Unidades:</b> 1 m/s = 3.6 km/h = 2.237 mph.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "distanceKm",
+      "label": "Distancia Recorrida (kilómetros - km)",
+      "label_en": "Distance Traveled (kilometers - km)",
+      "type": "number",
+      "default": 120,
+      "min": 0.1,
+      "max": 100000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "timeHours",
+      "label": "Tiempo de Desplazamiento (horas - h)",
+      "label_en": "Travel Duration (hours - h)",
+      "type": "number",
+      "default": 1.5,
+      "min": 0.01,
+      "max": 1000,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "speedKmhResult",
+      "label": "Velocidad Media en Kilómetros por Hora (km/h)",
+      "label_en": "Average Speed in Kilometers per Hour (km/h)",
+      "expression": "timeHours > 0 ? (distanceKm / timeHours) : 0",
+      "unit": "km/h",
+      "unit_en": "km/h",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "speedKmhResult", "op": ">=", "value": 0 }, "label": "Velocidad Calculada", "label_en": "Speed Computed", "tone": "success", "text": "Velocidad de traslación evaluada.", "text_en": "Translational velocity evaluated." }
+      ]
+    },
+    {
+      "id": "speedMphResult",
+      "label": "Velocidad Equivalente en Millas por Hora (mph)",
+      "label_en": "Speed Equivalent in Miles per Hour (mph)",
+      "expression": "speedKmhResult * 0.621371",
+      "unit": "mph",
+      "unit_en": "mph",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "speedMpsResult",
+      "label": "Velocidad en Metros por Segundo (m/s)",
+      "label_en": "Speed in Meters per Second (m/s)",
+      "expression": "speedKmhResult / 3.6",
+      "unit": "m/s",
+      "unit_en": "m/s",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

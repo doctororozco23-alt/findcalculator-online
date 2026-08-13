@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "drywall-sheets-calculator",
+    "title": "Calculadora de Planchas de Drywall, Yeso-Cartón y Tornillos",
+    "title_en": "Drywall Sheets, Tape & Screw Calculator",
+    "slug": "calculadora-de-planchas-de-drywall-yeso-carton-tornillos",
+    "category": "construction",
+    "subcategory": "remodeling",
+    "tags": ["drywall", "yeso-carton", "plasterboard", "planchas-de-yeso", "tabiqueria", "pasta-juntas", "reformas"],
+    "tags_en": ["drywall", "sheetrock", "plasterboard", "drywall-sheets", "joint-compound", "screws", "remodeling"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la cantidad de planchas de drywall / yeso-cartón (4x8 ft o 4x12 ft), cinta para juntas y tornillos necesarios para paredes y techos.",
+    "shortDescription_en": "Calculate number of drywall sheets (4x8 ft or 4x12 ft), joint tape, and screws needed for walls and ceilings.",
+    "longDescription": "Herramienta de acabado de interiores y remodelaciones. Determina la superficie a revestir descontando aberturas y calcula el material de encintado y pasta de acabado.",
+    "longDescription_en": "Interior finishing and remodeling tool. Computes wall/ceiling coverage area minus openings and calculates joint compound and taping materials.",
+    "howToUse": [
+      "Ingresa la Superficie Total de Paredes y Techos (m² o pies²).",
+      "Selecciona el Formato de Plancha de Drywall (4x8 pies = 2.97 m² o 4x12 pies = 4.46 m²).",
+      "Consulta el Número de Planchas Requeridas (con 10% de desperdicio), Kilos de Pasta y Metros de Cinta."
+    ],
+    "howToUse_en": [
+      "Enter Total Wall & Ceiling Surface Area (m² or sq ft).",
+      "Select Drywall Sheet Format (4x8 ft = 32 sq ft or 4x12 ft = 48 sq ft).",
+      "View Required Sheet Count (with 10% waste), Compound Weight, and Joint Tape Length."
+    ],
+    "methodology": "Planchas = ceil((SuperficieTotal / AreaPlancha) * 1.1). Pasta Juntas ≈ 0.8 kg/m². Cinta ≈ 1.5 metros por m².",
+    "methodology_en": "Sheets = ceil((TotalArea / SheetArea) * 1.1). Joint Compound ≈ 0.8 kg/m². Tape ≈ 1.5 meters per m²."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Revestimientos de Yeso-Cartón y Acabados",
+    "role_en": "Drywall & Interior Wall Finishes Specialist Assistant",
+    "includeData": ["drywallSheetsCountResult", "jointCompoundKgResult"],
+    "instructions": [
+      "Interpreta la cantidad de planchas y pasta de juntas calculada.",
+      "Explica la elección del espesor de la plancha (1/2 pulgada = 12.5 mm estándar para paredes vs 5/8 pulgada RF ignífuga).",
+      "Aconseja instalar las planchas en sentido perpendicular a los pernos para mayor rigidez estructural."
+    ],
+    "instructions_en": [
+      "Interpret calculated sheet count and joint compound weight.",
+      "Explain sheet thickness selection (1/2-inch = 12.5 mm standard walls vs 5/8-inch fire-rated Type X).",
+      "Advise installing sheets perpendicular to studs for optimal structural strength."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "dws-guide",
+      "icon": "🧱",
+      "title": "Drywall Standard Sheet Sizes",
+      "title_es": "Tamaños Estándar de Planchas de Drywall",
+      "content_html_en": "<p><b>4x8 ft Sheet (1.22 x 2.44 m):</b> 32 sq ft (2.97 m²) - Standard easy-handling size.</p><p><b>4x12 ft Sheet (1.22 x 3.66 m):</b> 48 sq ft (4.46 m²) - Reduces joint seams on long walls.</p>",
+      "content_html": "<p><b>Plancha 4x8 ft (1.22 x 2.44 m):</b> 32 ft² (2.97 m²) - Tamaño estándar fácil de manipular.</p><p><b>Plancha 4x12 ft (1.22 x 3.66 m):</b> 48 ft² (4.46 m²) - Reduce juntas en paredes largas.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "totalWallSurfaceM2",
+      "label": "Superficie Total a Revestir (m²)",
+      "label_en": "Total Surface Area to Cover (m²)",
+      "type": "number",
+      "default": 85,
+      "min": 1,
+      "max": 10000,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "sheetFormatAreaM2",
+      "label": "Formato / Tamaño de Plancha",
+      "label_en": "Sheet Format / Size",
+      "type": "select",
+      "default": "2.97",
+      "options": [
+        { "value": "2.97", "label": "4 x 8 pies (1.22 x 2.44 m = 2.97 m²)", "label_en": "4 x 8 ft (1.22 x 2.44 m = 2.97 m²)" },
+        { "value": "4.46", "label": "4 x 12 pies (1.22 x 3.66 m = 4.46 m²)", "label_en": "4 x 12 ft (1.22 x 3.66 m = 4.46 m²)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "drywallSheetsCountResult",
+      "label": "Número de Planchas Requeridas (con 10% desperdicio)",
+      "label_en": "Required Sheets Count (with 10% waste)",
+      "expression": "sheetFormatAreaM2 > 0 ? ceil((totalWallSurfaceM2 / sheetFormatAreaM2) * 1.1) : 0",
+      "unit": "planchas",
+      "unit_en": "sheets",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "drywallSheetsCountResult", "op": ">=", "value": 0 }, "label": "Planchas Calculadas", "label_en": "Sheets Computed", "tone": "success", "text": "Cantidad total de planchas de yeso-cartón cuantificada.", "text_en": "Total drywall sheets quantity quantified." }
+      ]
+    },
+    {
+      "id": "jointCompoundKgResult",
+      "label": "Pasta para Juntas Estimada (kg)",
+      "label_en": "Estimated Joint Compound (kg)",
+      "expression": "totalWallSurfaceM2 * 0.8",
+      "unit": "kg",
+      "unit_en": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "jointTapeMetersResult",
+      "label": "Cinta para Juntas Requerida (m)",
+      "label_en": "Required Joint Tape (m)",
+      "expression": "totalWallSurfaceM2 * 1.5",
+      "unit": "m",
+      "unit_en": "m",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

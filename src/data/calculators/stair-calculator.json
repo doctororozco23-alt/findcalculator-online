@@ -1,0 +1,135 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "stair-calculator",
+    "title": "Calculadora de Diseño y Geometría de Escaleras",
+    "title_en": "Stair Calculator (Rise, Tread, Steps & Angle)",
+    "slug": "calculadora-de-diseno-de-escaleras-huella-contrahuella",
+    "category": "construction",
+    "subcategory": "materials",
+    "tags": ["escaleras", "huella", "contrahuella", "peldaños", "escalones", "construccion", "codigo-edificacion"],
+    "tags_en": ["stairs", "stair-calculator", "rise", "tread", "steps", "riser", "building-code"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el número exacto de peldaños, altura de contrahuella (Rise), profundidad de huella (Tread) y ángulo de pendiente de una escalera.",
+    "shortDescription_en": "Compute exact number of steps, riser height, tread depth, and slope angle for stairs according to building codes.",
+    "longDescription": "Herramienta de arquitectura y carpintería de obra. Diseña escaleras seguras y ergonómicas según el Código Internacional de Edificación (IBC), verificando la Ley de Blondel ($2h + d \\approx 63\\text{ cm}$).",
+    "longDescription_en": "Architecture and carpentry tool. Designs safe ergonomic stairs complying with International Building Code (IBC) and Blondel's Rule ($2h + d \\approx 63\\text{ cm}$).",
+    "howToUse": [
+      "Ingresa la Altura Total de la Escalera / Elevación (Total Rise) en pulgadas.",
+      "Ingresa la Profundidad Deseada de la Huella (Tread Depth) (ej. 10 pulgadas).",
+      "Consulta el Número de Peldaños necesario, la Contrahuella Exacta (Rise) y el Ángulo de Inclinación."
+    ],
+    "howToUse_en": [
+      "Enter Total Stair Rise (vertical height) in inches.",
+      "Enter Desired Tread Depth (horizontal step) (e.g. 10 inches).",
+      "View Number of Steps required, Exact Riser Height, and Incline Angle."
+    ],
+    "methodology": "Número de Escalones N = round(AlturaTotal / 7.5). Contrahuella Real = AlturaTotal / N. Ángulo θ = atan(Contrahuella / Huella) * (180/π). Ley de Blondel: 2*Contrahuella + Huella ≈ 25 pulgadas (63 cm).",
+    "methodology_en": "Step Count N = round(TotalRise / 7.5). Actual Riser = TotalRise / N. Incline Angle θ = atan(Riser / Tread) * (180/π). Blondel's Rule: 2*Riser + Tread ≈ 25 inches (63 cm)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Arquitectura de Escaleras y Código IBC",
+    "role_en": "Staircase Architecture & IBC Code Specialist Assistant",
+    "includeData": ["stepsCountResult", "actualRiserInches", "inclineAngleDegrees"],
+    "instructions": [
+      "Interpreta la ergonomía de la escalera según la altura de contrahuella y profundidad de huella.",
+      "Verifica el cumplimiento de la Ley de Blondel (2*Contrahuella + Huella entre 62 cm y 64 cm / 24.5-25.5 in).",
+      "Evalúa el ángulo de inclinación recomendado (ideal entre 30° y 37°)."
+    ],
+    "instructions_en": [
+      "Interpret stair ergonomics based on riser height and tread depth.",
+      "Verify Blondel's Rule compliance (2*Riser + Tread between 24.5 and 25.5 inches / 62-64 cm).",
+      "Evaluate recommended incline angle (ideal between 30° and 37°)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "str-guide",
+      "icon": "🪜",
+      "title": "IBC Building Code Stair Standards",
+      "title_es": "Estándares IBC para Diseño de Escaleras",
+      "content_html_en": "<p><b>Maximum Riser Height:</b> 7.75 inches (19.7 cm) max per step.</p><p><b>Minimum Tread Depth:</b> 10.0 inches (25.4 cm) min per step.</p><p><b>Blondel's Ergonomic Rule:</b> 2 × Riser + 1 × Tread ≈ 24 to 25 inches (62 to 64 cm).</p>",
+      "content_html": "<p><b>Altura Máxima de Contrahuella:</b> 7.75 pulgadas (19.7 cm) máx por peldaño.</p><p><b>Profundidad Mínima de Huella:</b> 10.0 pulgadas (25.4 cm) mín por peldaño.</p><p><b>Regla Ergonómica de Blondel:</b> 2 × Contrahuella + 1 × Huella ≈ 24 a 25 pulgadas (62 a 64 cm).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "totalRiseInches",
+      "label": "Altura Total / Elevación de Escalera (pulgadas)",
+      "label_en": "Total Stair Rise (inches)",
+      "type": "number",
+      "default": 108,
+      "min": 10,
+      "max": 600,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "targetTreadInches",
+      "label": "Profundidad de Huella Deseada (pulgadas)",
+      "label_en": "Desired Tread Depth (inches)",
+      "type": "number",
+      "default": 10,
+      "min": 8,
+      "max": 18,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "stepsCountResult",
+      "label": "Número de Peldaños / Escalones (N)",
+      "label_en": "Number of Steps / Risers (N)",
+      "expression": "round(totalRiseInches / 7.5)",
+      "unit": "peldaños",
+      "unit_en": "steps",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "stepsCountResult", "op": ">=", "value": 1 }, "label": "Diseño de Escalera Evaluado", "label_en": "Stair Design Evaluated", "tone": "success", "text": "Cantidad de peldaños obtenida.", "text_en": "Number of steps computed." }
+      ]
+    },
+    {
+      "id": "actualRiserInches",
+      "label": "Altura Exacta de Contrahuella (Rise)",
+      "label_en": "Exact Riser Height (Rise)",
+      "expression": "stepsCountResult > 0 ? (totalRiseInches / stepsCountResult) : 0",
+      "unit": "in",
+      "unit_en": "in",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "totalRunInches",
+      "label": "Recorrido Horizontal Total (Total Run)",
+      "label_en": "Total Horizontal Run",
+      "expression": "(stepsCountResult - 1) * targetTreadInches",
+      "unit": "in",
+      "unit_en": "in",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "inclineAngleDegrees",
+      "label": "Ángulo de Inclinación de la Escalera",
+      "label_en": "Stair Incline Angle",
+      "expression": "totalRunInches > 0 ? (atan(totalRiseInches / totalRunInches) * (180 / pi)) : 0",
+      "unit": "°",
+      "unit_en": "°",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

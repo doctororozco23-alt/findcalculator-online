@@ -1,0 +1,125 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "raffle-ticket-probability-calculator",
+    "title": "Calculadora de Probabilidad de Rifas, Sorteos y Loterías",
+    "title_en": "Raffle Ticket & Prize Draw Win Probability Calculator",
+    "slug": "calculadora-de-probabilidad-de-rifas-sorteos-loterias",
+    "category": "home",
+    "subcategory": "entertainment",
+    "tags": ["rifas", "sorteos", "loterias", "probabilidad-de-ganar", "boletos-de-rifa", "entretenimiento", "hogar"],
+    "tags_en": ["raffle", "prize-draw", "lottery", "win-probability", "raffle-tickets", "entertainment", "home"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la probabilidad porcentual ($P = \\frac{n}{N} \\times 100$) y las probabilidades (odds) de ganar en rifas o sorteos según el número de boletos comprados.",
+    "shortDescription_en": "Calculate percentage probability ($P = \\frac{n}{N} \\times 100$) and odds of winning raffles based on tickets purchased.",
+    "longDescription": "Herramienta de entretenimiento y teoría de la probabilidad para eventos benéficos o juegos caseros. Determina la oportunidad real de obtener al menos un premio.",
+    "longDescription_en": "Entertainment and probability theory tool for charity events or home games. Determines actual chance of winning at least one prize.",
+    "howToUse": [
+      "Ingresa el Número de Boletos / Papeletas Compradas ($n$).",
+      "Ingresa el Número Total de Boletos Vendidos / Emitidos ($N$).",
+      "Ingresa el Número de Premios Disponibles (ej. 1 premio mayor o 3 premios).",
+      "Consulta la Probabilidad de Ganar (%) y la Relación de Probabilidades (Odds 1 en X)."
+    ],
+    "howToUse_en": [
+      "Enter Number of Purchased Tickets ($n$).",
+      "Enter Total Number of Tickets Sold / Issued ($N$).",
+      "Enter Number of Available Prizes (e.g. 1 grand prize or 3 prizes).",
+      "View Win Probability (%) and Odds Ratio (1 in X)."
+    ],
+    "methodology": "Probabilidad de No Ganar nada = ((N - Premios - n) / (N - Premios)) ... P(Ganar al menos 1) = (1 - ( (N-n)/N )^Premios) * 100.",
+    "methodology_en": "P(Win at least 1) = (1 - ((N - n) / N)^Prizes) * 100. Odds = N / n."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Probabilidad y Teoría de Juegos de Azar",
+    "role_en": "Probability Theory & Chance Games Specialist Assistant",
+    "includeData": ["winProbabilityPercentResult", "winOddsRatioResult"],
+    "instructions": [
+      "Interpreta la probabilidad porcentual calculada de ganar un premio en el sorteo.",
+      "Explica la Ley de los Grandes Números y por qué comprar 2 boletos duplica la probabilidad pero no garantiza el éxito.",
+      "Muestra la diferencia entre probabilidad de un premio único vs múltiples premios no acumulativos."
+    ],
+    "instructions_en": [
+      "Interpret calculated win percentage probability for the raffle.",
+      "Explain Law of Large Numbers and why buying 2 tickets doubles odds but doesn't guarantee winning.",
+      "Show difference between single prize draw vs multiple non-cumulative prizes."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "rtp-guide",
+      "icon": "🎟️",
+      "title": "Raffle Odds & Probability Formula",
+      "title_es": "Fórmula de Probabilidad de Rifas",
+      "content_html_en": "<p><b>Single Prize Formula:</b> Win % = (Your Tickets / Total Tickets) × 100</p><p><b>Odds:</b> 1 in (Total Tickets / Your Tickets)</p>",
+      "content_html": "<p><b>Fórmula Premio Único:</b> % Ganar = (Tus Boletos / Total Boletos) × 100</p><p><b>Probabilidades (Odds):</b> 1 en (Total Boletos / Tus Boletos)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "purchasedTicketsCount",
+      "label": "Número de Boletos Comprados (n)",
+      "label_en": "Number of Purchased Tickets (n)",
+      "type": "number",
+      "default": 5,
+      "min": 1,
+      "max": 100000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "totalTicketsSoldN",
+      "label": "Número Total de Boletos Vendidos (N)",
+      "label_en": "Total Number of Tickets Sold (N)",
+      "type": "number",
+      "default": 500,
+      "min": 1,
+      "max": 10000000,
+      "step": 10,
+      "required": true
+    },
+    {
+      "id": "prizesAvailableCount",
+      "label": "Número de Premios Disponibles",
+      "label_en": "Number of Available Prizes",
+      "type": "number",
+      "default": 1,
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "winProbabilityPercentResult",
+      "label": "Probabilidad de Ganar Al Menos Un Premio (%)",
+      "label_en": "Probability of Winning At Least One Prize (%)",
+      "expression": "totalTicketsSoldN > 0 ? (min(100, (1 - (((max(0, totalTicketsSoldN - purchasedTicketsCount)) / totalTicketsSoldN) ^ prizesAvailableCount)) * 100)) : 0",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "winProbabilityPercentResult", "op": ">=", "value": 0 }, "label": "Probabilidad Calculada", "label_en": "Probability Computed", "tone": "success", "text": "Oportunidad porcentual de éxito cuantificada.", "text_en": "Percentage chance of success quantified." }
+      ]
+    },
+    {
+      "id": "winOddsRatioResult",
+      "label": "Probabilidad Relativa (1 oportunidad en X)",
+      "label_en": "Relative Odds (1 chance in X)",
+      "expression": "purchasedTicketsCount > 0 ? (totalTicketsSoldN / purchasedTicketsCount) : 0",
+      "unit": "",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

@@ -1,0 +1,224 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "tdee-calculator",
+    "title": "Calculadora TDEE (Gasto Energético Diario Total)",
+    "title_en": "TDEE Calculator (Total Daily Energy Expenditure)",
+    "slug": "tdee-gasto-energetico-diario",
+    "category": "food",
+    "subcategory": "nutrition",
+    "tags": ["tdee", "gasto-calorico", "metabolismo", "mifflin"],
+    "tags_en": ["tdee", "energy-expenditure", "metabolism", "mifflin"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Flame"
+  },
+  "content": {
+    "shortDescription": "Calcula tu Gasto Energético Diario Total (TDEE) y tus calorías exactas para pérdida de grasa, mantenimiento o volumen muscular.",
+    "shortDescription_en": "Calculate your Total Daily Energy Expenditure (TDEE) and exact calories for fat loss, weight maintenance, or muscle gain.",
+    "longDescription": "Auditoría de gasto metabólico total diario. Multiplica tu Tasa Metabólica Basal (BMR por Mifflin-St Jeor o Katch-McArdle) por el Factor de Actividad Física (PAL) para calcular el déficit o superávit calórico exacto.",
+    "longDescription_en": "Total metabolic expenditure audit. Multiplies Basal Metabolic Rate (BMR via Mifflin-St Jeor or Katch-McArdle) by Physical Activity Level (PAL) to establish precise calorie deficit or surplus targets.",
+    "howToUse": [
+      "Selecciona tu sexo biológico, edad, estatura y peso corporal.",
+      "Selecciona tu nivel de actividad física habitual (PAL).",
+      "Si conoces tu porcentaje de grasa corporal, puedes seleccionar la fórmula Katch-McArdle.",
+      "Consulta tu TDEE de mantenimiento y las calorías objetivo para déficit o superávit."
+    ],
+    "howToUse_en": [
+      "Select biological sex, age, height, and body weight.",
+      "Select physical activity level (PAL multiplier).",
+      "If body fat % is known, choose Katch-McArdle formula.",
+      "View maintenance TDEE and target calories for fat loss or muscle gain."
+    ],
+    "methodology": "Ecuación TDEE = BMR × PAL. BMR Mifflin-St Jeor (1990) o Katch-McArdle (1996). Multiplicador PAL: Sedentario (1.2), Ligero (1.375), Moderado (1.55), Intenso (1.725), Extremo (1.9).",
+    "methodology_en": "TDEE Equation = BMR × PAL. BMR via Mifflin-St Jeor (1990) or Katch-McArdle (1996). PAL Multiplier: Sedentary (1.2), Light (1.375), Moderate (1.55), Heavy (1.725), Extreme (1.9)."
+  },
+  "guideSections": [
+    {
+      "id": "tdee-components-guide",
+      "icon": "⚡",
+      "title": "Components of Total Daily Energy Expenditure",
+      "title_es": "Componentes del Gasto Energético Diario Total",
+      "content_html_en": "<p><b>Basal Metabolic Rate (BMR ~60-70%):</b> Calories burned at complete rest to keep organs functioning.</p><p><b>NEAT (~15%):</b> Non-Exercise Activity Thermogenesis (walking, fidgeting, posture).</p><p><b>EAT (~10-15%):</b> Exercise Activity Thermogenesis (planned workouts).</p><p><b>TEF (~10%):</b> Thermic Effect of Food (energy required to digest protein, carbs, fats).</p>",
+      "content_html": "<p><b>Tasa Metabólica Basal (BMR ~60-70%):</b> Calorías quemadas en reposo absoluto para mantener los órganos vivos.</p><p><b>NEAT (~15%):</b> Termogénesis por Actividad No Asociada al Ejercicio (caminar, estar de pie, gestos).</p><p><b>EAT (~10-15%):</b> Termogénesis por Ejercicio Planificado (gimnasio, running, deportes).</p><p><b>TEF (~10%):</b> Efecto Térmico de los Alimentos (energía digestiva).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "gender",
+      "label": "Sexo biológico",
+      "label_en": "Biological Sex",
+      "type": "select",
+      "default": "male",
+      "options": [
+        { "value": "male", "label": "Hombre", "label_en": "Male" },
+        { "value": "female", "label": "Mujer", "label_en": "Female" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "age",
+      "label": "Edad",
+      "label_en": "Age",
+      "type": "number",
+      "default": 30,
+      "min": 15,
+      "max": 90,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [15, 90], "message": "Edad entre 15 y 90", "message_en": "Age between 15 and 90" }]
+    },
+    {
+      "id": "weightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 30,
+      "max": 250,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [30, 250], "message": "Peso entre 30 y 250 kg", "message_en": "Weight between 30 and 250 kg" }]
+    },
+    {
+      "id": "heightCm",
+      "label": "Estatura",
+      "label_en": "Height",
+      "type": "number",
+      "default": 178,
+      "min": 100,
+      "max": 230,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [100, 230], "message": "Estatura entre 100 y 230 cm", "message_en": "Height between 100 and 230 cm" }]
+    },
+    {
+      "id": "activityLevel",
+      "label": "Nivel de actividad física diaria (PAL)",
+      "label_en": "Physical Activity Level (PAL)",
+      "type": "select",
+      "default": "1.55",
+      "options": [
+        { "value": "1.2", "label": "Sedentario / Trabajo de oficina (PAL 1.2)", "label_en": "Sedentary / Desk Job (PAL 1.2)" },
+        { "value": "1.375", "label": "Ejercicio ligero 1-3 días/semana (PAL 1.375)", "label_en": "Light Exercise 1-3 days/wk (PAL 1.375)" },
+        { "value": "1.55", "label": "Ejercicio moderado 3-5 días/semana (PAL 1.55)", "label_en": "Moderate Exercise 3-5 days/wk (PAL 1.55)" },
+        { "value": "1.725", "label": "Ejercicio intenso 6-7 días/semana (PAL 1.725)", "label_en": "Heavy Exercise 6-7 days/wk (PAL 1.725)" },
+        { "value": "1.9", "label": "Atleta profesional / Trabajo físico duro (PAL 1.9)", "label_en": "Athlete / Hard Physical Job (PAL 1.9)" }
+      ],
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "bmrCalculated",
+      "label": "Tasa Metabólica Basal (BMR)",
+      "label_en": "Basal Metabolic Rate (BMR)",
+      "expression": "gender == 'male' ? (10 * weightKg + 6.25 * heightCm - 5 * age + 5) : (10 * weightKg + 6.25 * heightCm - 5 * age - 161)",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "tdeeMaintenance",
+      "label": "Gasto Energético Diario Total (TDEE Mantenimiento)",
+      "label_en": "Total Daily Energy Expenditure (Maintenance TDEE)",
+      "expression": "bmrCalculated * activityLevel",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "tdeeMaintenance", "op": ">", "value": 0 }, "label": "Calorías de Mantenimiento", "label_en": "Maintenance Budget", "tone": "success", "text": "Calorías exactas para mantener tu peso corporal actual constante.", "text_en": "Exact daily calories required to maintain current body weight." }
+      ]
+    },
+    {
+      "id": "tdeeMildCut",
+      "label": "Déficit Calórico Leve (-15% / ~0.3 kg/sem)",
+      "label_en": "Mild Deficit (-15% / ~0.3 kg/wk fat loss)",
+      "expression": "round(tdeeMaintenance * 0.85)",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "tdeeModerateCut",
+      "label": "Déficit Calórico Moderado (-20% / ~0.5 kg/sem)",
+      "label_en": "Moderate Deficit (-20% / ~0.5 kg/wk fat loss)",
+      "expression": "round(tdeeMaintenance * 0.80)",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "tdeeLeanBulk",
+      "label": "Superávit de Volumen Magro (+10% / ~0.25 kg/sem)",
+      "label_en": "Lean Bulk Surplus (+10% / ~0.25 kg/wk gain)",
+      "expression": "round(tdeeMaintenance * 1.10)",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "calorie-calculator", "type": "static", "message": "Calcula el desglose calórico detallado por objetivo", "message_en": "Calculate detailed calorie budget by goal", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Fisiólogo del Metabolismo y Nutricionista Clínico",
+    "role_en": "Metabolic Physiologist & Clinical Dietitian",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y orientador",
+    "includeData": ["tdeeMaintenance", "tdeeMildCut", "tdeeLeanBulk", "bmrCalculated", "weightKg"],
+    "instructions": [
+      "Sintetiza las calorías de mantenimiento TDEE, el presupuesto para déficit moderado y el volumen magro en 2 frases concisas.",
+      "Destaca que ajustar la ingesta de calorías basándose en los cambios reales de peso cada 2 semanas es clave."
+    ],
+    "instructions_en": [
+      "Summarize maintenance TDEE calories, moderate deficit budget, and lean bulk surplus in 2 concise sentences.",
+      "Highlight that adjusting calorie intake based on real bi-weekly scale progress is key to success."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora TDEE (Gasto Energético Diario Total) | CalculadoraHub",
+    "metaTitle_en": "TDEE Calculator (Total Daily Energy Expenditure) | CalculadoraHub",
+    "metaDescription": "Calcula tu gasto calórico diario total TDEE y tus calorías para perder grasa o ganar músculo. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your Total Daily Energy Expenditure (TDEE) and exact target calories. Free, instant results.",
+    "keywords": ["tdee calculator", "gasto energetico diario", "calorias mantenimiento", "tdee mifflin"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

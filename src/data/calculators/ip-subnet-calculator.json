@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "ip-subnet-calculator",
+    "title": "Calculadora de Subredes IP IPv4 y Máscara CIDR",
+    "title_en": "IP Subnet Calculator (IPv4 & CIDR Mask)",
+    "slug": "calculadora-de-subredes-ip-ipv4-cidr-mascara",
+    "category": "technology",
+    "subcategory": "internet",
+    "tags": ["ip", "subredes", "cidr", "mascara-de-subred", "redes", "ipv4", "broadcast", "hosts"],
+    "tags_en": ["ip", "subnet", "cidr", "subnet-mask", "networking", "ipv4", "broadcast", "hosts"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el número de hosts útiles, direcciones IP totales y máscara de subred a partir de un prefijo CIDR (ej. /24, /16).",
+    "shortDescription_en": "Compute usable hosts, total IP addresses, and subnet mask from a CIDR prefix (e.g. /24, /16).",
+    "longDescription": "Herramienta de redes informáticas y administración de sistemas. Desglosa la máscara de subred IPv4 y el espacio de direcciones IP utilizables según los estándares IETF.",
+    "longDescription_en": "Computer networking and sysadmin tool. Breaks down IPv4 subnet mask and usable IP address space following IETF standards.",
+    "howToUse": [
+      "Selecciona la Notación CIDR (ej. /24 para 256 IPs, /16 para 65,536 IPs).",
+      "Consulta el Número de Hosts Útiles, la Máscara Decimal Puntdada y el total de direcciones IP de la subred."
+    ],
+    "howToUse_en": [
+      "Select CIDR Prefix Notation (e.g. /24 for 256 IPs, /16 for 65,536 IPs).",
+      "View Usable Host Count, Dotted Decimal Mask, and total subnet IP addresses."
+    ],
+    "methodology": "Total Direcciones IP = 2^(32 - CIDR). Hosts Útiles = max(0, Total - 2).",
+    "methodology_en": "Total IP Addresses = 2^(32 - CIDR). Usable Hosts = max(0, Total - 2)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Arquitectura de Redes e IPv4 CIDR",
+    "role_en": "Network Architecture & IPv4 CIDR Specialist Assistant",
+    "includeData": ["usableHostsCount", "totalSubnetIps"],
+    "instructions": [
+      "Interpreta la capacidad de la subred calculada.",
+      "Explica la reserva de la primera IP para dirección de Red (Network ID) y la última IP para Broadcast.",
+      "Muestra la equivalencia en máscara decimal (ej. /24 = 255.255.255.0)."
+    ],
+    "instructions_en": [
+      "Interpret calculated subnet capacity.",
+      "Explain reservation of first IP for Network ID and last IP for Broadcast.",
+      "Show dotted decimal mask equivalent (e.g. /24 = 255.255.255.0)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ips-guide",
+      "icon": "🌐",
+      "title": "IPv4 CIDR Mask Cheat Sheet",
+      "title_es": "Tabla de Referencia Rápida de Máscaras CIDR IPv4",
+      "content_html_en": "<p><b>/24:</b> 255.255.255.0 (254 Usable Hosts)</p><p><b>/27:</b> 255.255.255.224 (30 Usable Hosts)</p><p><b>/16:</b> 255.255.0.0 (65,534 Usable Hosts)</p>",
+      "content_html": "<p><b>/24:</b> 255.255.255.0 (254 Hosts Útiles)</p><p><b>/27:</b> 255.255.255.224 (30 Hosts Útiles)</p><p><b>/16:</b> 255.255.0.0 (65,534 Hosts Útiles)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "cidrPrefixLength",
+      "label": "Notación CIDR (Prefijo /Bits)",
+      "label_en": "CIDR Notation (Prefix /Bits)",
+      "type": "select",
+      "default": "24",
+      "options": [
+        { "value": "24", "label": "/24 (255.255.255.0 - 254 Hosts)", "label_en": "/24 (255.255.255.0 - 254 Hosts)" },
+        { "value": "25", "label": "/25 (255.255.255.128 - 126 Hosts)", "label_en": "/25 (255.255.255.128 - 126 Hosts)" },
+        { "value": "26", "label": "/26 (255.255.255.192 - 62 Hosts)", "label_en": "/26 (255.255.255.192 - 62 Hosts)" },
+        { "value": "27", "label": "/27 (255.255.255.224 - 30 Hosts)", "label_en": "/27 (255.255.255.224 - 30 Hosts)" },
+        { "value": "28", "label": "/28 (255.255.255.240 - 14 Hosts)", "label_en": "/28 (255.255.255.240 - 14 Hosts)" },
+        { "value": "16", "label": "/16 (255.255.0.0 - 65,534 Hosts)", "label_en": "/16 (255.255.0.0 - 65,534 Hosts)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalSubnetIps",
+      "label": "Total de Direcciones IP en la Subred",
+      "label_en": "Total Subnet IP Addresses",
+      "expression": "2 ^ (32 - cidrPrefixLength)",
+      "unit": "IPs",
+      "unit_en": "IPs",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "usableHostsCount",
+      "label": "Número de Hosts Útiles Asignables",
+      "label_en": "Usable Assignable Host Count",
+      "expression": "max(0, totalSubnetIps - 2)",
+      "unit": "hosts",
+      "unit_en": "hosts",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "usableHostsCount", "op": ">=", "value": 0 }, "label": "Capacidad de Subred Calculada", "label_en": "Subnet Capacity Computed", "tone": "success", "text": "Espacio de direccionamiento IP cuantificado.", "text_en": "IP addressing space quantified." }
+      ]
+    }
+  ]
+}

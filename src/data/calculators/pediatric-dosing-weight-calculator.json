@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "pediatric-dosing-weight-calculator",
+    "title": "Calculadora de Dosis Medicamentosas Pediátricas por Peso (mg/kg y mL)",
+    "title_en": "Pediatric Weight-Based Medication Dosing Calculator (mg/kg & mL)",
+    "slug": "dosificacion-pediatrica-peso-mg-kg-ml-jarabes",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["dosis-pediatrica", "mg-kg", "paracetamol", "ibuprofeno", "amoxicilina", "jarabe-pediatrico"],
+    "tags_en": ["pediatric-dosing", "mg-kg", "paracetamol", "ibuprofen", "amoxicillin", "pediatric-syrup"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula dosis líquidas pediátricas exactas en mg/kg y volumen en mL por toma para Paracetamol, Ibuprofeno, Amoxicilina y otros fármacos comunes.",
+    "shortDescription_en": "Calculate exact pediatric liquid medication dosages in mg/kg and volume in mL per dose for Paracetamol, Ibuprofen, Amoxicillin, and common drugs.",
+    "longDescription": "Herramienta de dosificación basada en peso (Manual Harriet Lane / Guías AAP). Previene infradosificación y sobredosis accidentales mediante cálculo de volumen exacto según la concentración del frasco.",
+    "longDescription_en": "Weight-based dosing tool (Harriet Lane Handbook / AAP). Prevents underdosing and accidental overdose by computing exact mL volume per concentration.",
+    "howToUse": [
+      "Ingresa el peso exacto del niño en kilogramos (kg).",
+      "Selecciona la dosis objetivo deseada en mg/kg (ej. Paracetamol 15 mg/kg, Ibuprofeno 10 mg/kg, Amoxicilina 50 o 90 mg/kg/día).",
+      "Selecciona la concentración del frasco líquido (ej. 100 mg/mL gotas, 120 mg/5 mL jarabe, etc.).",
+      "Consulta los mg calculados por toma y el volumen exacto a administrar en mL."
+    ],
+    "howToUse_en": [
+      "Enter exact child body weight in kg.",
+      "Select target dose in mg/kg (e.g. Paracetamol 15 mg/kg, Ibuprofen 10 mg/kg, Amoxicillin 50 or 90 mg/kg/day).",
+      "Select liquid bottle concentration (e.g. 100 mg/mL drops, 120 mg/5 mL syrup).",
+      "View calculated mg per dose and exact volume to administer in mL."
+    ],
+    "methodology": "Dosis (mg) = Peso (kg) × Dosis (mg/kg). Volumen (mL) = Dosis (mg) / Concentración (mg/mL). Topes máximos adultos aplicados por seguridad.",
+    "methodology_en": "Dose (mg) = Weight (kg) × Dose (mg/kg). Volume (mL) = Dose (mg) / Concentration (mg/mL). Adult safety caps applied."
+  },
+  "guideSections": [
+    {
+      "id": "peds-dosing-guide",
+      "icon": "💊",
+      "title": "Pediatric Dosing Safety Rules",
+      "title_es": "Reglas de Seguridad en Dosificación Pediátrica",
+      "content_html_en": "<p><b>Paracetamol:</b> 10-15 mg/kg/dose every 4-6 hours. Max 75 mg/kg/day or 4,000 mg/day.</p><p><b>Ibuprofen:</b> 5-10 mg/kg/dose every 6-8 hours with food. Max 40 mg/kg/day or 1,200 mg/day.</p><p><b>Amoxicillin:</b> Standard 50 mg/kg/day divided bid. High-dose otitis 90 mg/kg/day divided bid.</p><p><b>Administration:</b> Always use a calibrated oral syringe or measuring dropper. Never use household kitchen spoons.</p>",
+      "content_html": "<p><b>Paracetamol:</b> 10-15 mg/kg/dosis cada 4-6 horas. Máximo 75 mg/kg/día o 4.000 mg/día.</p><p><b>Ibuprofeno:</b> 5-10 mg/kg/dosis cada 6-8 horas con alimentos. Máximo 40 mg/kg/día o 1.200 mg/día.</p><p><b>Amoxicilina:</b> Estándar 50 mg/kg/día dividido cada 12h. Dosis alta para otitis 90 mg/kg/día dividido cada 12h.</p><p><b>Administración:</b> Utilizar siempre jeringa oral graduada o cuentagotas de dosificación. Nunca usar cucharas soperas o de postre domésticas.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "childWeightKg",
+      "label": "Peso del niño (kg)",
+      "label_en": "Child Weight (kg)",
+      "type": "number",
+      "default": 12,
+      "min": 2,
+      "max": 70,
+      "step": 0.5,
+      "unit": "kg",
+      "unit_en": "kg",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [2, 70], "message": "Peso entre 2 y 70 kg", "message_en": "Weight between 2 and 70 kg" }]
+    },
+    {
+      "id": "targetDoseMgKg",
+      "label": "Dosis objetivo (mg/kg por toma)",
+      "label_en": "Target Dose (mg/kg per dose)",
+      "type": "select",
+      "default": 15,
+      "options": [
+        { "value": 10, "label": "10 mg/kg (Ibuprofeno estándar / Paracetamol leve)", "label_en": "10 mg/kg (Standard Ibuprofen / Mild Paracetamol)" },
+        { "value": 15, "label": "15 mg/kg (Paracetamol estándar antitérmico)", "label_en": "15 mg/kg (Standard Paracetamol antipyretic)" },
+        { "value": 25, "label": "25 mg/kg por toma (Amoxicilina 50 mg/kg/día dividida en 2 tomas)", "label_en": "25 mg/kg per dose (Amoxicillin 50 mg/kg/day bid)" },
+        { "value": 45, "label": "45 mg/kg por toma (Amoxicilina 90 mg/kg/día dosis alta otitis dividida en 2 tomas)", "label_en": "45 mg/kg per dose (Amoxicillin 90 mg/kg/day high-dose bid)" }
+      ]
+    },
+    {
+      "id": "concentrationMgMl",
+      "label": "Concentración del frasco (mg por mL)",
+      "label_en": "Bottle Concentration (mg per mL)",
+      "type": "select",
+      "default": 24,
+      "options": [
+        { "value": 100, "label": "100 mg / 1 mL (Gotas Paracetamol 100 mg/mL)", "label_en": "100 mg / 1 mL (Paracetamol drops)" },
+        { "value": 24, "label": "24 mg / 1 mL (Jarabe Paracetamol 120 mg/5 mL)", "label_en": "24 mg / 1 mL (Paracetamol syrup 120 mg/5 mL)" },
+        { "value": 32, "label": "32 mg / 1 mL (Jarabe Paracetamol 160 mg/5 mL)", "label_en": "32 mg / 1 mL (Paracetamol syrup 160 mg/5 mL)" },
+        { "value": 20, "label": "20 mg / 1 mL (Jarabe Ibuprofeno 100 mg/5 mL 2%)", "label_en": "20 mg / 1 mL (Ibuprofen syrup 100 mg/5 mL 2%)" },
+        { "value": 40, "label": "40 mg / 1 mL (Jarabe Ibuprofeno 200 mg/5 mL 4%)", "label_en": "40 mg / 1 mL (Ibuprofen syrup 200 mg/5 mL 4%)" },
+        { "value": 50, "label": "50 mg / 1 mL (Suspensión Amoxicilina 250 mg/5 mL)", "label_en": "50 mg / 1 mL (Amoxicillin suspension 250 mg/5 mL)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "calculatedMgDose",
+      "label": "Dosis Calculada por Toma",
+      "label_en": "Calculated Single Dose (mg)",
+      "expression": "childWeightKg * targetDoseMgKg",
+      "unit": "mg",
+      "unit_en": "mg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "calculatedMlDose",
+      "label": "Volumen a Administrar por Toma",
+      "label_en": "Volume to Administer per Dose",
+      "expression": "calculatedMgDose / concentrationMgMl",
+      "unit": "mL",
+      "unit_en": "mL",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "calculatedMlDose", "op": ">", "value": 0 }, "label": "Volumen Pediátrico Calculado por Toma", "label_en": "Calculated Pediatric Volume per Dose", "tone": "success", "text": "Medir siempre con jeringa oral graduada.", "text_en": "Always measure using a calibrated oral syringe." }
+      ]
+    }
+  ]
+}

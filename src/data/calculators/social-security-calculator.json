@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "social-security-calculator",
+    "title": "Calculadora de Beneficios del Seguro Social",
+    "title_en": "Social Security Benefits Calculator",
+    "slug": "beneficios-seguro-social",
+    "category": "finance",
+    "subcategory": "retirement",
+    "tags": ["seguro-social", "social-security", "jubilacion"],
+    "tags_en": ["social-security", "benefits", "retirement"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Building2"
+  },
+  "content": {
+    "shortDescription": "Estima tu prestación mensual estimada del Seguro Social según tu edad de reclamo (62, 67 o 70 años).",
+    "shortDescription_en": "Estimate your monthly Social Security benefit payout based on claiming age (62, 67, or 70).",
+    "longDescription": "Calcula el impacto de solicitar la jubilación del Seguro Social de forma anticipada (a los 62 años), a la edad plena de jubilación (67 años) o diferida (70 años).",
+    "longDescription_en": "Calculate financial impact of claiming Social Security benefits early (age 62), at full retirement age (67), or delayed (age 70).",
+    "howToUse": [
+      "Ingresa tu ingreso medio mensual bruto actual.",
+      "Selecciona la edad prevista para reclamar los beneficios (62 a 70 años).",
+      "Consulta el beneficio mensual ajustado del Seguro Social."
+    ],
+    "howToUse_en": [
+      "Enter your current average monthly gross income and active currency.",
+      "Select planned claiming age (age 62 to 70).",
+      "View adjusted monthly Social Security benefit payout."
+    ],
+    "methodology": "Fórmula Seguro Social: Edad Plena (67) = 100% PIA. Reclamo Anticipado (62) = -30% penalización. Reclamo Tardío (70) = +24% bonificación.",
+    "methodology_en": "Social Security Formula: Full Retirement (67) = 100% PIA. Early Claim (62) = -30% penalty. Delayed Claim (70) = +24% bonus."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🏛️",
+      "title": "Full Retirement Age (FRA) vs Early Claiming",
+      "title_es": "Edad Plena de Jubilación vs Reclamo Anticipado",
+      "content_html_en": "<p>Claiming Social Security at age 62 permanently reduces your monthly check by up to 30%. Delaying until age 70 increases your benefit by 8% per year.</p>",
+      "content_html": "<p>Solicitar el Seguro Social a los 62 años reduce permanentemente el cheque mensual hasta un 30%. Esperar a los 70 lo incrementa un 8% anual.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "averageMonthlyIncome",
+      "label": "Ingreso bruto medio mensual de tu carrera",
+      "label_en": "Average Monthly Career Income",
+      "type": "currency",
+      "default": 4500,
+      "min": 1000,
+      "max": 20000,
+      "step": 250,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "claimingAge",
+      "label": "Edad prevista de reclamo (62 a 70 años)",
+      "label_en": "Planned Claiming Age (62 to 70)",
+      "type": "slider",
+      "default": 67,
+      "min": 62,
+      "max": 70,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "fullRetirementBenefit",
+      "label": "Prestación mensual a la Edad Plena (67 años)",
+      "label_en": "Full Retirement Monthly Benefit (Age 67)",
+      "expression": "averageMonthlyIncome * 0.42",
+      "unit": { "follows": "averageMonthlyIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "actualMonthlyBenefit",
+      "label": "Beneficio Mensual Ajustado a tu Edad de Reclamo",
+      "label_en": "Adjusted Monthly Social Security Benefit",
+      "expression": "fullRetirementBenefit * (1 + (claimingAge - 67) * 0.08)",
+      "unit": { "follows": "averageMonthlyIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "claimingAge", "op": ">=", "value": 70 }, "label": "Beneficio Máximo Obtenido", "label_en": "Maximum Benefit Achieved", "tone": "success", "text": "Cheque mensual incrementado al máximo por diferir el reclamo.", "text_en": "Monthly payout maximized by delaying benefit claim to age 70." }
+      ]
+    },
+    {
+      "id": "annualBenefitTotal",
+      "label": "Ingreso anual total del Seguro Social",
+      "label_en": "Total Annual Social Security Income",
+      "expression": "actualMonthlyBenefit * 12",
+      "unit": { "follows": "averageMonthlyIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "pension-calculator", "type": "static", "message": "Calcula tu pensión laboral privada", "message_en": "Calculate employment pension", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Especialista en Beneficios del Seguro Social",
+    "role_en": "Social Security Retirement Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y orientador",
+    "includeData": ["actualMonthlyBenefit", "fullRetirementBenefit", "claimingAge", "annualBenefitTotal"],
+    "instructions": [
+      "Sintetiza la prestación mensual calculada según la edad de reclamo en 2 frases concisas.",
+      "Destaca que esperar hasta los 70 años otorga la mayor cuantía mensual garantizada."
+    ],
+    "instructions_en": [
+      "Summarize adjusted monthly benefit based on selected claiming age in 2 concise sentences.",
+      "Highlight how waiting until age 70 yields the maximum lifetime monthly check."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Beneficios del Seguro Social | CalculadoraHub",
+    "metaTitle_en": "Social Security Benefits Calculator | CalculadoraHub",
+    "metaDescription": "Calcula tu cheque mensual del Seguro Social según tu edad de jubilación. Gratis e instantáneo.",
+    "metaDescription_en": "Estimate monthly Social Security retirement checks based on claiming age. Free, instant results.",
+    "keywords": ["social security calculator", "seguro social", "cheque jubilacion", "edad reclamo"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "student-loan-calculator",
+    "title": "Calculadora de Pago de Préstamos Estudiantiles",
+    "title_en": "Student Loan Payoff Calculator",
+    "slug": "pago-prestamos-estudiantiles",
+    "category": "finance",
+    "subcategory": "loans",
+    "tags": ["prestamo-estudiantil", "student-loan", "educacion"],
+    "tags_en": ["student-loan", "payoff", "education"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "GraduationCap"
+  },
+  "content": {
+    "shortDescription": "Calcula el plan de pagos mensuales y la aceleración de amortización para préstamos universitarios.",
+    "shortDescription_en": "Calculate monthly repayment plan and payoff acceleration strategy for student loans.",
+    "longDescription": "Estima el costo mensual y el impacto de hacer aportaciones adicionales para amortizar anticipadamente la deuda acumulada de préstamos universitarios o estudiantiles.",
+    "longDescription_en": "Estimate monthly payments and see how making extra monthly payments accelerates student loan forgiveness or early payoff.",
+    "howToUse": [
+      "Ingresa el saldo pendiente total del préstamo estudiantil.",
+      "Establece la tasa de interés anual (%).",
+      "Indica el plazo estándar en años (ej. 10 años).",
+      "Añade un pago extra mensual opcional y consulta el tiempo y dinero ahorrados."
+    ],
+    "howToUse_en": [
+      "Enter total current student loan balance owed and active currency.",
+      "Set annual interest rate (%).",
+      "Enter standard repayment term in years (e.g. 10 years).",
+      "Add optional extra monthly payment to view time and interest savings."
+    ],
+    "methodology": "Fórmula Préstamo Estudiantil: Cuota = Saldo × [ (r / 12) / (1 - (1 + r / 12)^-n) ]. Ahorro con pagos extras.",
+    "methodology_en": "Student Loan Formula: Payment = Balance × [ (r / 12) / (1 - (1 + r / 12)^-n) ]. Savings calculated with extra payments."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🎓",
+      "title": "Student Loan Refinancing & Early Payoff",
+      "title_es": "Refinanciación y Pago Anticipado Estudiantil",
+      "content_html_en": "<p>Adding even a small extra monthly payment (e.g. $50/mo) directly to principal can knock off years from student debt and save thousands in interest.</p>",
+      "content_html": "<p>Añadir un pequeño pago mensual adicional directamente al principal elimina años de deuda universitaria y ahorra miles en intereses.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "studentBalance",
+      "label": "Saldo pendiente del préstamo estudiantil",
+      "label_en": "Total Current Student Loan Balance",
+      "type": "currency",
+      "default": 35000,
+      "min": 1000,
+      "max": 500000,
+      "step": 1000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1000, 500000], "message": "Saldo entre 1.000 y 500.000", "message_en": "Balance between 1,000 and 500,000" }]
+    },
+    {
+      "id": "interestRate",
+      "label": "Tasa de interés anual (%)",
+      "label_en": "Annual Interest Rate (%)",
+      "type": "number",
+      "default": 5.8,
+      "min": 0.1,
+      "max": 20,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "repaymentYears",
+      "label": "Plazo estándar de reembolso (años)",
+      "label_en": "Standard Repayment Term (years)",
+      "type": "slider",
+      "default": 10,
+      "min": 5,
+      "max": 25,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "extraMonthlyPayment",
+      "label": "Pago extra mensual adicional al principal",
+      "label_en": "Extra Monthly Payment Added to Principal",
+      "type": "currency",
+      "default": 50,
+      "min": 0,
+      "max": 5000,
+      "step": 25,
+      "unit": { "follows": "studentBalance" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "standardMonthlyPayment",
+      "label": "Cuota Mensual Estándar Fija",
+      "label_en": "Standard Monthly Required Payment",
+      "expression": "studentBalance * (interestRate / 1200) / (1 - (1 + interestRate / 1200) ^ -(repaymentYears * 12))",
+      "unit": { "follows": "studentBalance" },
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "standardMonthlyPayment", "op": ">", "value": 0 }, "label": "Cuota Estudiantil", "label_en": "Student Loan Payment", "tone": "info", "text": "Cuota obligatoria requerida bajo el plan estándar de amortización.", "text_en": "Standard required monthly payment under standard loan amortization schedule." }
+      ]
+    },
+    {
+      "id": "totalInterestStandard",
+      "label": "Total intereses bajo plan estándar",
+      "label_en": "Total Standard Interest Paid",
+      "expression": "(standardMonthlyPayment * repaymentYears * 12) - studentBalance",
+      "unit": { "follows": "studentBalance" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "acceleratedPayoffMonths",
+      "label": "Meses requeridos con el pago extra",
+      "label_en": "Accelerated Months with Extra Payment",
+      "expression": "studentBalance / ((standardMonthlyPayment + extraMonthlyPayment) - (studentBalance * (interestRate / 1200)))",
+      "unit": "meses",
+      "unit_en": "months",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "personal-loan-calculator", "type": "static", "message": "Calcula un préstamo personal tradicional", "message_en": "Calculate standard personal loan", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Préstamos Estudiantiles",
+    "role_en": "Student Loan Payoff Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y orientador",
+    "includeData": ["standardMonthlyPayment", "acceleratedPayoffMonths", "totalInterestStandard", "studentBalance"],
+    "instructions": [
+      "Sintetiza la cuota mensual estándar y la aceleración alcanzada con el pago extra en 2 frases concisas.",
+      "Destaca el ahorro en intereses acumulados por abonar capital por adelantado."
+    ],
+    "instructions_en": [
+      "Summarize standard monthly payment and accelerated payoff months achieved with extra payment in 2 concise sentences.",
+      "Highlight interest savings achieved by applying extra monthly payments directly to principal."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Pago de Préstamos Estudiantiles | CalculadoraHub",
+    "metaTitle_en": "Student Loan Payoff Calculator | CalculadoraHub",
+    "metaDescription": "Calcula la cuota mensual y el plan de amortización rápida de tus préstamos estudiantiles. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate monthly student loan payments and early payoff savings strategy. Free, instant results.",
+    "keywords": ["student loan calculator", "prestamo estudiantil", "deuda universitaria", "amortizacion anticipada"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

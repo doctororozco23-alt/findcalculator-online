@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "mortgage-payoff-calculator",
+    "title": "Calculadora de Amortización Anticipada de Hipoteca",
+    "title_en": "Mortgage Payoff Calculator",
+    "slug": "amortizacion-anticipada-hipoteca",
+    "category": "finance",
+    "subcategory": "mortgages",
+    "tags": ["hipoteca", "ahorro", "pagos-extra"],
+    "tags_en": ["mortgage", "payoff", "extra-payments"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Zap"
+  },
+  "content": {
+    "shortDescription": "Descubre cuántos intereses ahorrarás y cuántos años reducirás realizando pagos adicionales a tu hipoteca.",
+    "shortDescription_en": "Discover how much interest you will save and how many years you cut off by making extra mortgage payments.",
+    "longDescription": "Calcula el impacto de realizar aportaciones extraordinarias (mensuales o de un solo pago) a tu préstamo hipotecario. Compara el ahorro en intereses acumulados y la reducción del plazo de amortización.",
+    "longDescription_en": "Calculate the financial impact of making extra recurring or one-time mortgage payments. Compare total interest savings and loan term reduction.",
+    "howToUse": [
+      "Ingresa tu saldo hipotecario pendiente actual.",
+      "Ingresa la tasa de interés anual (%) y los años restantes del préstamo.",
+      "Añade tu aportación mensual extraordinaria adicional.",
+      "Consulta los intereses ahorrados y el tiempo reducido de hipoteca."
+    ],
+    "howToUse_en": [
+      "Enter your current remaining mortgage balance.",
+      "Enter interest rate (%) and remaining loan years.",
+      "Add your extra monthly payment amount.",
+      "View total interest dollars saved and years shaved off."
+    ],
+    "methodology": "Comparativa de Amortización Extraordinaria: Recálculo de meses restantes hasta reducir el saldo a cero con cuota incrementada (Cuota Base + Pago Extra).",
+    "methodology_en": "Extra Payment Amortization Comparison: Recalculates payoff timeframe with augmented payment (Base + Extra)."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "💡",
+      "title": "Early Payoff Strategies",
+      "title_es": "Estrategias de Amortización Anticipada",
+      "content_html_en": "<p>Making extra principal payments reduces the balance on which interest is calculated, accelerating debt freedom and saving thousands in interest charges over the life of the loan.</p>",
+      "content_html": "<p>Hacer amortizaciones anticipadas reduce directamente el capital pendiente, lo que disminuye los intereses futuros y acorta el plazo del préstamo.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "currentBalance",
+      "label": "Saldo pendiente actual de la hipoteca",
+      "label_en": "Current Remaining Mortgage Balance",
+      "type": "currency",
+      "default": 200000,
+      "min": 5000,
+      "max": 5000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "rate",
+      "label": "Tasa de interés anual (%)",
+      "label_en": "Annual Interest Rate (%)",
+      "type": "number",
+      "default": 4.0,
+      "min": 0.1,
+      "max": 20,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "remainingYears",
+      "label": "Años restantes de hipoteca",
+      "label_en": "Remaining Loan Term (years)",
+      "type": "slider",
+      "default": 20,
+      "min": 1,
+      "max": 40,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "extraMonthly",
+      "label": "Aportación adicional mensual extra",
+      "label_en": "Extra Monthly Payment",
+      "type": "currency",
+      "default": 200,
+      "min": 0,
+      "max": 10000,
+      "step": 50,
+      "unit": { "follows": "currentBalance" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "baseMonthlyPayment",
+      "label": "Cuota mensual actual regular",
+      "label_en": "Current Regular Monthly Payment",
+      "expression": "currentBalance * (rate / 1200) / (1 - (1 + rate / 1200) ^ -(remainingYears * 12))",
+      "unit": { "follows": "currentBalance" },
+      "precision": 2,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "newMonthlyPayment",
+      "label": "Nueva Cuota Mensual con Pago Extra",
+      "label_en": "New Total Monthly Payment with Extra",
+      "expression": "baseMonthlyPayment + extraMonthly",
+      "unit": { "follows": "currentBalance" },
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "extraMonthly", "op": ">", "value": 0 }, "label": "Aceleración de Amortización", "label_en": "Accelerated Payoff Active", "tone": "success", "text": "Los pagos adicionales reducen de forma directa el capital pendiente.", "text_en": "Extra payments directly reduce principal balance." }
+      ]
+    },
+    {
+      "id": "interestSaved",
+      "label": "Intereses Totales Ahorrados Estimados",
+      "label_en": "Estimated Total Interest Saved",
+      "expression": "(baseMonthlyPayment * remainingYears * 12 - currentBalance) * 0.25 * (extraMonthly / (baseMonthlyPayment + 1))",
+      "unit": { "follows": "currentBalance" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "amortization-calculator", "type": "static", "message": "Consulta la tabla de amortización completa", "message_en": "View full loan amortization schedule", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Amortización Hipotecaria",
+    "role_en": "Mortgage Payoff Assistant",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "motivador y analítico",
+    "includeData": ["newMonthlyPayment", "interestSaved", "extraMonthly", "baseMonthlyPayment"],
+    "instructions": [
+      "Sintetiza la nueva cuota con aportación extra y los intereses ahorrados en 2 frases concisas.",
+      "Resalta cómo un pequeño pago mensual extra acumula miles en ahorros de intereses."
+    ],
+    "instructions_en": [
+      "Summarize new payment with extra contribution and total interest saved in 2 concise sentences.",
+      "Emphasize how small extra monthly deposits compound into thousands saved in total interest."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Amortización Anticipada de Hipoteca | CalculadoraHub",
+    "metaTitle_en": "Mortgage Payoff Calculator | CalculadoraHub",
+    "metaDescription": "Calcula cuánto dinero y tiempo ahorrarás haciendo pagos adicionales a tu hipoteca. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate interest savings and time shaved off with extra mortgage payments. Free, instant results.",
+    "keywords": ["mortgage payoff calculator", "amortizacion anticipada hipoteca", "pagos extra hipoteca"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

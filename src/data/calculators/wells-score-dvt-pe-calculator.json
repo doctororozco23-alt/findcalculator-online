@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "wells-score-dvt-pe-calculator",
+    "title": "Calculadora del Score de Wells para TEP y TVP",
+    "title_en": "Wells Score Calculator for DVT and Pulmonary Embolism (PE)",
+    "slug": "wells-score-tep-tvp-probabilidad-clinica",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["wells-score", "tep", "tvp", "tromboembolismo", "urgencias", "dimero-d"],
+    "tags_en": ["wells-score", "pe", "dvt", "thrombosis", "emergency", "d-dimer"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula el Score de Wells para estimar la probabilidad clínica preprueba de Tromboembolia Pulmonar (TEP) y Trombosis Venosa Profunda (TVP) en Urgencias.",
+    "shortDescription_en": "Calculate Wells Score for clinical pretest probability of Pulmonary Embolism (PE) and Deep Vein Thrombosis (DVT) in Emergency.",
+    "longDescription": "Regla clínica de decisión validada (Wells et al. NEJM / ESC Guidelines). Orienta la solicitud de Dímero-D vs angio-TC pulmonar directo en TEP o ecografía Doppler venosa en TVP.",
+    "longDescription_en": "Validated clinical decision rule (Wells et al. NEJM / ESC Guidelines). Guides D-Dimer testing vs direct CT pulmonary angiography for PE.",
+    "howToUse": [
+      "Indica si hay signos o síntomas clínicos de TVP.",
+      "Selecciona si el diagnóstico alternativo es menos probable que TEP.",
+      "Indica si la Frecuencia Cardíaca es mayor a 100 lpm.",
+      "Indica inmovilización ≥3 días o cirugía en las últimas 4 semanas.",
+      "Selecciona antecedente previo de TVP o TEP.",
+      "Indica si presenta Hemoptisis.",
+      "Indica si padece Cáncer activo (tratado en últimos 6 meses o paliativo)."
+    ],
+    "howToUse_en": [
+      "Indicate clinical signs of DVT.",
+      "Select if alternative diagnosis is less likely than PE.",
+      "Indicate if Heart Rate > 100 bpm.",
+      "Indicate immobilization ≥3 days or surgery within 4 weeks.",
+      "Select prior DVT or PE history.",
+      "Indicate Hemoptysis.",
+      "Indicate active Cancer (treated in last 6 months or palliative)."
+    ],
+    "methodology": "Score de Wells TEP: Signos TVP (+3), Diagnóstico alternativo menos probable (+3), FC > 100 lpm (+1.5), Inmovilización/Cirugía (+1.5), TVP/TEP previo (+1.5), Hemoptisis (+1), Cáncer (+1). Rango 0-12.5 puntos.",
+    "methodology_en": "Wells PE Score: DVT signs (+3), Alt dx less likely (+3), HR > 100 (+1.5), Immobilization/Surgery (+1.5), Prior DVT/PE (+1.5), Hemoptysis (+1), Cancer (+1). Range 0-12.5 pts."
+  },
+  "guideSections": [
+    {
+      "id": "wells-guide",
+      "icon": "🩺",
+      "title": "PE Diagnostic Algorithm per ESC Guidelines",
+      "title_es": "Algoritmo Diagnóstico de TEP según Guías ESC",
+      "content_html_en": "<p><b>Wells ≤ 4 points (Improbable PE):</b> High-sensitivity D-Dimer test. If negative, PE is ruled out safely. If positive, proceed to CTPA.</p><p><b>Wells > 4 points (Probable PE):</b> Skip D-Dimer. Proceed directly to CT Pulmonary Angiography (CTPA) and initiate empiric anticoagulation if no contraindications.</p>",
+      "content_html": "<p><b>Wells ≤ 4 puntos (TEP Improbable):</b> Solicitar Dímero-D de alta sensibilidad. Si es negativo, se descarta TEP con seguridad. Si es positivo, realizar angio-TC pulmonar.</p><p><b>Wells > 4 puntos (TEP Probable):</b> Omitir Dímero-D. Proceder directamente a angio-TC pulmonar e iniciar anticoagulación empírica si no hay contraindicaciones.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "dvt_signs",
+      "label": "Signos y síntomas clínicos de TVP (edema o dolor palpación pierna)",
+      "label_en": "Clinical signs/symptoms of DVT",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 3, "label": "Sí (+3 pts)", "label_en": "Yes (+3 pts)" }
+      ]
+    },
+    {
+      "id": "alt_dx",
+      "label": "Diagnóstico alternativo menos probable que TEP",
+      "label_en": "Alternative diagnosis less likely than PE",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 3, "label": "Sí (+3 pts)", "label_en": "Yes (+3 pts)" }
+      ]
+    },
+    {
+      "id": "hr_over100",
+      "label": "Frecuencia cardíaca mayor a 100 lpm",
+      "label_en": "Heart rate > 100 bpm",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1.5, "label": "Sí (+1.5 pts)", "label_en": "Yes (+1.5 pts)" }
+      ]
+    },
+    {
+      "id": "immob_surg",
+      "label": "Inmovilización ≥ 3 días O cirugía en las últimas 4 semanas",
+      "label_en": "Immobilization ≥ 3 days OR surgery in past 4 weeks",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1.5, "label": "Sí (+1.5 pts)", "label_en": "Yes (+1.5 pts)" }
+      ]
+    },
+    {
+      "id": "prior_dvt_pe",
+      "label": "Antecedente de TVP o TEP previo documentado",
+      "label_en": "Previous documented DVT or PE",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1.5, "label": "Sí (+1.5 pts)", "label_en": "Yes (+1.5 pts)" }
+      ]
+    },
+    {
+      "id": "hemoptysis",
+      "label": "Hemoptisis",
+      "label_en": "Hemoptysis",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "malignancy",
+      "label": "Cáncer / Malignidad activa",
+      "label_en": "Active Malignancy",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "wellsPeTotal",
+      "label": "Score de Wells para TEP Total",
+      "label_en": "Total Wells PE Score",
+      "expression": "dvt_signs + alt_dx + hr_over100 + immob_surg + prior_dvt_pe + hemoptysis + malignancy",
+      "unit": "puntos",
+      "unit_en": "points",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "wellsPeTotal", "op": "<=", "value": 1.5 }, "label": "Probabilidad Baja (Score ≤ 1.5)", "label_en": "Low Probability (Score ≤ 1.5)", "tone": "success", "text": "Baja probabilidad (1.3%). Dímero-D de alta sensibilidad para descartar TEP.", "text_en": "Low probability (1.3%). High-sensitivity D-Dimer to rule out PE." },
+        { "when": { "field": "wellsPeTotal", "op": "between", "value": [2.0, 4.0] }, "label": "Probabilidad Moderada (Score 2.0 - 4.0)", "label_en": "Moderate Probability (Score 2.0 - 4.0)", "tone": "info", "text": "Probabilidad intermedia (16.2%). Dímero-D o angio-TC pulmonar directo.", "text_en": "Intermediate probability (16.2%). D-Dimer or direct CTPA." },
+        { "when": { "field": "wellsPeTotal", "op": ">", "value": 4.0 }, "label": "Probabilidad Alta (Score > 4.0)", "label_en": "High Probability (Score > 4.0)", "tone": "warning", "text": "Alta probabilidad (40.6%). Angio-TC pulmonar directo e iniciar anticoagulación.", "text_en": "High probability (40.6%). Direct CTPA & initiate anticoagulation." }
+      ]
+    }
+  ]
+}

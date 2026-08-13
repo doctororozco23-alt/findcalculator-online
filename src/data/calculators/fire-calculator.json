@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "fire-calculator",
+    "title": "Calculadora FIRE (Independencia Financiera y Retiro Temprano)",
+    "title_en": "FIRE Calculator (Financial Independence Retire Early)",
+    "slug": "independencia-financiera-retiro-temprano-fire",
+    "category": "finance",
+    "subcategory": "retirement",
+    "tags": ["fire", "retiro-temprano", "independencia-financiera"],
+    "tags_en": ["fire", "retire-early", "financial-independence"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Flame"
+  },
+  "content": {
+    "shortDescription": "Calcula tu número FIRE objetivo (Regla del 4%) y los años faltantes para lograr el retiro anticipado.",
+    "shortDescription_en": "Calculate your target FIRE nest egg number (4% Rule) and years needed to achieve early retirement.",
+    "longDescription": "Calcula el patrimonio financiero necesario para alcanzar la independencia financiera y retirarte joven basándote en tu presupuesto de gastos anuales (Regla del 4% / Multiplicador 25x).",
+    "longDescription_en": "Calculate total target nest egg capital required to retire early based on your planned annual living expenses (4% Safe Withdrawal Rule / 25x multiplier).",
+    "howToUse": [
+      "Ingresa tu presupuesto de gastos anuales deseado en el retiro.",
+      "Ingresa tu patrimonio neto invertido actual.",
+      "Establece tu capacidad de ahorro anual adicional.",
+      "Consulta tu Número FIRE objetivo y los años requeridos para lograrlo."
+    ],
+    "howToUse_en": [
+      "Enter target annual living expenses in retirement and active currency.",
+      "Enter current invested net worth savings.",
+      "Set additional annual savings rate.",
+      "View calculated FIRE Target Number and years remaining to retire early."
+    ],
+    "methodology": "Fórmula FIRE: Número FIRE = Gastos Anuales × 25. Regla de Retiro Seguro = 4% anual.",
+    "methodology_en": "FIRE Formula: FIRE Target Number = Annual Expenses × 25. Safe Withdrawal Rate = 4% annually."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🔥",
+      "title": "The 4% Safe Withdrawal Rule",
+      "title_es": "La Regla del 4% de Retiro Seguro",
+      "content_html_en": "<p>The Trinity Study established that withdrawing 4% of your initial portfolio value annually (adjusted for inflation) offers a 95%+ probability of lasting 30+ years.</p>",
+      "content_html": "<p>El Estudio Trinity estableció que retirar el 4% anual de tu portafolio permite mantener el patrimonio intacto durante 30+ años de retiro.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "annualLivingExpenses",
+      "label": "Presupuesto de gastos anuales deseado en el retiro",
+      "label_en": "Target Annual Living Expenses in Retirement",
+      "type": "currency",
+      "default": 40000,
+      "min": 5000,
+      "max": 1000000,
+      "step": 2500,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [5000, 1000000], "message": "Gastos entre 5.000 y 1.000.000", "message_en": "Expenses between 5,000 and 1,000,000" }]
+    },
+    {
+      "id": "currentNetWorth",
+      "label": "Patrimonio neto invertido actual",
+      "label_en": "Current Invested Net Worth",
+      "type": "currency",
+      "default": 100000,
+      "min": 0,
+      "max": 10000000,
+      "step": 5000,
+      "unit": { "follows": "annualLivingExpenses" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "annualSavingsRate",
+      "label": "Ahorro e inversión adicional guardado cada año",
+      "label_en": "Additional Annual Savings & Investments",
+      "type": "currency",
+      "default": 24000,
+      "min": 1000,
+      "max": 500000,
+      "step": 1000,
+      "unit": { "follows": "annualLivingExpenses" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "fireTargetNumber",
+      "label": "Número FIRE Objetivo (Patrimonio Necesario)",
+      "label_en": "Target FIRE Nest Egg Number",
+      "expression": "annualLivingExpenses * 25",
+      "unit": { "follows": "annualLivingExpenses" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "fireTargetNumber", "op": ">", "value": 0 }, "label": "Meta FIRE Calculada", "label_en": "FIRE Goal Target", "tone": "success", "text": "Capital necesario para financiar tus gastos con la regla del 4%.", "text_en": "Required portfolio capital to cover annual living expenses indefinitely." }
+      ]
+    },
+    {
+      "id": "remainingFireCapital",
+      "label": "Patrimonio pendiente por acumular",
+      "label_en": "Remaining Net Worth to Accumulate",
+      "expression": "max(fireTargetNumber - currentNetWorth, 0)",
+      "unit": { "follows": "annualLivingExpenses" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "yearsToFire",
+      "label": "Años estimados para alcanzar la Independencia Financiera",
+      "label_en": "Estimated Years to Reach FIRE",
+      "expression": "remainingFireCapital / (annualSavingsRate + currentNetWorth * 0.06)",
+      "unit": "años",
+      "unit_en": "years",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "compound-interest-calculator", "type": "static", "message": "Proyecta el interés compuesto de tu portafolio", "message_en": "Project portfolio compound growth", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Consultor de Independencia Financiera FIRE",
+    "role_en": "FIRE Retirement Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "motivador y analítico",
+    "includeData": ["fireTargetNumber", "yearsToFire", "remainingFireCapital", "annualLivingExpenses"],
+    "instructions": [
+      "Sintetiza el Número FIRE objetivo (25x gastos) y los años estimados para el retiro anticipado en 2 frases concisas.",
+      "Destaca que incrementar la tasa de ahorro anual es el motor principal para acortar el tiempo hasta FIRE."
+    ],
+    "instructions_en": [
+      "Summarize target FIRE nest egg number (25x expenses) and estimated years remaining in 2 concise sentences.",
+      "Highlight that increasing annual savings velocity is the single strongest lever to accelerate FIRE."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora FIRE (Independencia Financiera y Retiro Temprano) | CalculadoraHub",
+    "metaTitle_en": "FIRE Calculator (Financial Independence Retire Early) | CalculadoraHub",
+    "metaDescription": "Calcula tu Número FIRE objetivo (Regla 4%) y años para el retiro anticipado. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your target FIRE nest egg number and years to early retirement. Free, instant results.",
+    "keywords": ["fire calculator", "independencia financiera", "retiro temprano", "regla del 4"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

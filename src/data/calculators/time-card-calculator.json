@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "time-card-calculator",
+    "title": "Calculadora de Tarjeta de Horas Semanales de Trabajo y Horas Extras",
+    "title_en": "Weekly Time Card & Overtime Pay Calculator",
+    "slug": "calculadora-de-tarjeta-de-horas-semanales-trabajo-horas-extras",
+    "category": "datetime",
+    "subcategory": "time",
+    "tags": ["tarjeta-de-horas", "time-card", "horas-extras", "nominas", "horas-semanales", "tarifa-por-hora", "salario"],
+    "tags_en": ["time-card", "weekly-hours", "overtime", "payroll", "hourly-rate", "work-hours", "salary"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el total de horas semanales trabajadas, desglose de horas extras (overtime 1.5x) y pago bruto total.",
+    "shortDescription_en": "Calculate total weekly hours worked, overtime breakdown (1.5x rate), and total gross pay.",
+    "longDescription": "Herramienta de control de nóminas y tarjeta de marcaje de horas. Evalúa la jornada laboral de 5 días con descansos diarios de almuerzo y tarifa de tiempo extra.",
+    "longDescription_en": "Payroll and punch card tracking tool. Evaluates 5-day workweek with daily lunch breaks and overtime rates.",
+    "howToUse": [
+      "Ingresa las Horas Diarias Promedio Trabajadas (ej. 8 horas/día).",
+      "Ingresa los Días Trabajados en la Semana (ej. 5 días).",
+      "Ingresa tu Tarifa de Pago por Hora ($ USD/hora).",
+      "Consulta las Horas Regulares, Horas Extras (> 40h) y la Paga Bruta Semanal."
+    ],
+    "howToUse_en": [
+      "Enter Average Daily Hours Worked (e.g. 8 hours/day).",
+      "Enter Days Worked per Week (e.g. 5 days).",
+      "Enter Hourly Pay Rate ($ USD/hour).",
+      "View Regular Hours, Overtime Hours (> 40h), and Weekly Gross Pay."
+    ],
+    "methodology": "Total Horas = HorasDiarias * DíasTrabajados. Horas Extras = max(0, TotalHoras - 40). Paga Bruta = (Regulares * Tarifa) + (Extras * Tarifa * 1.5).",
+    "methodology_en": "Total Hours = DailyHours * DaysWorked. Overtime Hours = max(0, TotalHours - 40). Gross Pay = (Regular * Rate) + (Overtime * Rate * 1.5)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Control de Nóminas y Leyes Laborales (FLSA)",
+    "role_en": "Payroll Control & FLSA Labor Laws Specialist Assistant",
+    "includeData": ["weeklyGrossPayResult", "overtimeHoursResult"],
+    "instructions": [
+      "Interpreta el desglose de salario semanal regular vs horas extras de 1.5x (Ley FLSA).",
+      "Explica la importancia del registro diario preciso de pausas de almuerzo.",
+      "Muestra la proyección de ingresos brutos mensuales a partir de la tarjeta de horas."
+    ],
+    "instructions_en": [
+      "Interpret weekly salary breakdown for regular vs 1.5x overtime hours (FLSA Act).",
+      "Explain importance of precise daily lunch break logging.",
+      "Show monthly gross income projection based on weekly time card."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "tmc-guide",
+      "icon": "⏱️",
+      "title": "FLSA Overtime Rules & 40-Hour Threshold",
+      "title_es": "Reglas de Horas Extras FLSA y Umbral de 40 Horas",
+      "content_html_en": "<p><b>40-Hour Threshold:</b> Hours worked over 40 in a 7-day workweek must be paid at 1.5 times the regular hourly rate.</p><p><b>Lunch Breaks:</b> Unpaid meal breaks of 30+ minutes must be deducted from gross daily shift time.</p>",
+      "content_html": "<p><b>Umbral de 40 Horas:</b> Las horas trabajadas por encima de 40 en una semana deben abonarse a 1.5 veces la tarifa regular.</p><p><b>Pausas de Almuerzo:</b> Los descansos no pagados de 30+ minutos deben descontarse del tiempo de turno bruto.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "dailyWorkHoursAvg",
+      "label": "Horas Diarias Trabajadas (netas)",
+      "label_en": "Daily Net Hours Worked",
+      "type": "number",
+      "default": 9,
+      "min": 1,
+      "max": 24,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "daysWorkedPerWeek",
+      "label": "Días Trabajados en la Semana",
+      "label_en": "Days Worked per Week",
+      "type": "number",
+      "default": 5,
+      "min": 1,
+      "max": 7,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "hourlyPayRateUsd",
+      "label": "Tarifa de Pago por Hora ($ USD/hora)",
+      "label_en": "Hourly Pay Rate ($ USD/hour)",
+      "type": "currency",
+      "default": 22,
+      "min": 5,
+      "max": 500,
+      "step": 0.5,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalWeeklyHoursResult",
+      "label": "Horas Totales Trabajadas en la Semana",
+      "label_en": "Total Weekly Hours Worked",
+      "expression": "dailyWorkHoursAvg * daysWorkedPerWeek",
+      "unit": "horas",
+      "unit_en": "hours",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "regularHoursResult",
+      "label": "Horas Regulares (hasta 40h)",
+      "label_en": "Regular Hours (up to 40h)",
+      "expression": "min(40, totalWeeklyHoursResult)",
+      "unit": "horas",
+      "unit_en": "hours",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "overtimeHoursResult",
+      "label": "Horas Extras (> 40h a 1.5x)",
+      "label_en": "Overtime Hours (> 40h at 1.5x)",
+      "expression": "max(0, totalWeeklyHoursResult - 40)",
+      "unit": "horas",
+      "unit_en": "hours",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "weeklyGrossPayResult",
+      "label": "Paga Bruta Semanal Total",
+      "label_en": "Total Weekly Gross Pay",
+      "expression": "(regularHoursResult * hourlyPayRateUsd) + (overtimeHoursResult * hourlyPayRateUsd * 1.5)",
+      "unit": "USD",
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "weeklyGrossPayResult", "op": ">=", "value": 0 }, "label": "Paga Semanal Calculada", "label_en": "Weekly Pay Computed", "tone": "success", "text": "Remuneración semanal calculada.", "text_en": "Weekly gross pay calculated." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "gdp-calculator",
+    "title": "Calculadora de Producto Interno Bruto (PIB / GDP por Método del Gasto)",
+    "title_en": "Gross Domestic Product Calculator (GDP Expenditure Method)",
+    "slug": "calculadora-de-producto-interno-bruto-pib-gdp-gasto",
+    "category": "finance",
+    "subcategory": "business",
+    "tags": ["pib", "gdp", "producto-interno-bruto", "macroeconomia", "consumo", "inversion", "exportaciones"],
+    "tags_en": ["gdp", "gross-domestic-product", "macroeconomics", "consumption", "investment", "exports"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el Producto Interno Bruto ($PIB / GDP = C + I + G + (X - M)$) por el Método del Gasto Macroeconómico.",
+    "shortDescription_en": "Compute Gross Domestic Product ($GDP = C + I + G + (X - M)$) using the Macroeconomic Expenditure Method.",
+    "longDescription": "Herramienta de economía política y análisis macroeconómico. Suma el Consumo ($C$), Inversión Bruta ($I$), Gasto Público ($G$) y Exportaciones Netas ($X - M$).",
+    "longDescription_en": "Macroeconomic analysis tool. Sums Consumption ($C$), Gross Investment ($I$), Government Spending ($G$), and Net Exports ($X - M$).",
+    "howToUse": [
+      "Ingresa el Consumo de los Hogares (C) en millones de dólares.",
+      "Ingresa la Inversión Privada Bruta (I) en millones.",
+      "Ingresa las Compras del Gobierno / Gasto Público (G).",
+      "Ingresa las Exportaciones (X) y las Importaciones (M).",
+      "Consulta el PIB Total Calculado y la Balanza Comercial."
+    ],
+    "howToUse_en": [
+      "Enter Household Consumption (C) in millions.",
+      "Enter Gross Private Investment (I) in millions.",
+      "Enter Government Purchases (G) in millions.",
+      "Enter Exports (X) and Imports (M).",
+      "View Calculated Total GDP and Trade Balance."
+    ],
+    "methodology": "PIB = Consumo + Inversión + GastoPúblico + (Exportaciones - Importaciones). Balanza Comercial = Exportaciones - Importaciones.",
+    "methodology_en": "GDP = Consumption + Investment + Government + (Exports - Imports). Trade Balance = Exports - Imports."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Macroeconomía y Cuentas Nacionales",
+    "role_en": "Macroeconomics & National Accounts Specialist Assistant",
+    "includeData": ["totalGdpResult", "netExportsResult"],
+    "instructions": [
+      "Interpreta el PIB total calculado por el método del gasto.",
+      "Analiza si la Balanza Comercial es superavitaria (X > M) o deficitaria (X < M).",
+      "Explica la contribución porcentual del consumo privado al PIB nacional."
+    ],
+    "instructions_en": [
+      "Interpret total calculated GDP by expenditure approach.",
+      "Analyze whether Trade Balance is in surplus (X > M) or deficit (X < M).",
+      "Explain private consumption percentage contribution to national GDP."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "gdp-guide",
+      "icon": "🏛️",
+      "title": "GDP Expenditure Approach Formula",
+      "title_es": "Fórmula del PIB por el Método del Gasto",
+      "content_html_en": "<p><b>Formula:</b> GDP = C + I + G + (X - M).</p><p><b>C:</b> Personal Consumption | <b>I:</b> Gross Private Investment | <b>G:</b> Government Spending | <b>X-M:</b> Net Exports.</p>",
+      "content_html": "<p><b>Fórmula:</b> PIB = C + I + G + (X - M).</p><p><b>C:</b> Consumo Privado | <b>I:</b> Inversión Privada | <b>G:</b> Gasto Público | <b>X-M:</b> Exportaciones Netas.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "consumptionC",
+      "label": "Consumo Privado de Hogares (C - Millones)",
+      "label_en": "Household Consumption (C - Millions)",
+      "type": "currency",
+      "default": 14000,
+      "min": 0,
+      "max": 1000000,
+      "step": 100,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 }
+      ]
+    },
+    {
+      "id": "investmentI",
+      "label": "Inversión Privada Bruta (I - Millones)",
+      "label_en": "Gross Private Investment (I - Millions)",
+      "type": "currency",
+      "default": 3500,
+      "min": 0,
+      "max": 1000000,
+      "step": 100,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 }
+      ]
+    },
+    {
+      "id": "governmentG",
+      "label": "Gasto Público / Gobierno (G - Millones)",
+      "label_en": "Government Spending (G - Millions)",
+      "type": "currency",
+      "default": 4000,
+      "min": 0,
+      "max": 1000000,
+      "step": 100,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 }
+      ]
+    },
+    {
+      "id": "exportsX",
+      "label": "Exportaciones (X - Millones)",
+      "label_en": "Exports (X - Millions)",
+      "type": "currency",
+      "default": 2500,
+      "min": 0,
+      "max": 1000000,
+      "step": 100,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 }
+      ]
+    },
+    {
+      "id": "importsM",
+      "label": "Importaciones (M - Millones)",
+      "label_en": "Imports (M - Millions)",
+      "type": "currency",
+      "default": 3100,
+      "min": 0,
+      "max": 1000000,
+      "step": 100,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "netExportsResult",
+      "label": "Exportaciones Netas / Balanza Comercial (X - M)",
+      "label_en": "Net Exports / Trade Balance (X - M)",
+      "expression": "exportsX - importsM",
+      "unit": "USD",
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "totalGdpResult",
+      "label": "Producto Interno Bruto Total (PIB / GDP)",
+      "label_en": "Total Gross Domestic Product (GDP)",
+      "expression": "consumptionC + investmentI + governmentG + netExportsResult",
+      "unit": "USD",
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalGdpResult", "op": ">=", "value": 0 }, "label": "PIB Nacional Calculado", "label_en": "National GDP Computed", "tone": "success", "text": "Producción macroeconómica agregada cuantificada.", "text_en": "Aggregate macroeconomic output quantified." }
+      ]
+    }
+  ]
+}

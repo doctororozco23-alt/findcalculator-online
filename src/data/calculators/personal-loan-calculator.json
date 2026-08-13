@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "personal-loan-calculator",
+    "title": "Calculadora de Préstamo Personal",
+    "title_en": "Personal Loan Calculator",
+    "slug": "prestamo-personal",
+    "category": "finance",
+    "subcategory": "loans",
+    "tags": ["prestamo-personal", "cuota-prestamo", "intereses"],
+    "tags_en": ["personal-loan", "loan-payment", "interest"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "HandCoins"
+  },
+  "content": {
+    "shortDescription": "Calcula la cuota mensual fija y el coste total en intereses de un préstamo personal o de libre disposición.",
+    "shortDescription_en": "Calculate monthly installment payment and total interest costs for a personal loan.",
+    "longDescription": "Estima la cuota mensual fija requerida para devolver un préstamo personal no garantizado según el capital prestado, tasa de interés anual (TIN %) y plazo de amortización en meses.",
+    "longDescription_en": "Estimate fixed monthly installment payment required to pay off an unsecured personal loan based on principal, annual interest rate, and term length.",
+    "howToUse": [
+      "Ingresa el monto del préstamo personal solicitado.",
+      "Establece la tasa de interés anual (%).",
+      "Indica el plazo en meses (ej. 12, 36, 60 meses).",
+      "Consulta la cuota fija mensual y el total de intereses acumulados."
+    ],
+    "howToUse_en": [
+      "Enter requested personal loan principal amount and active currency.",
+      "Set annual interest rate (%).",
+      "Enter loan repayment term in months (e.g. 12, 36, 60 months).",
+      "View fixed monthly payment and total accumulated interest."
+    ],
+    "methodology": "Fórmula Préstamo Personal: Cuota = Capital × [ (r / 12) / (1 - (1 + r / 12)^-n) ].",
+    "methodology_en": "Personal Loan Formula: Payment = Principal × [ (r / 12) / (1 - (1 + r / 12)^-n) ]."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🤝",
+      "title": "Fixed Rates vs Variable Personal Loans",
+      "title_es": "Préstamos Personales Fijos vs Variables",
+      "content_html_en": "<p>Fixed-rate personal loans lock in your monthly payment for the entire term, protecting you from interest rate increases during repayment.</p>",
+      "content_html": "<p>Los préstamos personales a tasa fija mantienen una cuota mensual idéntica durante todo el contrato, ofreciendo estabilidad presupuestaria.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "loanAmount",
+      "label": "Monto del préstamo personal",
+      "label_en": "Personal Loan Principal Amount",
+      "type": "currency",
+      "default": 15000,
+      "min": 500,
+      "max": 100000,
+      "step": 500,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [500, 100000], "message": "Monto entre 500 y 100.000", "message_en": "Amount between 500 and 100,000" }]
+    },
+    {
+      "id": "interestRate",
+      "label": "Tasa de interés anual (%)",
+      "label_en": "Annual Interest Rate (%)",
+      "type": "number",
+      "default": 8.5,
+      "min": 0.1,
+      "max": 35,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "loanMonths",
+      "label": "Plazo de devolución (meses)",
+      "label_en": "Repayment Term (months)",
+      "type": "slider",
+      "default": 36,
+      "min": 6,
+      "max": 84,
+      "step": 6,
+      "unit": "meses",
+      "unit_en": "months",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "monthlyPayment",
+      "label": "Cuota Mensual Fija a Pagar",
+      "label_en": "Fixed Monthly Installment Payment",
+      "expression": "loanAmount * (interestRate / 1200) / (1 - (1 + interestRate / 1200) ^ -loanMonths)",
+      "unit": { "follows": "loanAmount" },
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "monthlyPayment", "op": ">", "value": 0 }, "label": "Cuota Mensual Calculada", "label_en": "Monthly Installment Calculated", "tone": "info", "text": "Cuota fija requerida para amortizar el capital e intereses.", "text_en": "Fixed monthly payment required to fully amortize loan principal and interest." }
+      ]
+    },
+    {
+      "id": "totalInterestPaid",
+      "label": "Total intereses pagados al banco",
+      "label_en": "Total Interest Costs Paid to Lender",
+      "expression": "(monthlyPayment * loanMonths) - loanAmount",
+      "unit": { "follows": "loanAmount" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "totalRepaymentAmount",
+      "label": "Desembolso total acumulado",
+      "label_en": "Total Cumulative Amount Paid Back",
+      "expression": "monthlyPayment * loanMonths",
+      "unit": { "follows": "loanAmount" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "auto-loan-calculator", "type": "static", "message": "Calcula un préstamo de coche específico", "message_en": "Calculate specific auto loan payment", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Préstamos Personales",
+    "role_en": "Personal Loan Financial Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["monthlyPayment", "totalInterestPaid", "totalRepaymentAmount", "loanAmount"],
+    "instructions": [
+      "Sintetiza la cuota fija mensual y el costo total en intereses en 2 frases concisas.",
+      "Destaca cómo reducir el plazo en meses disminuye drásticamente el costo total en intereses."
+    ],
+    "instructions_en": [
+      "Summarize fixed monthly payment and total interest cost in 2 concise sentences.",
+      "Highlight how shortening repayment term significantly reduces total interest paid."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Préstamo Personal | CalculadoraHub",
+    "metaTitle_en": "Personal Loan Calculator | CalculadoraHub",
+    "metaDescription": "Calcula la cuota mensual y los intereses totales de tu préstamo personal. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate monthly installment payment and total interest cost for personal loans. Free, instant results.",
+    "keywords": ["personal loan calculator", "prestamo personal", "cuota prestamo", "credito personal"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "pregnancy-conception-calculator",
+    "title": "Calculadora de Concepción de Embarazo (Por Fecha)",
+    "title_en": "Pregnancy Conception Calculator (By Calendar Date)",
+    "slug": "concepcion-embarazo",
+    "category": "health",
+    "subcategory": "pregnancy",
+    "tags": ["concepcion", "embarazo", "ovulacion", "edad-fetal"],
+    "tags_en": ["conception", "pregnancy", "ovulation", "fetal-age"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calendar"
+  },
+  "content": {
+    "shortDescription": "Calcula la fecha probable de concepción, la ventana de fertilidad previa y la edad fetal biológica real basándote en la fecha de parto o regla.",
+    "shortDescription_en": "Calculate probable conception date, fertile window, and actual biological fetal age based on due date or last period.",
+    "longDescription": "Calculadora biológica clínica que determina retrospectivamente la fecha exacta de la fecundación del óvulo, la ventana de días fértiles de las relaciones sexuales que derivaron en el embarazo y la edad fetal real en semanas y días.",
+    "longDescription_en": "Clinical biological calculator determining fertilization date, fertile window dates of intercourse leading to pregnancy, and actual biological fetal age.",
+    "howToUse": [
+      "Selecciona el método de referencia (Por Fecha Estimada de Parto FPP o Por Última Regla LMP).",
+      "Ingresa la fecha en el calendario.",
+      "Consulta la fecha exacta probable de concepción y la ventana de días fértiles.",
+      "Revisa la edad fetal biológica real acumulada hasta el día de hoy."
+    ],
+    "howToUse_en": [
+      "Select reference method (By Estimated Due Date EDD or By Last Menstrual Period LMP).",
+      "Select date on calendar.",
+      "View exact estimated conception date and fertile intercourse window.",
+      "View actual biological fetal age in weeks and days as of today."
+    ],
+    "methodology": "Cálculo Fisiológico de Concepción: Fecha Concepción = FPP - 266 días (38 semanas de desarrollo biológico desde la fecundación). Ventana Fértil = Fecha Concepción - 5 días hasta +1 día.",
+    "methodology_en": "Physiological Conception Calculation: Conception Date = EDD - 266 days (38 biological development weeks). Fertile Window = Conception Date - 5 days to +1 day."
+  },
+  "guideSections": [
+    {
+      "id": "conception-biology",
+      "icon": "🧬",
+      "title": "Biological Difference: Gestational Age vs Fetal Age",
+      "title_es": "Diferencia Biológica: Edad Gestacional vs Edad Fetal",
+      "content_html_en": "<p><b>Gestational Age:</b> Measured from the first day of your last period (LMP). It is 2 weeks longer than actual baby growth.</p><p><b>Actual Fetal Age:</b> Measured from the exact moment of fertilization/conception (ovulation day).</p>",
+      "content_html": "<p><b>Edad Gestacional:</b> Medida desde el primer día de la última regla (LMP). Incluye 2 semanas previas a la fecundación.</p><p><b>Edad Fetal Real:</b> Medida desde el momento exacto de la fertilización del óvulo (día de ovulación).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "knownMethod",
+      "label": "Dato de referencia conocido",
+      "label_en": "Known Reference Parameter",
+      "type": "select",
+      "default": "due_date",
+      "options": [
+        { "value": "due_date", "label": "Por Fecha Probable de Parto (FPP / Due Date)", "label_en": "By Estimated Delivery Due Date (EDD)" },
+        { "value": "lmp", "label": "Por primer día de la Última Regla (LMP)", "label_en": "By first day of Last Menstrual Period (LMP)" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "referenceDate",
+      "label": "Fecha de referencia en el calendario",
+      "label_en": "Calendar Reference Date",
+      "type": "date",
+      "default": "2026-11-20",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "cycleLength",
+      "label": "Duración habitual del ciclo menstrual",
+      "label_en": "Average Menstrual Cycle Length",
+      "type": "number",
+      "default": 28,
+      "min": 21,
+      "max": 40,
+      "step": 1,
+      "unit": "días",
+      "unit_en": "days",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "estimatedConceptionDate",
+      "label": "Fecha Probable de Concepción",
+      "label_en": "Estimated Conception Date",
+      "expression": "knownMethod == 'due_date' ? addDays(referenceDate, -266) : addDays(referenceDate, 14 + (cycleLength - 28))",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "actualFetalAgeDaysTotal",
+      "label": "Días Fetal Biológicos Transcurridos Hoy",
+      "label_en": "Total Biological Fetal Days Elapsed Today",
+      "expression": "max(daysBetween(estimatedConceptionDate, todayDate()), 0)",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "actualFetalAgeWeeks",
+      "label": "Edad Fetal Biológica Real",
+      "label_en": "Actual Biological Fetal Age",
+      "expression": "floor(actualFetalAgeDaysTotal / 7)",
+      "unit": "semanas",
+      "unit_en": "weeks",
+      "precision": 0,
+      "format": "primary",
+      "interpretation": [
+        { "when": { "field": "actualFetalAgeWeeks", "op": ">", "value": 0 }, "label": "Edad Fetal Biológica", "label_en": "Biological Fetal Age", "tone": "info", "text": "Semanas transcurridas exactamente desde el momento biológico de la fertilización.", "text_en": "Exact weeks elapsed since actual biological fertilization occurred." }
+      ]
+    },
+    {
+      "id": "actualFetalAgeExtraDays",
+      "label": "Días Fetal Adicionales de la Semana",
+      "label_en": "Extra Fetal Days into Current Week",
+      "expression": "actualFetalAgeDaysTotal % 7",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "fertilityWindowStart",
+      "label": "Inicio Estimado de la Ventana Fértil",
+      "label_en": "Estimated Fertile Window Start Date",
+      "expression": "addDays(estimatedConceptionDate, -5)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "fertilityWindowEnd",
+      "label": "Fin Estimado de la Ventana Fértil",
+      "label_en": "Estimated Fertile Window End Date",
+      "expression": "addDays(estimatedConceptionDate, 1)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "pregnancy-calculator", "type": "static", "message": "Calcula la edad gestacional completa por LMP", "message_en": "Calculate complete gestational age by LMP", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Especialista en Biología de la Concepción",
+    "role_en": "Conception Biology Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "cálido y profesional",
+    "includeData": ["estimatedConceptionDate", "actualFetalAgeWeeks", "actualFetalAgeExtraDays", "fertilityWindowStart", "fertilityWindowEnd"],
+    "instructions": [
+      "Sintetiza la fecha probable de concepción, la ventana fértil de fertilización y la edad fetal biológica real en 2 frases concisas.",
+      "Explica con claridad la diferencia entre la edad gestacional obstétrica (desde la regla) y la edad fetal biológica real (desde la concepción)."
+    ],
+    "instructions_en": [
+      "Summarize estimated conception date, intercourse fertile window, and actual biological fetal age in 2 concise sentences.",
+      "Clearly explain the difference between obstetric gestational age vs actual biological fetal age."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Concepción de Embarazo (Por Fecha) | CalculadoraHub",
+    "metaTitle_en": "Pregnancy Conception Calculator (By Calendar Date) | CalculadoraHub",
+    "metaDescription": "Calcula la fecha de concepción, la ventana fértil y la edad fetal biológica real de tu bebé. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate estimated conception date, fertile window, and actual biological fetal age. Free, instant results.",
+    "keywords": ["pregnancy conception calculator", "fecha de concepcion", "edad fetal real", "ventana fertil"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "standard-deviation-calculator",
+    "title": "Calculadora de Desviación Estándar y Varianza",
+    "title_en": "Standard Deviation & Variance Calculator",
+    "slug": "calculadora-de-desviacion-estandar-y-varianza",
+    "category": "statistics",
+    "subcategory": "descriptive",
+    "tags": ["desviacion-estandar", "varianza", "poblacion", "muestra", "estadistica-descriptiva", "sigma"],
+    "tags_en": ["standard-deviation", "variance", "population", "sample", "descriptive-statistics", "sigma"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "BarChart3"
+  },
+  "content": {
+    "shortDescription": "Calcula la Desviación Estándar Muestral ($s$) y Poblacional ($\\sigma$), la Varianza ($s^2, \\sigma^2$) y el Error Estándar de la Media.",
+    "shortDescription_en": "Compute Sample ($s$) and Population ($\\sigma$) Standard Deviation, Variance ($s^2, \\sigma^2$), and Standard Error.",
+    "longDescription": "Herramienta estadística clave para medir la dispersión de datos alrededor de la media. Distingue entre muestra ($n-1$ en denominador por corrección de Bessel) y población completa ($n$).",
+    "longDescription_en": "Key statistical tool measuring data dispersion around the mean. Computes sample ($n-1$ Bessel correction) and population ($n$) metrics.",
+    "howToUse": [
+      "Ingresa hasta 5 valores numéricos de la muestra o población.",
+      "Consulta la Desviación Estándar Muestral ($s$), Poblacional ($\\sigma$) y Varianzas."
+    ],
+    "howToUse_en": [
+      "Enter up to 5 numerical values for sample or population.",
+      "View Sample ($s$) and Population ($\\sigma$) Standard Deviation and Variances."
+    ],
+    "methodology": "Varianza Muestral s² = ∑(x - x̄)² / (n - 1). Desviación Muestral s = √s². Varianza Poblacional σ² = ∑(x - μ)² / n.",
+    "methodology_en": "Sample Variance s² = ∑(x - x̄)² / (n - 1). Sample SD s = √s². Population Variance σ² = ∑(x - μ)² / n."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Dispersión y Varianza Estadista",
+    "role_en": "Dispersion & Variance Statistical Specialist Assistant",
+    "includeData": ["sampleSDResult", "populationSD", "sampleVariance", "meanValue"],
+    "instructions": [
+      "Explica la diferencia técnica entre la Desviación Muestral (s) con corrección de Bessel (n-1) y la Poblacional (σ).",
+      "Interpreta la Varianza como la media de las desviaciones al cuadrado.",
+      "Evalúa el nivel de variabilidad de los datos respecto a la media."
+    ],
+    "instructions_en": [
+      "Explain technical difference between Sample SD (s) with Bessel correction (n-1) and Population SD (σ).",
+      "Interpret Variance as mean of squared deviations.",
+      "Evaluate level of data variability around the mean."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "sd-guide",
+      "icon": "📈",
+      "title": "Sample vs Population Standard Deviation",
+      "title_es": "Desviación Estándar Muestral vs Poblacional",
+      "content_html_en": "<p><b>Sample SD (s):</b> Used when data represents a sample of a larger population (divides by n-1, Bessel's correction).</p><p><b>Population SD (σ):</b> Used when data includes all members of a population (divides by n).</p>",
+      "content_html": "<p><b>Desviación Muestral (s):</b> Se utiliza cuando los datos provienen de una muestra (divide entre n-1, corrección de Bessel).</p><p><b>Desviación Poblacional (σ):</b> Se utiliza cuando los datos contienen a toda la población (divide entre n).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "x1",
+      "label": "Dato 1 (x₁)",
+      "label_en": "Data 1 (x₁)",
+      "type": "number",
+      "default": 10,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "x2",
+      "label": "Dato 2 (x₂)",
+      "label_en": "Data 2 (x₂)",
+      "type": "number",
+      "default": 12,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "x3",
+      "label": "Dato 3 (x₃)",
+      "label_en": "Data 3 (x₃)",
+      "type": "number",
+      "default": 23,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "x4",
+      "label": "Dato 4 (x₄)",
+      "label_en": "Data 4 (x₄)",
+      "type": "number",
+      "default": 23,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "x5",
+      "label": "Dato 5 (x₅)",
+      "label_en": "Data 5 (x₅)",
+      "type": "number",
+      "default": 16,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "meanValue",
+      "label": "Media Aritmética (x̄)",
+      "label_en": "Arithmetic Mean (x̄)",
+      "expression": "(x1 + x2 + x3 + x4 + x5) / 5",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "ssTotal",
+      "label": "Suma de Cuadrados (SS = ∑(x - x̄)²)",
+      "label_en": "Sum of Squares (SS = ∑(x - x̄)²)",
+      "expression": "(x1 - meanValue)^2 + (x2 - meanValue)^2 + (x3 - meanValue)^2 + (x4 - meanValue)^2 + (x5 - meanValue)^2",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "sampleVariance",
+      "label": "Varianza Muestral (s² = SS / (n - 1))",
+      "label_en": "Sample Variance (s² = SS / (n - 1))",
+      "expression": "ssTotal / 4",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "sampleSDResult",
+      "label": "Desviación Estándar Muestral (s)",
+      "label_en": "Sample Standard Deviation (s)",
+      "expression": "sqrt(sampleVariance)",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "sampleSDResult", "op": ">=", "value": 0 }, "label": "Desviación Estándar Calculada", "label_en": "Standard Deviation Computed", "tone": "success", "text": "Dispersión muestral calculada correctamente.", "text_en": "Sample dispersion evaluated successfully." }
+      ]
+    },
+    {
+      "id": "populationSD",
+      "label": "Desviación Estándar Poblacional (σ)",
+      "label_en": "Population Standard Deviation (σ)",
+      "expression": "sqrt(ssTotal / 5)",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

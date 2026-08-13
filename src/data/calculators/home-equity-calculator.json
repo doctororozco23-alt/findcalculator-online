@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "home-equity-calculator",
+    "title": "Calculadora de Préstamo con Garantía Hipotecaria",
+    "title_en": "Home Equity Loan Calculator",
+    "slug": "prestamo-garantia-hipotecaria",
+    "category": "finance",
+    "subcategory": "mortgages",
+    "tags": ["home-equity", "hipoteca", "prestamo"],
+    "tags_en": ["home-equity", "mortgage", "loan"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Home"
+  },
+  "content": {
+    "shortDescription": "Calcula el capital acumulado disponible en tu vivienda (Equity) y las cuotas de un segundo préstamo con garantía hipotecaria.",
+    "shortDescription_en": "Calculate your home equity value and monthly payments for a fixed home equity loan.",
+    "longDescription": "Determina el valor acumulado neto de tu propiedad (Valor de Mercado - Hipoteca Pendiente) y estima el importe máximo que puedes solicitar prestado usando la vivienda como aval.",
+    "longDescription_en": "Determine net home equity (Market Value - Remaining Mortgage) and estimate borrowing capacity applying standard 80-85% LTV limits.",
+    "howToUse": [
+      "Ingresa el valor estimado de mercado de tu vivienda.",
+      "Ingresa el saldo pendiente actual de tu hipoteca principal.",
+      "Establece la tasa de interés anual (%) y el plazo del segundo préstamo.",
+      "Consulta tu capital acumulado neto (Equity) y la cuota mensual."
+    ],
+    "howToUse_en": [
+      "Enter estimated home market value.",
+      "Enter current primary mortgage remaining balance.",
+      "Set annual interest rate (%) and loan term in years.",
+      "View net home equity and monthly equity loan payment."
+    ],
+    "methodology": "Fórmula Equity: Equity = Valor Mercado - Hipoteca Pendiente. Préstamo Máximo (80% LTV) = (Valor Mercado × 0.80) - Hipoteca Pendiente.",
+    "methodology_en": "Home Equity Formula: Net Equity = Market Value - Current Mortgage. Max Loan (80% LTV) = (Market Value × 0.80) - Current Mortgage."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🏡",
+      "title": "Understanding Home Equity",
+      "title_es": "Comprendiendo el Capital Acumulado (Home Equity)",
+      "content_html_en": "<p>Home equity is the difference between what your home is worth and what you owe on your primary mortgage. It grows as home value appreciates and principal is paid down.</p>",
+      "content_html": "<p>El capital acumulado (Equity) es la diferencia entre el valor actual de mercado de tu casa y lo que resta por pagar de tu hipoteca.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "homeValue",
+      "label": "Valor estimado de mercado de la vivienda",
+      "label_en": "Estimated Home Market Value",
+      "type": "currency",
+      "default": 350000,
+      "min": 10000,
+      "max": 5000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [10000, 5000000], "message": "Valor entre 10.000 y 5.000.000", "message_en": "Value between 10,000 and 5,000,000" }]
+    },
+    {
+      "id": "mortgageBalance",
+      "label": "Saldo pendiente de la hipoteca principal",
+      "label_en": "Current Primary Mortgage Balance",
+      "type": "currency",
+      "default": 200000,
+      "min": 0,
+      "max": 5000000,
+      "step": 5000,
+      "unit": { "follows": "homeValue" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "equityLoanRate",
+      "label": "Tasa de interés del préstamo secundario (%)",
+      "label_en": "Second Equity Loan Interest Rate (%)",
+      "type": "number",
+      "default": 6.5,
+      "min": 0.1,
+      "max": 20,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "loanYears",
+      "label": "Plazo del préstamo (años)",
+      "label_en": "Loan Term (years)",
+      "type": "slider",
+      "default": 15,
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "netEquity",
+      "label": "Capital Acumulado Neto (Home Equity)",
+      "label_en": "Net Home Equity Value",
+      "expression": "max(homeValue - mortgageBalance, 0)",
+      "unit": { "follows": "homeValue" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "maxBorrowableEquity",
+      "label": "Monto Máximo Prestabilidad LTV (80%)",
+      "label_en": "Max Borrowable Equity (80% LTV Limit)",
+      "expression": "max((homeValue * 0.80) - mortgageBalance, 0)",
+      "unit": { "follows": "homeValue" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "maxBorrowableEquity", "op": ">", "value": 0 }, "label": "Capacidad de Endeudamiento", "label_en": "Available Borrowing Power", "tone": "success", "text": "Capital acumulado disponible para préstamo secundario.", "text_en": "Available equity for second mortgage funding." }
+      ]
+    },
+    {
+      "id": "monthlyEquityPayment",
+      "label": "Cuota mensual del préstamo equity máximo",
+      "label_en": "Monthly Payment for Max Equity Loan",
+      "expression": "maxBorrowableEquity * (equityLoanRate / 1200) / (1 - (1 + equityLoanRate / 1200) ^ -(loanYears * 12))",
+      "unit": { "follows": "homeValue" },
+      "precision": 2,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "heloc-calculator", "type": "static", "message": "Compara con una línea de crédito HELOC", "message_en": "Compare with HELOC credit line", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Capital Acumulado Home Equity",
+    "role_en": "Home Equity Loan Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["netEquity", "maxBorrowableEquity", "monthlyEquityPayment", "homeValue"],
+    "instructions": [
+      "Sintetiza el capital neto acumulado (Equity) y el límite prestable al 80% LTV en 2 frases concisas.",
+      "Recuerda que la vivienda sirve como colateral para la deuda secundaria."
+    ],
+    "instructions_en": [
+      "Summarize net home equity and 80% LTV max borrowable limit in 2 concise sentences.",
+      "Remind user that home serves as collateral for second equity loan."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Préstamo con Garantía Hipotecaria | CalculadoraHub",
+    "metaTitle_en": "Home Equity Loan Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el capital acumulado en tu vivienda (Equity) y las cuotas del préstamo secundario. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate home equity value and max borrowable loan amount (80% LTV). Free, instant results.",
+    "keywords": ["home equity calculator", "garantia hipotecaria", "equity vivienda", "segunda hipoteca"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

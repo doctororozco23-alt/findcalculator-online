@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "bmi-prime-calculator",
+    "title": "Calculadora de IMC Prime (Índice de Masa Corporal Relativo)",
+    "title_en": "BMI Prime Calculator (Relative Body Mass Index)",
+    "slug": "imc-prime-indice-relativo",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["imc-prime", "bmi-prime", "imc-relativo", "oms"],
+    "tags_en": ["bmi-prime", "relative-bmi", "who", "health"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula tu IMC Prime (Índice de Masa Corporal Relativo) para evaluar en qué porcentaje superas o estás por debajo del límite máximo de peso saludable (IMC 25.0).",
+    "shortDescription_en": "Calculate your BMI Prime ratio to evaluate the exact percentage you are above or below the upper healthy BMI limit (25.0).",
+    "longDescription": "Auditoría de peso corporal relativo. El IMC Prime es una métrica clínica que expresa tu IMC como una proporción directa del límite máximo normal (IMC 25.0 kg/m²). Un IMC Prime de 1.00 representa el límite máximo saludable.",
+    "longDescription_en": "Relative body weight audit. BMI Prime expresses your actual BMI as a ratio of the upper normal weight threshold (BMI 25.0 kg/m²). A BMI Prime of 1.00 represents upper healthy boundary.",
+    "howToUse": [
+      "Ingresa tu peso corporal actual.",
+      "Ingresa tu estatura exacta.",
+      "Consulta tu IMC Prime y el porcentaje exacto de desviación respecto al límite máximo saludable.",
+      "Revisa la clasificación clínica asociada (Bajo Peso, Normal, Sobrepeso u Obesidad)."
+    ],
+    "howToUse_en": [
+      "Enter current body weight.",
+      "Enter exact height.",
+      "View calculated BMI Prime ratio and exact percentage deviation from upper normal limit.",
+      "Review associated clinical classification (Underweight, Normal, Overweight, Obese)."
+    ],
+    "methodology": "Ecuación Clínica: IMC Prime = IMC Actual / 25.0. Rango Saludable Normal = 0.74 a 1.00. Sobrepeso = 1.00 a 1.20. Obesidad = ≥ 1.20.",
+    "methodology_en": "Clinical Ratio Formula: BMI Prime = Actual BMI / 25.0. Normal Range = 0.74 to 1.00. Overweight = 1.00 to 1.20. Obese = ≥ 1.20."
+  },
+  "guideSections": [
+    {
+      "id": "bmi-prime-guide",
+      "icon": "⚖️",
+      "title": "Clinical Interpretation of BMI Prime Ratios",
+      "title_es": "Interpretación Clínica de las Proporciones de IMC Prime",
+      "content_html_en": "<p><b>Underweight (< 0.74):</b> Actual BMI is below 18.5 kg/m².</p><p><b>Normal Range (0.74 - 1.00):</b> Healthy weight range (BMI 18.5 to 25.0 kg/m²).</p><p><b>Overweight (1.00 - 1.20):</b> 1.10 means you are 10% over the upper healthy weight limit.</p><p><b>Obese (≥ 1.20):</b> 1.30 means you are 30% over the upper healthy weight limit.</p>",
+      "content_html": "<p><b>Bajo Peso (< 0.74):</b> IMC por debajo de 18.5 kg/m².</p><p><b>Rango Normal (0.74 - 1.00):</b> Peso dentro de la horquilla saludable (IMC 18.5 a 25.0 kg/m²).</p><p><b>Sobrepeso (1.00 - 1.20):</b> Un valor de 1.10 significa un 10% por encima del límite saludable.</p><p><b>Obesidad (≥ 1.20):</b> Un valor de 1.30 representa un 30% por encima del límite máximo saludable.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "weightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 78,
+      "min": 30,
+      "max": 250,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [30, 250], "message": "Peso entre 30 y 250 kg", "message_en": "Weight between 30 and 250 kg" }]
+    },
+    {
+      "id": "heightCm",
+      "label": "Estatura",
+      "label_en": "Height",
+      "type": "number",
+      "default": 175,
+      "min": 100,
+      "max": 230,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [100, 230], "message": "Estatura entre 100 y 230 cm", "message_en": "Height between 100 and 230 cm" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "actualBmiVal",
+      "label": "Índice de Masa Corporal Actual (IMC)",
+      "label_en": "Actual Body Mass Index (BMI)",
+      "expression": "weightKg / ((heightCm / 100) ^ 2)",
+      "unit": "kg/m²",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "bmiPrimeVal",
+      "label": "Ratio IMC Prime",
+      "label_en": "BMI Prime Ratio",
+      "expression": "actualBmiVal / 25.0",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "bmiPrimeVal", "op": "<", "value": 0.74 }, "label": "Bajo Peso (< 0.74)", "label_en": "Underweight Tier (< 0.74)", "tone": "warning", "text": "IMC por debajo del límite mínimo normal de salud.", "text_en": "BMI is below lower normal healthy threshold." },
+        { "when": { "field": "bmiPrimeVal", "op": "between", "value": [0.74, 1.00] }, "label": "Rango Saludable Normal (0.74 - 1.00)", "label_en": "Normal Healthy Range (0.74 - 1.00)", "tone": "success", "text": "Peso corporal óptimo dentro del límite máximo de salud.", "text_en": "Body weight is within normal upper healthy boundary." },
+        { "when": { "field": "bmiPrimeVal", "op": "between", "value": [1.00, 1.20] }, "label": "Sobrepeso (1.00 - 1.20)", "label_en": "Overweight Tier (1.00 - 1.20)", "tone": "warning", "text": "Peso corporal por encima del límite máximo normal de salud.", "text_en": "Body weight is above upper normal healthy boundary." },
+        { "when": { "field": "bmiPrimeVal", "op": ">=", "value": 1.20 }, "label": "Obesidad (≥ 1.20)", "label_en": "Obese Tier (≥ 1.20)", "tone": "warning", "text": "IMC en categoría clínica de obesidad.", "text_en": "BMI falls into clinical obesity classification." }
+      ]
+    },
+    {
+      "id": "percentOverUnderLimit",
+      "label": "Desviación Porcentual del Límite Saludable",
+      "label_en": "Percentage Deviation from Upper Healthy Limit",
+      "expression": "(bmiPrimeVal - 1.00) * 100",
+      "unit": "%",
+      "precision": 1,
+      "format": "percent",
+      "type": "primary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "healthy-weight-calculator", "type": "static", "message": "Calcula los kg necesarios para el rango saludable", "message_en": "Calculate kg needed to enter healthy range", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Epidemiólogo y Especialista en Salud Pública",
+    "role_en": "Epidemiologist & Public Health Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y analítico",
+    "includeData": ["bmiPrimeVal", "actualBmiVal", "percentOverUnderLimit", "weightKg"],
+    "instructions": [
+      "Sintetiza el valor de IMC Prime, el IMC tradicional y el porcentaje exacto de desviación del límite saludable en 2 frases concisas.",
+      "Explica que un IMC Prime superior a 1.00 indica exceso ponderal en relación con la estatura."
+    ],
+    "instructions_en": [
+      "Summarize BMI Prime ratio, traditional BMI, and exact percentage deviation from upper normal limit in 2 concise sentences.",
+      "Explain that a BMI Prime value above 1.00 reflects relative weight excess for height."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de IMC Prime (Índice Relativo) | CalculadoraHub",
+    "metaTitle_en": "BMI Prime Calculator (Relative Body Mass Index) | CalculadoraHub",
+    "metaDescription": "Calcula tu ratio de IMC Prime y evalúa tu desviación del límite máximo saludable. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your BMI Prime ratio to assess percentage deviation from upper healthy weight limits. Free, instant results.",
+    "keywords": ["bmi prime calculator", "imc prime", "imc relativo", "salud imc"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

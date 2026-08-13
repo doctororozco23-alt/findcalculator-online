@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "probability-calculator",
+    "title": "Calculadora de Probabilidad de Eventos Simples y Compuestos",
+    "title_en": "Simple & Compound Event Probability Calculator",
+    "slug": "calculadora-de-probabilidad-eventos-simples-compuestos",
+    "category": "statistics",
+    "subcategory": "probability",
+    "tags": ["probabilidad", "eventos", "probabilidad-compuesta", "probabilidad-condicional", "estadistica", "azar"],
+    "tags_en": ["probability", "events", "compound-probability", "conditional-probability", "statistics", "chance"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "BarChart3"
+  },
+  "content": {
+    "shortDescription": "Calcula la Probabilidad Clásica ( $P(A) = \\frac{\\text{favorables}}{\\text{posibles}}$ ), el Evento Complementario ( $P(A^c) = 1 - P(A)$ ) y Odds ratio.",
+    "shortDescription_en": "Compute Classical Probability ( $P(A) = \\frac{\\text{favorable}}{\\text{total}}$ ), Complementary Event ( $P(A^c) = 1 - P(A)$ ), and Odds.",
+    "longDescription": "Herramienta probabilística fundamental. Dado el número de eventos favorables y el espacio muestral total de casos posibles, calcula el porcentaje de ocurrencia, la probabilidad decimal y la razón de probabilidad a favor/en contra (Odds).",
+    "longDescription_en": "Fundamental probability calculator. Given favorable cases and total sample space, computes occurrence percentage, decimal probability, and Odds.",
+    "howToUse": [
+      "Ingresa el número de Casos Favorables.",
+      "Ingresa el número total de Casos Posibles (Espacio Muestral).",
+      "Consulta la Probabilidad Decimal $P(A)$, el Porcentaje % $P(A)$ y la Probabilidad Complementaria $P(A^c)$."
+    ],
+    "howToUse_en": [
+      "Enter number of Favorable Cases.",
+      "Enter Total Sample Space (Possible Cases).",
+      "View Decimal Probability $P(A)$, Percentage % $P(A)$, and Complementary Probability $P(A^c)$."
+    ],
+    "methodology": "P(A) = Casos Favorables / Casos Posibles. P(A^c) = 1 - P(A). Porcentaje = P(A) * 100%.",
+    "methodology_en": "P(A) = Favorable / Total. P(A^c) = 1 - P(A). Percentage = P(A) * 100%."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Probabilidad y Azar",
+    "role_en": "Probability & Chance Specialist Assistant",
+    "includeData": ["probPercentResult", "probDecimalResult", "complementaryProb"],
+    "instructions": [
+      "Interpreta la probabilidad calculada en el rango 0 a 100%.",
+      "Explica la probabilidad del evento complementario P(A^c).",
+      "Analiza la razón de Odds (casos a favor vs desfavorables)."
+    ],
+    "instructions_en": [
+      "Interpret computed probability in 0 to 100% range.",
+      "Explain probability of complementary event P(A^c).",
+      "Analyze Odds ratio (favorable vs unfavorable cases)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "prob-guide",
+      "icon": "🎲",
+      "title": "Classical Probability Axioms",
+      "title_es": "Axiomas de la Probabilidad Clásica",
+      "content_html_en": "<p><b>Range:</b> 0 ≤ P(A) ≤ 1 (0% impossible event, 100% certain event).</p><p><b>Complementary Rule:</b> P(A^c) = 1 - P(A).</p><p><b>Odds:</b> Ratio of favorable to unfavorable outcomes (P / (1-P)).</p>",
+      "content_html": "<p><b>Rango:</b> 0 ≤ P(A) ≤ 1 (0% evento imposible, 100% evento seguro).</p><p><b>Regla del Complementario:</b> P(A^c) = 1 - P(A).</p><p><b>Odds (Razón de Ocurrencia):</b> Relación de casos favorables contra desfavorables (P / (1-P)).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "favorableCases",
+      "label": "Casos Favorables",
+      "label_en": "Favorable Cases",
+      "type": "number",
+      "default": 1,
+      "min": 0,
+      "max": 1000000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "totalCases",
+      "label": "Casos Posibles Totales (Espacio Muestral)",
+      "label_en": "Total Possible Cases (Sample Space)",
+      "type": "number",
+      "default": 6,
+      "min": 1,
+      "max": 1000000,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1, 1000000], "message": "Los casos totales deben ser ≥ 1", "message_en": "Total cases must be ≥ 1" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "probDecimalResult",
+      "label": "Probabilidad Decimal (P(A))",
+      "label_en": "Decimal Probability (P(A))",
+      "expression": "totalCases > 0 ? (favorableCases / totalCases) : 0",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "probPercentResult",
+      "label": "Porcentaje de Ocurrencia (% P(A))",
+      "label_en": "Occurrence Percentage (% P(A))",
+      "expression": "probDecimalResult * 100",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "probPercentResult", "op": ">=", "value": 0 }, "label": "Probabilidad Evaluada", "label_en": "Probability Evaluated", "tone": "success", "text": "Ocurrencia probabilística cuantificada.", "text_en": "Probabilistic occurrence quantified." }
+      ]
+    },
+    {
+      "id": "complementaryProb",
+      "label": "Probabilidad Complementaria (P(Aᶜ) = 1 - P(A))",
+      "label_en": "Complementary Probability (P(Aᶜ) = 1 - P(A))",
+      "expression": "1 - probDecimalResult",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

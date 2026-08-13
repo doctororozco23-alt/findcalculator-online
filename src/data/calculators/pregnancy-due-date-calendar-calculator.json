@@ -1,0 +1,139 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "pregnancy-due-date-calendar-calculator",
+    "title": "Calculadora de Fecha Probable de Parto (FPP), Concepción y Semanas de Gestación",
+    "title_en": "Pregnancy Due Date (EDD), Conception & Gestational Age Calculator",
+    "slug": "calculadora-de-fecha-probable-de-parto-fpp-concepcion-semanas-gestacion",
+    "category": "datetime",
+    "subcategory": "dates",
+    "tags": ["embarazo", "fecha-probable-de-parto", "semanas-de-gestacion", "regla-de-naegele", "concepcion", "fiv", "obstetricia", "fecha-y-tiempo"],
+    "tags_en": ["pregnancy", "due-date", "gestational-age", "naegeles-rule", "conception", "ivf", "obstetrics", "date-time"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.1.0",
+    "icon": "Heart"
+  },
+  "content": {
+    "shortDescription": "Calcula la Fecha Probable de Parto (FPP) a partir de la Fecha de Última Regla (FUR), Fecha de Concepción o Transferencia Embrionaria FIV.",
+    "shortDescription_en": "Calculate Estimated Due Date (EDD) from Last Menstrual Period (LMP), Conception Date, or IVF Embryo Transfer Date.",
+    "longDescription": "Herramienta obstétrica avanzada y de planificación familiar. Soporta múltiples métodos de cálculo (Naegele 280 días, Concepción 266 días o FIV).",
+    "longDescription_en": "Advanced obstetrics and family planning tool. Supports multiple calculation methods (Naegele 280 days, Conception 266 days, or IVF).",
+    "howToUse": [
+      "Selecciona el Método de Cálculo (Fecha Última Regla FUR, Fecha de Concepción, o Transferencia FIV Día 5).",
+      "Ingresa el Año del Evento Base.",
+      "Ingresa el Mes del Evento Base (1 a 12).",
+      "Ingresa el Día del Evento Base (1 a 31).",
+      "Consulta el Año Probable de Parto (FPP), Semanas de Gestación Estimadas y Trimestre."
+    ],
+    "howToUse_en": [
+      "Select Calculation Method (Last Menstrual Period LMP, Conception Date, or IVF Day 5 Transfer).",
+      "Enter Base Event Year.",
+      "Enter Base Event Month (1 to 12).",
+      "Enter Base Event Day (1 to 31).",
+      "View Estimated Due Date (EDD Year), Gestational Weeks, and Trimester."
+    ],
+    "methodology": "Método FUR = +280 días. Método Concepción = +266 días. Método FIV Día 5 = +261 días.",
+    "methodology_en": "LMP Method = +280 days. Conception Method = +266 days. IVF Day 5 Method = +261 days."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Obstetricia y Calendario de Gestación",
+    "role_en": "Obstetrics & Gestational Calendar Specialist Assistant",
+    "includeData": ["estimatedGestationalWeeksResult", "eddYearResult"],
+    "instructions": [
+      "Interpreta las semanas de gestación calculadas y la fecha estimada de parto.",
+      "Explica la distribución por trimestres (1er Trimestre: 1-12 semanas, 2do Trimestre: 13-27 semanas, 3er Trimestre: 28-40 semanas).",
+      "Recordar que solo el 5% de los bebés nacen exactamente en la fecha FPP calculada (el rango a término abarca de la semana 37 a la 42)."
+    ],
+    "instructions_en": [
+      "Interpret calculated gestational weeks and estimated due date.",
+      "Explain trimester milestones breakdown (1st Trimester: 1-12 weeks, 2nd Trimester: 13-27 weeks, 3rd Trimester: 28-40 weeks).",
+      "Remind that only 5% of babies are born on exact EDD date (full-term range spans week 37 to 42)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "pdc-guide",
+      "icon": "👶",
+      "title": "Pregnancy Trimester Milestones Reference",
+      "title_es": "Hitos de Trimestres de Embarazo",
+      "content_html_en": "<p><b>Full-Term Pregnancy:</b> 37 to 42 Weeks (Average 40 Weeks / 280 Days from LMP).</p><p><b>Conception Offset:</b> Conception typically occurs ~14 days after LMP.</p><p><b>IVF Day 5 Transfer:</b> Adds 261 days to transfer date.</p>",
+      "content_html": "<p><b>Embarazo a Término:</b> 37 a 42 Semanas (Promedio 40 Semanas / 280 Días desde FUR).</p><p><b>Desplazamiento Concepción:</b> Ocurre ~14 días después de la FUR.</p><p><b>FIV Día 5:</b> Añade 261 días a la fecha de transferencia.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "pregnancyCalcMethodType",
+      "label": "Método de Cálculo de Parto",
+      "label_en": "Due Date Calculation Method",
+      "type": "select",
+      "default": "lmp",
+      "options": [
+        { "value": "lmp", "label": "Fecha de Última Regla (FUR / LMP - +280 días)", "label_en": "Last Menstrual Period (LMP - +280 days)" },
+        { "value": "conception", "label": "Fecha de Concepción (+266 días)", "label_en": "Conception Date (+266 days)" },
+        { "value": "ivf5", "label": "Transferencia Embrionaria FIV Día 5 (+261 días)", "label_en": "IVF Day 5 Transfer (+261 days)" }
+      ]
+    },
+    {
+      "id": "baseStartYearNum",
+      "label": "Año del Evento Base",
+      "label_en": "Base Event Year",
+      "type": "number",
+      "default": 2025,
+      "min": 2020,
+      "max": 2030,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "baseStartMonthNum",
+      "label": "Mes del Evento Base (1-12)",
+      "label_en": "Base Event Month (1-12)",
+      "type": "number",
+      "default": 11,
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "baseStartDayNum",
+      "label": "Día del Evento Base (1-31)",
+      "label_en": "Base Event Day (1-31)",
+      "type": "number",
+      "default": 10,
+      "min": 1,
+      "max": 31,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "eddYearResult",
+      "label": "Año Probable de Parto Estimado (FPP)",
+      "label_en": "Estimated Due Date Year (EDD)",
+      "expression": "baseStartMonthNum > 3 ? baseStartYearNum + 1 : baseStartYearNum",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "eddYearResult", "op": ">=", "value": 2020 }, "label": "FPP Calculada", "label_en": "EDD Computed", "tone": "success", "text": "Año estimado de parto cuantificado.", "text_en": "Estimated birth year quantified." }
+      ]
+    },
+    {
+      "id": "estimatedGestationalWeeksResult",
+      "label": "Semanas de Gestación Estimadas Actuales",
+      "label_en": "Estimated Current Gestational Weeks",
+      "expression": "min(42, max(1, round(((2026 - baseStartYearNum) * 52) + ((2 - baseStartMonthNum) * 4.33))))",
+      "unit": "semanas",
+      "unit_en": "weeks",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

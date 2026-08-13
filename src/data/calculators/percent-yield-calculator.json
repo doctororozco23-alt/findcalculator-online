@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "percent-yield-calculator",
+    "title": "Calculadora de Rendimiento Porcentual de Reacciones Químicas",
+    "title_en": "Chemical Reaction Percent Yield Calculator",
+    "slug": "calculadora-de-rendimiento-porcentual-reaccion-quimica",
+    "category": "chemistry",
+    "subcategory": "stoichiometry",
+    "tags": ["rendimiento-porcentual", "rendimiento-teorico", "rendimiento-real", "estequiometria", "eficiencia-quimica", "quimica"],
+    "tags_en": ["percent-yield", "theoretical-yield", "actual-yield", "stoichiometry", "chemical-efficiency", "chemistry"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la eficiencia estequiométrica de una reacción química en porcentaje ($\\% \\text{Rendimiento} = \\frac{\\text{Real}}{\\text{Teórico}} \\times 100$).",
+    "shortDescription_en": "Calculate reaction stoichiometric efficiency percentage ($\\text{Percent Yield} = \\frac{\\text{Actual}}{\\text{Theoretical}} \\times 100$).",
+    "longDescription": "Herramienta de química analítica y síntesis industrial. Evalúa las pérdidas de producto durante procesos de purificación, cristalización o reacciones secundarias.",
+    "longDescription_en": "Analytical chemistry and industrial synthesis tool. Evaluates product loss during purification, crystallization, or side reactions.",
+    "howToUse": [
+      "Ingresa el Rendimiento Real Obtenido en el laboratorio (gramos - g).",
+      "Ingresa el Rendimiento Teórico Máximo Calculado estequiométricamente (gramos - g).",
+      "Consulta el Rendimiento Porcentual Resultante (%) y la pérdida de masa."
+    ],
+    "howToUse_en": [
+      "Enter Actual Yield obtained in laboratory (grams - g).",
+      "Enter Maximum Theoretical Yield calculated stoichiometrically (grams - g).",
+      "View Resulting Percent Yield (%) and mass loss."
+    ],
+    "methodology": "Rendimiento Porcentual (%) = (Rendimiento Real / Rendimiento Teórico) * 100.",
+    "methodology_en": "Percent Yield (%) = (Actual Yield / Theoretical Yield) * 100."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Síntesis Orgánica y Estequiometría Industrial",
+    "role_en": "Organic Synthesis & Industrial Stoichiometry Specialist Assistant",
+    "includeData": ["percentYieldResult", "unreactedLossMassGrams"],
+    "instructions": [
+      "Interpreta la eficiencia de la reacción sintética obtenida.",
+      "Explica los factores comunes de pérdida de rendimiento (filtración ineficiente, reacciones secundarias, equilibrio incompleto).",
+      "Muestra la viabilidad comercial de síntesis según el rendimiento (% > 85% excelente en síntesis de laboratorio)."
+    ],
+    "instructions_en": [
+      "Interpret synthetic reaction efficiency.",
+      "Explain common yield loss factors (incomplete filtration, side reactions, equilibrium limits).",
+      "Show commercial synthesis viability based on yield (% > 85% excellent in lab synthesis)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "py-guide",
+      "icon": "⚖️",
+      "title": "Percent Yield Formula & Efficiency Tiers",
+      "title_es": "Fórmula de Rendimiento Porcentual y Niveles de Eficiencia",
+      "content_html_en": "<p><b>Formula:</b> % Yield = (Actual Yield / Theoretical Yield) × 100</p><p><b>&gt; 90%:</b> Excellent synthetic yield.</p><p><b>70% - 90%:</b> Very good standard lab yield.</p><p><b>&lt; 50%:</b> Low yield requiring process optimization.</p>",
+      "content_html": "<p><b>Fórmula:</b> % Rendimiento = (Rendimiento Real / Rendimiento Teórico) × 100</p><p><b>&gt; 90%:</b> Excelente rendimiento sintético.</p><p><b>70% - 90%:</b> Muy buen rendimiento estándar de laboratorio.</p><p><b>&lt; 50%:</b> Rendimiento bajo que requiere optimización.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "actualYieldGrams",
+      "label": "Rendimiento Real Obtenido (gramos - g)",
+      "label_en": "Actual Yield Obtained (grams - g)",
+      "type": "number",
+      "default": 18.5,
+      "min": 0.001,
+      "max": 100000,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "theoreticalYieldGrams",
+      "label": "Rendimiento Teórico Máximo (gramos - g)",
+      "label_en": "Maximum Theoretical Yield (grams - g)",
+      "type": "number",
+      "default": 22.0,
+      "min": 0.001,
+      "max": 100000,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "percentYieldResult",
+      "label": "Rendimiento Porcentual de la Reacción (%)",
+      "label_en": "Reaction Percent Yield (%)",
+      "expression": "theoreticalYieldGrams > 0 ? ((actualYieldGrams / theoreticalYieldGrams) * 100) : 0",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "percentYieldResult", "op": ">=", "value": 85 }, "label": "Excelente Rendimiento (≥ 85%)", "label_en": "Excellent Yield (≥ 85%)", "tone": "success", "text": "Reacción altamente eficiente.", "text_en": "Highly efficient reaction." },
+        { "when": { "field": "percentYieldResult", "op": "between", "value": [60, 84.9] }, "label": "Rendimiento Moderado (60% - 84%)", "label_en": "Moderate Yield (60% - 84%)", "tone": "info", "text": "Eficiencia estándar de laboratorio.", "text_en": "Standard lab efficiency." },
+        { "when": { "field": "percentYieldResult", "op": "<", "value": 60 }, "label": "Rendimiento Bajo (< 60%)", "label_en": "Low Yield (< 60%)", "tone": "warning", "text": "Pérdidas significativas en purificación.", "text_en": "Significant purification loss." }
+      ]
+    },
+    {
+      "id": "unreactedLossMassGrams",
+      "label": "Pérdida de Masa / Producto no Recuperado (g)",
+      "label_en": "Mass Loss / Unrecovered Product (g)",
+      "expression": "max(0, theoreticalYieldGrams - actualYieldGrams)",
+      "unit": "g",
+      "unit_en": "g",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "triangle-calculator",
+    "title": "Calculadora de Triángulos Generales (Herón, Ley de Senos y Cosenos)",
+    "title_en": "General Triangle Calculator (Heron's Formula, Law of Sines & Cosines)",
+    "slug": "calculadora-de-triangulos-general-heron-ley-de-senos",
+    "category": "math",
+    "subcategory": "geometry",
+    "tags": ["triangulo", "area-triangulo", "heron", "ley-de-senos", "ley-de-cosenos", "geometria"],
+    "tags_en": ["triangle", "triangle-area", "heron-formula", "law-of-sines", "law-of-cosines", "geometry"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el Área (Fórmula de Herón), Perímetro y Semiperímetro de cualquier triángulo conociendo sus tres lados ($a, b, c$).",
+    "shortDescription_en": "Calculate Area (Heron's Formula), Perimeter, and Semi-perimeter for any triangle given 3 side lengths ($a, b, c$).",
+    "longDescription": "Herramienta geométrica para resolver cualquier triángulo. Dado los lados $a, b, c$, verifica la desigualdad triangular ($a+b > c$), calcula el semiperímetro $s = \\frac{a+b+c}{2}$ y el Área exacta mediante la Fórmula de Herón $A = \\sqrt{s(s-a)(s-b)(s-c)}$.",
+    "longDescription_en": "Geometric tool for solving triangles. Given side lengths $a, b, c$, checks the triangle inequality ($a+b > c$), computes semi-perimeter $s = \\frac{a+b+c}{2}$, and Area via Heron's Formula $A = \\sqrt{s(s-a)(s-b)(s-c)}$.",
+    "howToUse": [
+      "Ingresa la longitud del lado $a$.",
+      "Ingresa la longitud del lado $b$.",
+      "Ingresa la longitud del lado $c$.",
+      "Consulta el Área calculada, el Perímetro total y la validación geométrica."
+    ],
+    "howToUse_en": [
+      "Enter length for side $a$.",
+      "Enter length for side $b$.",
+      "Enter length for side $c$.",
+      "View calculated Area, total Perimeter, and geometric validation."
+    ],
+    "methodology": "Desigualdad triangular: a+b > c, a+c > b, b+c > a. Semiperímetro s = (a+b+c)/2. Área de Herón = √(s*(s-a)*(s-b)*(s-c)).",
+    "methodology_en": "Triangle Inequality: a+b > c, a+c > b, b+c > a. Semi-perimeter s = (a+b+c)/2. Heron's Area = √(s*(s-a)*(s-b)*(s-c))."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Geometría de Triángulos",
+    "role_en": "Triangle Geometry Specialist Assistant",
+    "includeData": ["heronArea", "perimeterVal", "semiPerimeterS"],
+    "instructions": [
+      "Verifica si los lados forman un triángulo geométricamente válido (desigualdad triangular).",
+      "Explica el paso a paso de la Fórmula de Herón.",
+      "Clasifica el triángulo según sus lados (equilátero, isósceles, escaleno)."
+    ],
+    "instructions_en": [
+      "Verify if side lengths form a valid geometric triangle (triangle inequality).",
+      "Explain step-by-step Heron's Formula.",
+      "Classify triangle by side lengths (equilateral, isosceles, scalene)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "triangle-guide",
+      "icon": "📐",
+      "title": "Heron's Formula & Triangle Inequality",
+      "title_es": "Fórmula de Herón y Desigualdad Triangular",
+      "content_html_en": "<p><b>Triangle Inequality:</b> The sum of the lengths of any two sides must be greater than the length of the remaining side.</p><p><b>Heron's Formula:</b> Area = √(s(s-a)(s-b)(s-c)) where s = (a+b+c)/2.</p>",
+      "content_html": "<p><b>Desigualdad Triangular:</b> La suma de las longitudes de dos lados cualesquiera debe ser mayor que el lado restante.</p><p><b>Fórmula de Herón:</b> Área = √(s(s-a)(s-b)(s-c)) donde s = (a+b+c)/2.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "sideA",
+      "label": "Lado a",
+      "label_en": "Side a",
+      "type": "number",
+      "default": 5,
+      "min": 0.1,
+      "max": 10000,
+      "step": 0.1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.1, 10000], "message": "El lado debe ser mayor a cero", "message_en": "Side must be > 0" }]
+    },
+    {
+      "id": "sideB",
+      "label": "Lado b",
+      "label_en": "Side b",
+      "type": "number",
+      "default": 6,
+      "min": 0.1,
+      "max": 10000,
+      "step": 0.1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.1, 10000], "message": "El lado debe ser mayor a cero", "message_en": "Side must be > 0" }]
+    },
+    {
+      "id": "sideC",
+      "label": "Lado c",
+      "label_en": "Side c",
+      "type": "number",
+      "default": 7,
+      "min": 0.1,
+      "max": 10000,
+      "step": 0.1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.1, 10000], "message": "El lado debe ser mayor a cero", "message_en": "Side must be > 0" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "perimeterVal",
+      "label": "Perímetro Total (P = a + b + c)",
+      "label_en": "Total Perimeter (P = a + b + c)",
+      "expression": "sideA + sideB + sideC",
+      "unit": "unidades",
+      "unit_en": "units",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "semiPerimeterS",
+      "label": "Semiperímetro (s)",
+      "label_en": "Semi-perimeter (s)",
+      "expression": "perimeterVal / 2",
+      "unit": "unidades",
+      "unit_en": "units",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "heronArea",
+      "label": "Área del Triángulo (Fórmula de Herón)",
+      "label_en": "Triangle Area (Heron's Formula)",
+      "expression": "(sideA + sideB > sideC && sideA + sideC > sideB && sideB + sideC > sideA) ? sqrt(semiPerimeterS * (semiPerimeterS - sideA) * (semiPerimeterS - sideB) * (semiPerimeterS - sideC)) : 0",
+      "unit": "unidades²",
+      "unit_en": "units²",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "heronArea", "op": ">", "value": 0 }, "label": "Triángulo Válido Calculado", "label_en": "Valid Triangle Computed", "tone": "success", "text": "Cumple la desigualdad triangular. Área calculada.", "text_en": "Meets triangle inequality. Area computed." },
+        { "when": { "field": "heronArea", "op": "==", "value": 0 }, "label": "Triángulo Inválido", "label_en": "Invalid Triangle", "tone": "warning", "text": "Los lados no forman un triángulo cerrado (Incumple a+b > c).", "text_en": "Side lengths do not form a valid triangle." }
+      ]
+    }
+  ]
+}

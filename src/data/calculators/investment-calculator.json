@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "investment-calculator",
+    "title": "Calculadora de Crecimiento de Inversiones",
+    "title_en": "Investment Growth Calculator",
+    "slug": "crecimiento-inversiones",
+    "category": "finance",
+    "subcategory": "investments",
+    "tags": ["inversion", "crecimiento", "ahorro"],
+    "tags_en": ["investment", "growth", "savings"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "TrendingUp"
+  },
+  "content": {
+    "shortDescription": "Proyecta el crecimiento acumulado de tu portafolio de inversión combinando capital inicial y depósitos periódicos.",
+    "shortDescription_en": "Project total accumulated portfolio growth combining initial starting capital and recurring deposits.",
+    "longDescription": "Calcula el valor futuro total de tu portafolio de inversión a lo largo del tiempo bajo una tasa de retorno media esperada y una frecuencia de aportaciones periódicas.",
+    "longDescription_en": "Calculate total projected future value of your investment portfolio over time given expected rate of return and deposit frequency.",
+    "howToUse": [
+      "Ingresa el capital inicial invertido.",
+      "Añade la aportación mensual periódica.",
+      "Establece la tasa de retorno anual estimada (%) y el horizonte de años.",
+      "Consulta el balance futuro total proyectado."
+    ],
+    "howToUse_en": [
+      "Enter starting initial capital and active currency.",
+      "Add recurring monthly contribution.",
+      "Set estimated annual rate of return (%) and time horizon in years.",
+      "View total projected future balance."
+    ],
+    "methodology": "Fórmula Crecimiento Inversión: FV = P × (1 + r)^t + PMT × [ ((1 + r)^t - 1) / r ].",
+    "methodology_en": "Investment Growth Formula: FV = P × (1 + r)^t + PMT × [ ((1 + r)^t - 1) / r ]."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "📈",
+      "title": "Long-Term Wealth Accumulation",
+      "title_es": "Acumulación de Patrimonio a Largo Plazo",
+      "content_html_en": "<p>Consistent recurring contributions combined with annual compound growth are the foundation for long-term financial independence.</p>",
+      "content_html": "<p>Aportaciones periódicas constantes sumadas al crecimiento compuesto anual constituyen la base para construir independencia financiera a largo plazo.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "startingCapital",
+      "label": "Capital inicial invertido",
+      "label_en": "Starting Initial Capital",
+      "type": "currency",
+      "default": 15000,
+      "min": 0,
+      "max": 10000000,
+      "step": 1000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "monthlyContribution",
+      "label": "Aportación mensual periódica",
+      "label_en": "Recurring Monthly Contribution",
+      "type": "currency",
+      "default": 500,
+      "min": 0,
+      "max": 100000,
+      "step": 50,
+      "unit": { "follows": "startingCapital" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "annualReturnRate",
+      "label": "Tasa de retorno anual estimada (%)",
+      "label_en": "Estimated Annual Return Rate (%)",
+      "type": "number",
+      "default": 7.5,
+      "min": 0.1,
+      "max": 30,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "investmentYears",
+      "label": "Horizonte temporal (años)",
+      "label_en": "Time Horizon (years)",
+      "type": "slider",
+      "default": 15,
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalDeposits",
+      "label": "Total dinero aportado de tu bolsillo",
+      "label_en": "Total Out-of-Pocket Cash Deposited",
+      "expression": "startingCapital + (monthlyContribution * 12 * investmentYears)",
+      "unit": { "follows": "startingCapital" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "futurePortfolioValue",
+      "label": "Balance Futuro Total del Portafolio",
+      "label_en": "Projected Future Portfolio Value",
+      "expression": "startingCapital * ((1 + annualReturnRate / 100) ^ investmentYears) + (monthlyContribution * 12) * ((((1 + annualReturnRate / 100) ^ investmentYears) - 1) / (annualReturnRate / 100))",
+      "unit": { "follows": "startingCapital" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "futurePortfolioValue", "op": ">", "value": 0 }, "label": "Proyección de Portafolio", "label_en": "Portfolio Growth Projection", "tone": "success", "text": "Proyección basada en tasa de crecimiento compuesto.", "text_en": "Projection based on compound investment growth." }
+      ]
+    },
+    {
+      "id": "investmentGain",
+      "label": "Ganancia generada por rentabilidad",
+      "label_en": "Total Net Investment Profit",
+      "expression": "max(futurePortfolioValue - totalDeposits, 0)",
+      "unit": { "follows": "startingCapital" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "roi-calculator", "type": "static", "message": "Calcula el retorno de inversión (ROI)", "message_en": "Calculate Return on Investment (ROI)", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Portafolio e Inversiones",
+    "role_en": "Portfolio Investment Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y motivador",
+    "includeData": ["futurePortfolioValue", "investmentGain", "totalDeposits", "annualReturnRate"],
+    "instructions": [
+      "Sintetiza el balance futuro proyectado y la ganancia neta en 2 frases concisas.",
+      "Destaca que las aportaciones periódicas impulsan exponencialmente el crecimiento acumulado."
+    ],
+    "instructions_en": [
+      "Summarize projected future portfolio value and net profit in 2 concise sentences.",
+      "Highlight how recurring contributions exponentially drive total accumulated growth."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Crecimiento de Inversiones | CalculadoraHub",
+    "metaTitle_en": "Investment Growth Calculator | CalculadoraHub",
+    "metaDescription": "Proyecta el valor futuro de tu portafolio de inversión y ahorros. Gratis e instantáneo.",
+    "metaDescription_en": "Project future investment portfolio value and net returns over time. Free, instant results.",
+    "keywords": ["investment calculator", "crecimiento inversiones", "portafolio ahorro"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

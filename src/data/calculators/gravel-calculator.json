@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "gravel-calculator",
+    "title": "Calculadora de Grava y Piedra Triturada (Volumen y Toneladas)",
+    "title_en": "Gravel & Crushed Stone Calculator (Volume & Tons)",
+    "slug": "calculadora-de-grava-piedra-triturada-toneladas",
+    "category": "construction",
+    "subcategory": "materials",
+    "tags": ["grava", "piedra-triturada", "toneladas-de-grava", "caminos", "paisajismo", "construccion", "agregados"],
+    "tags_en": ["gravel", "crushed-stone", "gravel-tons", "driveways", "landscaping", "construction", "aggregates"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la cantidad de grava o piedra triturada necesaria en yardas cúbicas ($yd^3$) y toneladas ($ton$) para caminos y superficies.",
+    "shortDescription_en": "Calculate required gravel or crushed stone volume in cubic yards ($yd^3$) and weight in US tons ($ton$) for driveways.",
+    "longDescription": "Herramienta de paisajismo y aglomerados de obra civil. Determina el peso en toneladas de grava compactada requerida a partir del volumen del terreno.",
+    "longDescription_en": "Landscaping and civil engineering aggregates tool. Determines weight in tons of compacted gravel required based on site dimensions.",
+    "howToUse": [
+      "Ingresa el Largo del área del terreno (pies).",
+      "Ingresa el Ancho del área del terreno (pies).",
+      "Ingresa la Profundidad de la capa de grava (pulgadas, ej. 2 a 4 in).",
+      "Consulta el Volumen en Yardas Cúbicas ($yd^3$) y el Peso Estimado en Toneladas."
+    ],
+    "howToUse_en": [
+      "Enter Terrain Length (feet).",
+      "Enter Terrain Width (feet).",
+      "Enter Gravel Layer Depth (inches, e.g. 2 to 4 in).",
+      "View Volume in Cubic Yards ($yd^3$) and Estimated Weight in Tons."
+    ],
+    "methodology": "Volumen (ft³) = Largo(ft) * Ancho(ft) * (Profundidad(in) / 12). Yardas Cúbicas = Volumen / 27. Toneladas de Grava ≈ Yardas * 1.4.",
+    "methodology_en": "Volume (ft³) = Length(ft) * Width(ft) * (Depth(in) / 12). Cubic Yards = Volume / 27. Gravel Tons ≈ Yards * 1.4."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Agregados y Paisajismo Civil",
+    "role_en": "Civil Aggregates & Landscaping Specialist Assistant",
+    "includeData": ["gravelTonsResult", "gravelCubicYards", "gravelCubicFeet"],
+    "instructions": [
+      "Interpreta el tonelaje de grava estimado según la densidad promedio (1.4 toneladas por yarda cúbica).",
+      "Explica la importancia de la compactación del terreno antes del vertido.",
+      "Recomienda una profundidad estándar (2 in para senderos, 4 in para entradas de vehículos/driveways)."
+    ],
+    "instructions_en": [
+      "Interpret estimated gravel tonnage based on average density (1.4 tons per cubic yard).",
+      "Explain the importance of terrain compaction prior to pouring.",
+      "Recommend standard depth (2 in for walkways, 4 in for driveways)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "grv-guide",
+      "icon": "🪨",
+      "title": "Gravel Density & Depth Standards",
+      "title_es": "Densidad de Grava y Estándares de Profundidad",
+      "content_html_en": "<p><b>Walkways & Paths:</b> 2 inches (5 cm) recommended depth.</p><p><b>Driveways & Parking:</b> 3 to 4 inches (7.5 to 10 cm) recommended depth.</p><p><b>Average Density:</b> 1 Cubic Yard of dry gravel weighs approximately 1.4 US Tons (2,800 lbs).</p>",
+      "content_html": "<p><b>Senderos y Caminos:</b> 2 pulgadas (5 cm) de profundidad recomendada.</p><p><b>Entradas de Vehículos (Driveways):</b> 3 a 4 pulgadas (7.5 a 10 cm) de profundidad recomendada.</p><p><b>Densidad Promedio:</b> 1 Yarda Cúbica de grava seca pesa aproximadamente 1.4 Toneladas de EE.UU. (2,800 lbs).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "gravelLengthFt",
+      "label": "Largo del Terreno (pies)",
+      "label_en": "Terrain Length (feet)",
+      "type": "number",
+      "default": 30,
+      "min": 1,
+      "max": 1000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "gravelWidthFt",
+      "label": "Ancho del Terreno (pies)",
+      "label_en": "Terrain Width (feet)",
+      "type": "number",
+      "default": 10,
+      "min": 1,
+      "max": 1000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "gravelDepthInches",
+      "label": "Profundidad de la Grava (pulgadas)",
+      "label_en": "Gravel Depth (inches)",
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 12,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "gravelCubicFeet",
+      "label": "Volumen en Pies Cúbicos (ft³)",
+      "label_en": "Volume in Cubic Feet (ft³)",
+      "expression": "gravelLengthFt * gravelWidthFt * (gravelDepthInches / 12)",
+      "unit": "ft³",
+      "unit_en": "ft³",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "gravelCubicYards",
+      "label": "Volumen en Yardas Cúbicas (yd³)",
+      "label_en": "Volume in Cubic Yards (yd³)",
+      "expression": "gravelCubicFeet / 27",
+      "unit": "yd³",
+      "unit_en": "yd³",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "gravelCubicYards", "op": ">=", "value": 0 }, "label": "Volumen de Grava Calculado", "label_en": "Gravel Volume Computed", "tone": "success", "text": "Materiales de agregados cuantificados.", "text_en": "Aggregates materials quantified." }
+      ]
+    },
+    {
+      "id": "gravelTonsResult",
+      "label": "Peso Estimado en Toneladas (US Tons)",
+      "label_en": "Estimated Weight in US Tons",
+      "expression": "gravelCubicYards * 1.4",
+      "unit": "tons",
+      "unit_en": "tons",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

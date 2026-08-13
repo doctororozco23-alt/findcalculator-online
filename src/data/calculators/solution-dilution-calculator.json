@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "solution-dilution-calculator",
+    "title": "Calculadora de Dilución de Soluciones (C₁ V₁ = C₂ V₂)",
+    "title_en": "Solution Dilution Calculator (C₁ V₁ = C₂ V₂)",
+    "slug": "calculadora-de-dilucion-de-soluciones-concentracion-volumen",
+    "category": "chemistry",
+    "subcategory": "solutions",
+    "tags": ["dilucion", "concentracion", "volumen", "molaridad", "solucion-madre", "laboratorio-quimico", "soluciones"],
+    "tags_en": ["dilution", "concentration", "volume", "molarity", "stock-solution", "chemistry-lab", "solutions"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el volumen de solución madre ($V_1$) o la concentración objetivo ($C_2$) mediante la ecuación de dilución ($C_1 \\cdot V_1 = C_2 \\cdot V_2$).",
+    "shortDescription_en": "Calculate stock solution volume ($V_1$) or target concentration ($C_2$) using the dilution equation ($C_1 \\cdot V_1 = C_2 \\cdot V_2$).",
+    "longDescription": "Herramienta de laboratorio y química práctica. Determina la cantidad exacta de alícuota concentrada que debe tomarse y diluirse con solvente para alcanzar el volumen y concentración deseados.",
+    "longDescription_en": "Laboratory and practical chemistry tool. Determines exact concentrated aliquot to pipet and dilute with solvent to achieve target volume and concentration.",
+    "howToUse": [
+      "Ingresa la Concentración Inicial de la Solución Madre ($C_1$, ej. 12 M HCl).",
+      "Ingresa la Concentración Objetivo Deseada ($C_2$, ej. 1 M HCl).",
+      "Ingresa el Volumen Total Final Deseado ($V_2$ en mL o L).",
+      "Consulta el Volumen Requerido de Solución Madre ($V_1$) y el Volumen de Solvente a añadir."
+    ],
+    "howToUse_en": [
+      "Enter Initial Stock Solution Concentration ($C_1$, e.g. 12 M HCl).",
+      "Enter Desired Target Concentration ($C_2$, e.g. 1 M HCl).",
+      "Enter Desired Final Total Volume ($V_2$ in mL or L).",
+      "View Required Stock Solution Volume ($V_1$) and Solvent Volume to add."
+    ],
+    "methodology": "Ecuación de Conservación de Moles: C1 * V1 = C2 * V2  ⇒  V1 = (C2 * V2) / C1. Volumen Solvente = V2 - V1.",
+    "methodology_en": "Moles Conservation Equation: C1 * V1 = C2 * V2  ⇒  V1 = (C2 * V2) / C1. Solvent Volume = V2 - V1."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Preparación de Soluciones de Laboratorio",
+    "role_en": "Lab Solution Preparation Specialist Assistant",
+    "includeData": ["requiredStockVolumeResult", "addedSolventVolumeResult"],
+    "instructions": [
+      "Interpreta las cantidades calculadas para la preparación práctica en matraz aforado.",
+      "Explica la regla de seguridad de adición de reactivos (siempre añadir ácido sobre agua, nunca agua sobre ácido concentrado).",
+      "Muestra el factor de dilución total ($F_d = C_1 / C_2$)."
+    ],
+    "instructions_en": [
+      "Interpret calculated amounts for practical volumetric flask preparation.",
+      "Explain safety rule for reagent addition (always add acid to water, never water to concentrated acid).",
+      "Show total dilution factor ($F_d = C_1 / C_2$)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "dlt-guide",
+      "icon": "🧪",
+      "title": "Dilution Conservation Principle",
+      "title_es": "Principio de Conservación de la Dilución",
+      "content_html_en": "<p><b>Formula:</b> C₁ × V₁ = C₂ × V₂</p><p><b>Solvent Added:</b> V_solvent = V₂ - V₁</p><p><b>Safety First:</b> Always add concentrated acid into water slowly while stirring.</p>",
+      "content_html": "<p><b>Fórmula:</b> C₁ × V₁ = C₂ × V₂</p><p><b>Solvente Añadido:</b> V_solvente = V₂ - V₁</p><p><b>Seguridad:</b> Verter siempre el ácido concentrado sobre el agua lentamente con agitación.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "stockConcentrationC1",
+      "label": "Concentración Inicial de Solución Madre (C₁)",
+      "label_en": "Initial Stock Concentration (C₁)",
+      "type": "number",
+      "default": 12.0,
+      "min": 0.01,
+      "max": 100,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "targetConcentrationC2",
+      "label": "Concentración Objetivo Deseada (C₂)",
+      "label_en": "Desired Target Concentration (C₂)",
+      "type": "number",
+      "default": 1.0,
+      "min": 0.001,
+      "max": 100,
+      "step": 0.05,
+      "required": true
+    },
+    {
+      "id": "targetFinalVolumeV2",
+      "label": "Volumen Final Deseado (V₂ en mL)",
+      "label_en": "Desired Final Volume (V₂ in mL)",
+      "type": "number",
+      "default": 500,
+      "min": 1,
+      "max": 100000,
+      "step": 10,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "requiredStockVolumeResult",
+      "label": "Volumen Requerido de Solución Madre (V₁ en mL)",
+      "label_en": "Required Stock Solution Volume (V₁ in mL)",
+      "expression": "stockConcentrationC1 > 0 ? ((targetConcentrationC2 * targetFinalVolumeV2) / stockConcentrationC1) : 0",
+      "unit": "mL",
+      "unit_en": "mL",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "requiredStockVolumeResult", "op": ">=", "value": 0 }, "label": "Volumen Alícuota Calculado", "label_en": "Aliquot Volume Computed", "tone": "success", "text": "Volumen de solución concentrada a pipetear.", "text_en": "Concentrated solution volume to pipet." }
+      ]
+    },
+    {
+      "id": "addedSolventVolumeResult",
+      "label": "Volumen de Solvente / Agua a Añadir (mL)",
+      "label_en": "Solvent / Water Volume to Add (mL)",
+      "expression": "max(0, targetFinalVolumeV2 - requiredStockVolumeResult)",
+      "unit": "mL",
+      "unit_en": "mL",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

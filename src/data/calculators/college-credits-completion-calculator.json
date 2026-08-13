@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "college-credits-completion-calculator",
+    "title": "Calculadora de Porcentaje de Créditos Universitarios Completados y Avance de Grado",
+    "title_en": "College Credits Completion & Degree Progress Calculator",
+    "slug": "calculadora-de-porcentaje-de-creditos-universitarios-completados-avance",
+    "category": "education",
+    "subcategory": "grades",
+    "tags": ["creditos-universitarios", "avance-de-carrera", "porcentaje-completado", "grado-academico", "universidad", "educacion"],
+    "tags_en": ["college-credits", "degree-progress", "completion-rate", "bachelors-degree", "university", "education"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el porcentaje de progreso de tu carrera universitaria en función de los créditos aprobados sobre el total exigido para graduación.",
+    "shortDescription_en": "Calculate your college degree completion percentage based on earned credits versus total required credits for graduation.",
+    "longDescription": "Herramienta de tutoría universitaria y orientación académica. Estima los créditos y semestres restantes para la titulación.",
+    "longDescription_en": "College academic advising tool. Estimates remaining credits and semesters required to graduate.",
+    "howToUse": [
+      "Ingresa el Total de Créditos Requeridos para Graduación en el Plan de Estudios (ej. 120 créditos).",
+      "Ingresa el Total de Créditos Aprobados y Acumulados a la Fecha (ej. 75 créditos).",
+      "Ingresa el Promedio de Créditos Cursados por Semestre (ej. 15 créditos/semestre).",
+      "Consulta el Porcentaje de Avance, Créditos Pendientes y Semestres Restantes para Graduarte."
+    ],
+    "howToUse_en": [
+      "Enter Total Required Credits for Degree Graduation (e.g. 120 credits).",
+      "Enter Total Earned Credits to Date (e.g. 75 credits).",
+      "Enter Average Credits Taken per Semester (e.g. 15 credits/semester).",
+      "View Completion Percentage, Remaining Credits, and Semesters Until Graduation."
+    ],
+    "methodology": "PorcentajeAvance = (CréditosAprobados / CréditosTotales) * 100. CréditosFaltantes = CréditosTotales - CréditosAprobados. SemestresRestantes = CréditosFaltantes / CréditosPorSemestre.",
+    "methodology_en": "CompletionPercent = (EarnedCredits / TotalRequiredCredits) * 100. RemainingCredits = TotalRequiredCredits - EarnedCredits. RemainingSemesters = RemainingCredits / CreditsPerSemester."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Orientación Universitaria y Plan de Estudios",
+    "role_en": "University Academic Advising & Degree Planning Specialist Assistant",
+    "includeData": ["degreeCompletionPercentResult", "remainingCreditsToGraduationResult", "estimatedSemestersLeftResult"],
+    "instructions": [
+      "Interpreta el porcentaje de avance de la carrera universitaria alcanzado.",
+      "Identifica el estado de estatus universitario (Freshman < 30 cr, Sophomore 30-59 cr, Junior 60-89 cr, Senior 90+ cr).",
+      "Proporciona recomendaciones para optimizar la carga de créditos en cursos de verano."
+    ],
+    "instructions_en": [
+      "Interpret calculated college degree completion percentage.",
+      "Identify university class standing (Freshman < 30 cr, Sophomore 30-59 cr, Junior 60-89 cr, Senior 90+ cr).",
+      "Provide advice to optimize credit load using summer terms."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ccc-guide",
+      "icon": "🎓",
+      "title": "US University Class Standing Credit Milestones",
+      "title_es": "Niveles de Estatus Universitario por Créditos EE.UU.",
+      "content_html_en": "<p><b>Freshman:</b> 0 to 29 Credits</p><p><b>Sophomore:</b> 30 to 59 Credits</p><p><b>Junior:</b> 60 to 89 Credits</p><p><b>Senior:</b> 90+ Credits (Graduation Ready)</p>",
+      "content_html": "<p><b>Primer Año (Freshman):</b> 0 a 29 Créditos</p><p><b>Segundo Año (Sophomore):</b> 30 a 59 Créditos</p><p><b>Tercer Año (Junior):</b> 60 a 89 Créditos</p><p><b>Cuarto Año (Senior):</b> 90+ Créditos (Listo para Graduación)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "totalRequiredDegreeCredits",
+      "label": "Total de Créditos Exigidos para Titulación",
+      "label_en": "Total Required Degree Credits",
+      "type": "number",
+      "default": 120,
+      "min": 30,
+      "max": 300,
+      "step": 5,
+      "required": true
+    },
+    {
+      "id": "earnedCreditsToDateNum",
+      "label": "Total de Créditos Aprobados a la Fecha",
+      "label_en": "Total Earned Credits to Date",
+      "type": "number",
+      "default": 75,
+      "min": 0,
+      "max": 300,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "averageCreditsPerSemesterNum",
+      "label": "Créditos Promedio por Semestre",
+      "label_en": "Average Credits Taken per Semester",
+      "type": "number",
+      "default": 15,
+      "min": 3,
+      "max": 30,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "remainingCreditsToGraduationResult",
+      "label": "Créditos Restantes para Titulación",
+      "label_en": "Remaining Credits for Graduation",
+      "expression": "max(0, totalRequiredDegreeCredits - earnedCreditsToDateNum)",
+      "unit": "créditos",
+      "unit_en": "credits",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "degreeCompletionPercentResult",
+      "label": "Porcentaje de Avance de Carrera Completado",
+      "label_en": "Degree Progress Completion Percentage",
+      "expression": "totalRequiredDegreeCredits > 0 ? (min(100, (earnedCreditsToDateNum / totalRequiredDegreeCredits) * 100)) : 0",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "degreeCompletionPercentResult", "op": ">=", "value": 50 }, "label": "Estatus Junior/Senior", "label_en": "Junior/Senior Standing", "tone": "success", "text": "Más de la mitad de la titulación completada.", "text_en": "Over half of degree requirements fulfilled." }
+      ]
+    },
+    {
+      "id": "estimatedSemestersLeftResult",
+      "label": "Semestres Restantes Estimados para Graduación",
+      "label_en": "Estimated Remaining Semesters to Graduate",
+      "expression": "averageCreditsPerSemesterNum > 0 ? (remainingCreditsToGraduationResult / averageCreditsPerSemesterNum) : 0",
+      "unit": "semestres",
+      "unit_en": "semesters",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

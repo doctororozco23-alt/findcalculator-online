@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "thermal-expansion-linear-calculator",
+    "title": "Calculadora de Dilatación Térmica Lineal de Materiales (ΔL = α L₀ ΔT)",
+    "title_en": "Linear Thermal Expansion Calculator (ΔL = α L₀ ΔT)",
+    "slug": "calculadora-de-dilatacion-termica-lineal-de-materiales",
+    "category": "engineering",
+    "subcategory": "materials",
+    "tags": ["dilatacion-termica", "expansion-lineal", "coeficiente-de-dilatacion", "juntas-de-dilatacion", "materiales", "ingenieria"],
+    "tags_en": ["thermal-expansion", "linear-expansion", "expansion-coefficient", "expansion-joints", "materials", "engineering"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el alargamiento o contracción térmica de materiales sólidos ($\\Delta L = \\alpha \\cdot L_0 \\cdot \\Delta T$) debido a cambios de temperatura.",
+    "shortDescription_en": "Calculate thermal elongation or contraction of solid materials ($\\Delta L = \\alpha \\cdot L_0 \\cdot \\Delta T$) under temperature shifts.",
+    "longDescription": "Herramienta de ingeniería civil, mecánica y de materiales. Determina la holgura requerida en juntas de dilatación para tuberías, puentes y raíles de ferrocarril.",
+    "longDescription_en": "Civil, mechanical, and materials engineering tool. Determines required expansion joint gap for piping, bridges, and railway tracks.",
+    "howToUse": [
+      "Ingresa la Longitud Inicial del Elemento ($L_0$ en metros).",
+      "Selecciona o Ingresa el Coeficiente de Dilatación Térmica Lineal ($\\alpha$, ej. Acero = $12 \\times 10^{-6}$ /°C).",
+      "Ingresa la Variación de Temperatura ($\\Delta T$ en °C).",
+      "Consulta el Alargamiento / Variación de Longitud (ΔL en mm)."
+    ],
+    "howToUse_en": [
+      "Enter Initial Length ($L_0$ in meters).",
+      "Select or Enter Linear Thermal Expansion Coefficient ($\\alpha$, e.g. Steel = $12 \\times 10^{-6}$ /°C).",
+      "Enter Temperature Change ($\\Delta T$ in °C).",
+      "View Elongation / Length Shift (ΔL in mm)."
+    ],
+    "methodology": "Variación de Longitud ΔL = α * L0 * ΔT. Longitud Final L = L0 + ΔL. α en 1/°C.",
+    "methodology_en": "Length Variation ΔL = α * L0 * ΔT. Final Length L = L0 + ΔL. α in 1/°C."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Ciencia de Materiales y Juntas de Dilatación",
+    "role_en": "Materials Science & Expansion Joints Specialist Assistant",
+    "includeData": ["deltaLengthMmResult", "finalLengthMetersResult"],
+    "instructions": [
+      "Interpreta la variación dimensional en milímetros causada por el cambio térmico.",
+      "Explica la importancia del diseño de juntas de dilatación en estructuras de hormigón y puentes metálicos para evitar tensiones térmicas destructivas.",
+      "Compara los coeficientes de dilatación entre metales (Aluminio $\\alpha \\approx 23 \\times 10^{-6}$ vs Acero $\\alpha \\approx 12 \\times 10^{-6}$)."
+    ],
+    "instructions_en": [
+      "Interpret dimensional shift in millimeters caused by temperature change.",
+      "Explain importance of expansion joint design in concrete structures and steel bridges to prevent destructive thermal stress.",
+      "Compare expansion coefficients across metals (Aluminum $\\alpha \\approx 23 \\times 10^{-6}$ vs Steel $\\alpha \\approx 12 \\times 10^{-6}$)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "tle-guide",
+      "icon": "📏",
+      "title": "Linear Thermal Expansion Formula",
+      "title_es": "Fórmula de Dilatación Térmica Lineal",
+      "content_html_en": "<p><b>Formula:</b> ΔL = α × L₀ × ΔT</p><p><b>Structural Steel:</b> α ≈ 12 × 10⁻⁶ 1/°C</p><p><b>Aluminum:</b> α ≈ 23 × 10⁻⁶ 1/°C</p><p><b>Copper:</b> α ≈ 16.5 × 10⁻⁶ 1/°C</p>",
+      "content_html": "<p><b>Fórmula:</b> ΔL = α × L₀ × ΔT</p><p><b>Acero Estructural:</b> α ≈ 12 × 10⁻⁶ 1/°C</p><p><b>Aluminio:</b> α ≈ 23 × 10⁻⁶ 1/°C</p><p><b>Cobre:</b> α ≈ 16.5 × 10⁻⁶ 1/°C</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "initialLengthL0Meters",
+      "label": "Longitud Inicial del Elemento (L₀ en metros)",
+      "label_en": "Initial Length (L₀ in meters)",
+      "type": "number",
+      "default": 100,
+      "min": 0.01,
+      "max": 10000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "expansionAlphaCoeff",
+      "label": "Coeficiente de Dilatación Térmica (α en 1/°C)",
+      "label_en": "Thermal Expansion Coefficient (α in 1/°C)",
+      "type": "select",
+      "default": "0.000012",
+      "options": [
+        { "value": "0.000012", "label": "Acero Estructural (α = 12 × 10⁻⁶ /°C)", "label_en": "Structural Steel (α = 12 × 10⁻⁶ /°C)" },
+        { "value": "0.000023", "label": "Aluminio (α = 23 × 10⁻⁶ /°C)", "label_en": "Aluminum (α = 23 × 10⁻⁶ /°C)" },
+        { "value": "0.0000165", "label": "Cobre (α = 16.5 × 10⁻⁶ /°C)", "label_en": "Copper (α = 16.5 × 10⁻⁶ /°C)" },
+        { "value": "0.000010", "label": "Hormigón / Concreto (α = 10 × 10⁻⁶ /°C)", "label_en": "Concrete (α = 10 × 10⁻⁶ /°C)" },
+        { "value": "0.000009", "label": "Vidrio Estándar (α = 9 × 10⁻⁶ /°C)", "label_en": "Standard Glass (α = 9 × 10⁻⁶ /°C)" }
+      ]
+    },
+    {
+      "id": "deltaTempCelsius",
+      "label": "Variación de Temperatura (ΔT en °C)",
+      "label_en": "Temperature Change (ΔT in °C)",
+      "type": "number",
+      "default": 40,
+      "min": -200,
+      "max": 1000,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "deltaLengthMmResult",
+      "label": "Variación de Longitud / Alargamiento (ΔL en mm)",
+      "label_en": "Length Shift / Elongation (ΔL in mm)",
+      "expression": "(expansionAlphaCoeff * initialLengthL0Meters * deltaTempCelsius) * 1000",
+      "unit": "mm",
+      "unit_en": "mm",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "deltaLengthMmResult", "op": ">=", "value": 0 }, "label": "Expansión Térmica Calculada", "label_en": "Thermal Expansion Computed", "tone": "success", "text": "Alargamiento dimensional por calor cuantificado.", "text_en": "Dimensional elongation due to heat quantified." }
+      ]
+    },
+    {
+      "id": "finalLengthMetersResult",
+      "label": "Longitud Final Ajustada (L en metros)",
+      "label_en": "Adjusted Final Length (L in meters)",
+      "expression": "initialLengthL0Meters + (deltaLengthMmResult / 1000)",
+      "unit": "m",
+      "unit_en": "m",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

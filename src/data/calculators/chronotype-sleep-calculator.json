@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "chronotype-sleep-calculator",
+    "title": "Calculadora de Cronotipo de Sueño (Alondra, Oso o Búho - MEQ)",
+    "title_en": "Sleep Chronotype Calculator (Lark, Bear, or Owl - MEQ)",
+    "slug": "cronotipo-sueno-alondra-buho",
+    "category": "health",
+    "subcategory": "sleep",
+    "tags": ["cronotipo", "sueno", "circadiano", "alondra", "buho", "meq"],
+    "tags_en": ["chronotype", "sleep", "circadian", "lark", "owl", "meq"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Sun"
+  },
+  "content": {
+    "shortDescription": "Descubre tu cronotipo circadiano natural (Alondra Matutina, Oso Intermedio o Búho Vespertino) y optimiza tu ventana pico de concentración cognitiva.",
+    "shortDescription_en": "Discover your natural circadian chronotype (Morning Lark, Intermediate Bear, or Evening Owl) and optimize your peak cognitive focus window.",
+    "longDescription": "Auditoría de cronobiología y ritmo circadiano. Basada en el Cuestionario de Matutinidad-Vespertinidad de Horne-Östberg (MEQ). Identifica la predisposición genética de tu reloj biológico para sincronizar el trabajo profundo y el descanso.",
+    "longDescription_en": "Chronobiology and circadian rhythm audit. Based on the Horne-Östberg Morningness-Eveningness Questionnaire (MEQ). Identifies your biological clock to synchronize deep work and rest.",
+    "howToUse": [
+      "Selecciona tu hora preferida de despertar espontáneo en días libres.",
+      "Selecciona la franja horaria en la que sientes tu máximo nivel de alerta y energía mental.",
+      "Selecciona tu hora natural en la que empiezas a sentir somnolencia.",
+      "Consulta tu perfil de cronotipo, la ventana pico de rendimiento cognitivo y el inicio de secreción de melatonina."
+    ],
+    "howToUse_en": [
+      "Select your preferred spontaneous wake-up time on free days.",
+      "Select the time of day you feel your peak mental energy and focus.",
+      "Select your natural time of onset sleepiness.",
+      "View your chronotype profile, peak cognitive performance window, and circadian melatonin onset."
+    ],
+    "methodology": "Cuestionario MEQ Horne-Östberg / Munich ChronoType (MCTQ): Alondra (Alerta 08:00-11:00), Oso (Alerta 10:00-14:00), Búho (Alerta 17:00-21:00). Regulado por el núcleo supraquiasmático.",
+    "methodology_en": "Horne-Östberg MEQ / Munich ChronoType (MCTQ): Lark (Peak 08:00-11:00), Bear (Peak 10:00-14:00), Owl (Peak 17:00-21:00). Regulated by the suprachiasmatic nucleus."
+  },
+  "guideSections": [
+    {
+      "id": "chronotypes-guide",
+      "icon": "🦉",
+      "title": "Circadian Chronotypes & Suprachiasmatic Nucleus",
+      "title_es": "Cronotipos Circadianos y Núcleo Supraquiasmático",
+      "content_html_en": "<p><b>Lark / Morning Type (~25%):</b> Early rise, peak focus early morning, early melatonin release (~21:00).</p><p><b>Bear / Intermediate (~50%):</b> Follows solar cycle, peak focus mid-day (10:00-14:00).</p><p><b>Owl / Evening Type (~25%):</b> Delayed phase, peak creative focus late afternoon/evening (17:00-21:00).</p>",
+      "content_html": "<p><b>Alondra / Matutino (~25%):</b> Madrugador natural, pico de concentración temprano, secreción de melatonina temprana (~21:00).</p><p><b>Oso / Intermedio (~50%):</b> Sigue el ciclo solar, pico de concentración a mediodía (10:00-14:00).</p><p><b>Búho / Vespertino (~25%):</b> Fase retrasada, pico de creatividad y enfoque a última hora de la tarde/noche (17:00-21:00).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "wakePreference",
+      "label": "Hora preferida de despertar espontáneo en días libres",
+      "label_en": "Preferred spontaneous wake-up time on free days",
+      "type": "select",
+      "default": "medium",
+      "options": [
+        { "value": "early", "label": "Temprano (Entre 05:00 y 06:30 AM)", "label_en": "Early (Between 5:00 and 6:30 AM)" },
+        { "value": "medium", "label": "Normal (Entre 07:00 y 08:30 AM)", "label_en": "Normal (Between 7:00 and 8:30 AM)" },
+        { "value": "late", "label": "Tardío (A partir de las 09:00 AM en adelante)", "label_en": "Late (From 9:00 AM onwards)" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "peakAlertnessPreference",
+      "label": "Franja horaria de máxima claridad mental",
+      "label_en": "Time of day with peak mental clarity & focus",
+      "type": "select",
+      "default": "midday",
+      "options": [
+        { "value": "morning", "label": "Por la mañana temprano (08:00 a 11:00 AM)", "label_en": "Early Morning (8:00 to 11:00 AM)" },
+        { "value": "midday", "label": "A mediodía / primeras horas de la tarde (11:00 AM a 03:00 PM)", "label_en": "Midday / Early Afternoon (11:00 AM to 3:00 PM)" },
+        { "value": "evening", "label": "A última hora de la tarde / noche (05:00 a 10:00 PM)", "label_en": "Late Afternoon / Evening (5:00 to 10:00 PM)" }
+      ],
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "chronotypeScore",
+      "label": "Puntuación de Matutinidad-Vespertinidad",
+      "label_en": "Morningness-Eveningness Score",
+      "expression": "(wakePreference == 'early' ? 3 : (wakePreference == 'medium' ? 2 : 1)) + (peakAlertnessPreference == 'morning' ? 3 : (peakAlertnessPreference == 'midday' ? 2 : 1))",
+      "unit": "pts",
+      "unit_en": "pts",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "peakAlertnessHourStart",
+      "label": "Inicio de la Ventana Pico de Concentración Cognitiva",
+      "label_en": "Peak Cognitive Focus Window Start",
+      "expression": "chronotypeScore >= 5 ? 8 : (chronotypeScore <= 3 ? 17 : 10)",
+      "unit": ":00 h",
+      "unit_en": ":00 h",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "chronotypeScore", "op": ">=", "value": 5 }, "label": "Cronotipo Alondra / Matutino", "label_en": "Lark / Morning Chronotype", "tone": "success", "text": "Perfil matutino. Máximo rendimiento intelectual a primera hora del día.", "text_en": "Morning profile. Peak intellectual performance early in the day." },
+        { "when": { "field": "chronotypeScore", "op": "between", "value": [4, 4] }, "label": "Cronotipo Oso / Intermedio", "label_en": "Bear / Intermediate Chronotype", "tone": "info", "text": "Perfil equilibrado solar. Máximo rendimiento a mediodía.", "text_en": "Balanced solar profile. Peak performance around midday." },
+        { "when": { "field": "chronotypeScore", "op": "<=", "value": 3 }, "label": "Cronotipo Búho / Vespertino", "label_en": "Owl / Evening Chronotype", "tone": "warning", "text": "Perfil nocturno. Máxima concentración y creatividad por la tarde/noche.", "text_en": "Evening profile. Peak focus and creativity in late afternoon/night." }
+      ]
+    },
+    {
+      "id": "peakAlertnessHourEnd",
+      "label": "Fin de la Ventana Pico de Concentración",
+      "label_en": "Peak Cognitive Focus Window End",
+      "expression": "chronotypeScore >= 5 ? 12 : (chronotypeScore <= 3 ? 21 : 14)",
+      "unit": ":00 h",
+      "unit_en": ":00 h",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "sleep-calculator", "type": "static", "message": "Calcula tus ciclos de descanso nocturno de 90 min", "message_en": "Calculate 90-min REM sleep cycles", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Cronobiólogo y Especialista en Ritmos Circadianos",
+    "role_en": "Chronobiologist & Circadian Rhythm Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y orientador",
+    "includeData": ["chronotypeScore", "peakAlertnessHourStart", "peakAlertnessHourEnd", "wakePreference"],
+    "instructions": [
+      "Sintetiza el perfil de cronotipo identificado y la ventana óptima de trabajo profundo en 2 frases concisas.",
+      "Aconseja programar las tareas cognitivas más exigentes durante la ventana pico de concentración."
+    ],
+    "instructions_en": [
+      "Summarize identified chronotype profile and optimal deep work focus window in 2 concise sentences.",
+      "Advise scheduling most demanding cognitive tasks during peak alertness window."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Cronotipo de Sueño (Alondra vs Búho) | CalculadoraHub",
+    "metaTitle_en": "Sleep Chronotype Calculator (Lark, Bear, Owl) | CalculadoraHub",
+    "metaDescription": "Descubre tu cronotipo de sueño circadiano (Alondra, Oso o Búho) y tu ventana pico de energía. Gratis e instantáneo.",
+    "metaDescription_en": "Discover your natural sleep chronotype (Lark, Bear, or Owl) and peak focus hours. Free, instant results.",
+    "keywords": ["chronotype sleep calculator", "cronotipo sueno", "alondra o buho", "meq horne ostberg"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

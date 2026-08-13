@@ -1,0 +1,158 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "gpa-calculator",
+    "title": "Calculadora de GPA Universitario y Escolar (Escala 4.0 y 5.0)",
+    "title_en": "High School & College GPA Calculator (4.0 & 5.0 Scale)",
+    "slug": "calculadora-de-gpa-promedio-academico-4-0",
+    "category": "education",
+    "subcategory": "grades",
+    "tags": ["gpa", "calculadora-de-gpa", "promedio-academico", "creditos", "notas-universitarias", "calificaciones"],
+    "tags_en": ["gpa", "gpa-calculator", "academic-average", "credits", "college-grades", "grades"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "GraduationCap"
+  },
+  "content": {
+    "shortDescription": "Calcula tu Promedio Académico Ponderado (GPA) en escala estándar de 4.0 ó 5.0 a partir de tus asignaturas y créditos.",
+    "shortDescription_en": "Compute your Grade Point Average (GPA) on standard 4.0 or 5.0 scale using course grades and credit hours.",
+    "longDescription": "Herramienta académica universitaria y secundaria. Calcula el GPA ponderado por créditos evaluando asignaturas individuales en escala de 4.0 (A=4, B=3, C=2, D=1, F=0).",
+    "longDescription_en": "College and high school academic tool. Computes credit-weighted GPA on standard 4.0 scale (A=4, B=3, C=2, D=1, F=0).",
+    "howToUse": [
+      "Ingresa la Calificación en GPA (0 a 4.0) de hasta 4 asignaturas.",
+      "Ingresa el número de Créditos / Horas lectivas de cada curso.",
+      "Consulta el GPA Ponderado final acumulado y los créditos totales cursados."
+    ],
+    "howToUse_en": [
+      "Enter Grade points (0 to 4.0) for up to 4 courses.",
+      "Enter Credit hours for each course.",
+      "View final cumulative weighted GPA and total credits earned."
+    ],
+    "methodology": "GPA Ponderado = ∑(Calificación_i * Créditos_i) / ∑Créditos_i.",
+    "methodology_en": "Weighted GPA = ∑(Grade_i * Credits_i) / ∑Credits_i."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Orientación Académica Universitaria",
+    "role_en": "College Academic Advising Assistant",
+    "includeData": ["gpaFinalResult", "totalCreditsSum"],
+    "instructions": [
+      "Interpreta el GPA acumulado en la escala 4.0 (Sobresaliente > 3.5, Bueno > 3.0, Riesgo < 2.0).",
+      "Explica la importancia de los créditos ponderados.",
+      "Recomienda estrategias para elevar el GPA en los próximos semestres."
+    ],
+    "instructions_en": [
+      "Interpret cumulative GPA on 4.0 scale (Honors > 3.5, Good > 3.0, Warning < 2.0).",
+      "Explain the importance of credit weighting.",
+      "Recommend strategies to improve GPA in upcoming semesters."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "gpa-guide",
+      "icon": "🎓",
+      "title": "Standard 4.0 GPA Scale Conversion",
+      "title_es": "Conversión Estándar de la Escala GPA 4.0",
+      "content_html_en": "<p><b>A (90-100%):</b> 4.0 Grade Points.</p><p><b>B (80-89%):</b> 3.0 Grade Points.</p><p><b>C (70-79%):</b> 2.0 Grade Points.</p><p><b>D (60-69%):</b> 1.0 Grade Point.</p><p><b>F (&lt; 60%):</b> 0.0 Grade Points.</p>",
+      "content_html": "<p><b>A (90-100%):</b> 4.0 Puntos GPA.</p><p><b>B (80-89%):</b> 3.0 Puntos GPA.</p><p><b>C (70-79%):</b> 2.0 Puntos GPA.</p><p><b>D (60-69%):</b> 1.0 Punto GPA.</p><p><b>F (&lt; 60%):</b> 0.0 Puntos GPA.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "g1",
+      "label": "Curso 1: Calificación (0 - 4.0)",
+      "label_en": "Course 1: Grade (0 - 4.0)",
+      "type": "number",
+      "default": 3.7,
+      "min": 0,
+      "max": 4.0,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "c1",
+      "label": "Curso 1: Créditos",
+      "label_en": "Course 1: Credits",
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "g2",
+      "label": "Curso 2: Calificación (0 - 4.0)",
+      "label_en": "Course 2: Grade (0 - 4.0)",
+      "type": "number",
+      "default": 4.0,
+      "min": 0,
+      "max": 4.0,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "c2",
+      "label": "Curso 2: Créditos",
+      "label_en": "Course 2: Credits",
+      "type": "number",
+      "default": 4,
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "g3",
+      "label": "Curso 3: Calificación (0 - 4.0)",
+      "label_en": "Course 3: Grade (0 - 4.0)",
+      "type": "number",
+      "default": 3.0,
+      "min": 0,
+      "max": 4.0,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "c3",
+      "label": "Curso 3: Créditos",
+      "label_en": "Course 3: Credits",
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalCreditsSum",
+      "label": "Créditos Totales Cursados",
+      "label_en": "Total Credits Earned",
+      "expression": "c1 + c2 + c3",
+      "unit": "créditos",
+      "unit_en": "credits",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "gpaFinalResult",
+      "label": "GPA Ponderado Final (Escala 4.0)",
+      "label_en": "Final Weighted GPA (4.0 Scale)",
+      "expression": "totalCreditsSum > 0 ? ((g1 * c1 + g2 * c2 + g3 * c3) / totalCreditsSum) : 0",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "gpaFinalResult", "op": ">=", "value": 3.5 }, "label": "GPA de Honor / Sobresaliente (≥ 3.5)", "label_en": "Honors GPA (≥ 3.5)", "tone": "success", "text": "Excelente rendimiento académico (Dean's List).", "text_en": "Excellent academic performance (Dean's List)." },
+        { "when": { "field": "gpaFinalResult", "op": "between", "value": [2.5, 3.49] }, "label": "Buen Rendimiento Académico (2.5 - 3.4)", "label_en": "Good Standing (2.5 - 3.4)", "tone": "info", "text": "Desempeño académico dentro del promedio esperado.", "text_en": "Academic performance within expected average." },
+        { "when": { "field": "gpaFinalResult", "op": "<", "value": 2.5 }, "label": "Rendimiento Bajo (< 2.5)", "label_en": "Below Average (< 2.5)", "tone": "warning", "text": "Se recomienda tutoría y refuerzo de estudios.", "text_en": "Tutoring and academic reinforcement recommended." }
+      ]
+    }
+  ]
+}

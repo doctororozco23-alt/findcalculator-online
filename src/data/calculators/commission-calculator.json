@@ -1,0 +1,158 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "commission-calculator",
+    "title": "Calculadora de Comisiones de Venta e Incentivos",
+    "title_en": "Commission & Sales Incentive Calculator",
+    "slug": "comisiones-venta-incentivos",
+    "category": "finance",
+    "subcategory": "business",
+    "tags": ["comision", "ventas", "incentivos"],
+    "tags_en": ["commission", "sales", "incentives"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Award"
+  },
+  "content": {
+    "shortDescription": "Calcula el importe total abonado en comisiones comerciales y la paga bruta final según el volumen de ventas.",
+    "shortDescription_en": "Calculate total sales commission payouts and gross sales earnings based on revenue generated.",
+    "longDescription": "Estima las comisiones acumuladas por un vendedor o equipo comercial aplicando un porcentaje de comisión fijo o por tramos sobre las ventas totales cerradas.",
+    "longDescription_en": "Estimate earned sales commission compensation for sales representatives or account executives based on gross closed revenue.",
+    "howToUse": [
+      "Ingresa el volumen total de ventas facturado.",
+      "Establece la tasa de comisión comercial (%).",
+      "Añade el salario base fijo mensual.",
+      "Consulta el importe total de comisiones y el salario bruto final."
+    ],
+    "howToUse_en": [
+      "Enter total closed sales revenue amount and active currency.",
+      "Set sales commission rate (%).",
+      "Add base monthly salary.",
+      "View total commission earned and total gross earnings."
+    ],
+    "methodology": "Fórmula Comisión: Comisión = VentasTotales × (TasaComisión / 100). Paga Total = SalarioBase + Comisión.",
+    "methodology_en": "Commission Formula: Commission = Total Sales × (Commission Rate / 100). Gross Total = Base Salary + Commission."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "💰",
+      "title": "Structuring Sales Commission Plans",
+      "title_es": "Estructuración de Planes de Comisión de Ventas",
+      "content_html_en": "<p>Tiered and percentage-based sales commissions align sales representative performance directly with revenue growth objectives.</p>",
+      "content_html": "<p>Las comisiones basadas en porcentajes sobre ventas alinean el rendimiento comercial directamente con los objetivos de ingresos.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "totalSalesRevenue",
+      "label": "Volumen total de ventas facturado",
+      "label_en": "Total Closed Sales Revenue Amount",
+      "type": "currency",
+      "default": 85000,
+      "min": 1000,
+      "max": 10000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "commissionRatePercent",
+      "label": "Porcentaje de comisión comercial (%)",
+      "label_en": "Sales Commission Rate (%)",
+      "type": "number",
+      "default": 8.0,
+      "min": 0.5,
+      "max": 50.0,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "baseSalary",
+      "label": "Salario base mensual fijo",
+      "label_en": "Fixed Base Monthly Salary",
+      "type": "currency",
+      "default": 3000,
+      "min": 0,
+      "max": 50000,
+      "step": 250,
+      "unit": { "follows": "totalSalesRevenue" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "commissionEarned",
+      "label": "Comisión Total Devengada",
+      "label_en": "Total Sales Commission Earned",
+      "expression": "totalSalesRevenue * (commissionRatePercent / 100)",
+      "unit": { "follows": "totalSalesRevenue" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "commissionEarned", "op": ">", "value": 0 }, "label": "Comisión Calculada", "label_en": "Commission Payout Result", "tone": "success", "text": "Importe ganado en comisiones directas por ventas.", "text_en": "Direct sales incentive compensation earned." }
+      ]
+    },
+    {
+      "id": "totalGrossPay",
+      "label": "Salario Bruto Total (Base + Comisión)",
+      "label_en": "Total Gross Earnings (Base + Commission)",
+      "expression": "baseSalary + commissionEarned",
+      "unit": { "follows": "totalSalesRevenue" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "salary-take-home-calculator", "type": "static", "message": "Calcula el salario neto tras impuestos", "message_en": "Calculate net take-home pay after taxes", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Comisiones de Ventas",
+    "role_en": "Sales Compensation Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y motivador",
+    "includeData": ["commissionEarned", "totalGrossPay", "totalSalesRevenue", "baseSalary"],
+    "instructions": [
+      "Sintetiza la comisión total devengada y la paga bruta final en 2 frases concisas.",
+      "Destaca la proporción que representa la comisión sobre el paquete salarial total."
+    ],
+    "instructions_en": [
+      "Summarize total sales commission earned and total gross pay in 2 concise sentences.",
+      "Highlight the percentage share that incentive commission represents of total gross earnings."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Comisiones de Venta e Incentivos | CalculadoraHub",
+    "metaTitle_en": "Commission & Sales Incentive Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el importe de las comisiones de venta e incentivos comerciales. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate sales commission payouts and gross compensation. Free, instant results.",
+    "keywords": ["commission calculator", "comision ventas", "incentivos comerciales", "salario bruto"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

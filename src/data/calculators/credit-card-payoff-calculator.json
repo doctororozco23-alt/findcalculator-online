@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "credit-card-payoff-calculator",
+    "title": "Calculadora de Liquidación de Tarjetas de Crédito",
+    "title_en": "Credit Card Payoff Calculator",
+    "slug": "liquidacion-tarjeta-credito",
+    "category": "finance",
+    "subcategory": "loans",
+    "tags": ["tarjeta-credito", "deuda", "intereses"],
+    "tags_en": ["credit-card", "debt", "interest"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "CreditCard"
+  },
+  "content": {
+    "shortDescription": "Calcula los meses necesarios para liquidar el saldo de tu tarjeta de crédito y el interés total pagado.",
+    "shortDescription_en": "Calculate time in months to pay off credit card debt balance and total interest costs paid.",
+    "longDescription": "Calcula cuánto tiempo tardarás en eliminar el saldo deudor de tu tarjeta de crédito realizando un pago mensual fijo superior al mínimo y cuánto dinero ahorrarás en intereses.",
+    "longDescription_en": "Calculate months required to pay off credit card debt by making a fixed monthly payment above minimum and total interest saved.",
+    "howToUse": [
+      "Ingresa el saldo deudor actual de tu tarjeta de crédito.",
+      "Establece la tasa de interés anual de la tarjeta (APR %).",
+      "Indica tu pago mensual previsto.",
+      "Consulta los meses necesarios para estar libre de deudas."
+    ],
+    "howToUse_en": [
+      "Enter current credit card balance owed and active currency.",
+      "Set card interest rate (APR %).",
+      "Enter planned fixed monthly payment.",
+      "View months required to reach debt-free status."
+    ],
+    "methodology": "Fórmula Liquidación Tarjeta: Meses = -log(1 - (Saldo × r / Pago)) / log(1 + r).",
+    "methodology_en": "Credit Card Payoff Formula: Months = -log(1 - (Balance × r / Payment)) / log(1 + r)."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "💳",
+      "title": "The Danger of Minimum Payments",
+      "title_es": "El Peligro de Pagar Solo el Mínimo",
+      "content_html_en": "<p>Paying only the minimum monthly payment on a high-APR credit card can extend payback duration to 15-20 years and double total interest paid.</p>",
+      "content_html": "<p>Pagar únicamente la cuota mínima mensual en una tarjeta de crédito prolonga la deuda durante 15-20 años y duplica los intereses pagados.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "cardBalance",
+      "label": "Saldo deudor actual de la tarjeta",
+      "label_en": "Current Credit Card Balance Owed",
+      "type": "currency",
+      "default": 6000,
+      "min": 100,
+      "max": 500000,
+      "step": 100,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [100, 500000], "message": "Saldo entre 100 y 500.000", "message_en": "Balance between 100 and 500,000" }]
+    },
+    {
+      "id": "aprRate",
+      "label": "Tasa de interés de la tarjeta (APR %)",
+      "label_en": "Card Interest Rate (APR %)",
+      "type": "number",
+      "default": 21.9,
+      "min": 1.0,
+      "max": 40.0,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "monthlyPaymentAmount",
+      "label": "Pago mensual fijo que aportarás",
+      "label_en": "Planned Fixed Monthly Payment",
+      "type": "currency",
+      "default": 250,
+      "min": 20,
+      "max": 50000,
+      "step": 10,
+      "unit": { "follows": "cardBalance" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "payoffMonths",
+      "label": "Meses necesarios para liquidar la deuda",
+      "label_en": "Months Needed to Liquidate Debt",
+      "expression": "cardBalance / (monthlyPaymentAmount - (cardBalance * (aprRate / 1200)))",
+      "unit": "meses",
+      "unit_en": "months",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "payoffMonths", "op": "<=", "value": 36 }, "label": "Plan de Liquidación Eficiente", "label_en": "Efficient Payoff Plan", "tone": "success", "text": "Deuda liquidada en un horizonte inferior a 3 años.", "text_en": "Credit card debt fully eliminated within a 3-year timeframe." }
+      ]
+    },
+    {
+      "id": "totalInterestPaid",
+      "label": "Total intereses pagados",
+      "label_en": "Total Interest Costs Paid",
+      "expression": "max((monthlyPaymentAmount * payoffMonths) - cardBalance, 0)",
+      "unit": { "follows": "cardBalance" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "totalOutlay",
+      "label": "Desembolso total acumulado",
+      "label_en": "Total Cumulative Cash Outlay",
+      "expression": "cardBalance + totalInterestPaid",
+      "unit": { "follows": "cardBalance" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "balance-transfer-calculator", "type": "static", "message": "Compara con una transferencia de saldo a 0%", "message_en": "Compare with 0% balance transfer offer", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Deuda de Tarjetas de Crédito",
+    "role_en": "Credit Card Payoff Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y motivador",
+    "includeData": ["payoffMonths", "totalInterestPaid", "cardBalance", "monthlyPaymentAmount"],
+    "instructions": [
+      "Sintetiza los meses necesarios para estar libre de deudas y los intereses pagados en 2 frases concisas.",
+      "Destaca que añadir 50 adicionales al pago mensual acelera enormemente el cierre de la tarjeta."
+    ],
+    "instructions_en": [
+      "Summarize months needed to reach debt-free status and total interest cost in 2 concise sentences.",
+      "Emphasize that adding an extra 50 to monthly payments dramatically shortens payoff timeline."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Liquidación de Tarjetas de Crédito | CalculadoraHub",
+    "metaTitle_en": "Credit Card Payoff Calculator | CalculadoraHub",
+    "metaDescription": "Calcula cuántos meses tardarás en liquidar tu tarjeta de crédito y cuánto pagarás en intereses. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate months to pay off credit card balance and total interest paid. Free, instant results.",
+    "keywords": ["credit card payoff calculator", "liquidar tarjeta de credito", "deuda tarjeta", "intereses apr"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

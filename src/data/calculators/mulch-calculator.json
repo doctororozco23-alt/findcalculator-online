@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "mulch-calculator",
+    "title": "Calculadora de Mantillo / Abono (Mulch para Jardines y Paisajismo)",
+    "title_en": "Mulch Calculator for Gardens & Landscaping",
+    "slug": "calculadora-de-mantillo-mulch-jardines-paisajismo",
+    "category": "home",
+    "subcategory": "gardening",
+    "tags": ["mantillo", "mulch", "jardines", "paisajismo", "yardas-cubicas", "bolsas-de-abono", "tierra"],
+    "tags_en": ["mulch", "mulch-calculator", "gardens", "landscaping", "cubic-yards", "mulch-bags", "soil"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el volumen de mantillo/abono (Mulch) necesario para tu jardín en yardas cúbicas ($yd^3$) y cantidad de bolsas de 2 pies³.",
+    "shortDescription_en": "Compute volume of garden mulch needed in cubic yards ($yd^3$) and 2 cu ft bags count.",
+    "longDescription": "Herramienta de paisajismo y jardinería. Determina el volumen de mantillo o corteza decorativa necesaria para cubrir canteros de jardín a la profundidad recomendada (2 a 4 pulgadas).",
+    "longDescription_en": "Landscaping and gardening tool. Computes mulch or bark volume required to cover garden beds at recommended depth (2 to 4 inches).",
+    "howToUse": [
+      "Ingresa el Largo del área del jardín (pies).",
+      "Ingresa el Ancho del área del jardín (pies).",
+      "Ingresa la Profundidad deseada del mantillo (pulgadas, típicamente 3 in).",
+      "Consulta el Volumen en Yardas Cúbicas ($yd^3$) y el total de Bolsas de 2 pies³."
+    ],
+    "howToUse_en": [
+      "Enter Garden Bed Length (feet).",
+      "Enter Garden Bed Width (feet).",
+      "Enter Desired Mulch Depth (inches, typically 3 in).",
+      "View Volume in Cubic Yards ($yd^3$) and total 2 cu ft Bags required."
+    ],
+    "methodology": "Volumen (ft³) = Largo(ft) * Ancho(ft) * (Profundidad(in) / 12). Yardas Cúbicas = Volumen / 27. Bolsas de 2 ft³ = ceil(Volumen / 2).",
+    "methodology_en": "Volume (ft³) = Length(ft) * Width(ft) * (Depth(in) / 12). Cubic Yards = Volume / 27. 2 cu ft Bags = ceil(Volume / 2)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Paisajismo y Jardinería",
+    "role_en": "Landscaping & Gardening Specialist Assistant",
+    "includeData": ["mulchCubicYards", "mulchBags2cuft", "mulchCubicFeet"],
+    "instructions": [
+      "Interpreta el volumen de mantillo necesario en yardas cúbicas y bolsas.",
+      "Explica los beneficios agronómicos del mantillo (retención de humedad, control de malezas).",
+      "Recomienda una profundidad adecuada (3 pulgadas es ideal para la mayoría de plantas)."
+    ],
+    "instructions_en": [
+      "Interpret required mulch volume in cubic yards and bags.",
+      "Explain agronomic benefits of mulching (moisture retention, weed control).",
+      "Recommend proper depth (3 inches is ideal for most plants)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "mlc-guide",
+      "icon": "🌱",
+      "title": "Mulching Depth & Landscaping Rules",
+      "title_es": "Profundidad de Mantillo y Reglas de Paisajismo",
+      "content_html_en": "<p><b>Recommended Depth:</b> 2 to 3 inches for annuals and perennials; 3 to 4 inches around trees and shrubs.</p><p><b>1 Cubic Yard of Mulch:</b> Covers 108 sq ft at 3 inches deep (equivalent to 13.5 bags of 2 cu ft).</p>",
+      "content_html": "<p><b>Profundidad Recomendada:</b> 2 a 3 pulgadas para flores anuales y perennes; 3 a 4 pulgadas alrededor de árboles y arbustos.</p><p><b>1 Yarda Cúbica de Mantillo:</b> Cubre 108 pies² a 3 pulgadas de profundidad (equivalente a 13.5 bolsas de 2 pies³).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "bedLengthFt",
+      "label": "Largo del Área de Jardín (pies)",
+      "label_en": "Garden Area Length (feet)",
+      "type": "number",
+      "default": 20,
+      "min": 1,
+      "max": 1000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "bedWidthFt",
+      "label": "Ancho del Área de Jardín (pies)",
+      "label_en": "Garden Area Width (feet)",
+      "type": "number",
+      "default": 10,
+      "min": 1,
+      "max": 1000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "depthInches",
+      "label": "Profundidad del Mantillo (pulgadas)",
+      "label_en": "Mulch Depth (inches)",
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 12,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "mulchCubicFeet",
+      "label": "Volumen Total en Pies Cúbicos (ft³)",
+      "label_en": "Total Volume in Cubic Feet (ft³)",
+      "expression": "bedLengthFt * bedWidthFt * (depthInches / 12)",
+      "unit": "ft³",
+      "unit_en": "ft³",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "mulchCubicYards",
+      "label": "Volumen en Yardas Cúbicas (yd³)",
+      "label_en": "Volume in Cubic Yards (yd³)",
+      "expression": "mulchCubicFeet / 27",
+      "unit": "yd³",
+      "unit_en": "yd³",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "mulchCubicYards", "op": ">=", "value": 0 }, "label": "Mantillo Calculado", "label_en": "Mulch Computed", "tone": "success", "text": "Volumen de mantillo para paisajismo cuantificado.", "text_en": "Landscaping mulch volume quantified." }
+      ]
+    },
+    {
+      "id": "mulchBags2cuft",
+      "label": "Bolsas de Mantillo de 2 ft³ Necesarias",
+      "label_en": "2 cu ft Mulch Bags Needed",
+      "expression": "ceil(mulchCubicFeet / 2)",
+      "unit": "bolsas",
+      "unit_en": "bags",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

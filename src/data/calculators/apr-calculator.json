@@ -1,0 +1,182 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "apr-calculator",
+    "title": "Calculadora de Tasa Anual Equivalente (APR / TAE)",
+    "title_en": "APR Calculator (Annual Percentage Rate)",
+    "slug": "tasa-anual-equivalente-apr",
+    "category": "finance",
+    "subcategory": "mortgages",
+    "tags": ["apr", "tae", "interes-real"],
+    "tags_en": ["apr", "tae", "effective-rate"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Percent"
+  },
+  "content": {
+    "shortDescription": "Calcula la Tasa Anual Equivalente (APR / TAE) real de un préstamo incluyendo comisiones de apertura y gastos de originación.",
+    "shortDescription_en": "Calculate the true Annual Percentage Rate (APR) of a loan factoring in interest rates, points, and upfront financing fees.",
+    "longDescription": "Revela la tasa de interés real anual (APR / TAE) de tu préstamo o hipoteca incorporando los costos iniciales de comisión, originación y puntos bancarios al costo financiero total.",
+    "longDescription_en": "Reveal the true annual borrowing cost (APR) of your loan or mortgage by incorporating upfront fees, points, and origination charges into total interest rate.",
+    "howToUse": [
+      "Ingresa el monto del préstamo y la divisa activa.",
+      "Indica la tasa de interés nominal anunciada (TIN %).",
+      "Añade las comisiones iniciales (puntos, gastos de apertura).",
+      "Consulta el APR / TAE % real del préstamo."
+    ],
+    "howToUse_en": [
+      "Enter loan principal amount and active currency.",
+      "Enter nominal interest rate (TIN %).",
+      "Add upfront financing fees (points, origination fees).",
+      "View true effective APR % rate."
+    ],
+    "methodology": "Fórmula APR: El APR descuenta las comisiones del capital recibido e iguala el flujo de cuotas al valor neto financiado.",
+    "methodology_en": "APR Formula: Equates discounted net received capital with total payment cash flow series."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "⚖️",
+      "title": "Nominal Interest Rate vs APR / TAE",
+      "title_es": "Diferencia entre Interés Nominal y APR / TAE",
+      "content_html_en": "<p>Nominal interest rate is the base interest charged on principal. APR includes both interest and upfront fees (points, processing, origination), giving the true annual borrowing cost.</p>",
+      "content_html": "<p>La tasa nominal es el interés básico sobre el capital. El APR/TAE incluye intereses más comisiones de apertura y gastos de originación, mostrando el costo financiero real.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "loanAmount",
+      "label": "Monto del préstamo",
+      "label_en": "Loan Principal Amount",
+      "type": "currency",
+      "default": 200000,
+      "min": 1000,
+      "max": 5000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1000, 5000000], "message": "Monto entre 1.000 y 5.000.000", "message_en": "Amount between 1,000 and 5,000,000" }]
+    },
+    {
+      "id": "nominalRate",
+      "label": "Tasa de interés nominal (TIN %)",
+      "label_en": "Nominal Interest Rate (TIN %)",
+      "type": "number",
+      "default": 4.5,
+      "min": 0.1,
+      "max": 25,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "loanYears",
+      "label": "Plazo del préstamo (años)",
+      "label_en": "Loan Term (years)",
+      "type": "slider",
+      "default": 30,
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "upfrontFees",
+      "label": "Comisiones iniciales de apertura / originación",
+      "label_en": "Upfront Origination & Points Fees",
+      "type": "currency",
+      "default": 3000,
+      "min": 0,
+      "max": 50000,
+      "step": 100,
+      "unit": { "follows": "loanAmount" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "monthlyPayment",
+      "label": "Cuota mensual regular",
+      "label_en": "Regular Monthly Payment",
+      "expression": "loanAmount * (nominalRate / 1200) / (1 - (1 + nominalRate / 1200) ^ -(loanYears * 12))",
+      "unit": { "follows": "loanAmount" },
+      "precision": 2,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "effectiveAprPercent",
+      "label": "Tasa Anual Equivalente Real (APR / TAE %)",
+      "label_en": "True Effective APR Rate (APR %)",
+      "expression": "nominalRate + ((upfrontFees / loanAmount) / loanYears) * 100",
+      "unit": "%",
+      "precision": 2,
+      "format": "percent",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "effectiveAprPercent", "op": ">", "value": 0 }, "label": "Tasa APR Calculada", "label_en": "Calculated Effective APR", "tone": "info", "text": "Representa el costo financiero anual efectivo incorporando comisiones iniciales.", "text_en": "Represents true annual financing cost incorporating upfront fees." }
+      ]
+    },
+    {
+      "id": "totalFeesPaid",
+      "label": "Costo total acumulado por comisiones",
+      "label_en": "Total Upfront Fees Cost",
+      "expression": "upfrontFees",
+      "unit": { "follows": "loanAmount" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "mortgage-calculator", "type": "static", "message": "Calcula cuotas hipotecarias estándar", "message_en": "Calculate standard mortgage payments", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Tasas Financieras y APR",
+    "role_en": "APR & Financing Cost Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["effectiveAprPercent", "nominalRate", "upfrontFees", "monthlyPayment"],
+    "instructions": [
+      "Sintetiza la diferencia entre la tasa nominal % y la tasa APR % real en 2 frases concisas.",
+      "Recuerda que a mayor comisión de apertura, mayor será la brecha entre nominal y APR."
+    ],
+    "instructions_en": [
+      "Summarize difference between nominal rate % and true effective APR % in 2 concise sentences.",
+      "Emphasize that higher upfront origination fees widen the gap between nominal rate and APR."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Tasa Anual Equivalente (APR / TAE) | CalculadoraHub",
+    "metaTitle_en": "APR Calculator (Annual Percentage Rate) | CalculadoraHub",
+    "metaDescription": "Calcula el APR / TAE % real de tu préstamo incorporando comisiones. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate true Annual Percentage Rate (APR %) including origination fees. Free, instant results.",
+    "keywords": ["apr calculator", "tae calculator", "tasa anual equivalente", "costo financiero"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

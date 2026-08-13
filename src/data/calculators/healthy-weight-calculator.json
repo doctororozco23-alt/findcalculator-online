@@ -1,0 +1,179 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "healthy-weight-calculator",
+    "title": "Calculadora de Rango de Peso Saludable (Clasificación OMS)",
+    "title_en": "Healthy Weight Range Calculator (WHO Standards)",
+    "slug": "rango-peso-saludable-oms",
+    "category": "fitness",
+    "subcategory": "body-composition",
+    "tags": ["peso-saludable", "rango-peso", "oms", "imc"],
+    "tags_en": ["healthy-weight", "weight-range", "who", "bmi"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Scale"
+  },
+  "content": {
+    "shortDescription": "Calcula el rango de peso corporal saludable mínimo, óptimo y máximo según los umbrales de la Organización Mundial de la Salud (OMS).",
+    "shortDescription_en": "Calculate your minimum, optimal midpoint, and maximum healthy body weight range based on World Health Organization (WHO) standards.",
+    "longDescription": "Auditoría de salud ponderal que determina la horquilla de peso óptima (en kg o lbs) para mantener un Índice de Masa Corporal normal (IMC 18.5 a 24.9 kg/m²) y calcula los kilogramos necesarios para ingresar en el rango saludable.",
+    "longDescription_en": "Public health weight audit calculating the healthy weight range (kg or lbs) required to maintain a normal Body Mass Index (BMI 18.5 to 24.9 kg/m²) and weight change required to reach normal tier.",
+    "howToUse": [
+      "Ingresa tu estatura exacta.",
+      "Ingresa tu peso corporal actual.",
+      "Consulta el peso saludable mínimo (IMC 18.5), punto medio óptimo (IMC 22.0) y máximo (IMC 24.9).",
+      "Revisa la diferencia de peso requerida para ingresar o mantener el rango saludable."
+    ],
+    "howToUse_en": [
+      "Enter exact height.",
+      "Enter current body weight.",
+      "View minimum healthy weight (BMI 18.5), optimal midpoint (BMI 22.0), and maximum limit (BMI 24.9).",
+      "Review calculated weight change required to reach or maintain healthy range."
+    ],
+    "methodology": "Estándar OMS: Peso Mínimo = 18.5 × H², Punto Medio = 22.0 × H², Peso Máximo = 24.9 × H² (siendo H la estatura en metros).",
+    "methodology_en": "WHO International Standard: Min Weight = 18.5 × H², Midpoint = 22.0 × H², Max Weight = 24.9 × H² (where H is height in meters)."
+  },
+  "guideSections": [
+    {
+      "id": "who-classification-table",
+      "icon": "🍏",
+      "title": "WHO International Weight Classifications",
+      "title_es": "Clasificación Internacional de Peso de la OMS",
+      "content_html_en": "<p><b>Underweight:</b> BMI < 18.5 kg/m².</p><p><b>Normal Healthy Range:</b> BMI 18.5 - 24.9 kg/m².</p><p><b>Overweight (Pre-obese):</b> BMI 25.0 - 29.9 kg/m².</p><p><b>Obesity Class I:</b> BMI 30.0 - 34.9 kg/m².</p><p><b>Obesity Class II:</b> BMI 35.0 - 39.9 kg/m².</p><p><b>Obesity Class III (Severe):</b> BMI ≥ 40.0 kg/m².</p>",
+      "content_html": "<p><b>Bajo Peso:</b> IMC < 18.5 kg/m².</p><p><b>Rango Saludable Normal:</b> IMC 18.5 - 24.9 kg/m².</p><p><b>Sobrepeso (Pre-obesidad):</b> IMC 25.0 - 29.9 kg/m².</p><p><b>Obesidad Clase I:</b> IMC 30.0 - 34.9 kg/m².</p><p><b>Obesidad Clase II:</b> IMC 35.0 - 39.9 kg/m².</p><p><b>Obesidad Clase III (Severa):</b> IMC ≥ 40.0 kg/m².</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "heightCm",
+      "label": "Estatura",
+      "label_en": "Height",
+      "type": "number",
+      "default": 175,
+      "min": 100,
+      "max": 230,
+      "step": 1,
+      "unit": "cm",
+      "units": [
+        { "id": "cm", "label": "cm", "toBase": 1 },
+        { "id": "ft", "label": "ft/in", "toBase": 30.48 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "currentWeightKg",
+      "label": "Peso corporal actual",
+      "label_en": "Current Body Weight",
+      "type": "number",
+      "default": 78,
+      "min": 30,
+      "max": 300,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "currentBmiVal",
+      "label": "IMC Actual",
+      "label_en": "Current BMI Value",
+      "expression": "currentWeightKg / ((heightCm / 100) ^ 2)",
+      "unit": "kg/m²",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "minHealthyWeightKg",
+      "label": "Peso Mínimo Saludable (IMC 18.5)",
+      "label_en": "Minimum Healthy Weight (BMI 18.5)",
+      "expression": "18.5 * ((heightCm / 100) ^ 2)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "midpointHealthyWeightKg",
+      "label": "Punto Medio Saludable Óptimo (IMC 22.0)",
+      "label_en": "Optimal Midpoint Healthy Weight (BMI 22.0)",
+      "expression": "22.0 * ((heightCm / 100) ^ 2)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "currentBmiVal", "op": "<", "value": 18.5 }, "label": "Bajo Peso", "label_en": "Underweight Range", "tone": "warning", "text": "Peso actual por debajo del umbral mínimo de salud recomendado.", "text_en": "Current body weight is below the minimum recommended healthy threshold." },
+        { "when": { "field": "currentBmiVal", "op": "between", "value": [18.5, 24.9] }, "label": "Rango Saludable Normal", "label_en": "Normal Healthy Range", "tone": "success", "text": "Peso corporal dentro de la horquilla saludable recomendada por la OMS.", "text_en": "Body weight is within the WHO recommended healthy range." },
+        { "when": { "field": "currentBmiVal", "op": "between", "value": [25.0, 29.9] }, "label": "Sobrepeso", "label_en": "Overweight Range", "tone": "warning", "text": "Peso actual por encima del umbral máximo de salud recomendado.", "text_en": "Current body weight exceeds upper healthy recommended threshold." },
+        { "when": { "field": "currentBmiVal", "op": ">=", "value": 30.0 }, "label": "Rango de Obesidad", "label_en": "Obesity Tier", "tone": "warning", "text": "Peso actual en categoría de obesidad según criterios de la OMS.", "text_en": "Current weight falls into obesity classification under WHO criteria." }
+      ]
+    },
+    {
+      "id": "maxHealthyWeightKg",
+      "label": "Peso Máximo Saludable (IMC 24.9)",
+      "label_en": "Maximum Healthy Weight (BMI 24.9)",
+      "expression": "24.9 * ((heightCm / 100) ^ 2)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "weightToGainOrLoseKg",
+      "label": "Diferencia para Alcanzar el Rango Saludable",
+      "label_en": "Weight Change Needed for Healthy Range",
+      "expression": "currentWeightKg > maxHealthyWeightKg ? (currentWeightKg - maxHealthyWeightKg) : (currentWeightKg < minHealthyWeightKg ? (minHealthyWeightKg - currentWeightKg) : 0)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "ideal-weight-calculator", "type": "static", "message": "Compara con las 5 fórmulas clínicas ajustadas por contextura", "message_en": "Compare with 5 clinical formulas & frame size", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Especialista en Salud Pública y Salud Ponderal",
+    "role_en": "Public Health & Body Weight Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y orientador",
+    "includeData": ["minHealthyWeightKg", "midpointHealthyWeightKg", "maxHealthyWeightKg", "currentBmiVal", "weightToGainOrLoseKg"],
+    "instructions": [
+      "Sintetiza el rango de peso saludable (mínimo, punto medio y máximo), el IMC actual y la diferencia ponderal necesaria en 2 frases concisas.",
+      "Destaca que la salud no se define por un número único sino por un rango flexible respetando la composición corporal."
+    ],
+    "instructions_en": [
+      "Summarize healthy weight range (min, midpoint, max), current BMI, and weight change required in 2 concise sentences.",
+      "Highlight that health is best defined by a flexible range rather than a rigid single number."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Rango de Peso Saludable (OMS) | CalculadoraHub",
+    "metaTitle_en": "Healthy Weight Range Calculator (WHO Standards) | CalculadoraHub",
+    "metaDescription": "Calcula el rango de peso saludable mínimo, medio y máximo según la OMS. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your minimum, midpoint, and maximum healthy body weight range under WHO standards. Free, instant results.",
+    "keywords": ["healthy weight calculator", "peso saludable oms", "rango imc normal", "clasificacion oms"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

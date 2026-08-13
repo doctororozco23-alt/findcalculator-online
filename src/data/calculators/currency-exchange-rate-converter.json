@@ -1,0 +1,134 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "currency-exchange-rate-converter",
+    "title": "Conversor de Divisas, Monedas y Tipos de Cambio (USD, EUR, GBP)",
+    "title_en": "Currency Exchange Rate & Foreign Forex Converter",
+    "slug": "conversor-de-divisas-monedas-tipos-de-cambio-usd-eur-gbp",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["conversor-de-divisas", "monedas", "tipos-de-cambio", "dolar", "euro", "forex", "conversores"],
+    "tags_en": ["currency-converter", "foreign-exchange", "forex", "usd", "eur", "gbp", "converters"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte importes entre divisas internacionales (USD, EUR, GBP, MXN, COP, ARS) aplicando tasas de cambio configurables.",
+    "shortDescription_en": "Convert amounts between international currencies (USD, EUR, GBP, MXN, COP, ARS) using customizable exchange rates.",
+    "longDescription": "Herramienta de comercio internacional, viajes y mercado Forex. Calcula el monto equivalente en moneda destino e incluye la comisión de cambio bancario.",
+    "longDescription_en": "International trade, travel, and Forex market tool. Computes equivalent amount in target currency including bank exchange fees.",
+    "howToUse": [
+      "Ingresa el Monto a Convertir en la Moneda de Origen.",
+      "Ingresa o Selecciona la Tasa de Cambio (ej. 1 USD = 0.92 EUR o 1 USD = 17.5 MXN).",
+      "Ingresa opcionalmente la Comisión de Cambio Bancario (%).",
+      "Consulta el Monto Convertido Resultante y el Costo de Comisión."
+    ],
+    "howToUse_en": [
+      "Enter Amount to Convert in Source Currency.",
+      "Enter or Select Exchange Rate (e.g. 1 USD = 0.92 EUR or 1 USD = 17.5 MXN).",
+      "Optionally enter Bank Exchange Fee (%).",
+      "View Resulting Converted Amount and Bank Fee Cost."
+    ],
+    "methodology": "Monto Bruto = MontoOrigen * TasaCambio. Comisión = MontoBruto * (ComisionPercent / 100). Monto Neto = MontoBruto - Comisión.",
+    "methodology_en": "Gross Amount = SourceAmount * ExchangeRate. Fee = GrossAmount * (FeePercent / 100). Net Amount = GrossAmount - Fee."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Divisas, Mercado Forex y Finanzas Internacionales",
+    "role_en": "Currencies, Forex Market & International Finance Specialist Assistant",
+    "includeData": ["convertedNetCurrencyAmountResult", "bankFeeAmountResult"],
+    "instructions": [
+      "Interpreta el resultado del cambio de divisa y la comisión bancaria deducida.",
+      "Explica la diferencia entre el tipo de cambio interbancario de mercado vs el tipo de cambio comercial ofrecido en aeropuertos.",
+      "Muestra recomendaciones para minimizar comisiones al pagar con tarjeta de crédito en el extranjero."
+    ],
+    "instructions_en": [
+      "Interpret calculated currency conversion result and deducted bank fee.",
+      "Explain difference between mid-market interbank rate vs retail exchange rate offered at airports.",
+      "Show recommendations to minimize transaction fees when paying abroad with credit cards."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "cer-guide",
+      "icon": "💱",
+      "title": "Foreign Exchange Rate Mechanics",
+      "title_es": "Mecánica del Tipo de Cambio de Divisas",
+      "content_html_en": "<p><b>Mid-Market Rate:</b> The midpoint between buy and sell prices on global currency markets.</p><p><b>Spread / Fee:</b> 1% to 4% markup added by banks and exchange kiosks.</p>",
+      "content_html": "<p><b>Tipo de Cambio Medio:</b> El punto medio entre precios de compra y venta en mercados globales.</p><p><b>Margen / Comisión:</b> Recargo del 1% al 4% añadido por bancos y casas de cambio.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "sourceAmountVal",
+      "label": "Monto en Moneda de Origen",
+      "label_en": "Source Currency Amount",
+      "type": "number",
+      "default": 500,
+      "min": 0.01,
+      "max": 100000000,
+      "step": 10,
+      "required": true
+    },
+    {
+      "id": "exchangeRateMultiplier",
+      "label": "Tasa de Cambio (1 Origen = X Destino)",
+      "label_en": "Exchange Rate (1 Source = X Target)",
+      "type": "number",
+      "default": 0.92,
+      "min": 0.000001,
+      "max": 1000000,
+      "step": 0.01,
+      "required": true
+    },
+    {
+      "id": "bankExchangeFeePercent",
+      "label": "Comisión de Cambio Bancario (%)",
+      "label_en": "Bank Exchange Fee (%)",
+      "type": "number",
+      "default": 2.0,
+      "min": 0,
+      "max": 20,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "grossConvertedAmountVal",
+      "label": "Monto Convertido Bruto",
+      "label_en": "Gross Converted Amount",
+      "expression": "sourceAmountVal * exchangeRateMultiplier",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "bankFeeAmountResult",
+      "label": "Comisión Bancaria Retenida",
+      "label_en": "Deducted Bank Fee",
+      "expression": "grossConvertedAmountVal * (bankExchangeFeePercent / 100)",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "convertedNetCurrencyAmountResult",
+      "label": "Monto Neto Recibido en Moneda Destino",
+      "label_en": "Net Received Amount in Target Currency",
+      "expression": "grossConvertedAmountVal - bankFeeAmountResult",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "convertedNetCurrencyAmountResult", "op": ">=", "value": 0 }, "label": "Monto Neto Calculado", "label_en": "Net Amount Computed", "tone": "success", "text": "Monto neto recibido tras comisiones cuantificado.", "text_en": "Net received amount after fees quantified." }
+      ]
+    }
+  ]
+}

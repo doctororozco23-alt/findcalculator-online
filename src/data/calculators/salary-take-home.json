@@ -1,0 +1,173 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "salary-take-home-calculator",
+    "title": "Calculadora de Salario Neto y Cheque de Pago",
+    "title_en": "Salary & Take-Home Paycheck Calculator",
+    "slug": "salario-neto",
+    "category": "finance",
+    "subcategory": "taxes",
+    "tags": ["nomina", "impuestos", "salario"],
+    "tags_en": ["payroll", "taxes", "salary"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Briefcase"
+  },
+  "content": {
+    "shortDescription": "Calcula tu salario neto real disponible tras deducir impuestos de retención e impuestos sobre el ingreso.",
+    "shortDescription_en": "Calculate your actual net take-home paycheck after deducting estimated income tax withholdings.",
+    "longDescription": "Convierte tu salario bruto anual o mensual en tu cheque neto real recibido en el bolsillo tras aplicar el porcentaje estimado de retención de impuestos e impuestos sobre el ingreso.",
+    "longDescription_en": "Convert your annual or monthly gross salary into actual net take-home pay received in your bank account after estimated tax withholdings.",
+    "howToUse": [
+      "Ingresa tu salario bruto anual o mensual.",
+      "Indica la tasa estimada de retención fiscal (IRPF / Tax rate %).",
+      "Selecciona la frecuencia de pago (Mensual, Quincenal, Semanal).",
+      "Consulta tu salario neto real por periodo."
+    ],
+    "howToUse_en": [
+      "Enter your annual or monthly gross gross income salary.",
+      "Enter your estimated tax withholding rate (%).",
+      "Select payment pay frequency (Monthly, Bi-weekly, Weekly).",
+      "View your actual net take-home paycheck per period."
+    ],
+    "methodology": "Fórmula de Salario Neto: Neto = Bruto × (1 - TasaImpuesto / 100).",
+    "methodology_en": "Net Pay Formula: Net = Gross × (1 - TaxRate / 100)."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "💼",
+      "title": "Gross vs Net Salary Explained",
+      "title_es": "Diferencia entre Salario Bruto y Salario Neto",
+      "content_html_en": "<p><b>Gross Salary:</b> The total agreed compensation before any tax withholdings or social security contributions are deducted.<br/><b>Net Take-Home Pay:</b> The actual amount deposited into your bank account after all obligatory deductions.</p>",
+      "content_html": "<p><b>Salario Bruto:</b> La compensación total acordada antes de deducciones tributarias.<br/><b>Salario Neto:</b> El importe real ingresado en tu cuenta bancaria tras retenciones fiscales.</p>"
+    },
+    {
+      "id": "pay_frequencies",
+      "icon": "🗓️",
+      "title": "Paycheck Frequencies",
+      "title_es": "Frecuencias de Pago",
+      "content_html_en": "<ul><li><b>Monthly (12/yr):</b> 1 paycheck per month.</li><li><b>Bi-weekly (26/yr):</b> Every 2 weeks (2 months per year have 3 paychecks).</li><li><b>Semi-monthly (24/yr):</b> Twice per month (e.g. 1st and 15th).</li></ul>",
+      "content_html": "<ul><li><b>Mensual (12/año):</b> 1 nómina al mes.</li><li><b>Quincenal (24/año):</b> 2 nóminas por mes.</li></ul>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "grossSalary",
+      "label": "Salario bruto anual",
+      "label_en": "Annual Gross Salary",
+      "type": "currency",
+      "default": 45000,
+      "min": 5000,
+      "max": 1000000,
+      "step": 1000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [5000, 1000000], "message": "Salario entre 5.000 y 1.000.000", "message_en": "Salary between 5,000 and 1,000,000" }]
+    },
+    {
+      "id": "taxRate",
+      "label": "Retención fiscal estimada (Tasa %)",
+      "label_en": "Estimated Tax Withholding Rate (%)",
+      "type": "slider",
+      "default": 20,
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "netAnnualSalary",
+      "label": "Salario neto anual total",
+      "label_en": "Total Net Annual Salary",
+      "expression": "grossSalary * (1 - taxRate / 100)",
+      "unit": { "follows": "grossSalary" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "netMonthlyPaycheck",
+      "label": "Salario Neto Mensual (Cheque de Pago)",
+      "label_en": "Net Monthly Take-Home Paycheck",
+      "expression": "netAnnualSalary / 12",
+      "unit": { "follows": "grossSalary" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "taxRate", "op": ">=", "value": 30 }, "label": "Retención Alta", "label_en": "High Tax Bracket", "tone": "info", "text": "Retención fiscal superior al 30%.", "text_en": "Tax withholding rate exceeding 30%." }
+      ]
+    },
+    {
+      "id": "biweeklyPaycheck",
+      "label": "Pago quincenal (Bi-weekly)",
+      "label_en": "Bi-weekly Take-Home Pay (26/yr)",
+      "expression": "netAnnualSalary / 26",
+      "unit": { "follows": "grossSalary" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "totalTaxesPaid",
+      "label": "Impuestos totales retrazados por año",
+      "label_en": "Total Annual Tax Withholdings",
+      "expression": "grossSalary * (taxRate / 100)",
+      "unit": { "follows": "grossSalary" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "budget-50-30-20-calculator", "type": "static", "message": "Organiza tu salario con la regla de presupuesto 50/30/20", "message_en": "Organize your salary with 50/30/20 budget rule", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Fiscal y de Nómina",
+    "role_en": "Payroll & Tax Assistant",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y conciso",
+    "includeData": ["netMonthlyPaycheck", "netAnnualSalary", "totalTaxesPaid", "grossSalary", "taxRate"],
+    "instructions": [
+      "Sintetiza el cheque neto mensual e impuestos retrazados en 2 frases concisas.",
+      "Recuerda que la tasa real depende de deducciones personales e impuestos estatales/locales."
+    ],
+    "instructions_en": [
+      "Summarize monthly take-home paycheck and annual taxes paid in 2 concise sentences.",
+      "Remind user that actual withholding depends on personal exemptions and state/local taxes."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Salario Neto y Cheque de Pago | CalculadoraHub",
+    "metaTitle_en": "Salary & Take-Home Paycheck Calculator | CalculadoraHub",
+    "metaDescription": "Calcula tu salario neto mensual y cheque de pago tras impuestos. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your net monthly paycheck after tax withholdings. Free, instant results.",
+    "keywords": ["salary calculator", "salario neto", "cheque de pago", "impuestos nomina"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

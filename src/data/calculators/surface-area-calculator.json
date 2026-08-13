@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "surface-area-calculator",
+    "title": "Calculadora de Área Superficial de Sólidos 3D",
+    "title_en": "Surface Area Calculator for 3D Solids",
+    "slug": "calculadora-de-area-superficial-solidos-3d",
+    "category": "math",
+    "subcategory": "geometry",
+    "tags": ["area-superficial", "solidos-3d", "esfera", "cilindro", "cubo", "geometria"],
+    "tags_en": ["surface-area", "3d-solids", "sphere", "cylinder", "cube", "geometry"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el área superficial total ($A_{sup}$) de Esferas ($A = 4\\pi r^2$), Cilindros ($A = 2\\pi r h + 2\\pi r^2$) y Cubos ($A = 6a^2$).",
+    "shortDescription_en": "Compute total surface area ($A_{sup}$) for Spheres ($A = 4\\pi r^2$), Cylinders ($A = 2\\pi r h + 2\\pi r^2$), and Cubes ($A = 6a^2$).",
+    "longDescription": "Herramienta de geometría 3D y física de materiales. Cuantifica el área exterior total expuesta de cuerpos geométricos tridimensionales.",
+    "longDescription_en": "3D geometry tool. Quantifies total outer surface area of 3D geometric bodies.",
+    "howToUse": [
+      "Selecciona el Sólido Tridimensional.",
+      "Ingresa el Radio $r$, Altura $h$ o Arista $a$.",
+      "Consulta el Área Superficial total calculada."
+    ],
+    "howToUse_en": [
+      "Select 3D Solid.",
+      "Enter Radius $r$, Height $h$, or Edge $a$.",
+      "View total calculated Surface Area."
+    ],
+    "methodology": "Esfera: A = 4*π*r². Cilindro: A = 2*π*r*h + 2*π*r². Cubo: A = 6*a².",
+    "methodology_en": "Sphere: A = 4*π*r². Cylinder: A = 2*π*r*h + 2*π*r². Cube: A = 6*a²."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Superficies Tridimensionales",
+    "role_en": "3D Surface Area Specialist Assistant",
+    "includeData": ["calculatedSurfaceArea"],
+    "instructions": [
+      "Desglosa el área lateral y las áreas de las bases para cilindros y cubos.",
+      "Explica la razón superficie-volumen (S/V).",
+      "Identifica aplicaciones en empaquetado y transferencia de calor."
+    ],
+    "instructions_en": [
+      "Break down lateral area and base areas for cylinders and cubes.",
+      "Explain surface-to-volume ratio (S/V).",
+      "Identify packaging and heat transfer applications."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "sa-guide",
+      "icon": "🌐",
+      "title": "Surface Area Principles",
+      "title_es": "Principios del Área Superficial",
+      "content_html_en": "<p><b>Sphere:</b> Total outer area = 4 × π × r².</p><p><b>Cylinder:</b> Total area = Lateral area (2πrh) + 2 × Base area (2πr²).</p><p><b>Cube:</b> 6 identical square faces = 6 × a².</p>",
+      "content_html": "<p><b>Esfera:</b> Área exterior total = 4 × π × r².</p><p><b>Cilindro:</b> Área total = Área lateral (2πrh) + 2 × Área de la base (2πr²).</p><p><b>Cubo:</b> 6 caras cuadradas idénticas = 6 × a².</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "solidKind",
+      "label": "Sólido Geométrico",
+      "label_en": "Geometric Solid",
+      "type": "select",
+      "default": "sphere",
+      "options": [
+        { "value": "sphere", "label": "Esfera (4 × π × r²)", "label_en": "Sphere (4 × π × r²)" },
+        { "value": "cylinder", "label": "Cilindro (2πrh + 2πr²)", "label_en": "Cylinder (2πrh + 2πr²)" },
+        { "value": "cube", "label": "Cubo (6 × a²)", "label_en": "Cube (6 × a²)" }
+      ]
+    },
+    {
+      "id": "dimR",
+      "label": "Radio (r) / Arista (a)",
+      "label_en": "Radius (r) / Edge (a)",
+      "type": "number",
+      "default": 5,
+      "min": 0.1,
+      "max": 10000,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "dimH",
+      "label": "Altura (h) (solo Cilindro)",
+      "label_en": "Height (h) (Cylinder only)",
+      "type": "number",
+      "default": 10,
+      "min": 0.1,
+      "max": 10000,
+      "step": 0.1,
+      "required": false
+    }
+  ],
+  "calculations": [
+    {
+      "id": "calculatedSurfaceArea",
+      "label": "Área Superficial Total (A_sup)",
+      "label_en": "Total Surface Area (A_sup)",
+      "expression": "solidKind == 'sphere' ? (4 * pi * dimR^2) : (solidKind == 'cylinder' ? (2 * pi * dimR * dimH + 2 * pi * dimR^2) : (6 * dimR^2))",
+      "unit": "unidades²",
+      "unit_en": "units²",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "calculatedSurfaceArea", "op": ">", "value": 0 }, "label": "Área Superficial Calculada", "label_en": "Surface Area Evaluated", "tone": "success", "text": "Superficie exterior 3D calculada.", "text_en": "3D outer surface area evaluated." }
+      ]
+    }
+  ]
+}

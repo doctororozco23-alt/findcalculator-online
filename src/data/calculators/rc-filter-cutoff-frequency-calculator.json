@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "rc-filter-cutoff-frequency-calculator",
+    "title": "Calculadora de Frecuencia de Corte de Filtro RC (Pasabajos / Pasaaltos)",
+    "title_en": "RC Filter Cutoff Frequency Calculator (Low-pass / High-pass)",
+    "slug": "calculadora-de-frecuencia-de-corte-de-filtro-rc-pasabajos-pasaaltos",
+    "category": "technology",
+    "subcategory": "electrical",
+    "tags": ["filtro-rc", "frecuencia-de-corte", "filtro-pasabajos", "filtro-pasaaltos", "hertz", "electronica", "tecnologia"],
+    "tags_en": ["rc-filter", "cutoff-frequency", "low-pass-filter", "high-pass-filter", "hertz", "electronics", "technology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la frecuencia de corte a -3dB ($f_c = \\frac{1}{2\\pi R C}$) en Hertz y la constante de tiempo ($\\tau = R C$) para filtros RC.",
+    "shortDescription_en": "Calculate -3dB cutoff frequency ($f_c = \\frac{1}{2\\pi R C}$) in Hertz and time constant ($\\tau = R C$) for RC filters.",
+    "longDescription": "Herramienta de procesamiento de señales y audio electrónica. Modela la atenuación de frecuencias indeseadas en circuitos pasivos de primer orden.",
+    "longDescription_en": "Signal processing and audio electronics tool. Models unwanted frequency attenuation in first-order passive RC circuits.",
+    "howToUse": [
+      "Ingresa el Valor de la Resistencia ($R$ en Ohmios - Ω o kΩ).",
+      "Ingresa la Capacitancia del Condensador ($C$ en Nanofaradios nF o Microfaradios $\\mu$F).",
+      "Consulta la Frecuencia de Corte Calculada ($f_c$ en Hz o kHz) y la Constante de Tiempo ($\\tau$ en ms)."
+    ],
+    "howToUse_en": [
+      "Enter Resistor Value ($R$ in Ohms - Ω or kΩ).",
+      "Enter Capacitor Capacitance ($C$ in Nanofarads nF or Microfarads $\\mu$F).",
+      "View Calculated Cutoff Frequency ($f_c$ in Hz or kHz) and Time Constant ($\\tau$ in ms)."
+    ],
+    "methodology": "Frecuencia de corte fc = 1 / (2 * π * R * C). Constante de tiempo τ = R * C (en segundos). 1 nF = 10⁻⁹ F.",
+    "methodology_en": "Cutoff frequency fc = 1 / (2 * π * R * C). Time constant τ = R * C (in seconds). 1 nF = 10⁻⁹ F."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Procesamiento de Señales y Filtros Electrónicos",
+    "role_en": "Signal Processing & Electronic Filters Specialist Assistant",
+    "includeData": ["cutoffFrequencyHzResult", "timeConstantMsResult"],
+    "instructions": [
+      "Interpreta la frecuencia de corte a -3dB en Hertz cuantificada.",
+      "Explica la atenuación de 20 dB por década en frecuencias superiores a $f_c$ para filtros pasabajos de 1er orden.",
+      "Muestra la relación con la constante de tiempo $\\tau = R C$ (tiempo de carga al 63.2% del voltaje total)."
+    ],
+    "instructions_en": [
+      "Interpret quantified -3dB cutoff frequency in Hertz.",
+      "Explain 20 dB per decade roll-off attenuation above $f_c$ for 1st-order low-pass filters.",
+      "Show relationship with time constant $\\tau = R C$ (63.2% charge time)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "rfc-guide",
+      "icon": "📻",
+      "title": "RC Filter Formulas & Cutoff Point",
+      "title_es": "Fórmulas y Punto de Corte en Filtros RC",
+      "content_html_en": "<p><b>Cutoff Frequency (fc):</b> fc = 1 / (2 × π × R × C)</p><p><b>Time Constant (τ):</b> τ = R × C</p><p><b>At Cutoff Frequency:</b> Signal amplitude drops to 70.7% (-3dB attenuation).</p>",
+      "content_html": "<p><b>Frecuencia de Corte (fc):</b> fc = 1 / (2 × π × R × C)</p><p><b>Constante de Tiempo (τ):</b> τ = R × C</p><p><b>En Punto de Corte:</b> La amplitud decae al 70.7% (-3dB de atenuación).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "filterResistanceOhms",
+      "label": "Resistencia (R en Ohmios - Ω)",
+      "label_en": "Resistor (R in Ohms - Ω)",
+      "type": "number",
+      "default": 10000,
+      "min": 1,
+      "max": 10000000,
+      "step": 100,
+      "required": true
+    },
+    {
+      "id": "filterCapacitanceNanofarads",
+      "label": "Capacitancia (C en Nanofaradios - nF)",
+      "label_en": "Capacitor (C in Nanofarads - nF)",
+      "type": "number",
+      "default": 10,
+      "min": 0.001,
+      "max": 100000,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "capacitanceFaradsVal",
+      "label": "Capacitancia en Faradios (F)",
+      "label_en": "Capacitance in Farads (F)",
+      "expression": "filterCapacitanceNanofarads / 1000000000",
+      "unit": "F",
+      "unit_en": "F",
+      "precision": 9,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "cutoffFrequencyHzResult",
+      "label": "Frecuencia de Corte Calculada (-3dB en Hz)",
+      "label_en": "Calculated Cutoff Frequency (-3dB in Hz)",
+      "expression": "(filterResistanceOhms > 0 && capacitanceFaradsVal > 0) ? (1 / (2 * pi * filterResistanceOhms * capacitanceFaradsVal)) : 0",
+      "unit": "Hz",
+      "unit_en": "Hz",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "cutoffFrequencyHzResult", "op": ">=", "value": 0 }, "label": "Frecuencia Calculada", "label_en": "Frequency Computed", "tone": "success", "text": "Frecuencia de corte a -3dB cuantificada.", "text_en": "-3dB cutoff frequency quantified." }
+      ]
+    },
+    {
+      "id": "timeConstantMsResult",
+      "label": "Constante de Tiempo (τ en milisegundos - ms)",
+      "label_en": "Time Constant (τ in milliseconds - ms)",
+      "expression": "(filterResistanceOhms * capacitanceFaradsVal) * 1000",
+      "unit": "ms",
+      "unit_en": "ms",
+      "precision": 3,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

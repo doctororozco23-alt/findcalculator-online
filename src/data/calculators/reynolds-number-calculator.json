@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "reynolds-number-calculator",
+    "title": "Calculadora de Número de Reynolds y Regímenes de Flujo (Re)",
+    "title_en": "Reynolds Number & Flow Regime Calculator (Re)",
+    "slug": "calculadora-de-numero-de-reynolds-flujo-laminar-turbulento",
+    "category": "engineering",
+    "subcategory": "mechanics",
+    "tags": ["numero-de-reynolds", "reynolds", "flujo-laminar", "flujo-turbulento", "viscosidad", "mecanica-de-fluidos", "ingenieria"],
+    "tags_en": ["reynolds-number", "reynolds", "laminar-flow", "turbulent-flow", "viscosity", "fluid-mechanics", "engineering"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el número adimensional de Reynolds ($Re = (\\rho \\cdot v \\cdot D) / \\mu$) para clasificar el flujo de un fluido en laminar, de transición o turbulento.",
+    "shortDescription_en": "Calculate dimensionless Reynolds number ($Re = (\\rho \\cdot v \\cdot D) / \\mu$) to classify fluid flow into laminar, transitional, or turbulent regimes.",
+    "longDescription": "Herramienta de mecánica de fluidos e ingeniería química. Compara las fuerzas inerciales frente a las fuerzas viscosas en la capa límite de conductos.",
+    "longDescription_en": "Fluid mechanics and chemical engineering tool. Compares inertial forces against viscous forces in duct boundary layers.",
+    "howToUse": [
+      "Ingresa la Densidad del Fluido ($\\rho$ en kg/m³, ej. Agua = 1000 kg/m³).",
+      "Ingresa la Velocidad de Flujo ($v$ en m/s).",
+      "Ingresa el Diámetro Hidráulico / Interno del Tubo ($D$ en metros).",
+      "Ingresa la Viscosidad Dinámica ($\\mu$ en Pa·s, ej. Agua a 20°C = 0.001 Pa·s).",
+      "Consulta el Número de Reynolds ($Re$) y la Clasificación del Régimen de Flujo."
+    ],
+    "howToUse_en": [
+      "Enter Fluid Density ($\\rho$ in kg/m³, e.g. Water = 1000 kg/m³).",
+      "Enter Flow Velocity ($v$ in m/s).",
+      "Enter Pipe Hydraulic Diameter ($D$ in meters).",
+      "Enter Dynamic Viscosity ($\\mu$ in Pa·s, e.g. Water at 20°C = 0.001 Pa·s).",
+      "View Reynolds Number ($Re$) and Flow Regime Classification."
+    ],
+    "methodology": "Número de Reynolds Re = (ρ * v * D) / μ. Flujo en tubería: Re < 2300 Laminar, 2300-4000 Transición, Re > 4000 Turbulento.",
+    "methodology_en": "Reynolds Number Re = (ρ * v * D) / μ. Pipe Flow: Re < 2300 Laminar, 2300-4000 Transitional, Re > 4000 Turbulent."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Mecánica de Fluidos y Fenómenos de Transporte",
+    "role_en": "Fluid Mechanics & Transport Phenomena Specialist Assistant",
+    "includeData": ["reynoldsNumberResult"],
+    "instructions": [
+      "Interpreta el régimen de flujo obtenido (Laminar Re < 2300, Transición 2300-4000, Turbulento Re > 4000).",
+      "Explica las implicaciones prácticas: el flujo turbulento incrementa la pérdida de carga por fricción pero mejora la transferencia de calor.",
+      "Muestra la diferencia entre viscosidad dinámica (Pa·s) y cinemática (m²/s)."
+    ],
+    "instructions_en": [
+      "Interpret obtained flow regime (Laminar Re < 2300, Transition 2300-4000, Turbulent Re > 4000).",
+      "Explain practical implications: turbulent flow increases friction head loss but enhances heat transfer.",
+      "Show difference between dynamic viscosity (Pa·s) vs kinematic viscosity (m²/s)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "rey-guide",
+      "icon": "🌊",
+      "title": "Reynolds Number Flow Regimes",
+      "title_es": "Regímenes de Flujo del Número de Reynolds",
+      "content_html_en": "<p><b>Re &lt; 2,300:</b> Laminar Flow (smooth parallel streamlines).</p><p><b>2,300 &le; Re &le; 4,000:</b> Critical Transition Zone.</p><p><b>Re &gt; 4,000:</b> Fully Turbulent Flow (chaotic eddies and mixing).</p>",
+      "content_html": "<p><b>Re &lt; 2,300:</b> Flujo Laminar (líneas de corriente paralelas y suaves).</p><p><b>2,300 &le; Re &le; 4,000:</b> Zona Crítica de Transición.</p><p><b>Re &gt; 4,000:</b> Flujo Totalmente Turbulento (remolinos y mezcla caótica).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "fluidDensityKgM3",
+      "label": "Densidad del Fluido (ρ en kg/m³)",
+      "label_en": "Fluid Density (ρ in kg/m³)",
+      "type": "number",
+      "default": 1000,
+      "min": 0.1,
+      "max": 20000,
+      "step": 10,
+      "required": true
+    },
+    {
+      "id": "flowVelocityMpsRe",
+      "label": "Velocidad de Flujo (v en m/s)",
+      "label_en": "Flow Velocity (v in m/s)",
+      "type": "number",
+      "default": 1.2,
+      "min": 0.001,
+      "max": 500,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "pipeDiameterMetersRe",
+      "label": "Diámetro Interno (D en metros)",
+      "label_en": "Internal Diameter (D in meters)",
+      "type": "number",
+      "default": 0.05,
+      "min": 0.001,
+      "max": 10,
+      "step": 0.005,
+      "required": true
+    },
+    {
+      "id": "dynamicViscosityPaS",
+      "label": "Viscosidad Dinámica (μ en Pa·s)",
+      "label_en": "Dynamic Viscosity (μ in Pa·s)",
+      "type": "number",
+      "default": 0.001,
+      "min": 0.000001,
+      "max": 100,
+      "step": 0.0001,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "reynoldsNumberResult",
+      "label": "Número de Reynolds Calculado (Re)",
+      "label_en": "Calculated Reynolds Number (Re)",
+      "expression": "dynamicViscosityPaS > 0 ? ((fluidDensityKgM3 * flowVelocityMpsRe * pipeDiameterMetersRe) / dynamicViscosityPaS) : 0",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "reynoldsNumberResult", "op": "<", "value": 2300 }, "label": "Flujo Laminar (Re < 2,300)", "label_en": "Laminar Flow (Re < 2,300)", "tone": "info", "text": "Líneas de corriente suaves sin mezcla lateral.", "text_en": "Smooth streamlines without lateral mixing." },
+        { "when": { "field": "reynoldsNumberResult", "op": "between", "value": [2300, 4000] }, "label": "Zona de Transición (2,300 - 4,000)", "label_en": "Transition Zone (2,300 - 4,000)", "tone": "warning", "text": "Comportamiento inestable de flujo.", "text_en": "Unstable flow behavior." },
+        { "when": { "field": "reynoldsNumberResult", "op": ">", "value": 4000 }, "label": "Flujo Turbulento (Re > 4,000)", "label_en": "Turbulent Flow (Re > 4,000)", "tone": "success", "text": "Régimen altamente turbulento y caótico.", "text_en": "Highly turbulent and chaotic regime." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "gear-ratio-speed-calculator",
+    "title": "Calculadora de Relación de Transmisión y Velocidad en Engranajes",
+    "title_en": "Gear Ratio & Output Speed Calculator",
+    "slug": "calculadora-de-relacion-de-transmision-engranajes-velocidad-rpm",
+    "category": "engineering",
+    "subcategory": "mechanics",
+    "tags": ["engranajes", "relacion-de-transmision", "rpm", "dientes-engranaje", "torque-mecanico", "reductora", "ingenieria-mecanica"],
+    "tags_en": ["gear-ratio", "transmission-ratio", "rpm", "gear-teeth", "mechanical-torque", "gearbox", "mechanical-engineering"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la relación de transmisión de engranajes ($i = Z_2 / Z_1$) y la velocidad rotacional de salida ($N_2 = N_1 / i$) en RPM.",
+    "shortDescription_en": "Calculate gear transmission ratio ($i = Z_2 / Z_1$) and rotational output speed ($N_2 = N_1 / i$) in RPM.",
+    "longDescription": "Herramienta de diseño mecánico y cajas reductoras. Relaciona el número de dientes del engranaje conductor y conducido para determinar la reducción de velocidad y la amplificación de torque.",
+    "longDescription_en": "Mechanical design and gearbox tool. Relates driving and driven gear tooth counts to determine speed reduction and torque multiplication.",
+    "howToUse": [
+      "Ingresa el Número de Dientes del Engranaje Conductor / Entrante ($Z_1$).",
+      "Ingresa el Número de Dientes del Engranaje Conducido / Salida ($Z_2$).",
+      "Ingresa la Velocidad de Entrada del Motor ($N_1$ en RPM).",
+      "Consulta la Relación de Transmisión ($i$) y la Velocidad de Salida ($N_2$ en RPM)."
+    ],
+    "howToUse_en": [
+      "Enter Driver / Input Gear Tooth Count ($Z_1$).",
+      "Enter Driven / Output Gear Tooth Count ($Z_2$).",
+      "Enter Motor Input Speed ($N_1$ in RPM).",
+      "View Transmission Gear Ratio ($i$) and Output Speed ($N_2$ in RPM)."
+    ],
+    "methodology": "Relación de Transmisión i = Z2 / Z1. Velocidad de Salida N2 = N1 / i = N1 * (Z1 / Z2).",
+    "methodology_en": "Gear Ratio i = Z2 / Z1. Output Speed N2 = N1 / i = N1 * (Z1 / Z2)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Diseño de Transmisiones Mecánicas y Reductores",
+    "role_en": "Mechanical Transmission Design & Gearbox Specialist Assistant",
+    "includeData": ["gearRatioValResult", "outputSpeedRpmResult"],
+    "instructions": [
+      "Interpreta la relación de transmisión de engranajes calculada (reducción $i > 1$ vs multiplicación $i < 1$).",
+      "Explica la conservación de potencia: reducir la velocidad a la mitad duplica el torque de salida disponible.",
+      "Muestra recomendaciones para evitar interferencia de dientes (mínimo 17 dientes para piñones cilíndricos estándar)."
+    ],
+    "instructions_en": [
+      "Interpret calculated gear transmission ratio (reduction $i > 1$ vs speed multiplication $i < 1$).",
+      "Explain power conservation: halving output RPM doubles available output torque.",
+      "Show recommendations to prevent tooth undercut (minimum 17 teeth for standard spur pinions)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "grs-guide",
+      "icon": "⚙️",
+      "title": "Gear Ratio & Velocity Formulas",
+      "title_es": "Fórmulas de Engranajes y Velocidad",
+      "content_html_en": "<p><b>Gear Ratio (i):</b> i = Driven Teeth (Z₂) / Driver Teeth (Z₁)</p><p><b>Output Speed:</b> N₂ = N₁ / i</p><p><b>Torque Relation:</b> T₂ = T₁ × i (neglecting efficiency losses).</p>",
+      "content_html": "<p><b>Relación de Transmisión (i):</b> i = Dientes Conducido (Z₂) / Dientes Conductor (Z₁)</p><p><b>Velocidad de Salida:</b> N₂ = N₁ / i</p><p><b>Relación de Torque:</b> T₂ = T₁ × i (despreciando pérdidas por rendimiento).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "driverTeethZ1",
+      "label": "Dientes Engranaje Conductor / Entrada (Z₁)",
+      "label_en": "Driver / Input Gear Teeth (Z₁)",
+      "type": "number",
+      "default": 18,
+      "min": 8,
+      "max": 500,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "drivenTeethZ2",
+      "label": "Dientes Engranaje Conducido / Salida (Z₂)",
+      "label_en": "Driven / Output Gear Teeth (Z₂)",
+      "type": "number",
+      "default": 54,
+      "min": 8,
+      "max": 500,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "inputSpeedRpmN1",
+      "label": "Velocidad de Entrada (N₁ en RPM)",
+      "label_en": "Input Speed (N₁ in RPM)",
+      "type": "number",
+      "default": 1450,
+      "min": 1,
+      "max": 50000,
+      "step": 10,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "gearRatioValResult",
+      "label": "Relación de Transmisión de Engranajes (i)",
+      "label_en": "Transmission Gear Ratio (i)",
+      "expression": "driverTeethZ1 > 0 ? (drivenTeethZ2 / driverTeethZ1) : 0",
+      "unit": ":1",
+      "unit_en": ":1",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "gearRatioValResult", "op": ">", "value": 1 }, "label": "Reducción de Velocidad (i > 1)", "label_en": "Speed Reduction (i > 1)", "tone": "success", "text": "Mayor torque de salida a menor velocidad.", "text_en": "Higher output torque at lower speed." },
+        { "when": { "field": "gearRatioValResult", "op": "<", "value": 1 }, "label": "Multiplicación de Velocidad (i < 1)", "label_en": "Speed Multiplication (i < 1)", "tone": "info", "text": "Mayor velocidad de salida a menor torque.", "text_en": "Higher output speed at lower torque." }
+      ]
+    },
+    {
+      "id": "outputSpeedRpmResult",
+      "label": "Velocidad de Salida Resultante (N₂ en RPM)",
+      "label_en": "Resulting Output Speed (N₂ in RPM)",
+      "expression": "gearRatioValResult > 0 ? (inputSpeedRpmN1 / gearRatioValResult) : 0",
+      "unit": "RPM",
+      "unit_en": "RPM",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "weight-calculator",
+    "title": "Calculadora de Peso Gravitatorio en Planetas y la Luna",
+    "title_en": "Gravitational Weight Calculator for Planets & Moon",
+    "slug": "calculadora-de-peso-gravitatorio-planetas-luna-gravedad",
+    "category": "physics",
+    "subcategory": "mechanics",
+    "tags": ["peso", "gravedad", "planetas", "luna", "marte", "júpiter", "newtons", "fisica-astronomica"],
+    "tags_en": ["weight", "gravity", "planets", "moon", "mars", "jupiter", "newtons", "astrophysics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la fuerza de peso ($W = m \\cdot g$) en Newtons y libras para tu masa en la Tierra, la Luna, Marte o Júpiter.",
+    "shortDescription_en": "Calculate gravitational weight force ($W = m \\cdot g$) in Newtons and lbs for your mass on Earth, Moon, Mars, or Jupiter.",
+    "longDescription": "Herramienta de astrofísica y mecánica celeste. Demuestra cómo varía la fuerza de peso según la aceleración de gravedad ($g$) de diferentes cuerpos celestes.",
+    "longDescription_en": "Astrophysics and celestial mechanics tool. Demonstrates how weight force varies based on gravitational acceleration ($g$) across planetary bodies.",
+    "howToUse": [
+      "Ingresa tu Masa Corporal / de Objeto (en kg).",
+      "Selecciona el Cuerpo Celeste (Tierra, Luna, Marte, Júpiter).",
+      "Consulta el Peso Gravitatorio resultante en Newtons (N) y libras-fuerza (lbs)."
+    ],
+    "howToUse_en": [
+      "Enter Body / Object Mass (in kg).",
+      "Select Celestial Body (Earth, Moon, Mars, Jupiter).",
+      "View Resulting Gravitational Weight in Newtons (N) and pounds-force (lbs)."
+    ],
+    "methodology": "Peso W = Masa * Gravedad (g). Tierra g = 9.807 m/s², Luna g = 1.62 m/s², Marte g = 3.71 m/s², Júpiter g = 24.79 m/s².",
+    "methodology_en": "Weight W = Mass * Gravity (g). Earth g = 9.807 m/s², Moon g = 1.62 m/s², Mars g = 3.71 m/s², Jupiter g = 24.79 m/s²."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Astrofísica y Mecánica Celeste",
+    "role_en": "Astrophysics & Celestial Mechanics Specialist Assistant",
+    "includeData": ["weightNewtonsResult", "weightLbsResult"],
+    "instructions": [
+      "Interpreta la fuerza de peso en el planeta o satélite seleccionado.",
+      "Compara la gravedad del cuerpo respecto a la aceleración terrestre de $9.81 m/s^2$.",
+      "Explica la sensación de ligereza en la Luna (16.5% de la gravedad terrestre) o pesadez en Júpiter."
+    ],
+    "instructions_en": [
+      "Interpret weight force on selected planet or moon.",
+      "Compare body gravity relative to Earth acceleration of $9.81 m/s^2$.",
+      "Explain feeling of lightness on Moon (16.5% Earth gravity) vs heaviness on Jupiter."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "wgt-guide",
+      "icon": "🪐",
+      "title": "Solar System Surface Gravity Table",
+      "title_es": "Tabla de Gravedad en la Superficie del Sistema Solar",
+      "content_html_en": "<p><b>Earth:</b> 9.807 m/s² (1.00g)</p><p><b>Moon:</b> 1.62 m/s² (0.165g)</p><p><b>Mars:</b> 3.71 m/s² (0.378g)</p><p><b>Jupiter:</b> 24.79 m/s² (2.528g)</p>",
+      "content_html": "<p><b>Tierra:</b> 9.807 m/s² (1.00g)</p><p><b>Luna:</b> 1.62 m/s² (0.165g)</p><p><b>Marte:</b> 3.71 m/s² (0.378g)</p><p><b>Júpiter:</b> 24.79 m/s² (2.528g)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "bodyMassKg",
+      "label": "Masa del Objeto (kg)",
+      "label_en": "Object Mass (kg)",
+      "type": "number",
+      "default": 70,
+      "min": 0.1,
+      "max": 10000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "planetGravityMps2",
+      "label": "Cuerpo Celeste (Aceleración g)",
+      "label_en": "Celestial Body (g Acceleration)",
+      "type": "select",
+      "default": "9.807",
+      "options": [
+        { "value": "9.807", "label": "Tierra (g = 9.81 m/s²)", "label_en": "Earth (g = 9.81 m/s²)" },
+        { "value": "1.62", "label": "Luna (g = 1.62 m/s²)", "label_en": "Moon (g = 1.62 m/s²)" },
+        { "value": "3.71", "label": "Marte (g = 3.71 m/s²)", "label_en": "Mars (g = 3.71 m/s²)" },
+        { "value": "24.79", "label": "Júpiter (g = 24.79 m/s²)", "label_en": "Jupiter (g = 24.79 m/s²)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "weightNewtonsResult",
+      "label": "Fuerza de Peso Gravitatorio (Newtons - N)",
+      "label_en": "Gravitational Weight Force (Newtons - N)",
+      "expression": "bodyMassKg * planetGravityMps2",
+      "unit": "N",
+      "unit_en": "N",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "weightNewtonsResult", "op": ">=", "value": 0 }, "label": "Fuerza de Peso Calculada", "label_en": "Weight Force Computed", "tone": "success", "text": "Fuerza de atracción gravitatoria cuantificada.", "text_en": "Gravitational pull force quantified." }
+      ]
+    },
+    {
+      "id": "weightLbsResult",
+      "label": "Peso Equivalente en Libras-Fuerza (lbs)",
+      "label_en": "Equivalent Weight in Pounds-Force (lbs)",
+      "expression": "weightNewtonsResult * 0.224809",
+      "unit": "lbs",
+      "unit_en": "lbs",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

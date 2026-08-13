@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "attenuator-db-calculator",
+    "title": "Calculadora de Atenuación de Señal en Decibelios (dB y Potencia)",
+    "title_en": "Signal Attenuation & Power Ratio dB Calculator",
+    "slug": "calculadora-de-atenuacion-de-senal-decibelios-db-potencia-voltaje",
+    "category": "technology",
+    "subcategory": "electrical",
+    "tags": ["decibelios", "db", "atenuacion-de-senal", "amplificacion", "relacion-de-potencia", "rf", "electronica", "tecnologia"],
+    "tags_en": ["decibels", "db", "attenuation", "gain", "power-ratio", "rf", "electronics", "technology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la atenuación o ganancia de señal en decibelios ($dB = 10 \\log_{10}\\frac{P_{out}}{P_{in}}$) y la relación entre voltajes ($20 \\log_{10}$).",
+    "shortDescription_en": "Calculate signal attenuation or gain in decibels ($dB = 10 \\log_{10}\\frac{P_{out}}{P_{in}}$) and voltage ratio ($20 \\log_{10}$).",
+    "longDescription": "Herramienta de radiofrecuencia RF, audio y telecomunicaciones. Convierte relaciones de potencia o voltaje a decibelios y viceversa.",
+    "longDescription_en": "RF radiofrequency, audio, and telecommunications tool. Converts power or voltage ratios to decibels and vice versa.",
+    "howToUse": [
+      "Ingresa la Potencia o Voltaje de Entrada ($P_{in}$ en Watts o Volts).",
+      "Ingresa la Potencia o Voltaje de Salida ($P_{out}$ en Watts o Volts).",
+      "Consulta el Nivel de Ganancia / Atenuación Calculado en dB y la Relación Porcentual."
+    ],
+    "howToUse_en": [
+      "Enter Input Power or Voltage ($P_{in}$ in Watts or Volts).",
+      "Enter Output Power or Voltage ($P_{out}$ in Watts or Volts).",
+      "View Calculated Gain / Attenuation Level in dB and Percentage Ratio."
+    ],
+    "methodology": "Ganancia Potencia dB = 10 * log10(Pout / Pin). Ganancia Voltaje dB = 20 * log10(Vout / Vin). Porcentaje = (Pout / Pin) * 100.",
+    "methodology_en": "Power Gain dB = 10 * log10(Pout / Pin). Voltage Gain dB = 20 * log10(Vout / Vin). Percentage = (Pout / Pin) * 100."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Radiofrecuencia, Audio y Telecomunicaciones",
+    "role_en": "RF Radiofrequency, Audio & Telecommunications Specialist Assistant",
+    "includeData": ["powerGainDbResult", "powerRatioPercentageResult"],
+    "instructions": [
+      "Interpreta el nivel de atenuación (dB negativo) o ganancia (dB positivo) de la señal.",
+      "Explica los puntos de referencia clave: -3 dB representa la reducción de potencia a la mitad (50%), +3 dB representa el doble de potencia.",
+      "Muestra la conversión a unidades logarítmicas absolutas (dBm respecto a 1 mW)."
+    ],
+    "instructions_en": [
+      "Interpret signal attenuation level (negative dB) or gain (positive dB).",
+      "Explain key benchmark reference points: -3 dB equals half power (50%), +3 dB equals double power.",
+      "Show conversion to absolute logarithmic units (dBm relative to 1 mW)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "adb-guide",
+      "icon": "📻",
+      "title": "Decibel Rules of Thumb Reference",
+      "title_es": "Reglas Prácticas de Decibelios",
+      "content_html_en": "<p><b>+3 dB:</b> Power doubles (2x Power).</p><p><b>-3 dB:</b> Power cuts in half (50% Power).</p><p><b>+10 dB:</b> Power increases 10x.</p><p><b>-10 dB:</b> Power decreases to 10% (90% loss).</p>",
+      "content_html": "<p><b>+3 dB:</b> La potencia se duplica (2x Potencia).</p><p><b>-3 dB:</b> La potencia se reduce a la mitad (50% Potencia).</p><p><b>+10 dB:</b> La potencia aumenta 10x.</p><p><b>-10 dB:</b> La potencia disminuye al 10% (90% de pérdida).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputPowerPinWatts",
+      "label": "Potencia de Entrada (P_in en Watts)",
+      "label_en": "Input Power (P_in in Watts)",
+      "type": "number",
+      "default": 10.0,
+      "min": 0.000001,
+      "max": 100000,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "outputPowerPoutWatts",
+      "label": "Potencia de Salida (P_out en Watts)",
+      "label_en": "Output Power (P_out in Watts)",
+      "type": "number",
+      "default": 5.0,
+      "min": 0.000001,
+      "max": 100000,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "powerRatioPercentageResult",
+      "label": "Relación de Potencia de Salida / Entrada (%)",
+      "label_en": "Output / Input Power Ratio (%)",
+      "expression": "inputPowerPinWatts > 0 ? ((outputPowerPoutWatts / inputPowerPinWatts) * 100) : 0",
+      "unit": "%",
+      "unit_en": "%",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "powerGainDbResult",
+      "label": "Nivel de Ganancia / Atenuación en Decibelios (dB)",
+      "label_en": "Calculated Gain / Attenuation Level (dB)",
+      "expression": "(inputPowerPinWatts > 0 && outputPowerPoutWatts > 0) ? (10 * log10(outputPowerPoutWatts / inputPowerPinWatts)) : 0",
+      "unit": "dB",
+      "unit_en": "dB",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "powerGainDbResult", "op": "<", "value": 0 }, "label": "Atenuación de Señal (dB < 0)", "label_en": "Signal Attenuation (dB < 0)", "tone": "info", "text": "Pérdida de potencia en el canal cuantificada.", "text_en": "Power loss along channel quantified." },
+        { "when": { "field": "powerGainDbResult", "op": ">=", "value": 0 }, "label": "Ganancia de Señal (dB ≥ 0)", "label_en": "Signal Gain (dB ≥ 0)", "tone": "success", "text": "Amplificación de potencia cuantificada.", "text_en": "Power amplification quantified." }
+      ]
+    }
+  ]
+}

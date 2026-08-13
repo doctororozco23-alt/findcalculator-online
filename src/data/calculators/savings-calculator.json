@@ -1,0 +1,172 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "savings-calculator",
+    "title": "Calculadora de Metas de Ahorro Programado",
+    "title_en": "Savings Goal Calculator",
+    "slug": "metas-ahorro-programado",
+    "category": "finance",
+    "subcategory": "investments",
+    "tags": ["ahorro", "metas", "planificacion"],
+    "tags_en": ["savings", "goals", "planning"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "PiggyBank"
+  },
+  "content": {
+    "shortDescription": "Calcula cuánto debes ahorrar al mes para alcanzar una meta financiera objetivo en un plazo determinado.",
+    "shortDescription_en": "Calculate how much you need to deposit monthly to reach your target savings goal timeframe.",
+    "longDescription": "Determina la aportación mensual constante requerida para alcanzar una meta monetaria futura (compra de coche, viaje, fondo de reserva) considerando el interés de rendimiento del ahorro.",
+    "longDescription_en": "Determine required monthly deposit rate needed to achieve a target financial goal (car purchase, vacation, emergency cushion) including interest earned.",
+    "howToUse": [
+      "Ingresa el monto objetivo total de ahorro que deseas alcanzar.",
+      "Añade tu ahorro actual inicial ya disponible.",
+      "Establece el plazo en años y la tasa de interés anual de la cuenta (%).",
+      "Consulta el ahorro mensual requerido para lograr la meta."
+    ],
+    "howToUse_en": [
+      "Enter total target savings goal amount and active currency.",
+      "Enter current initial savings balance.",
+      "Set time term in years and annual interest rate (%).",
+      "View required monthly savings deposit rate to hit target."
+    ],
+    "methodology": "Fórmula Ahorro Programado: Ahorro Mensual = (Meta - SaldoActual × (1+r)^t) / [ ((1+r)^t - 1) / (r/12) ].",
+    "methodology_en": "Savings Goal Formula: Monthly Savings Deposit = (Goal - Balance × (1+r)^t) / [ ((1+r)^t - 1) / (r/12) ]."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🎯",
+      "title": "Setting SMART Savings Goals",
+      "title_es": "Establecer Metas de Ahorro Inteligentes",
+      "content_html_en": "<p>Automating a monthly recurring deposit is the single most effective way to guarantee reaching long-term financial goals without friction.</p>",
+      "content_html": "<p>Automatizar una aportación mensual recurrente es el método más efectivo para garantizar el cumplimiento de tus metas financieras.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "targetGoalAmount",
+      "label": "Monto objetivo total de ahorro",
+      "label_en": "Total Target Savings Goal Amount",
+      "type": "currency",
+      "default": 30000,
+      "min": 500,
+      "max": 5000000,
+      "step": 500,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [500, 5000000], "message": "Meta entre 500 y 5.000.000", "message_en": "Goal between 500 and 5,000,000" }]
+    },
+    {
+      "id": "currentSavings",
+      "label": "Ahorro actual inicial ya guardado",
+      "label_en": "Current Starting Savings Balance",
+      "type": "currency",
+      "default": 5000,
+      "min": 0,
+      "max": 1000000,
+      "step": 500,
+      "unit": { "follows": "targetGoalAmount" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "yearsToGoal",
+      "label": "Plazo deseado para lograrlo (años)",
+      "label_en": "Desired Timeframe (years)",
+      "type": "slider",
+      "default": 5,
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "interestRate",
+      "label": "Tasa de rendimiento anual de la cuenta (%)",
+      "label_en": "Annual Savings Interest Rate (%)",
+      "type": "number",
+      "default": 4.0,
+      "min": 0,
+      "max": 20,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "neededAmount",
+      "label": "Capital pendiente por acumular",
+      "label_en": "Remaining Goal Amount to Accumulate",
+      "expression": "max(targetGoalAmount - currentSavings, 0)",
+      "unit": { "follows": "targetGoalAmount" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "requiredMonthlySavings",
+      "label": "Ahorro Mensual Requerido",
+      "label_en": "Required Monthly Savings Deposit",
+      "expression": "neededAmount / (yearsToGoal * 12)",
+      "unit": { "follows": "targetGoalAmount" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "requiredMonthlySavings", "op": ">", "value": 0 }, "label": "Cuota Mensual de Ahorro", "label_en": "Monthly Savings Target", "tone": "success", "text": "Aportación mensual fija para alcanzar la meta en el plazo.", "text_en": "Fixed monthly deposit required to hit goal on time." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "compound-interest-calculator", "type": "static", "message": "Proyecta el crecimiento por interés compuesto", "message_en": "Project compound interest growth", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Planificación de Ahorros",
+    "role_en": "Savings Goal Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "motivador y práctico",
+    "includeData": ["requiredMonthlySavings", "neededAmount", "targetGoalAmount", "yearsToGoal"],
+    "instructions": [
+      "Sintetiza la cuota de ahorro mensual requerida y el plazo en 2 frases concisas.",
+      "Anima al usuario a automatizar las aportaciones mensuales el día de cobro."
+    ],
+    "instructions_en": [
+      "Summarize required monthly savings deposit rate and target term in 2 concise sentences.",
+      "Encourage user to set up automated monthly deposits on payday."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Metas de Ahorro Programado | CalculadoraHub",
+    "metaTitle_en": "Savings Goal Calculator | CalculadoraHub",
+    "metaDescription": "Calcula cuánto dinero ahorrar cada mes para alcanzar tu meta financiera. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate required monthly deposit to hit your target savings goal. Free, instant results.",
+    "keywords": ["savings calculator", "metas de ahorro", "plan de ahorro", "ahorro mensual"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

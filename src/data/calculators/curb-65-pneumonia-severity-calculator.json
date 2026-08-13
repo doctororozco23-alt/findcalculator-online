@@ -1,0 +1,124 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "curb-65-pneumonia-severity-calculator",
+    "title": "Calculadora CURB-65 para Gravedad de Neumonía Adquirida en la Comunidad",
+    "title_en": "CURB-65 Pneumonia Severity Score Calculator",
+    "slug": "curb-65-neumonia-gravedad-nac",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["curb-65", "neumonia", "nac", "respiratorio", "urgencias", "uci", "ingreso-hospitalario"],
+    "tags_en": ["curb-65", "pneumonia", "cap", "respiratory", "emergency", "icu", "hospitalization"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula el score CURB-65 para estratificar la gravedad de la Neumonía Adquirida en la Comunidad (NAC) y orientar la decisión de ingreso ambulatorio, planta o UCI.",
+    "shortDescription_en": "Calculate CURB-65 score to stratify Community-Acquired Pneumonia (CAP) severity and guide outpatient vs ward vs ICU management.",
+    "longDescription": "Escala clínica validada por la British Thoracic Society (Lim et al. Thorax). Evalúa 5 criterios: Confusión, Urea > 7 mmol/L, Frecuencia Respiratoria ≥ 30/min, Presión arterial baja y Edad ≥ 65 años.",
+    "longDescription_en": "British Thoracic Society validated score. Evaluates 5 criteria: Confusion, Urea, Respiratory rate, Blood pressure, and Age ≥ 65.",
+    "howToUse": [
+      "Indica si presenta Confusión (desorientación reciente).",
+      "Indica si la Urea en sangre es mayor a 7 mmol/L (BUN > 19 mg/dL).",
+      "Indica si la Frecuencia Respiratoria es ≥ 30/min.",
+      "Indica si presenta Presión Arterial baja (PAS < 90 o PAD ≤ 60 mmHg).",
+      "Indica si la Edad es mayor o igual a 65 años."
+    ],
+    "howToUse_en": [
+      "Indicate Confusion (new disorientation).",
+      "Indicate Blood Urea > 7 mmol/L (BUN > 19 mg/dL).",
+      "Indicate Respiratory Rate ≥ 30/min.",
+      "Indicate Low Blood Pressure (SBP < 90 or DBP ≤ 60 mmHg).",
+      "Indicate Age ≥ 65 years."
+    ],
+    "methodology": "Score CURB-65: Confusión (+1), Urea > 7 mmol/L (+1), FR ≥ 30/min (+1), TA baja (+1), Edad ≥ 65 (+1). Total 0-5 puntos.",
+    "methodology_en": "CURB-65 Score: Confusion (+1), Urea > 7 mmol/L (+1), RR ≥ 30/min (+1), Low BP (+1), Age ≥ 65 (+1). Total 0-5 points."
+  },
+  "guideSections": [
+    {
+      "id": "curb-guide",
+      "icon": "🫁",
+      "title": "Site-of-Care Recommendations per BTS Guidelines",
+      "title_es": "Recomendaciones de Lugar de Atención (Guías BTS)",
+      "content_html_en": "<p><b>Score 0 - 1:</b> Low risk (mortality &lt; 1.5%). Outpatient treatment appropriate.</p><p><b>Score 2:</b> Intermediate risk (mortality 9.2%). Hospital ward admission or short-stay unit.</p><p><b>Score 3 - 5:</b> High risk (mortality 22%). Severe pneumonia; evaluate urgent ICU admission.</p>",
+      "content_html": "<p><b>Score 0 - 1:</b> Riesgo bajo (mortalidad &lt; 1.5%). Tratamiento ambulatorio en domicilio adecuado.</p><p><b>Score 2:</b> Riesgo intermedio (mortalidad 9.2%). Ingreso en planta hospitalaria o unidad de corta estancia.</p><p><b>Score 3 - 5:</b> Alto riesgo (mortalidad 22%). Neumonía grave; evaluar ingreso urgente en UCI.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "curb_c",
+      "label": "Confusión (Desorientación reciente en persona, tiempo o espacio)",
+      "label_en": "Confusion (New mental disorientation)",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "curb_u",
+      "label": "Urea sérica > 7 mmol/L (BUN > 19 mg/dL)",
+      "label_en": "Blood Urea > 7 mmol/L (BUN > 19 mg/dL)",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "curb_r",
+      "label": "Frecuencia Respiratoria ≥ 30 respiraciones/min",
+      "label_en": "Respiratory Rate ≥ 30 breaths/min",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "curb_b",
+      "label": "Presión Arterial Baja (PAS < 90 mmHg O PAD ≤ 60 mmHg)",
+      "label_en": "Low Blood Pressure (SBP < 90 OR DBP ≤ 60 mmHg)",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "curb_65",
+      "label": "Edad ≥ 65 años",
+      "label_en": "Age ≥ 65 years",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "curb65Total",
+      "label": "Score CURB-65 Total",
+      "label_en": "Total CURB-65 Score",
+      "expression": "curb_c + curb_u + curb_r + curb_b + curb_65",
+      "unit": "puntos",
+      "unit_en": "points",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "curb65Total", "op": "<=", "value": 1 }, "label": "Score 0-1: Riesgo Bajo (Mortalidad < 1.5%)", "label_en": "Score 0-1: Low Risk (Mortality < 1.5%)", "tone": "success", "text": "Tratamiento ambulatorio en domicilio adecuado.", "text_en": "Outpatient oral antibiotic management appropriate." },
+        { "when": { "field": "curb65Total", "op": "==", "value": 2 }, "label": "Score 2: Riesgo Intermedio (Mortalidad 9.2%)", "label_en": "Score 2: Intermediate Risk (Mortality 9.2%)", "tone": "info", "text": "Ingreso en planta hospitalaria o unidad de corta estancia.", "text_en": "Hospital ward admission / short-stay unit indicated." },
+        { "when": { "field": "curb65Total", "op": ">=", "value": 3 }, "label": "Score 3-5: Alto Riesgo (Mortalidad 22%)", "label_en": "Score 3-5: High Risk (Mortality 22%)", "tone": "warning", "text": "Neumonía grave. Evaluar ingreso urgente en UCI.", "text_en": "Severe pneumonia. Urgent ICU admission evaluation." }
+      ]
+    }
+  ]
+}

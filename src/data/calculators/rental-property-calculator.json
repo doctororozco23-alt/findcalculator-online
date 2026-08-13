@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "rental-property-calculator",
+    "title": "Calculadora de Flujo de Caja en Inmuebles de Alquiler",
+    "title_en": "Rental Property Cash Flow Calculator",
+    "slug": "flujo-caja-inmuebles-alquiler",
+    "category": "finance",
+    "subcategory": "mortgages",
+    "tags": ["alquiler", "inmuebles", "cash-flow"],
+    "tags_en": ["rental", "properties", "cash-flow"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "DollarSign"
+  },
+  "content": {
+    "shortDescription": "Calcula el flujo de caja neto mensual (Cash Flow) de una propiedad de alquiler tras descontar hipoteca y gastos.",
+    "shortDescription_en": "Calculate monthly Net Cash Flow of a rental property after deducting mortgage payments and expenses.",
+    "longDescription": "Analiza la rentabilidad real mensual en efectivo que deja una propiedad en alquiler descontando la cuota mensual de hipoteca, impuestos de bienes raíces, seguro del hogar y reserva de mantenimiento.",
+    "longDescription_en": "Analyze actual monthly net cash deposited into bank account from rental property after deducting mortgage payments, property taxes, insurance, and maintenance reserve.",
+    "howToUse": [
+      "Ingresa la renta mensual cobrada al inquilino.",
+      "Añade la cuota mensual de la hipoteca.",
+      "Indica los gastos fijos mensuales (comunidad, seguro, impuestos).",
+      "Consulta el flujo de caja neto mensual (Cash Flow)."
+    ],
+    "howToUse_en": [
+      "Enter monthly rental income received.",
+      "Add monthly mortgage payment.",
+      "Enter monthly operating expenses (HOA, insurance, taxes, repairs).",
+      "View Net Monthly Cash Flow."
+    ],
+    "methodology": "Fórmula Cash Flow Mensual: Cash Flow = Renta Mensual - Cuota Hipoteca - Gastos Operativos Mensuales.",
+    "methodology_en": "Monthly Cash Flow Formula: Net Cash Flow = Monthly Rent - Mortgage Payment - Monthly Expenses."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "💵",
+      "title": "Positive vs Negative Cash Flow",
+      "title_es": "Flujo de Caja Positivo vs Negativo",
+      "content_html_en": "<p>Positive cash flow means rental income exceeds all debt service and operating expenses, creating passive monthly income. Negative cash flow requires out-of-pocket funding to keep the property running.</p>",
+      "content_html": "<p>Un flujo de caja positivo genera ingresos pasivos netos mensuales. Un flujo negativo exige dinero de tu bolsillo para cubrir la propiedad.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "monthlyRentIncome",
+      "label": "Renta mensual cobrada al inquilino",
+      "label_en": "Monthly Rent Income Received",
+      "type": "currency",
+      "default": 1800,
+      "min": 100,
+      "max": 50000,
+      "step": 50,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [100, 50000], "message": "Renta entre 100 y 50.000", "message_en": "Rent between 100 and 50,000" }]
+    },
+    {
+      "id": "mortgagePayment",
+      "label": "Cuota mensual de hipoteca",
+      "label_en": "Monthly Mortgage Payment",
+      "type": "currency",
+      "default": 1100,
+      "min": 0,
+      "max": 40000,
+      "step": 50,
+      "unit": { "follows": "monthlyRentIncome" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "monthlyExpenses",
+      "label": "Gastos mensuales (comunidad, impuestos, mantenimiento)",
+      "label_en": "Monthly Operating Expenses (HOA, taxes, repairs)",
+      "type": "currency",
+      "default": 300,
+      "min": 0,
+      "max": 20000,
+      "step": 50,
+      "unit": { "follows": "monthlyRentIncome" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "netMonthlyCashFlow",
+      "label": "Flujo de Caja Neto Mensual (Cash Flow)",
+      "label_en": "Net Monthly Cash Flow",
+      "expression": "monthlyRentIncome - mortgagePayment - monthlyExpenses",
+      "unit": { "follows": "monthlyRentIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "netMonthlyCashFlow", "op": ">", "value": 0 }, "label": "Flujo de Caja Positivo", "label_en": "Positive Cash Flow", "tone": "success", "text": "La propiedad genera ingresos netos positivos todos los meses.", "text_en": "Property generates positive net cash income every month." },
+        { "when": { "field": "netMonthlyCashFlow", "op": "<", "value": 0 }, "label": "Flujo de Caja Negativo", "label_en": "Negative Cash Flow", "tone": "error", "text": "Los ingresos no cubren la hipoteca y los gastos.", "text_en": "Rental income does not fully cover debt service and expenses." }
+      ]
+    },
+    {
+      "id": "annualCashFlow",
+      "label": "Flujo de Caja Neto Anual Acumulado",
+      "label_en": "Annual Net Cash Flow Total",
+      "expression": "netMonthlyCashFlow * 12",
+      "unit": { "follows": "monthlyRentIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "real-estate-calculator", "type": "static", "message": "Calcula la tasa Cap Rate de la propiedad", "message_en": "Calculate property Cap Rate", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Flujo de Caja Inmobiliario",
+    "role_en": "Rental Cash Flow Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["netMonthlyCashFlow", "annualCashFlow", "monthlyRentIncome", "mortgagePayment"],
+    "instructions": [
+      "Sintetiza el flujo de caja neto mensual y acumulado anual en 2 frases concisas.",
+      "Destaca la importancia de mantener una reserva para vacancia o reparaciones imprevistas."
+    ],
+    "instructions_en": [
+      "Summarize net monthly cash flow and annual total in 2 concise sentences.",
+      "Highlight maintaining cash reserves for vacancy and repair contingencies."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Flujo de Caja en Inmuebles de Alquiler | CalculadoraHub",
+    "metaTitle_en": "Rental Property Cash Flow Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el flujo de caja neto mensual (Cash Flow) de tu propiedad de alquiler. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate monthly net cash flow from rental property investments. Free, instant results.",
+    "keywords": ["rental property calculator", "flujo de caja inmuebles", "cash flow alquiler"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

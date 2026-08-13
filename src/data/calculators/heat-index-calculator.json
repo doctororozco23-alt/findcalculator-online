@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "heat-index-calculator",
+    "title": "Calculadora de Índice de Calor (Heat Index y Bochorno)",
+    "title_en": "Heat Index Calculator (Apparent Temperature & Humidity)",
+    "slug": "calculadora-de-indice-de-calor-bochorno-humedad",
+    "category": "physics",
+    "subcategory": "atmosphere",
+    "tags": ["indice-de-calor", "heat-index", "bochorno", "humedad-relativa", "sensacion-termica", "clima", "golpe-de-calor"],
+    "tags_en": ["heat-index", "feels-like", "humidity", "apparent-temp", "heat-stroke", "weather", "meteorology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el Índice de Calor percibido ($Heat\\ Index$) combinando la temperatura del aire y la humedad relativa.",
+    "shortDescription_en": "Calculate perceived Heat Index temperature combining air temperature and relative humidity.",
+    "longDescription": "Herramienta de salud ambiental y meteorología. Evalúa la dificultad del cuerpo para disipar calor mediante la evaporación del sudor en condiciones de alta humedad.",
+    "longDescription_en": "Environmental health and meteorology tool. Evaluates body difficulty in dissipating heat through sweat evaporation in high humidity.",
+    "howToUse": [
+      "Ingresa la Temperatura del Aire en grados Fahrenheit (°F) o Celsius (°C, min 80°F / 27°C).",
+      "Ingresa la Humedad Relativa (%) del ambiente.",
+      "Consulta el Índice de Calor Calculado y la categoría de peligro por estrés térmico."
+    ],
+    "howToUse_en": [
+      "Enter Air Temperature in Fahrenheit (°F) or Celsius (°C, min 80°F / 27°C).",
+      "Enter Relative Humidity (%) of ambient air.",
+      "View Calculated Heat Index and thermal stress hazard category."
+    ],
+    "methodology": "Ecuación de Rothfusz (NWS): HI = -42.379 + 2.049*T + 10.143*RH - 0.224*T*RH - 0.0068*T² - 0.054*RH² + ...",
+    "methodology_en": "NWS Rothfusz Equation: HI = -42.379 + 2.049*T + 10.143*RH - 0.224*T*RH - 0.0068*T² - 0.054*RH² + ..."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Prevención de Estrés Térmico y Golpe de Calor",
+    "role_en": "Thermal Stress & Heat Stroke Prevention Specialist Assistant",
+    "includeData": ["heatIndexFahrenheit", "heatIndexCelsius"],
+    "instructions": [
+      "Interpreta la categoría de peligro del índice de calor (Precaución 80-90°F, Precaución Extrema 90-103°F, Peligro 103-124°F, Peligro Extremo ≥ 125°F).",
+      "Advierte sobre el riesgo inminente de calambres por calor, agotamiento o golpe de calor.",
+      "Aconseja medidas de hidratación y pausas a la sombra para trabajadores en exteriores."
+    ],
+    "instructions_en": [
+      "Interpret heat index hazard level (Caution 80-90°F, Extreme Caution 90-103°F, Danger 103-124°F, Extreme Danger ≥ 125°F).",
+      "Warn about risk of heat cramps, exhaustion, or heat stroke.",
+      "Advise hydration measures and shade breaks for outdoor workers."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "hindex-guide",
+      "icon": "☀️",
+      "title": "NWS Heat Index Hazard Categories",
+      "title_es": "Categorías de Peligro por Índice de Calor NWS",
+      "content_html_en": "<p><b>80°F - 90°F:</b> Caution (fatigue possible with prolonged exposure).</p><p><b>90°F - 103°F:</b> Extreme Caution (sunstroke, heat cramps, and heat exhaustion possible).</p><p><b>103°F - 124°F:</b> Danger (heat exhaustion likely, heatstroke possible).</p><p><b>≥ 125°F:</b> Extreme Danger (heatstroke highly likely).</p>",
+      "content_html": "<p><b>80°F - 90°F:</b> Precaución (fatiga posible con exposición prolongada).</p><p><b>90°F - 103°F:</b> Precaución Extrema (posibilidad de calambres y agotamiento por calor).</p><p><b>103°F - 124°F:</b> Peligro (agotamiento por calor probable, riesgo de golpe de calor).</p><p><b>≥ 125°F:</b> Peligro Extremo (golpe de calor inminente).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "ambientTempFahrenheit",
+      "label": "Temperatura del Aire (°F)",
+      "label_en": "Air Temperature (°F)",
+      "type": "number",
+      "default": 90,
+      "min": 80,
+      "max": 120,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "relativeHumidityPercent",
+      "label": "Humedad Relativa (%)",
+      "label_en": "Relative Humidity (%)",
+      "type": "number",
+      "default": 70,
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "heatIndexFahrenheit",
+      "label": "Índice de Calor Calculado (°F)",
+      "label_en": "Calculated Heat Index (°F)",
+      "expression": "-42.379 + (2.04901523 * ambientTempFahrenheit) + (10.14333127 * relativeHumidityPercent) - (0.22475541 * ambientTempFahrenheit * relativeHumidityPercent) - (0.00683783 * (ambientTempFahrenheit^2)) - (0.05481717 * (relativeHumidityPercent^2)) + (0.00122874 * (ambientTempFahrenheit^2) * relativeHumidityPercent) + (0.00085282 * ambientTempFahrenheit * (relativeHumidityPercent^2)) - (0.00000199 * (ambientTempFahrenheit^2) * (relativeHumidityPercent^2))",
+      "unit": "°F",
+      "unit_en": "°F",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "heatIndexFahrenheit", "op": "between", "value": [80, 89.9] }, "label": "Precaución (80°F - 89°F)", "label_en": "Caution (80°F - 89°F)", "tone": "info", "text": "Fatiga posible con actividad prolongada.", "text_en": "Fatigue possible with prolonged activity." },
+        { "when": { "field": "heatIndexFahrenheit", "op": "between", "value": [90, 102.9] }, "label": "Precaución Extrema (90°F - 102°F)", "label_en": "Extreme Caution (90°F - 102°F)", "tone": "warning", "text": "Riesgo de calambres y agotamiento por calor.", "text_en": "Risk of heat cramps and exhaustion." },
+        { "when": { "field": "heatIndexFahrenheit", "op": ">=", "value": 103 }, "label": "Peligro / Peligro Extremo (≥ 103°F)", "label_en": "Danger / Extreme Danger (≥ 103°F)", "tone": "warning", "text": "Alto riesgo de golpe de calor. Suspender esfuerzo físico.", "text_en": "High risk of heatstroke. Cease physical exertion." }
+      ]
+    },
+    {
+      "id": "heatIndexCelsius",
+      "label": "Índice de Calor en Grados Celsius (°C)",
+      "label_en": "Heat Index Equivalent in Celsius (°C)",
+      "expression": "(heatIndexFahrenheit - 32) * (5 / 9)",
+      "unit": "°C",
+      "unit_en": "°C",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

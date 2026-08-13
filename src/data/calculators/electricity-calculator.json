@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "electricity-calculator",
+    "title": "Calculadora de Consumo Eléctrico y Costo en Factura (kWh)",
+    "title_en": "Electricity Consumption & Bill Cost Calculator (kWh)",
+    "slug": "calculadora-de-consumo-electrico-factura-kwh",
+    "category": "home",
+    "subcategory": "energy",
+    "tags": ["consumo-electrico", "factura-de-luz", "kwh", "vatios", "potencia", "costo-electrico", "electrodomesticos"],
+    "tags_en": ["electricity", "electric-bill", "kwh", "watts", "power", "energy-cost", "appliances"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el consumo de energía en kilovatios-hora ($kWh$) de cualquier electrodoméstico y estima su costo mensual en tu factura de luz.",
+    "shortDescription_en": "Calculate energy consumption in kilowatt-hours ($kWh$) for any appliance and estimate monthly electric bill cost.",
+    "longDescription": "Herramienta de eficiencia energética y economía doméstica. Convierte la potencia nominal en Vatios ($W$) y las horas de uso diario en $kWh$ consumidos al mes.",
+    "longDescription_en": "Energy efficiency and home economics tool. Converts rated power in Watts ($W$) and daily usage hours into monthly $kWh$ consumption.",
+    "howToUse": [
+      "Ingresa la Potencia del Electrodoméstico en Vatios (Watts).",
+      "Ingresa las Horas de Uso Diario habituales.",
+      "Ingresa la Tarifa Eléctrica por kWh ($ USD/kWh).",
+      "Consulta el Consumo Diario y Mensual en kWh y el Costo Estimado en tu factura."
+    ],
+    "howToUse_en": [
+      "Enter Appliance Rated Power in Watts.",
+      "Enter Daily Usage Hours.",
+      "Enter Electricity Rate per kWh ($ USD/kWh).",
+      "View Daily and Monthly Consumption in kWh and Estimated Bill Cost."
+    ],
+    "methodology": "kWh Diarios = (Vatios * HorasUso) / 1000. kWh Mensuales = kWh Diarios * 30. Costo Mensual = kWh Mensuales * Tarifa/kWh.",
+    "methodology_en": "Daily kWh = (Watts * UsageHours) / 1000. Monthly kWh = Daily kWh * 30. Monthly Cost = Monthly kWh * Rate/kWh."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Eficiencia Energética y Ahorro Doméstico",
+    "role_en": "Energy Efficiency & Home Savings Specialist Assistant",
+    "includeData": ["monthlyCostResult", "monthlyKwhResult", "dailyKwhResult"],
+    "instructions": [
+      "Interpreta el costo mensual estimado que aporta el electrodoméstico a la factura de luz.",
+      "Compara el consumo frente a electrodomésticos de alto impacto (aire acondicionado, secadora, nevera).",
+      "Aconseja hábitos de uso eficiente o temporización para reducir la factura."
+    ],
+    "instructions_en": [
+      "Interpret estimated monthly cost contribution of appliance to electric bill.",
+      "Compare consumption against high-impact appliances (AC, dryer, refrigerator).",
+      "Advise efficient usage habits or timers to reduce electric bills."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "elec-guide",
+      "icon": "⚡",
+      "title": "Kilowatt-Hours & Power Rating Basics",
+      "title_es": "Fundamentos de Kilovatios-Hora y Potencia",
+      "content_html_en": "<p><b>Kilowatt-Hour (kWh):</b> Unit of energy equal to 1,000 watts used continuously for 1 hour.</p><p><b>Average US Rate:</b> Approximately $0.16 per kWh (varies by state and utility provider).</p>",
+      "content_html": "<p><b>Kilovatio-Hora (kWh):</b> Unidad de energía equivalente a 1,000 vatios usados continuamente durante 1 hora.</p><p><b>Tarifa Promedio:</b> Aproximadamente $0.16 por kWh (varía según el país y distribuidora de energía).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "applianceWatts",
+      "label": "Potencia del Electrodoméstico (Vatios / Watts)",
+      "label_en": "Appliance Power (Watts)",
+      "type": "number",
+      "default": 1500,
+      "min": 1,
+      "max": 50000,
+      "step": 10,
+      "required": true
+    },
+    {
+      "id": "dailyHoursUse",
+      "label": "Horas de Uso Diario",
+      "label_en": "Daily Usage Hours",
+      "type": "number",
+      "default": 4,
+      "min": 0.1,
+      "max": 24,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "ratePerKwh",
+      "label": "Tarifa Eléctrica por kWh ($ USD/kWh)",
+      "label_en": "Electricity Rate per kWh ($ USD/kWh)",
+      "type": "currency",
+      "default": 0.16,
+      "min": 0.01,
+      "max": 5,
+      "step": 0.01,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "dailyKwhResult",
+      "label": "Consumo Diario (kWh/día)",
+      "label_en": "Daily Consumption (kWh/day)",
+      "expression": "(applianceWatts * dailyHoursUse) / 1000",
+      "unit": "kWh",
+      "unit_en": "kWh",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "monthlyKwhResult",
+      "label": "Consumo Mensual Estimado (kWh/mes)",
+      "label_en": "Estimated Monthly Consumption (kWh/month)",
+      "expression": "dailyKwhResult * 30",
+      "unit": "kWh",
+      "unit_en": "kWh",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "monthlyCostResult",
+      "label": "Costo Mensual Estimado en Factura",
+      "label_en": "Estimated Monthly Bill Cost",
+      "expression": "monthlyKwhResult * ratePerKwh",
+      "unit": "USD",
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "monthlyCostResult", "op": ">=", "value": 0 }, "label": "Costo Eléctrico Calculado", "label_en": "Electricity Cost Computed", "tone": "success", "text": "Impacto en factura de servicios evaluado.", "text_en": "Electric bill impact evaluated." }
+      ]
+    }
+  ]
+}

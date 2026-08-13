@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "simple-interest-calculator",
+    "title": "Calculadora de Interés Simple",
+    "title_en": "Simple Interest Calculator",
+    "slug": "interes-simple",
+    "category": "finance",
+    "subcategory": "investments",
+    "tags": ["interes-simple", "inversion", "ahorro"],
+    "tags_en": ["simple-interest", "investment", "savings"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "TrendingUp"
+  },
+  "content": {
+    "shortDescription": "Calcula el rendimiento e intereses generados por un capital sin capitalización de ganancias.",
+    "shortDescription_en": "Calculate simple interest earned or owed on principal without compounding.",
+    "longDescription": "Estima los intereses lineales generados por un depósito o préstamo bajo el método de interés simple, donde los intereses no se reinvierten en el capital inicial.",
+    "longDescription_en": "Estimate linear interest earned on a deposit or loan under simple interest methodology where interest is not reinvested into principal.",
+    "howToUse": [
+      "Ingresa el capital inicial o préstamo.",
+      "Establece la tasa de interés anual (%).",
+      "Indica la duración en años o meses.",
+      "Consulta el interés total generado y el saldo acumulado final."
+    ],
+    "howToUse_en": [
+      "Enter principal amount and active currency.",
+      "Set annual interest rate (%).",
+      "Enter duration in years.",
+      "View total simple interest earned and final ending balance."
+    ],
+    "methodology": "Fórmula Interés Simple: I = P × r × t. Saldo Final = P + I.",
+    "methodology_en": "Simple Interest Formula: Interest = Principal × Rate × Time. Ending Balance = Principal + Interest."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "📊",
+      "title": "Simple Interest vs Compound Interest",
+      "title_es": "Interés Simple vs Interés Compuesto",
+      "content_html_en": "<p>Simple interest is calculated solely on the original principal amount. Unlike compound interest, interest earned in previous periods does not accumulate interest.</p>",
+      "content_html": "<p>El interés simple se calcula únicamente sobre el principal inicial. A diferencia del compuesto, los intereses devengados no generan más intereses.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "principal",
+      "label": "Capital inicial o préstamo",
+      "label_en": "Principal Amount",
+      "type": "currency",
+      "default": 10000,
+      "min": 100,
+      "max": 10000000,
+      "step": 500,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "rate",
+      "label": "Tasa de interés anual (%)",
+      "label_en": "Annual Interest Rate (%)",
+      "type": "number",
+      "default": 5.0,
+      "min": 0.1,
+      "max": 30,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "years",
+      "label": "Plazo en años",
+      "label_en": "Time Horizon (years)",
+      "type": "slider",
+      "default": 5,
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalInterest",
+      "label": "Interés Total Generado",
+      "label_en": "Total Simple Interest Earned",
+      "expression": "principal * (rate / 100) * years",
+      "unit": { "follows": "principal" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalInterest", "op": ">", "value": 0 }, "label": "Interés Lineal", "label_en": "Linear Interest Calculated", "tone": "info", "text": "Rendimiento directo sobre el principal invertido.", "text_en": "Direct return on initial principal invested." }
+      ]
+    },
+    {
+      "id": "endingBalance",
+      "label": "Saldo Acumulado Final Total",
+      "label_en": "Final Ending Balance Total",
+      "expression": "principal + totalInterest",
+      "unit": { "follows": "principal" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "compound-interest-calculator", "type": "static", "message": "Compara con el interés compuesto", "message_en": "Compare with compound interest growth", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Interés Simple",
+    "role_en": "Simple Interest Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y didáctico",
+    "includeData": ["totalInterest", "endingBalance", "principal", "years"],
+    "instructions": [
+      "Sintetiza los intereses totales generados y el saldo final en 2 frases concisas.",
+      "Recuerda que en inversiones a largo plazo, el interés compuesto supera ampliamente al simple."
+    ],
+    "instructions_en": [
+      "Summarize total simple interest earned and final ending balance in 2 concise sentences.",
+      "Note that for long-term investments, compound interest significantly outperforms simple interest."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Interés Simple | CalculadoraHub",
+    "metaTitle_en": "Simple Interest Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el interés simple e importe acumulado de un depósito o préstamo. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate simple interest earned or owed on principal over time. Free, instant results.",
+    "keywords": ["simple interest calculator", "interes simple", "calculo de intereses"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

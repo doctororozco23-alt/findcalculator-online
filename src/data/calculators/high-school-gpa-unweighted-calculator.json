@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "high-school-gpa-unweighted-calculator",
+    "title": "Calculadora de GPA Escolar No Ponderado (Escala 4.0 Simple)",
+    "title_en": "High School Unweighted GPA Calculator (4.0 Simple Scale)",
+    "slug": "calculadora-de-gpa-escolar-no-ponderado-escala-4-0-simple",
+    "category": "education",
+    "subcategory": "grades",
+    "tags": ["gpa-no-ponderado", "unweighted-gpa", "secundaria", "bachillerato", "promedio-gpa", "educacion"],
+    "tags_en": ["unweighted-gpa", "high-school-gpa", "simple-gpa", "grades", "education"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el GPA escolar no ponderado en escala 4.0 simple promediando directamente los puntos de calificación sin importar créditos.",
+    "shortDescription_en": "Calculate high school unweighted GPA on a simple 4.0 scale by averaging grade points regardless of credit weighting.",
+    "longDescription": "Herramienta de secundaria y bachillerato para solicitudes de admisión universitaria (College Board). Asigna un valor de 0 a 4 a cada clase.",
+    "longDescription_en": "High school tool for college admissions applications (College Board). Assigns a 0 to 4 value to each class.",
+    "howToUse": [
+      "Ingresa los Puntos GPA de la Clase 1 (0.0 a 4.0).",
+      "Ingresa los Puntos GPA de la Clase 2 (0.0 a 4.0).",
+      "Ingresa los Puntos GPA de la Clase 3 (0.0 a 4.0).",
+      "Ingresa los Puntos GPA de la Clase 4 (0.0 a 4.0).",
+      "Consulta el GPA Escolar No Ponderado Promedio Resultante."
+    ],
+    "howToUse_en": [
+      "Enter Grade Points for Class 1 (0.0 to 4.0).",
+      "Enter Grade Points for Class 2 (0.0 to 4.0).",
+      "Enter Grade Points for Class 3 (0.0 to 4.0).",
+      "Enter Grade Points for Class 4 (0.0 to 4.0).",
+      "View Resulting Average High School Unweighted GPA."
+    ],
+    "methodology": "GPA No Ponderado = (PuntosClase1 + PuntosClase2 + PuntosClase3 + PuntosClase4) / 4.",
+    "methodology_en": "Unweighted GPA = (Class1Points + Class2Points + Class3Points + Class4Points) / 4."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Admisiones Universitarias y GPA Escolar",
+    "role_en": "High School Counseling & College Admissions Specialist Assistant",
+    "includeData": ["unweightedGpaAverageResult"],
+    "instructions": [
+      "Interpreta el GPA escolar no ponderado calculado en escala 4.0 simple.",
+      "Explica la diferencia entre el GPA No Ponderado (máximo 4.0) vs GPA Ponderado por clases AP/Honors (máximo 5.0).",
+      "Proporciona puntos de referencia para requisitos de admisión en universidades estatales y privadas."
+    ],
+    "instructions_en": [
+      "Interpret calculated high school unweighted GPA on a simple 4.0 scale.",
+      "Explain difference between Unweighted GPA (capped at 4.0) vs Weighted GPA with AP/Honors boosts (up to 5.0).",
+      "Provide benchmarks for state vs private university admissions requirements."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "hsu-guide",
+      "icon": "🏫",
+      "title": "Unweighted vs Weighted GPA Differences",
+      "title_es": "Diferencias GPA No Ponderado vs Ponderado",
+      "content_html_en": "<p><b>Unweighted GPA (4.0 Max):</b> All classes are measured on the same 0-4 scale regardless of difficulty.</p><p><b>Weighted GPA (5.0 Max):</b> Adds +1.0 boost for AP / IB classes and +0.5 for Honors.</p>",
+      "content_html": "<p><b>GPA No Ponderado (Máx 4.0):</b> Todas las clases miden en la misma escala 0-4 sin importar su dificultad.</p><p><b>GPA Ponderado (Máx 5.0):</b> Suma +1.0 de bonificación para clases AP / IB y +0.5 para Honors.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "hsClass1GpaVal",
+      "label": "Nota Clase 1 (Puntos 0.0 - 4.0)",
+      "label_en": "Class 1 Grade (Points 0.0 - 4.0)",
+      "type": "number",
+      "default": 4.0,
+      "min": 0,
+      "max": 4.0,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "hsClass2GpaVal",
+      "label": "Nota Clase 2 (Puntos 0.0 - 4.0)",
+      "label_en": "Class 2 Grade (Points 0.0 - 4.0)",
+      "type": "number",
+      "default": 3.7,
+      "min": 0,
+      "max": 4.0,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "hsClass3GpaVal",
+      "label": "Nota Clase 3 (Puntos 0.0 - 4.0)",
+      "label_en": "Class 3 Grade (Points 0.0 - 4.0)",
+      "type": "number",
+      "default": 3.3,
+      "min": 0,
+      "max": 4.0,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "hsClass4GpaVal",
+      "label": "Nota Clase 4 (Puntos 0.0 - 4.0)",
+      "label_en": "Class 4 Grade (Points 0.0 - 4.0)",
+      "type": "number",
+      "default": 3.0,
+      "min": 0,
+      "max": 4.0,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "unweightedGpaAverageResult",
+      "label": "GPA Escolar No Ponderado Promedio (0.0 - 4.0)",
+      "label_en": "Unweighted Average High School GPA (0.0 - 4.0)",
+      "expression": "(hsClass1GpaVal + hsClass2GpaVal + hsClass3GpaVal + hsClass4GpaVal) / 4",
+      "unit": "GPA",
+      "unit_en": "GPA",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "unweightedGpaAverageResult", "op": ">=", "value": 3.0 }, "label": "Promedio Solvente", "label_en": "Solid Average", "tone": "success", "text": "GPA no ponderado adecuado para postulaciones universitarias.", "text_en": "Solid unweighted GPA suitable for college applications." }
+      ]
+    }
+  ]
+}

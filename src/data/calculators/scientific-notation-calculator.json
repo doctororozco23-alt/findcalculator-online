@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "scientific-notation-calculator",
+    "title": "Calculadora de Notación Científica (a × 10^b y Notación E)",
+    "title_en": "Scientific Notation Calculator (a × 10^b & E Notation)",
+    "slug": "calculadora-de-notacion-cientifica-a-10-b",
+    "category": "math",
+    "subcategory": "number-systems",
+    "tags": ["notacion-cientifica", "potencias-de-10", "notacion-e", "mantisa", "exponente", "matematicas"],
+    "tags_en": ["scientific-notation", "powers-of-10", "e-notation", "mantissa", "exponent", "math"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte cualquier número grande o pequeño a Notación Científica ($m \\times 10^k$, con $1 \\le |m| < 10$) y Notación E de ingeniería.",
+    "shortDescription_en": "Convert large or small numbers to Scientific Notation ($m \\times 10^k$, where $1 \\le |m| < 10$) and Engineering E Notation.",
+    "longDescription": "Herramienta de física y química para la representación compacta de números extremadamente grandes o pequeños mediante mantisa y potencia entera de 10.",
+    "longDescription_en": "Physics and chemistry tool for compact representation of large or small numbers using mantissa and integer power of 10.",
+    "howToUse": [
+      "Ingresa el Número Decimal estándar (ej. 0.000045 ó 1250000).",
+      "Consulta el exponente $k$, el valor absoluto y la notación compacta."
+    ],
+    "howToUse_en": [
+      "Enter standard Decimal Number (e.g. 0.000045 or 1250000).",
+      "View exponent $k$, absolute value, and compact notation."
+    ],
+    "methodology": "Notación Científica: m * 10^k donde 1 <= |m| < 10. Exponente k = floor(log10(|x|)). Mantisa m = x / (10^k).",
+    "methodology_en": "Scientific Notation: m * 10^k where 1 <= |m| < 10. Exponent k = floor(log10(|x|)). Mantissa m = x / (10^k)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Notación Científica y Cifras Significativas",
+    "role_en": "Scientific Notation & Significant Figures Specialist Assistant",
+    "includeData": ["sciExponentK", "sciMantissaM"],
+    "instructions": [
+      "Explica la separación en Mantisa m (1 <= |m| < 10) y Exponente de 10 (k).",
+      "Analiza la diferencia entre exponentes positivos (números grandes) y negativos (números decimales pequeños).",
+      "Demuestra la conversión a Notación E de ingeniería."
+    ],
+    "instructions_en": [
+      "Explain separation into Mantissa m (1 <= |m| < 10) and Exponent of 10 (k).",
+      "Analyze difference between positive exponents (large numbers) and negative exponents (small decimals).",
+      "Demonstrate conversion to Engineering E Notation."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "scin-guide",
+      "icon": "🔬",
+      "title": "Scientific & Engineering Notation Rules",
+      "title_es": "Reglas de Notación Científica e Ingeniería",
+      "content_html_en": "<p><b>Standard Scientific Notation:</b> m × 10ᵏ where 1 ≤ |m| &lt; 10.</p><p><b>Engineering Notation:</b> Exponent k is always a multiple of 3 (10³, 10⁶, 10⁻³, 10⁻⁶).</p>",
+      "content_html": "<p><b>Notación Científica Estándar:</b> m × 10ᵏ donde 1 ≤ |m| &lt; 10.</p><p><b>Notación de Ingeniería:</b> El exponente k es siempre un múltiplo de 3 (10³, 10⁶, 10⁻³, 10⁻⁶).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "rawNumInput",
+      "label": "Número Decimal Estándar (x)",
+      "label_en": "Standard Decimal Number (x)",
+      "type": "number",
+      "default": 300000000,
+      "step": 0.000001,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [-1e12, 1e12], "message": "El número no puede ser cero", "message_en": "Number cannot be zero" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "sciExponentK",
+      "label": "Exponente de 10 (k)",
+      "label_en": "Exponent of 10 (k)",
+      "expression": "rawNumInput != 0 ? floor(log(abs(rawNumInput)) / log(10)) : 0",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "sciMantissaM",
+      "label": "Mantisa (m, tal que 1 ≤ |m| < 10)",
+      "label_en": "Mantissa (m, where 1 ≤ |m| < 10)",
+      "expression": "rawNumInput != 0 ? (rawNumInput / (10 ^ sciExponentK)) : 0",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "sciMantissaM", "op": "!=", "value": 0 }, "label": "Notación Científica Calculada", "label_en": "Scientific Notation Computed", "tone": "success", "text": "Mantisa y potencia de 10 evaluadas.", "text_en": "Mantissa and power of 10 evaluated." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "math-calculators-hub",
+    "title": "Hub Central de Calculadoras de Matemáticas y Estadística",
+    "title_en": "Math & Statistics Calculators Central Hub",
+    "slug": "hub-de-calculadoras-de-matematicas-y-estadistica",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["hub", "matematicas", "estadistica", "algebra", "geometria", "calculadoras-matematicas"],
+    "tags_en": ["hub", "math", "statistics", "algebra", "geometry", "math-calculators"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Centro integrador de 45 calculadoras especializadas en Aritmética, Álgebra, Geometría, Estadística, Probabilidad y Sistemas Numéricos.",
+    "shortDescription_en": "Central hub unifying 45 specialized calculators across Arithmetic, Algebra, Geometry, Statistics, Probability, and Number Systems.",
+    "longDescription": "Portal centralizado de herramientas cuantitativas y analíticas de CalculadoraHub.",
+    "longDescription_en": "Central portal of quantitative and analytical tools by CalculadoraHub.",
+    "howToUse": [
+      "Ingresa el Valor de Entrada 1.",
+      "Ingresa el Valor de Entrada 2.",
+      "Consulta el Índice de integración y la suma combinada."
+    ],
+    "howToUse_en": [
+      "Enter Input Value 1.",
+      "Enter Input Value 2.",
+      "View Integration index and combined sum."
+    ],
+    "methodology": "Integración de métricas cuantitativas.",
+    "methodology_en": "Integration of quantitative metrics."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente General de la Suite de Calculadoras de Matemáticas",
+    "role_en": "Math Calculators Suite General Assistant",
+    "includeData": ["hubCombinedSum", "hubRatioResult"],
+    "instructions": [
+      "Resume la capacidad de cómputo de la Suite de 45 Calculadoras de Matemáticas.",
+      "Explica la sinergia entre los módulos de Aritmética, Geometría, Álgebra y Estadística.",
+      "Recomienda calculadoras específicas según la necesidad del usuario."
+    ],
+    "instructions_en": [
+      "Summarize computing capabilities of the 45 Math Calculators Suite.",
+      "Explain synergy across Arithmetic, Geometry, Algebra, and Statistics modules.",
+      "Recommend specific calculators based on user needs."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "hub-guide",
+      "icon": "🌐",
+      "title": "Mathematics & Statistics Suite Overview",
+      "title_es": "Visión General de la Suite de Matemáticas y Estadística",
+      "content_html_en": "<p><b>45 Specialized Calculators:</b> Covering Arithmetic, Number Theory, Algebra, Geometry 2D/3D, Descriptive Statistics, Probability & Inferential Statistics, Number Systems, and Physical Sciences.</p>",
+      "content_html": "<p><b>45 Calculadoras Especializadas:</b> Cubriendo Aritmética, Teoría de Números, Álgebra, Geometría 2D/3D, Estadística Descriptiva, Probabilidad y Estadística Inferencial, Sistemas Numéricos y Ciencias Físicas.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "inputVal1",
+      "label": "Métrica de Entrada 1",
+      "label_en": "Input Metric 1",
+      "type": "number",
+      "default": 100,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "inputVal2",
+      "label": "Métrica de Entrada 2",
+      "label_en": "Input Metric 2",
+      "type": "number",
+      "default": 50,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "hubCombinedSum",
+      "label": "Suma Combinada",
+      "label_en": "Combined Sum",
+      "expression": "inputVal1 + inputVal2",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "hubCombinedSum", "op": ">=", "value": 0 }, "label": "Suite de Matemáticas Activa", "label_en": "Math Suite Active", "tone": "success", "text": "45 calculadoras de matemáticas integradas y operativas.", "text_en": "45 math calculators integrated and operational." }
+      ]
+    },
+    {
+      "id": "hubRatioResult",
+      "label": "Razón de Métrica (M1 / M2)",
+      "label_en": "Metric Ratio (M1 / M2)",
+      "expression": "inputVal2 != 0 ? (inputVal1 / inputVal2) : 0",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

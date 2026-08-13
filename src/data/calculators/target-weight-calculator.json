@@ -1,0 +1,193 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "target-weight-calculator",
+    "title": "Calculadora de Tiempo para Peso Objetivo (Fecha Estimada de Meta)",
+    "title_en": "Target Weight Time Calculator (Estimated Goal Date)",
+    "slug": "tiempo-para-peso-objetivo-fecha",
+    "category": "fitness",
+    "subcategory": "body-composition",
+    "tags": ["peso-objetivo", "meta-peso", "deficit-calorico", "fecha-meta"],
+    "tags_en": ["target-weight", "weight-goal", "calorie-deficit", "goal-date"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Target"
+  },
+  "content": {
+    "shortDescription": "Calcula cuántas semanas y días exactos tardarás en alcanzar tu peso objetivo y descubre la fecha del calendario en la que llegarás a tu meta.",
+    "shortDescription_en": "Calculate exact weeks, days, and calendar date required to reach your target body weight based on your daily calorie deficit.",
+    "longDescription": "Auditoría de proyección y planificación ponderal. Utiliza el equivalente biológico calórico (7.700 kcal por kg de masa grasa) para calcular la fecha exacta en el calendario en la que alcanzarás tu peso deseado según tu ritmo de déficit o superávit.",
+    "longDescription_en": "Weight loss timeline projection audit. Uses biological energy equivalence (7,700 kcal per kg of fat mass) to project the exact calendar date you will reach your goal weight.",
+    "howToUse": [
+      "Ingresa tu peso corporal actual.",
+      "Ingresa tu peso objetivo deseado.",
+      "Selecciona tu déficit o superávit calórico diario (ej. -500 kcal/día para perder 0.5 kg/semana).",
+      "Consulta las semanas y días necesarios y la fecha exacta de meta en el calendario."
+    ],
+    "howToUse_en": [
+      "Enter current body weight.",
+      "Enter target goal weight.",
+      "Select daily calorie deficit or surplus (e.g. -500 kcal/day for 0.5 kg/week loss).",
+      "View estimated weeks, days, and exact target goal date on the calendar."
+    ],
+    "methodology": "Equivalencia Energética: 1 kg de grasa = 7.700 kcal de déficit acumulado. Días Requeridos = (Kg_Diferencia × 7.700) / Déficit_Diario. Fecha Meta = Fecha Hoy + Días.",
+    "methodology_en": "Energy Equivalence: 1 kg fat = 7,700 kcal cumulative deficit. Required Days = (Kg_Diff × 7,700) / Daily_Deficit. Goal Date = Today + Days."
+  },
+  "guideSections": [
+    {
+      "id": "weight-loss-rate-guide",
+      "icon": "🎯",
+      "title": "Clinical Guidelines for Safe Weight Loss",
+      "title_es": "Pautas Clínicas para una Pérdida de Peso Segura",
+      "content_html_en": "<p><b>Moderate Deficit (-500 kcal/day):</b> ~0.5 kg/week loss. Preserves 95%+ of lean muscle mass.</p><p><b>Aggressive Deficit (-750 to -1000 kcal/day):</b> ~0.75-1.0 kg/week loss. Recommended for obesity class I/II under supervision.</p>",
+      "content_html": "<p><b>Déficit Moderado (-500 kcal/día):</b> Pérdida de ~0.5 kg/semana. Preserva más del 95% de la masa magra muscular.</p><p><b>Déficit Agresivo (-750 a -1000 kcal/día):</b> Pérdida de ~0.75-1.0 kg/semana. Recomendado en casos de obesidad bajo supervisión.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "currentWeightKg",
+      "label": "Peso corporal actual",
+      "label_en": "Current Body Weight",
+      "type": "number",
+      "default": 85,
+      "min": 35,
+      "max": 250,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [35, 250], "message": "Peso entre 35 y 250 kg", "message_en": "Weight between 35 and 250 kg" }]
+    },
+    {
+      "id": "targetWeightKg",
+      "label": "Peso objetivo deseado",
+      "label_en": "Target Goal Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 35,
+      "max": 250,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [35, 250], "message": "Peso entre 35 y 250 kg", "message_en": "Weight between 35 and 250 kg" }]
+    },
+    {
+      "id": "dailyDeficitCal",
+      "label": "Déficit o superávit calórico diario",
+      "label_en": "Target Daily Calorie Deficit / Surplus",
+      "type": "select",
+      "default": "500",
+      "options": [
+        { "value": "350", "label": "Déficit Leve (-350 kcal/día - 0.3 kg/semana)", "label_en": "Mild Deficit (-350 kcal/day - 0.3 kg/week)" },
+        { "value": "500", "label": "Déficit Moderado (-500 kcal/día - 0.5 kg/semana - Recomendado)", "label_en": "Moderate Deficit (-500 kcal/day - 0.5 kg/week - Recommended)" },
+        { "value": "750", "label": "Déficit Intenso (-750 kcal/día - 0.7 kg/semana)", "label_en": "Intense Deficit (-750 kcal/day - 0.7 kg/week)" },
+        { "value": "1000", "label": "Déficit Agresivo (-1000 kcal/día - 0.9 kg/semana)", "label_en": "Aggressive Deficit (-1000 kcal/day - 0.9 kg/week)" }
+      ],
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "weightDifferenceKg",
+      "label": "Diferencia Total de Peso a Cambiar",
+      "label_en": "Total Body Weight Change Required",
+      "expression": "abs(currentWeightKg - targetWeightKg)",
+      "unit": "kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalCaloricDeficitNeeded",
+      "label": "Déficit Calórico Total Acumulado Requerido",
+      "label_en": "Total Cumulative Calorie Deficit Required",
+      "expression": "weightDifferenceKg * 7700",
+      "unit": "kcal",
+      "unit_en": "kcal",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "daysToTargetWeight",
+      "label": "Días Requeridos para Alcanzar la Meta",
+      "label_en": "Total Days Required to Reach Goal",
+      "expression": "round(totalCaloricDeficitNeeded / dailyDeficitCal)",
+      "unit": "días",
+      "unit_en": "days",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "weeksToTargetWeight",
+      "label": "Semanas Estimadas para el Peso Objetivo",
+      "label_en": "Estimated Weeks to Target Weight",
+      "expression": "round(daysToTargetWeight / 7, 1)",
+      "unit": "semanas",
+      "unit_en": "weeks",
+      "precision": 1,
+      "format": "primary",
+      "interpretation": [
+        { "when": { "field": "weeksToTargetWeight", "op": ">", "value": 0 }, "label": "Planificación Ponderal", "label_en": "Weight Goal Timeline", "tone": "success", "text": "Semanas estimadas de adherencia para lograr tu peso deseado de forma sostenible.", "text_en": "Estimated weeks of consistent deficit required to sustainably reach target goal." }
+      ]
+    },
+    {
+      "id": "projectedGoalDate",
+      "label": "Fecha Estimada de Llegada a la Meta",
+      "label_en": "Projected Calendar Goal Date",
+      "expression": "addDays(todayDate(), daysToTargetWeight)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "calorie-calculator", "type": "static", "message": "Calcula tu presupuesto calórico diario total", "message_en": "Calculate daily calorie deficit budget", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Especialista en Medicina Ponderal y Adherencia Nutricional",
+    "role_en": "Bariatric Medicine & Behavioral Nutrition Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "motivador y realista",
+    "includeData": ["weeksToTargetWeight", "projectedGoalDate", "weightDifferenceKg", "daysToTargetWeight", "dailyDeficitCal"],
+    "instructions": [
+      "Sintetiza la cantidad de semanas, los kg a cambiar y la fecha estimada del calendario para alcanzar el peso objetivo en 2 frases concisas.",
+      "Enfatiza que la paciencia y la sostenibilidad del déficit son más importantes que la velocidad inicial."
+    ],
+    "instructions_en": [
+      "Summarize total weeks, weight change in kg, and projected calendar goal date in 2 concise sentences.",
+      "Emphasize that patience and deficit sustainability are far more important than initial speed."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Tiempo para Peso Objetivo (Fecha Meta) | CalculadoraHub",
+    "metaTitle_en": "Target Weight Time Calculator (Goal Date) | CalculadoraHub",
+    "metaDescription": "Calcula cuántas semanas y en qué fecha exacta llegarás a tu peso objetivo. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate exact weeks and calendar goal date required to reach your target weight. Free, instant results.",
+    "keywords": ["target weight calculator", "cuanto tardare en perder peso", "fecha objetivo peso", "deficit calorico semanas"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

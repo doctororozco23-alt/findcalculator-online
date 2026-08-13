@@ -1,0 +1,177 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "protein-calculator",
+    "title": "Calculadora de Proteína Diaria (Pautas ISSN g/kg)",
+    "title_en": "Daily Protein Calculator (ISSN g/kg Standards)",
+    "slug": "proteina-diaria-recomendada",
+    "category": "food",
+    "subcategory": "nutrition",
+    "tags": ["proteina", "protein", "g-kg", "hipertrofia", "issn"],
+    "tags_en": ["protein", "g-kg", "hypertrophy", "issn", "nutrition"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Utensils"
+  },
+  "content": {
+    "shortDescription": "Calcula tus necesidades diarias de proteína en gramos según tu peso corporal, objetivo físico y pautas de la Sociedad Internacional de Nutrición Deportiva (ISSN).",
+    "shortDescription_en": "Calculate daily target protein intake in grams based on body weight, fitness goal, and ISSN sports nutrition standards.",
+    "longDescription": "Auditoría de síntesis proteica muscular. Determina la ingesta óptima de proteína diaria (gramos, g/kg de peso corporal y calorías) para la ganancia muscular, preservación en déficit calórico o mantenimiento, junto con el reparto exacto por comida.",
+    "longDescription_en": "Muscular protein synthesis audit. Determines optimal daily protein targets (grams/day, g/kg body weight ratio, and calories) for muscle building, caloric deficit preservation, or maintenance.",
+    "howToUse": [
+      "Ingresa tu peso corporal actual y tu porcentaje estimado de grasa corporal (opcional).",
+      "Selecciona tu objetivo físico (Sedentario, Resistencia, Hipertrofia/Fuerza, Deficiente en Déficit).",
+      "Consulta tus gramos diarios de proteína y el desglose necesario por plato (para 3, 4 o 5 comidas)."
+    ],
+    "howToUse_en": [
+      "Enter current body weight and estimated body fat percentage (optional).",
+      "Select fitness objective (Sedentary, Endurance, Hypertrophy/Strength, Caloric Cut Preservation).",
+      "View target daily protein grams and per-meal breakdown (for 3, 4, or 5 meals daily)."
+    ],
+    "methodology": "Estándares ISSN / ACSM: Sedentario (0.8-1.0 g/kg), Resistencia (1.2-1.6 g/kg), Hipertrofia/Fuerza (1.6-2.2 g/kg), Definición/Déficit (2.2-2.6 g/kg de masa magra).",
+    "methodology_en": "ISSN / ACSM Standards: Sedentary (0.8-1.0 g/kg), Endurance (1.2-1.6 g/kg), Hypertrophy/Strength (1.6-2.2 g/kg), Cut Preservation (2.2-2.6 g/kg of LBM)."
+  },
+  "guideSections": [
+    {
+      "id": "protein-timing-guide",
+      "icon": "🥩",
+      "title": "Protein Distribution & Leucine Threshold",
+      "title_es": "Distribución de Proteína y Umbral de Leucina",
+      "content_html_en": "<p><b>Leucine Trigger (2.5 - 3.0g):</b> Each main meal should contain ~0.4 g/kg of high-quality protein to reach the leucine trigger and stimulate maximal MPS (Muscle Protein Synthesis).</p><p><b>Meal Frequency:</b> Distributing total daily protein evenly across 3 to 5 meals optimizes 24-hour nitrogen balance.</p>",
+      "content_html": "<p><b>Umbral de Leucina (2.5 - 3.0g):</b> Cada comida principal debe aportar ~0.4 g/kg de proteína de alto valor biológico para gatillar la Síntesis de Proteína Muscular (MPS).</p><p><b>Frecuencia de Comidas:</b> Distribuir la proteína de forma equitativa en 3 a 5 tomas optimiza el balance de nitrógeno de 24 horas.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "weightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 30,
+      "max": 250,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [30, 250], "message": "Peso entre 30 y 250 kg", "message_en": "Weight between 30 and 250 kg" }]
+    },
+    {
+      "id": "fitnessGoal",
+      "label": "Objetivo físico y nivel de entrenamiento",
+      "label_en": "Fitness Goal & Activity Level",
+      "type": "select",
+      "default": "hypertrophy",
+      "options": [
+        { "value": "sedentary", "label": "Sedentario / Salud General (0.8 - 1.0 g/kg)", "label_en": "Sedentary / Baseline Health (0.8 - 1.0 g/kg)" },
+        { "value": "endurance", "label": "Deportista de Resistencia / Running (1.4 g/kg)", "label_en": "Endurance Athlete / Running (1.4 g/kg)" },
+        { "value": "hypertrophy", "label": "Fuerza e Hipertrofia Muscular (2.0 g/kg - Estándar ISSN)", "label_en": "Strength & Muscle Hypertrophy (2.0 g/kg - ISSN Standard)" },
+        { "value": "cutting", "label": "Déficit Calórico / Preservación de Músculo (2.4 g/kg)", "label_en": "Caloric Cut / Muscle Preservation (2.4 g/kg)" }
+      ],
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "proteinGramsDaily",
+      "label": "Gramos Diarios Recomendados de Proteína",
+      "label_en": "Target Daily Protein Grams",
+      "expression": "fitnessGoal == 'sedentary' ? (weightKg * 0.9) : (fitnessGoal == 'endurance' ? (weightKg * 1.4) : (fitnessGoal == 'cutting' ? (weightKg * 2.4) : (weightKg * 2.0)))",
+      "unit": "g/día",
+      "unit_en": "g/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "proteinGramsDaily", "op": ">", "value": 0 }, "label": "Meta Proteica Diaria", "label_en": "Daily Protein Target", "tone": "success", "text": "Gramos de proteína necesarios para la reparación muscular y optimización metabólica.", "text_en": "Target daily protein intake for muscular repair and optimal nitrogen balance." }
+      ]
+    },
+    {
+      "id": "proteinCaloriesDaily",
+      "label": "Calorías Procedentes de Proteína",
+      "label_en": "Calories from Protein",
+      "expression": "proteinGramsDaily * 4",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "proteinPerKgRatio",
+      "label": "Aporte Real en g/kg de Peso Corporal",
+      "label_en": "Effective Protein g/kg Ratio",
+      "expression": "proteinGramsDaily / weightKg",
+      "unit": "g/kg",
+      "unit_en": "g/kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "proteinPerMeal3",
+      "label": "Proteína por Comida (para 3 comidas al día)",
+      "label_en": "Protein Per Meal (3 meals/day)",
+      "expression": "round(proteinGramsDaily / 3)",
+      "unit": "g/comida",
+      "unit_en": "g/meal",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "proteinPerMeal4",
+      "label": "Proteína por Comida (para 4 comidas al día)",
+      "label_en": "Protein Per Meal (4 meals/day)",
+      "expression": "round(proteinGramsDaily / 4)",
+      "unit": "g/comida",
+      "unit_en": "g/meal",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "macro-calculator", "type": "static", "message": "Calcula el desglose completo de macronutrientes", "message_en": "Calculate full macro breakdown", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Nutricionista Deportivo Experto en Síntesis Proteica",
+    "role_en": "Sports Dietitian & Muscle Protein Synthesis Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y orientador",
+    "includeData": ["proteinGramsDaily", "proteinPerKgRatio", "proteinPerMeal4", "weightKg", "fitnessGoal"],
+    "instructions": [
+      "Sintetiza la meta proteica diaria en gramos, la dosis en g/kg y la recomendación por comida en 2 frases concisas.",
+      "Recomienda fuentes de proteína magra de alto valor biológico (huevos, pechuga de pavo/pollo, pescado, aislado de suero, tofu)."
+    ],
+    "instructions_en": [
+      "Summarize daily protein target in grams, g/kg ratio, and per-meal recommendation in 2 concise sentences.",
+      "Recommend high biological value protein sources (eggs, chicken/turkey breast, fish, whey isolate, tofu)."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Proteína Diaria (Pautas ISSN g/kg) | CalculadoraHub",
+    "metaTitle_en": "Daily Protein Calculator (ISSN g/kg Standards) | CalculadoraHub",
+    "metaDescription": "Calcula los gramos diarios de proteína recomendados según tu peso y objetivo físico. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate target daily protein intake in grams based on body weight and fitness goals. Free, instant results.",
+    "keywords": ["protein calculator", "proteina diaria", "proteina g-kg", "proteina hipertrofia"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

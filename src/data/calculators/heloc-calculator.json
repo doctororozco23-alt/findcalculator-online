@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "heloc-calculator",
+    "title": "Calculadora de Línea de Crédito Hipotecaria (HELOC)",
+    "title_en": "HELOC Calculator (Home Equity Line of Credit)",
+    "slug": "linea-credito-hipotecaria-heloc",
+    "category": "finance",
+    "subcategory": "mortgages",
+    "tags": ["heloc", "linea-credito", "hipoteca"],
+    "tags_en": ["heloc", "credit-line", "mortgage"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "CreditCard"
+  },
+  "content": {
+    "shortDescription": "Estima los pagos en el período de disposición solo intereses y en el período de amortización de una línea HELOC.",
+    "shortDescription_en": "Estimate interest-only draw period payments and repayment period costs for a Home Equity Line of Credit (HELOC).",
+    "longDescription": "Calcula el costo financiero de utilizar una línea de crédito revolvente respaldada por la plusvalía de tu vivienda. Separa la fase de disposición inicial (solo pago de intereses) de la fase de amortización principal.",
+    "longDescription_en": "Calculate financial payment obligation for revolving credit line backed by home equity. Separates initial draw period (interest-only) from payback repayment period.",
+    "howToUse": [
+      "Ingresa la cantidad dispuesta o usada de la línea de crédito HELOC.",
+      "Establece la tasa de interés anual variable (%).",
+      "Indica la duración de la fase de disposición (draw period) y de la fase de reembolso.",
+      "Consulta el pago mensual solo de intereses y la cuota de reembolso final."
+    ],
+    "howToUse_en": [
+      "Enter HELOC credit line amount drawn.",
+      "Set variable annual interest rate (%).",
+      "Enter draw period length and repayment period length in years.",
+      "View interest-only payment vs full repayment monthly payment."
+    ],
+    "methodology": "Cálculo HELOC: Fase Disposición = Monto × (Tasa / 12). Fase Reembolso = Amortización completa en el plazo acordado.",
+    "methodology_en": "HELOC Formula: Draw Period = Balance × (Rate / 12). Repayment Period = Amortized principal + interest."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "💳",
+      "title": "How HELOC Revolving Credit Works",
+      "title_es": "Cómo Funciona una Línea de Crédito Revolvente HELOC",
+      "content_html_en": "<p>A HELOC works like a credit card secured by your home. During the draw period (usually 10 years), you can borrow as needed and only pay interest. During the repayment period (usually 20 years), you pay back principal and interest.</p>",
+      "content_html": "<p>Una línea HELOC funciona como una tarjeta de crédito garantizada por tu casa. Durante el periodo de disposición solo pagas intereses; luego comienza el reembolso de principal.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "helocDrawn",
+      "label": "Monto dispuesto de la línea HELOC",
+      "label_en": "HELOC Amount Drawn / Used",
+      "type": "currency",
+      "default": 50000,
+      "min": 1000,
+      "max": 1000000,
+      "step": 1000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1000, 1000000], "message": "Monto entre 1.000 y 1.000.000", "message_en": "Amount between 1,000 and 1,000,000" }]
+    },
+    {
+      "id": "interestRate",
+      "label": "Tasa de interés anual variable (%)",
+      "label_en": "Variable Annual Interest Rate (%)",
+      "type": "number",
+      "default": 7.0,
+      "min": 0.1,
+      "max": 25,
+      "step": 0.1,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "repaymentYears",
+      "label": "Plazo de reembolso final (años)",
+      "label_en": "Repayment Period Length (years)",
+      "type": "slider",
+      "default": 20,
+      "min": 5,
+      "max": 25,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "interestOnlyDrawPayment",
+      "label": "Pago mensual solo de intereses (Periodo de Disposición)",
+      "label_en": "Monthly Interest-Only Payment (Draw Period)",
+      "expression": "helocDrawn * (interestRate / 1200)",
+      "unit": { "follows": "helocDrawn" },
+      "precision": 2,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "fullRepaymentPayment",
+      "label": "Cuota Mensual Completa (Periodo de Reembolso)",
+      "label_en": "Full Monthly Payment (Repayment Period)",
+      "expression": "helocDrawn * (interestRate / 1200) / (1 - (1 + interestRate / 1200) ^ -(repaymentYears * 12))",
+      "unit": { "follows": "helocDrawn" },
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "fullRepaymentPayment", "op": ">", "value": 0 }, "label": "Fase de Amortización", "label_en": "Repayment Phase Rate", "tone": "info", "text": "Cuota mensual requerida una vez concluido el periodo de disposición.", "text_en": "Required monthly payment once interest-only draw period ends." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "home-equity-calculator", "type": "static", "message": "Compara con un préstamo equity a tasa fija", "message_en": "Compare with fixed home equity loan", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Líneas HELOC",
+    "role_en": "HELOC Credit Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y prudente",
+    "includeData": ["interestOnlyDrawPayment", "fullRepaymentPayment", "helocDrawn", "interestRate"],
+    "instructions": [
+      "Sintetiza el pago mensual solo de intereses durante la disposición y la cuota completa de reembolso en 2 frases concisas.",
+      "Advierte sobre el aumento de la cuota al pasar de la fase de solo intereses a la fase de amortización de principal."
+    ],
+    "instructions_en": [
+      "Summarize interest-only draw payment and full repayment monthly cost in 2 concise sentences.",
+      "Warn about payment shock when transitioning from draw period to full principal payback phase."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Línea de Crédito Hipotecaria (HELOC) | CalculadoraHub",
+    "metaTitle_en": "HELOC Calculator (Home Equity Line of Credit) | CalculadoraHub",
+    "metaDescription": "Calcula los pagos de solo intereses y cuota de reembolso de una línea HELOC. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate interest-only draw period and full repayment HELOC payments. Free, instant results.",
+    "keywords": ["heloc calculator", "linea de credito hipotecaria", "home equity line of credit"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

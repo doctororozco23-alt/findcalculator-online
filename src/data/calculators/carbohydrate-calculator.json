@@ -1,0 +1,181 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "carbohydrate-calculator",
+    "title": "Calculadora de Carbohidratos Diarios (Periodización Deportiva g/kg)",
+    "title_en": "Daily Carbohydrate Calculator (Sports Periodization g/kg)",
+    "slug": "carbohidratos-diarios",
+    "category": "food",
+    "subcategory": "diets",
+    "tags": ["carbohidratos", "carbos", "nutricion-deportiva", "g-kg"],
+    "tags_en": ["carbohydrates", "carbs", "sports-nutrition", "g-kg"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Utensils"
+  },
+  "content": {
+    "shortDescription": "Calcula tus necesidades diarias de carbohidratos en gramos por kg de peso corporal (g/kg) según las pautas de nutrición deportiva del ACSM y la ISSN.",
+    "shortDescription_en": "Calculate target daily carbohydrate intake in grams per kg of body weight (g/kg) based on ACSM and ISSN sports nutrition guidelines.",
+    "longDescription": "Auditoría de glucógeno y carbohidratos para atletas y deportistas. Determina la cantidad óptima de carbohidratos (gramos/día, g/kg y calorías), la ingesta mínima de fibra dietética y la recarga de carbohidratos pre-entrenamiento.",
+    "longDescription_en": "Glycogen and carbohydrate audit for endurance and strength athletes. Determines target carbs (grams/day, g/kg, and calories), daily dietary fiber needs, and pre-workout fueling targets.",
+    "howToUse": [
+      "Ingresa tu peso corporal y tu ingesta calórica diaria total.",
+      "Selecciona tu nivel de entrenamiento o protocolo de carbohidratos (Bajo, Moderado, Alto Rendimiento o Keto).",
+      "Consulta los gramos diarios de carbohidratos, el aporte por kg de peso corporal (g/kg) y la meta de fibra."
+    ],
+    "howToUse_en": [
+      "Enter body weight and target daily calorie intake.",
+      "Select physical training load or carb protocol (Light, Moderate, High Performance, or Keto).",
+      "View target daily carbohydrate grams, g/kg ratio, and daily dietary fiber target."
+    ],
+    "methodology": "Pautas ACSM / ISSN: Ejercicio Ligero (3-5 g/kg), Moderado (5-7 g/kg), Alto Rendimiento (6-10 g/kg), Ultra-Resistencia (8-12 g/kg). Fibra = 14g por cada 1.000 kcal.",
+    "methodology_en": "ACSM / ISSN Guidelines: Light Training (3-5 g/kg), Moderate (5-7 g/kg), Endurance (6-10 g/kg), Extreme (8-12 g/kg). Fiber = 14g per 1,000 kcal."
+  },
+  "guideSections": [
+    {
+      "id": "periodization-guide",
+      "icon": "🍞",
+      "title": "Carbohydrate Periodization & Glycogen",
+      "title_es": "Periodización de Carbohidratos y Glucógeno",
+      "content_html_en": "<p><b>Light Training (< 1h/day):</b> 3-5 g/kg. Focus on complex whole carbs.</p><p><b>Moderate Training (1-2h/day):</b> 5-7 g/kg. Adequate for strength and hypertrophy.</p><p><b>Endurance (2-3h/day):</b> 6-10 g/kg. High glycogen replenishment required.</p><p><b>Dietary Fiber:</b> Maintain 14g of fiber per 1,000 calories for gut and metabolic health.</p>",
+      "content_html": "<p><b>Ejercicio Ligero (< 1h/día):</b> 3-5 g/kg. Priorizar carbohidratos complejos integrales.</p><p><b>Ejercicio Moderado (1-2h/día):</b> 5-7 g/kg. Adecuado para fuerza e hipertrofia.</p><p><b>Resistencia (2-3h/día):</b> 6-10 g/kg. Alta recarga de glucógeno muscular.</p><p><b>Fibra Dietética:</b> Mantener 14g de fibra por cada 1.000 calorías consumidas.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "weightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 30,
+      "max": 250,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "targetCalories",
+      "label": "Ingesta calórica diaria total",
+      "label_en": "Target Daily Total Calories",
+      "type": "number",
+      "default": 2400,
+      "min": 1000,
+      "max": 6000,
+      "step": 50,
+      "unit": "kcal",
+      "unit_en": "kcal",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "trainingLoad",
+      "label": "Nivel de entrenamiento / Carga de carbohidratos",
+      "label_en": "Training Load / Carb Protocol",
+      "type": "select",
+      "default": "moderate",
+      "options": [
+        { "value": "light", "label": "Ligero / Oficina (3.5 g/kg - 40% calorías)", "label_en": "Light / Office (3.5 g/kg - 40% calories)" },
+        { "value": "moderate", "label": "Moderado / Fuerza e Hipertrofia (5.0 g/kg - 50% calorías)", "label_en": "Moderate / Strength (5.0 g/kg - 50% calories)" },
+        { "value": "endurance", "label": "Alto Rendimiento / Running (7.0 g/kg - 60% calorías)", "label_en": "High Endurance / Running (7.0 g/kg - 60% calories)" },
+        { "value": "extreme", "label": "Ultra-Resistencia / Maratón (9.0 g/kg - 65% calorías)", "label_en": "Ultra-Endurance / Marathon (9.0 g/kg - 65% calories)" },
+        { "value": "keto", "label": "Bajo en Carbos / Keto (0.5 g/kg - 5% calorías)", "label_en": "Low Carb / Keto (0.5 g/kg - 5% calories)" }
+      ],
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "carbGramsDaily",
+      "label": "Carbohidratos Diarios Recomendados",
+      "label_en": "Target Daily Carbohydrate Grams",
+      "expression": "trainingLoad == 'light' ? (weightKg * 3.5) : (trainingLoad == 'moderate' ? (weightKg * 5.0) : (trainingLoad == 'endurance' ? (weightKg * 7.0) : (trainingLoad == 'extreme' ? (weightKg * 9.0) : min(weightKg * 0.5, 40))))",
+      "unit": "g/día",
+      "unit_en": "g/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "carbGramsDaily", "op": ">", "value": 0 }, "label": "Glucógeno Deportivo", "label_en": "Target Glycogen Intake", "tone": "info", "text": "Gramos de carbohidratos diarios optimizados para tu volumen de entrenamiento.", "text_en": "Target daily carbohydrate grams optimized for training volume demands." }
+      ]
+    },
+    {
+      "id": "carbCaloriesDaily",
+      "label": "Calorías Procedentes de Carbohidratos",
+      "label_en": "Calories from Carbohydrates",
+      "expression": "carbGramsDaily * 4",
+      "unit": "kcal/día",
+      "unit_en": "kcal/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "carbsPerKgRatio",
+      "label": "Aporte en g/kg de Peso Corporal",
+      "label_en": "Carbohydrate g/kg Body Weight Ratio",
+      "expression": "carbGramsDaily / weightKg",
+      "unit": "g/kg",
+      "unit_en": "g/kg",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "fiberGramsDaily",
+      "label": "Meta Recomendada de Fibra Dietética",
+      "label_en": "Target Daily Dietary Fiber",
+      "expression": "(targetCalories / 1000) * 14",
+      "unit": "g/día",
+      "unit_en": "g/day",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "macro-calculator", "type": "static", "message": "Calcula la distribución completa de macronutrientes", "message_en": "Calculate full macronutrient breakdown", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Nutricionista Deportivo y Especialista en Glucógeno",
+    "role_en": "Sports Nutritionist & Glycogen Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y orientador",
+    "includeData": ["carbGramsDaily", "carbsPerKgRatio", "carbCaloriesDaily", "fiberGramsDaily", "weightKg"],
+    "instructions": [
+      "Sintetiza los gramos diarios de carbohidratos, la dosis en g/kg y la meta de fibra dietética en 2 frases concisas.",
+      "Destaca la importancia de consumir carbohidratos de digestión rápida en la ventana peri-entrenamiento para reponer el glucógeno."
+    ],
+    "instructions_en": [
+      "Summarize daily carbohydrate grams, g/kg ratio, and dietary fiber target in 2 concise sentences.",
+      "Highlight the importance of consuming fast-digesting carbohydrates around workout windows for optimal glycogen replenishment."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Carbohidratos Diarios (Periodización g/kg) | CalculadoraHub",
+    "metaTitle_en": "Daily Carbohydrate Calculator (Sports Periodization g/kg) | CalculadoraHub",
+    "metaDescription": "Calcula los gramos diarios de carbohidratos recomendados por kg de peso corporal (g/kg). Gratis e instantáneo.",
+    "metaDescription_en": "Calculate target daily carbohydrate grams per kg of body weight (g/kg). Free, instant results.",
+    "keywords": ["carbohydrate calculator", "carbohidratos diarios", "carbos g-kg", "nutricion deportiva"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

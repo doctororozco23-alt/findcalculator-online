@@ -1,0 +1,198 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "compound-interest-calculator",
+    "title": "Calculadora de Interés Compuesto",
+    "title_en": "Compound Interest Calculator",
+    "slug": "interes-compuesto",
+    "category": "finance",
+    "subcategory": "investments",
+    "tags": ["ahorro", "inversion", "interes-compuesto"],
+    "tags_en": ["savings", "investment", "compound-interest"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "TrendingUp"
+  },
+  "content": {
+    "shortDescription": "Proyecta el crecimiento futuro de tu inversión o ahorro gracias al efecto multiplicador del interés compuesto.",
+    "shortDescription_en": "Project the future growth of your investments or savings driven by the compounding multiplier effect.",
+    "longDescription": "Calcula cuánto crecerá tu capital inicial con aportaciones periódicas mensuales a una tasa de rendimiento anual determinada durante un número de años.",
+    "longDescription_en": "Calculate how your initial capital will compound over time with monthly recurring contributions at a given annual return rate over any period of years.",
+    "howToUse": [
+      "Ingresa tu depósito o inversión inicial.",
+      "Añade tu aportación mensual recurrente.",
+      "Establece la tasa de rendimiento anual esperada (%) y el número de años.",
+      "Revisa tu saldo acumulado futuro y la ganancia generada exclusivamente por intereses."
+    ],
+    "howToUse_en": [
+      "Enter your starting initial investment balance.",
+      "Add your recurring monthly contribution.",
+      "Set your expected annual rate of return (%) and time horizon in years.",
+      "View your projected future total balance and interest earned."
+    ],
+    "methodology": "Fórmula de Interés Compuesto con Aportación Recurrente: FV = P × (1 + r/n)^(n×t) + PMT × [ ((1 + r/n)^(n×t) - 1) / (r/n) ], donde P es el capital inicial, PMT la aportación mensual, r la tasa anual y t el tiempo en años.",
+    "methodology_en": "Compound Interest Formula with Recurring Deposit: FV = P × (1 + r/n)^(n×t) + PMT × [ ((1 + r/n)^(n×t) - 1) / (r/n) ]."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🚀",
+      "title": "The Power of Compound Interest",
+      "title_es": "El Poder del Interés Compuesto",
+      "content_html_en": "<p>Albert Einstein famously called compound interest the 'eighth wonder of the world.' It is interest earned not only on the initial principal, but also on the accumulated interest of previous periods.</p>",
+      "content_html": "<p>El interés compuesto es el interés generado sobre el capital inicial más los intereses acumulados en períodos anteriores, creando un efecto de crecimiento exponencial.</p>"
+    },
+    {
+      "id": "rule_72",
+      "icon": "⏱️",
+      "title": "Rule of 72 Shortcut",
+      "title_es": "La Regla del 72",
+      "content_html_en": "<p>Divide 72 by your annual interest rate to find approximately how many years it takes to double your money. For example, at an 8% return, 72 / 8 = 9 years to double.</p>",
+      "content_html": "<p>Divide 72 entre tu tasa de interés anual para saber cuántos años tardará en duplicarse tu dinero. Ejemplo: al 8%, 72 / 8 = 9 años para duplicarse.</p>"
+    },
+    {
+      "id": "formulas",
+      "icon": "🧮",
+      "title": "Mathematical Compounding Equations",
+      "title_es": "Ecuaciones Matemáticas de Capitalización",
+      "content_html_en": "<p><b>Future Value (FV):</b> FV = Principal × (1 + rate)ⁿ + Monthly × [ ((1 + rate)ⁿ - 1) / rate ]</p>",
+      "content_html": "<p><b>Valor Futuro (VF):</b> VF = Principal × (1 + tasa)ⁿ + Aportación × [ ((1 + tasa)ⁿ - 1) / tasa ]</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "principal",
+      "label": "Depósito / Capital Inicial",
+      "label_en": "Initial Investment",
+      "type": "currency",
+      "default": 10000,
+      "min": 0,
+      "max": 10000000,
+      "step": 1000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "monthlyContribution",
+      "label": "Aportación mensual recurrente",
+      "label_en": "Monthly Contribution",
+      "type": "currency",
+      "default": 300,
+      "min": 0,
+      "max": 100000,
+      "step": 50,
+      "unit": { "follows": "principal" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "returnRate",
+      "label": "Tasa de rendimiento anual estimada (%)",
+      "label_en": "Estimated Annual Return Rate (%)",
+      "type": "number",
+      "default": 8,
+      "min": 0.1,
+      "max": 30,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.1, 30], "message": "Introduce un rendimiento entre 0.1% y 30%", "message_en": "Enter rate between 0.1% and 30%" }]
+    },
+    {
+      "id": "years",
+      "label": "Plazo de inversión (años)",
+      "label_en": "Investment Horizon (years)",
+      "type": "slider",
+      "default": 20,
+      "min": 1,
+      "max": 50,
+      "step": 1,
+      "unit": "años",
+      "unit_en": "years",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalDeposits",
+      "label": "Total aportado en efectivo",
+      "label_en": "Total Cash Contributions",
+      "expression": "principal + (monthlyContribution * 12 * years)",
+      "unit": { "follows": "principal" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "futureValue",
+      "label": "Saldo Acumulado Futuro",
+      "label_en": "Projected Future Balance",
+      "expression": "principal * ((1 + returnRate / 100) ^ years) + (monthlyContribution * 12) * ((((1 + returnRate / 100) ^ years) - 1) / (returnRate / 100))",
+      "unit": { "follows": "principal" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "years", "op": ">=", "value": 20 }, "label": "Efecto Bola de Nieve", "label_en": "Snowball Compounding Effect", "tone": "success", "text": "Un horizonte superior a 20 años maximiza exponencialmente el rendimiento generado por intereses sobre intereses.", "text_en": "A 20+ year horizon exponentially multiplies return earned on previously accumulated interest." }
+      ]
+    },
+    {
+      "id": "totalInterestEarned",
+      "label": "Ganancia generada por intereses",
+      "label_en": "Total Interest & Profit Earned",
+      "expression": "max(futureValue - totalDeposits, 0)",
+      "unit": { "follows": "principal" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "roi-calculator", "type": "static", "message": "Calcula el retorno de inversión (ROI)", "message_en": "Calculate Return on Investment (ROI)", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Inversión y Ahorro",
+    "role_en": "Investment & Wealth Assistant",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "entusiasta y analítico",
+    "includeData": ["futureValue", "totalDeposits", "totalInterestEarned", "returnRate", "years"],
+    "instructions": [
+      "Resalta la diferencia entre el dinero aportado de tu bolsillo y la ganancia creada por el interés compuesto.",
+      "Destaca el horizonte temporal como el factor determinante del crecimiento."
+    ],
+    "instructions_en": [
+      "Highlight the difference between cash deposited from pocket vs profit generated by compound interest.",
+      "Emphasize time horizon as the single most critical compounding growth multiplier."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Interés Compuesto — Proyección de Inversión | CalculadoraHub",
+    "metaTitle_en": "Compound Interest Calculator — Investment Growth Projector | CalculadoraHub",
+    "metaDescription": "Calcula el crecimiento futuro de tu inversión y ahorros con interés compuesto. Gratis e instantáneo.",
+    "metaDescription_en": "Project your future investment and savings growth driven by compound interest. Free, instant results.",
+    "keywords": ["interes compuesto", "compound interest calculator", "proyeccion de inversion", "ahorro"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

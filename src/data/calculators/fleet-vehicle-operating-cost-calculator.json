@@ -1,0 +1,152 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "fleet-vehicle-operating-cost-calculator",
+    "title": "Calculadora de Costo de Operación Vehicular por Milla/km (TCO)",
+    "title_en": "Total Cost of Ownership (TCO) & Vehicle Operating Cost per Mile Calculator",
+    "slug": "calculadora-de-costo-de-operacion-vehicular-por-milla-km-tco",
+    "category": "transport",
+    "subcategory": "fuel",
+    "tags": ["costo-de-operacion-vehicular", "tco", "costo-por-milla", "flotas", "mantenimiento", "seguro-de-coche", "transporte"],
+    "tags_en": ["vehicle-operating-cost", "tco", "cost-per-mile", "fleet", "maintenance", "car-insurance", "transport"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el costo total de propiedad (TCO) y costo por milla conducida agregando combustible, seguro, mantenimiento y depreciación.",
+    "shortDescription_en": "Calculate total cost of ownership (TCO) and operating cost per driven mile factoring fuel, insurance, maintenance, and depreciation.",
+    "longDescription": "Herramienta de gestión de flotas, empresas de reparto y finanzas personales. Cuantifica el verdadero costo por milla de tener y conducir un vehículo.",
+    "longDescription_en": "Fleet management, delivery business, and personal finance tool. Quantifies true per-mile cost of owning and operating a vehicle.",
+    "howToUse": [
+      "Ingresa las Millas Totales Conducidas al Año (ej. 12,000 millas/año).",
+      "Ingresa el Gasto Anual en Combustible ($/año, ej. $1,800).",
+      "Ingresa el Gasto Anual en Seguro de Coche ($/año, ej. $1,400).",
+      "Ingresa el Gasto Anual en Mantenimiento y Neumáticos ($/año, ej. $800).",
+      "Ingresa la Depreciación Anual Estimada ($/año, ej. $2,500).",
+      "Consulta el Costo Total Anual de Operación y el Costo Real por Milla ($/milla)."
+    ],
+    "howToUse_en": [
+      "Enter Total Miles Driven Per Year (e.g. 12,000 miles/year).",
+      "Enter Annual Fuel Expense ($/year, e.g. $1,800).",
+      "Enter Annual Auto Insurance Premium ($/year, e.g. $1,400).",
+      "Enter Annual Maintenance & Tires Expense ($/year, e.g. $800).",
+      "Enter Estimated Annual Depreciation ($/year, e.g. $2,500).",
+      "View Total Annual Operating Cost and True Cost Per Driven Mile ($/mile)."
+    ],
+    "methodology": "CostoTotalAnual = Gasolina + Seguro + Mantenimiento + Depreciación. CostoPorMilla = CostoTotalAnual / MillasAnuales.",
+    "methodology_en": "TotalAnnualCost = Fuel + Insurance + Maintenance + Depreciation. CostPerMile = TotalAnnualCost / AnnualMiles."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Costos de Operación Vehicular y Flotas (TCO)",
+    "role_en": "Vehicle Operating Costs & Fleet TCO Specialist Assistant",
+    "includeData": ["totalAnnualOperatingCostResult", "costPerDrivenMileResult"],
+    "instructions": [
+      "Interpreta el costo total de operación anual y el costo por milla obtenido.",
+      "Compara el costo por milla calculado con la tarifa estándar de deducción del IRS (67 cent/milla).",
+      "Muestra la proporción de costos fijos (seguro, depreciación) frente a costos variables (gasolina, neumáticos)."
+    ],
+    "instructions_en": [
+      "Interpret calculated total annual operating cost and per-driven-mile rate.",
+      "Compare computed per-mile cost against official IRS standard rate (67 cents/mile).",
+      "Show fixed costs ratio (insurance, depreciation) versus variable costs (fuel, tires, maintenance)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "fvo-guide",
+      "icon": "🚙",
+      "title": "Average Car Operating Cost Benchmarks",
+      "title_es": "Pautas de Costos de Operación Vehicular",
+      "content_html_en": "<p><b>Average US Sedan Operating Cost:</b> ~$0.55 to $0.72 per mile.</p><p><b>SUV / Full-size Truck:</b> ~$0.75 to $1.10 per mile.</p><p><b>Electric Vehicle (EV):</b> ~$0.40 to $0.55 per mile (lower fuel & maintenance).</p>",
+      "content_html": "<p><b>Costo Operativo Sedán EE.UU. Promedio:</b> ~$0.55 a $0.72 por milla.</p><p><b>SUV / Camioneta Grande:</b> ~$0.75 a $1.10 por milla.</p><p><b>Vehículo Eléctrico (EV):</b> ~$0.40 a $0.55 por milla (menor combustible y mantenimiento).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "annualMilesDrivenCount",
+      "label": "Millas Totales Conducidas al Año",
+      "label_en": "Total Driven Miles per Year",
+      "type": "number",
+      "default": 12000,
+      "min": 1000,
+      "max": 200000,
+      "step": 500,
+      "required": true
+    },
+    {
+      "id": "annualFuelCostExpense",
+      "label": "Gasto Anual en Combustible ($/año)",
+      "label_en": "Annual Fuel Expense ($/year)",
+      "type": "number",
+      "default": 1800,
+      "min": 100,
+      "max": 50000,
+      "step": 50,
+      "required": true
+    },
+    {
+      "id": "annualInsuranceCostExpense",
+      "label": "Gasto Anual en Seguro de Coche ($/año)",
+      "label_en": "Annual Auto Insurance Premium ($/year)",
+      "type": "number",
+      "default": 1400,
+      "min": 100,
+      "max": 20000,
+      "step": 50,
+      "required": true
+    },
+    {
+      "id": "annualMaintenanceTiresExpense",
+      "label": "Gasto Anual en Mantenimiento y Neumáticos ($/año)",
+      "label_en": "Annual Maintenance & Tires ($/year)",
+      "type": "number",
+      "default": 850,
+      "min": 0,
+      "max": 20000,
+      "step": 50,
+      "required": true
+    },
+    {
+      "id": "annualDepreciationExpense",
+      "label": "Depreciación Anual Estimada ($/año)",
+      "label_en": "Estimated Annual Depreciation ($/year)",
+      "type": "number",
+      "default": 2400,
+      "min": 0,
+      "max": 50000,
+      "step": 100,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalAnnualOperatingCostResult",
+      "label": "Costo Total de Operación Anual del Vehículo ($)",
+      "label_en": "Total Annual Vehicle Operating Cost ($)",
+      "expression": "annualFuelCostExpense + annualInsuranceCostExpense + annualMaintenanceTiresExpense + annualDepreciationExpense",
+      "unit": "$/año",
+      "unit_en": "$/year",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalAnnualOperatingCostResult", "op": ">=", "value": 0 }, "label": "Costo TCO Calculado", "label_en": "TCO Cost Computed", "tone": "success", "text": "Gasto total de propiedad de vehículo cuantificado.", "text_en": "Total vehicle ownership cost quantified." }
+      ]
+    },
+    {
+      "id": "costPerDrivenMileResult",
+      "label": "Costo Real de Operación por Milla ($/milla)",
+      "label_en": "True Operating Cost per Driven Mile ($/mile)",
+      "expression": "annualMilesDrivenCount > 0 ? (totalAnnualOperatingCostResult / annualMilesDrivenCount) : 0",
+      "unit": "$/milla",
+      "unit_en": "$/mile",
+      "precision": 3,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

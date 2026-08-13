@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "tip-calculator",
+    "title": "Calculadora de Propinas y División de Cuenta Restaurante",
+    "title_en": "Tip Calculator & Bill Splitter",
+    "slug": "calculadora-de-propinas-division-de-cuenta-restaurante",
+    "category": "finance",
+    "subcategory": "business",
+    "tags": ["propina", "tip-calculator", "division-de-cuenta", "restaurante", "comensales", "dividir-cuenta", "finanzas-personales"],
+    "tags_en": ["tip", "tip-calculator", "bill-splitter", "restaurant", "diners", "split-bill", "personal-finance"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el importe de la propina y divide el total de la cuenta en partes iguales entre los comensales.",
+    "shortDescription_en": "Calculate tip amount and split the total restaurant bill equally among dining guests.",
+    "longDescription": "Herramienta de economía personal y etiqueta en restaurantes. Calcula el porcentaje de propina según el servicio y reparte la cuenta total por comensal.",
+    "longDescription_en": "Personal finance and restaurant etiquette tool. Computes tip percentage based on service quality and splits final total per diner.",
+    "howToUse": [
+      "Ingresa el Subtotal de la Cuenta del Restaurante.",
+      "Selecciona el Porcentaje de Propina (15%, 18%, 20%, 25%).",
+      "Ingresa el Número de Personas / Comensales.",
+      "Consulta el Importe de la Propina, el Total General y la Cuota por Persona."
+    ],
+    "howToUse_en": [
+      "Enter Restaurant Bill Subtotal.",
+      "Select Tip Percentage (15%, 18%, 20%, 25%).",
+      "Enter Number of Guests / Diners.",
+      "View Tip Amount, Total Bill, and Amount per Person."
+    ],
+    "methodology": "Propina = Subtotal * (Porcentaje / 100). Total = Subtotal + Propina. Pago por Persona = Total / Personas.",
+    "methodology_en": "Tip = Subtotal * (Percent / 100). Total = Subtotal + Tip. Per Person = Total / People."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Presupuesto Personal y Etiqueta en Restaurantes",
+    "role_en": "Personal Budget & Dining Etiquette Specialist Assistant",
+    "includeData": ["perPersonAmountResult", "totalTipAmountVal"],
+    "instructions": [
+      "Interpreta la propina calculada según los estándares culturales (15-20% estándar en EE.UU.).",
+      "Explica la división equitativa por persona para evitar discusiones en grupo.",
+      "Aclara si los impuestos ya estaban incluidos en el subtotal."
+    ],
+    "instructions_en": [
+      "Interpret calculated tip based on tipping cultural norms (15-20% standard in the US).",
+      "Explain fair split per person to simplify group payments.",
+      "Clarify if taxes were included in pre-tip subtotal."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "tip-guide",
+      "icon": "🍽️",
+      "title": "Standard Tipping Etiquette Rates",
+      "title_es": "Tarifas de Etiqueta Estándar para Propinas",
+      "content_html_en": "<p><b>15%:</b> Good standard service.</p><p><b>18% - 20%:</b> Great service / Recommended standard in US dining.</p><p><b>25%:</b> Outstanding service.</p>",
+      "content_html": "<p><b>15%:</b> Buen servicio estándar.</p><p><b>18% - 20%:</b> Excelente servicio / Estándar recomendado en EE.UU.</p><p><b>25%:</b> Servicio sobresaliente y extraordinario.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "billSubtotalAmount",
+      "label": "Subtotal de la Cuenta ($)",
+      "label_en": "Bill Subtotal ($)",
+      "type": "currency",
+      "default": 120,
+      "min": 1,
+      "max": 50000,
+      "step": 1,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 }
+      ]
+    },
+    {
+      "id": "tipPercentNum",
+      "label": "Porcentaje de Propina (%)",
+      "label_en": "Tip Percentage (%)",
+      "type": "select",
+      "default": "18",
+      "options": [
+        { "value": "10", "label": "10% (Básico)", "label_en": "10% (Basic)" },
+        { "value": "15", "label": "15% (Estándar)", "label_en": "15% (Standard)" },
+        { "value": "18", "label": "18% (Buen Servicio)", "label_en": "18% (Great Service)" },
+        { "value": "20", "label": "20% (Excelente Servicio)", "label_en": "20% (Excellent Service)" },
+        { "value": "25", "label": "25% (Sobresaliente)", "label_en": "25% (Outstanding)" }
+      ]
+    },
+    {
+      "id": "peopleCountNum",
+      "label": "Número de Personas / Comensales",
+      "label_en": "Number of Diners / People",
+      "type": "number",
+      "default": 3,
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalTipAmountVal",
+      "label": "Importe Total de la Propina",
+      "label_en": "Total Tip Amount",
+      "expression": "billSubtotalAmount * (tipPercentNum / 100)",
+      "unit": "USD",
+      "precision": 2,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "totalBillAmountVal",
+      "label": "Cuenta Total a Pagar (Subtotal + Propina)",
+      "label_en": "Total Bill Amount (Subtotal + Tip)",
+      "expression": "billSubtotalAmount + totalTipAmountVal",
+      "unit": "USD",
+      "precision": 2,
+      "format": "currency",
+      "type": "primary"
+    },
+    {
+      "id": "perPersonAmountResult",
+      "label": "Importe Total a Pagar por Persona",
+      "label_en": "Total Amount to Pay per Person",
+      "expression": "peopleCountNum > 0 ? (totalBillAmountVal / peopleCountNum) : 0",
+      "unit": "USD",
+      "precision": 2,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "perPersonAmountResult", "op": ">=", "value": 0 }, "label": "Cuota por Persona Calculada", "label_en": "Amount per Person Computed", "tone": "success", "text": "División equitativa de la cuenta completada.", "text_en": "Fair bill split completed." }
+      ]
+    }
+  ]
+}

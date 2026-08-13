@@ -1,0 +1,119 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "shoe-size-conversion",
+    "title": "Conversor Internacional de Tallas de Calzado (US, EU, UK, CM)",
+    "title_en": "International Shoe Size Converter (US, EU, UK, CM)",
+    "slug": "conversor-de-tallas-de-calzado-zapatos-us-eu-uk-cm",
+    "category": "converters",
+    "subcategory": "units",
+    "tags": ["tallas-de-calzado", "zapatos", "talla-us", "talla-eu", "talla-uk", "centimetros", "conversor-de-calzado"],
+    "tags_en": ["shoe-size", "shoes", "us-size", "eu-size", "uk-size", "centimeters", "shoe-converter"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Convierte tallas de calzado entre los sistemas de Estados Unidos (US), Europa (EU), Reino Unido (UK) y centímetros (CM).",
+    "shortDescription_en": "Convert shoe sizes between US, Europe (EU), United Kingdom (UK), and centimeter (CM) systems.",
+    "longDescription": "Herramienta de patronaje y calzado internacional. Mapea la longitud exacta del pie en centímetros con las tallas equivalentes estándar para hombres y mujeres.",
+    "longDescription_en": "International footwear sizing tool. Maps exact foot length in centimeters to equivalent standard sizes for men and women.",
+    "howToUse": [
+      "Ingresa la Longitud del Pie en centímetros (cm).",
+      "Consulta la Talla Equivalente en US Hombre, US Mujer, Europa (EU) y Reino Unido (UK)."
+    ],
+    "howToUse_en": [
+      "Enter Foot Length in centimeters (cm).",
+      "View Equivalent Sizes in US Men, US Women, Europe (EU), and United Kingdom (UK)."
+    ],
+    "methodology": "Talla US Hombre ≈ (cm / 2.54)*3 - 22. Talla EU ≈ 1.5 * (cm + 1.5). Talla UK ≈ US Hombre - 1.",
+    "methodology_en": "US Men Size ≈ (cm / 2.54)*3 - 22. EU Size ≈ 1.5 * (cm + 1.5). UK Size ≈ US Men - 1."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Patronaje y Conversión de Calzado",
+    "role_en": "Footwear Sizing & Pattern Conversion Specialist Assistant",
+    "includeData": ["shoeSizeUsMen", "shoeSizeEu", "shoeSizeUk"],
+    "instructions": [
+      "Interpreta las equivalencias de tallas de calzado internacionales.",
+      "Aconseja dejar un margen de 0.5 cm a 1 cm para confort en calzado deportivo.",
+      "Muestra la diferencia típica entre la horma americana (US) y europea (EU)."
+    ],
+    "instructions_en": [
+      "Interpret international shoe size equivalencies.",
+      "Advise leaving 0.5 cm to 1 cm margin for athletic shoe comfort.",
+      "Show typical fit difference between US and EU lasts."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "shs-guide",
+      "icon": "👟",
+      "title": "International Shoe Sizing Standard",
+      "title_es": "Estándar Internacional de Tallas de Calzado",
+      "content_html_en": "<p><b>Paris Point (EU):</b> 1 EU size = 2/3 cm (6.67 mm).</p><p><b>Barleycorn (US/UK):</b> 1 US/UK size = 1/3 inch (8.46 mm).</p>",
+      "content_html": "<p><b>Punto de París (EU):</b> 1 talla EU = 2/3 cm (6.67 mm).</p><p><b>Barleycorn (US/UK):</b> 1 talla US/UK = 1/3 pulgada (8.46 mm).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "footLengthCm",
+      "label": "Longitud del Pie (centímetros - cm)",
+      "label_en": "Foot Length (centimeters - cm)",
+      "type": "number",
+      "default": 27,
+      "min": 10,
+      "max": 40,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "shoeSizeUsMen",
+      "label": "Talla US Hombre Estimada",
+      "label_en": "Estimated US Men Size",
+      "expression": "round(((footLengthCm / 2.54) * 3 - 22) * 2) / 2",
+      "unit": "US",
+      "unit_en": "US",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "shoeSizeUsWomen",
+      "label": "Talla US Mujer Estimada",
+      "label_en": "Estimated US Women Size",
+      "expression": "shoeSizeUsMen + 1.5",
+      "unit": "US W",
+      "unit_en": "US W",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "shoeSizeEu",
+      "label": "Talla Europa Estimada (EU)",
+      "label_en": "Estimated Europe Size (EU)",
+      "expression": "round(1.5 * (footLengthCm + 1.5))",
+      "unit": "EU",
+      "unit_en": "EU",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "shoeSizeUk",
+      "label": "Talla Reino Unido Estimada (UK)",
+      "label_en": "Estimated UK Size (UK)",
+      "expression": "max(0, shoeSizeUsMen - 1)",
+      "unit": "UK",
+      "unit_en": "UK",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

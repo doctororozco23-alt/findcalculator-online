@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "pendulum-calculator",
+    "title": "Calculadora de Período y Frecuencia de Péndulo Simple",
+    "title_en": "Simple Pendulum Period & Frequency Calculator",
+    "slug": "calculadora-de-periodo-frecuencia-pendulo-simple-longitud",
+    "category": "physics",
+    "subcategory": "mechanics",
+    "tags": ["pendulo", "periodo", "frecuencia", "longitud-de-pendulo", "oscilacion", "movimiento-armonico", "fisica"],
+    "tags_en": ["pendulum", "period", "frequency", "pendulum-length", "oscillation", "harmonic-motion", "physics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el período de oscilación ($T = 2\\pi \\sqrt{L / g}$) y la frecuencia ($f = 1 / T$) de un péndulo simple.",
+    "shortDescription_en": "Calculate oscillation period ($T = 2\\pi \\sqrt{L / g}$) and frequency ($f = 1 / T$) of a simple pendulum.",
+    "longDescription": "Herramienta de Movimiento Armónico Simple (MAS) y oscilaciones. Determina la duración exacta de un ciclo completo de oscilación en función de la longitud del hilo y la aceleración gravitatoria.",
+    "longDescription_en": "Simple Harmonic Motion (SHM) and oscillations tool. Computes exact duration of a full cycle based on string length and gravitational acceleration.",
+    "howToUse": [
+      "Ingresa la Longitud de la Cuerda/Hilo ($L$ en metros).",
+      "Selecciona la Gravedad Local ($g$, Estándar Tierra = 9.81 m/s²).",
+      "Consulta el Período de Oscilación ($T$ en segundos) y la Frecuencia ($f$ en Hz)."
+    ],
+    "howToUse_en": [
+      "Enter String Length ($L$ in meters).",
+      "Select Local Gravity ($g$, Standard Earth = 9.81 m/s²).",
+      "View Oscillation Period ($T$ in seconds) and Frequency ($f$ in Hz)."
+    ],
+    "methodology": "Período T = 2 * π * sqrt(L / g). Frecuencia f = 1 / T. Asume oscilaciones de pequeño ángulo (θ < 15°).",
+    "methodology_en": "Period T = 2 * π * sqrt(L / g). Frequency f = 1 / T. Assumes small angle approximation (θ < 15°)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Oscilaciones y Movimiento Armónico Simple",
+    "role_en": "Oscillations & Simple Harmonic Motion Specialist Assistant",
+    "includeData": ["pendulumPeriodSecondsResult", "pendulumFrequencyHertzResult"],
+    "instructions": [
+      "Interpreta el período de oscilación obtenido.",
+      "Explica por qué la masa de la pesa (bóveda) no influye en el período en la aproximación ideal.",
+      "Muestra el uso histórico en relojes de péndulo y experimentos de medición de la gravedad."
+    ],
+    "instructions_en": [
+      "Interpret calculated oscillation period.",
+      "Explain why bob mass does not affect period under ideal approximation.",
+      "Show historical usage in pendulum clocks and gravity measurement experiments."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "pnd-guide",
+      "icon": "🕰️",
+      "title": "Simple Pendulum SHM Formula",
+      "title_es": "Fórmula del Péndulo Simple en MAS",
+      "content_html_en": "<p><b>Period:</b> T = 2π × √(L / g)</p><p><b>Frequency:</b> f = 1 / T</p><p><b>1 Meter String on Earth:</b> Yields a period of approximately 2.006 seconds.</p>",
+      "content_html": "<p><b>Período:</b> T = 2π × √(L / g)</p><p><b>Frecuencia:</b> f = 1 / T</p><p><b>Hilo de 1 Metro en la Tierra:</b> Produce un período aproximado de 2.006 segundos.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "pendulumLengthMeters",
+      "label": "Longitud de la Cuerda (L en metros)",
+      "label_en": "String Length (L in meters)",
+      "type": "number",
+      "default": 1.0,
+      "min": 0.01,
+      "max": 1000,
+      "step": 0.05,
+      "required": true
+    },
+    {
+      "id": "gravityAccelChoice",
+      "label": "Gravedad Local (g)",
+      "label_en": "Local Gravity (g)",
+      "type": "select",
+      "default": "9.80665",
+      "options": [
+        { "value": "9.80665", "label": "Tierra (g = 9.81 m/s²)", "label_en": "Earth (g = 9.81 m/s²)" },
+        { "value": "1.62", "label": "Luna (g = 1.62 m/s²)", "label_en": "Moon (g = 1.62 m/s²)" },
+        { "value": "3.71", "label": "Marte (g = 3.71 m/s²)", "label_en": "Mars (g = 3.71 m/s²)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "pendulumPeriodSecondsResult",
+      "label": "Período de Oscilación (T en segundos)",
+      "label_en": "Oscillation Period (T in seconds)",
+      "expression": "2 * pi * sqrt(pendulumLengthMeters / gravityAccelChoice)",
+      "unit": "s",
+      "unit_en": "s",
+      "precision": 3,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "pendulumPeriodSecondsResult", "op": ">=", "value": 0 }, "label": "Período Calculado", "label_en": "Period Computed", "tone": "success", "text": "Duración de ciclo de oscilación evaluada.", "text_en": "Oscillation cycle duration evaluated." }
+      ]
+    },
+    {
+      "id": "pendulumFrequencyHertzResult",
+      "label": "Frecuencia de Oscilación (f en Hertz - Hz)",
+      "label_en": "Oscillation Frequency (f in Hertz - Hz)",
+      "expression": "pendulumPeriodSecondsResult > 0 ? (1 / pendulumPeriodSecondsResult) : 0",
+      "unit": "Hz",
+      "unit_en": "Hz",
+      "precision": 3,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

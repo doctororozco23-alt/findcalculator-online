@@ -1,0 +1,172 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "has-bled-score-calculator",
+    "title": "Calculadora del Score HAS-BLED para Riesgo de Hemorragia en Anticoagulación",
+    "title_en": "HAS-BLED Score Calculator for Major Bleeding Risk in Anticoagulation",
+    "slug": "has-bled-score-riesgo-hemorragia-anticoagulacion",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["has-bled", "hemorragia", "sangrado", "anticoagulacion", "cardiologia", "hematologia"],
+    "tags_en": ["has-bled", "bleeding", "hemorrhage", "anticoagulation", "cardiology", "hematology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Calcula el score HAS-BLED para estimar el riesgo anual de hemorragia grave en pacientes en tratamiento anticoagulante por Fibrilación Auricular.",
+    "shortDescription_en": "Calculate HAS-BLED score to estimate annual major bleeding risk in patients receiving anticoagulation for Atrial Fibrillation.",
+    "longDescription": "Estratificación de riesgo hemorrágico (Pisters et al. CHEST 2010). Evalúa HTA no controlada, disfunción Renal/Hepática, Ictus previo, predisposición a Sangrado, INR lábil, Edad >65 y consumo de Fármacos/Alcohol.",
+    "longDescription_en": "Bleeding risk stratification tool. Evaluates HTN, renal/liver dysfunction, stroke history, bleeding tendency, labile INR, age >65, and drugs/alcohol.",
+    "howToUse": [
+      "Indica si presenta Hipertensión sistólica > 160 mmHg.",
+      "Selecciona presencia de alteración Renal y/o Hepática.",
+      "Indica antecedente de Ictus previo.",
+      "Indica historial de Sangrado mayor o predisposición hemorrágica.",
+      "Selecciona si presenta INR lábil (en Sintrom / AVK).",
+      "Indica si la Edad es superior a 65 años.",
+      "Selecciona consumo simultáneo de Fármacos antiagregantes/AINEs y/o consumo de Alcohol."
+    ],
+    "howToUse_en": [
+      "Indicate if patient has Systolic HTN > 160 mmHg.",
+      "Select presence of Renal and/or Liver dysfunction.",
+      "Indicate history of prior Stroke.",
+      "Indicate Bleeding history or predisposition.",
+      "Select if patient has Labile INR (on VKAs).",
+      "Indicate if Age > 65 years.",
+      "Select concomitant Drug (Antiplatelets/NSAIDs) and/or Alcohol use."
+    ],
+    "methodology": "Score HAS-BLED: H (HTN >160 +1), A (Abnormal renal +1 / Abnormal liver +1), S (Stroke +1), B (Bleeding history +1), L (Labile INR +1), E (Elderly >65 +1), D (Medications +1 / Alcohol +1). Rango 0-9 puntos.",
+    "methodology_en": "HAS-BLED Score: H (HTN +1), A (Abnormal renal +1 / liver +1), S (Stroke +1), B (Bleeding +1), L (Labile INR +1), E (Elderly >65 +1), D (Medications +1 / Alcohol +1). Total range 0-9 points."
+  },
+  "guideSections": [
+    {
+      "id": "hasbled-guide",
+      "icon": "🩸",
+      "title": "Clinical Bleeding Risk Guidance",
+      "title_es": "Orientación de Riesgo Hemorrágico Clínico",
+      "content_html_en": "<p><b>Score 0 - 2:</b> Low to moderate bleeding risk. Anticoagulation safe under regular monitoring.</p><p><b>Score ≥ 3:</b> High bleeding risk. Does NOT contraindicate anticoagulation, but mandates correcting reversible risk factors (control HTN, stop NSAIDs, avoid alcohol).</p>",
+      "content_html": "<p><b>Score 0 - 2:</b> Riesgo de sangrado bajo a moderado. Anticoagulación segura bajo seguimiento habitual.</p><p><b>Score ≥ 3:</b> Alto riesgo de sangrado. NO contraindica la anticoagulación, pero exige corregir factores modificables (control de HTA, suspender AINEs, moderar alcohol).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "htn_uncontrolled",
+      "label": "Hipertensión Arterial no controlada (PAS > 160 mmHg)",
+      "label_en": "Uncontrolled Hypertension (SBP > 160 mmHg)",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "renal_dysfunction",
+      "label": "Disfunción Renal (Diálisis, Trasplante o Creatinina ≥ 2.2 mg/dL)",
+      "label_en": "Renal Dysfunction (Dialysis, Transplant, or Cr ≥ 2.2 mg/dL)",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "liver_dysfunction",
+      "label": "Disfunción Hepática (Cirrosis, Bilirrubina > 2x o GOT/GPT/FA > 3x)",
+      "label_en": "Liver Dysfunction (Cirrhosis, Bilirubin > 2x, or AST/ALT/ALP > 3x)",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "stroke_history",
+      "label": "Antecedente de Ictus / ACV previo",
+      "label_en": "Prior Stroke History",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "bleeding_history",
+      "label": "Antecedente de Sangrado mayor o Anemia / Diátesis hemorrágica",
+      "label_en": "Prior Major Bleeding History or Predisposition",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "labile_inr",
+      "label": "INR lábil (en antivitamina K: INR en rango en terapéutico < 60% del tiempo)",
+      "label_en": "Labile INR (on VKAs: time in therapeutic range < 60%)",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No / En ACOD (0 pts)", "label_en": "No / On DOAC (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "elderly_65",
+      "label": "Edad superior a 65 años",
+      "label_en": "Age Over 65 Years",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "medications_nsaid",
+      "label": "Uso concomitante de Antiagregantes (Aspirina/Clopidogrel) o AINEs",
+      "label_en": "Concomitant Antiplatelet / NSAID Medications",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    },
+    {
+      "id": "alcohol_excess",
+      "label": "Consumo de Alcohol (≥ 8 bebidas por semana)",
+      "label_en": "Alcohol Consumption (≥ 8 drinks/week)",
+      "type": "select",
+      "default": 0,
+      "options": [
+        { "value": 0, "label": "No (0 pts)", "label_en": "No (0 pts)" },
+        { "value": 1, "label": "Sí (+1 pt)", "label_en": "Yes (+1 pt)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "hasBledTotal",
+      "label": "Puntuación HAS-BLED Total",
+      "label_en": "Total HAS-BLED Score",
+      "expression": "htn_uncontrolled + renal_dysfunction + liver_dysfunction + stroke_history + bleeding_history + labile_inr + elderly_65 + medications_nsaid + alcohol_excess",
+      "unit": "puntos",
+      "unit_en": "points",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "hasBledTotal", "op": "<=", "value": 1 }, "label": "Score 0-1: Riesgo Bajo de Sangrado (1.0% - 1.1%/año)", "label_en": "Score 0-1: Low Bleeding Risk (1.0% - 1.1%/yr)", "tone": "success", "text": "Anticoagulación oral segura con seguimiento habitual.", "text_en": "Safe oral anticoagulation with routine follow-up." },
+        { "when": { "field": "hasBledTotal", "op": "==", "value": 2 }, "label": "Score 2: Riesgo Moderado de Sangrado (1.9%/año)", "label_en": "Score 2: Moderate Bleeding Risk (1.9%/yr)", "tone": "info", "text": "Supervisión clínica estrecha recomendada.", "text_en": "Close clinical monitoring recommended." },
+        { "when": { "field": "hasBledTotal", "op": ">=", "value": 3 }, "label": "Score ≥ 3: Alto Riesgo de Sangrado (≥ 3.7%/año)", "label_en": "Score ≥ 3: High Bleeding Risk (≥ 3.7%/yr)", "tone": "warning", "text": "Alto riesgo de hemorragia grave. Corregir factores modificables sin suspender anticoagulación.", "text_en": "High risk of major bleeding. Correct modifiable factors without stopping anticoagulation." }
+      ]
+    }
+  ]
+}

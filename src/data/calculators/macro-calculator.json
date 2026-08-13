@@ -1,0 +1,230 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "macro-calculator",
+    "title": "Calculadora de Macronutrientes (Proteínas, Carbos y Grasas por g/kg)",
+    "title_en": "Macronutrient Calculator (Body-Weight Based & Diet Ratios)",
+    "slug": "macronutrientes-macros",
+    "category": "food",
+    "subcategory": "diets",
+    "tags": ["macros", "proteina", "carbohidratos", "dieta", "g-kg"],
+    "tags_en": ["macros", "protein", "carbs", "diet", "g-kg"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Utensils"
+  },
+  "content": {
+    "shortDescription": "Calcula la distribución clínica exacta de gramos de proteína, carbohidratos y grasas por peso corporal (g/kg) y protocolo dietético.",
+    "shortDescription_en": "Calculate exact clinical distribution of protein, carbohydrate, and fat grams based on body weight (g/kg) and diet protocol.",
+    "longDescription": "Auditoría nutricional avanzada para deportistas y entusiastas del fitness. Ajusta la proteína diaria en gramos por kg de peso corporal (1.6 - 2.4 g/kg), asegura las grasas esenciales (0.8 - 1.0 g/kg) y calcula el reparto por comidas.",
+    "longDescription_en": "Advanced nutritional audit for athletes and fitness practitioners. Customizes daily protein in g/kg of body weight (1.6-2.4 g/kg), safeguards essential fatty acids, and divides macros across daily meals.",
+    "howToUse": [
+      "Ingresa tu meta de calorías diarias (o el TDEE calculado).",
+      "Ingresa tu peso corporal actual.",
+      "Selecciona el protocolo dietético (Basado en g/kg por Peso Corporal, Alta Proteína, Zona Equilibrada o Keto).",
+      "Selecciona el número de comidas al día para ver el reparto por plato."
+    ],
+    "howToUse_en": [
+      "Enter target daily calorie budget.",
+      "Enter current body weight.",
+      "Select diet protocol (Body-Weight Based g/kg, High Protein Bodybuilding, Balanced Zone, or Keto).",
+      "Select number of daily meals (3, 4, or 5 meals) for per-meal distribution."
+    ],
+    "methodology": "Estándares de Nutrición Deportiva (ISSN): Proteína (4 kcal/g), Carbohidratos (4 kcal/g), Grasas (9 kcal/g). Enfoque g/kg: Proteína 2.0 g/kg, Grasas 0.9 g/kg, Carbohidratos el resto calórico.",
+    "methodology_en": "International Society of Sports Nutrition (ISSN) standards: Protein (4 kcal/g), Carbs (4 kcal/g), Fats (9 kcal/g). g/kg approach: 2.0 g/kg Protein, 0.9 g/kg Fat, remaining calories to Carbs."
+  },
+  "guideSections": [
+    {
+      "id": "sports-nutrition-rules",
+      "icon": "🥩",
+      "title": "Evidence-Based Macro Sizing Guidelines",
+      "title_es": "Pautas de Nutrición Basadas en Evidencia",
+      "content_html_en": "<p><b>Protein (1.6 - 2.4 g/kg):</b> Essential during caloric deficit to preserve lean muscle tissue. Supported by the International Society of Sports Nutrition (ISSN).</p><p><b>Fats (0.8 - 1.2 g/kg):</b> Required to maintain healthy testosterone, estrogen, and thyroid hormone synthesis.</p><p><b>Carbohydrates:</b> Primary glycogen fuel for resistance training and high-intensity performance.</p>",
+      "content_html": "<p><b>Proteína (1.6 - 2.4 g/kg):</b> Crucial en déficit calórico para preservar la masa muscular (ISSN).</p><p><b>Grasas (0.8 - 1.2 g/kg):</b> Indispensables para la síntesis de testosterona, estrógenos y tiroides.</p><p><b>Carbohidratos:</b> Combustible glucogénico primario para el entrenamiento de fuerza e intensidad.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "dailyCalories",
+      "label": "Meta de calorías diarias",
+      "label_en": "Target Daily Calories",
+      "type": "number",
+      "default": 2200,
+      "min": 1000,
+      "max": 6000,
+      "step": 50,
+      "unit": "kcal",
+      "unit_en": "kcal",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1000, 6000], "message": "Calorías entre 1000 y 6000", "message_en": "Calories between 1000 and 6000" }]
+    },
+    {
+      "id": "weightKg",
+      "label": "Peso corporal",
+      "label_en": "Body Weight",
+      "type": "number",
+      "default": 75,
+      "min": 30,
+      "max": 250,
+      "step": 0.5,
+      "unit": "kg",
+      "units": [
+        { "id": "kg", "label": "kg", "toBase": 1 },
+        { "id": "lbs", "label": "lbs", "toBase": 0.453592 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "dietProtocol",
+      "label": "Protocolo dietético",
+      "label_en": "Diet Protocol",
+      "type": "select",
+      "default": "g_kg_sports",
+      "options": [
+        { "value": "g_kg_sports", "label": "Deportista g/kg (2.0 g/kg Prot / 0.9 g/kg Grasa / Resto Carbos)", "label_en": "Athlete g/kg (2.0 g/kg Prot / 0.9 g/kg Fat / Rest Carbs)" },
+        { "value": "high_protein", "label": "Alta Proteína / Culturismo (40% Prot / 35% Carbo / 25% Grasa)", "label_en": "High Protein / Bodybuilding (40% Prot / 35% Carbs / 25% Fat)" },
+        { "value": "balanced", "label": "Zona Equilibrada (30% Prot / 40% Carbo / 30% Grasa)", "label_en": "Balanced Zone (30% Prot / 40% Carbs / 30% Fat)" },
+        { "value": "endurance", "label": "Resistencia / Running (20% Prot / 60% Carbo / 20% Grasa)", "label_en": "Endurance / Running (20% Prot / 60% Carbs / 20% Fat)" },
+        { "value": "keto", "label": "Cetogénica / Keto (25% Prot / 5% Carbo / 70% Grasa)", "label_en": "Keto (25% Prot / 5% Carbs / 70% Fat)" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "mealsCount",
+      "label": "Número de comidas diarias",
+      "label_en": "Number of Daily Meals",
+      "type": "select",
+      "default": "4",
+      "options": [
+        { "value": "3", "label": "3 Comidas principales", "label_en": "3 Main Meals" },
+        { "value": "4", "label": "4 Comidas al día", "label_en": "4 Meals a Day" },
+        { "value": "5", "label": "5 Comidas al día", "label_en": "5 Meals a Day" }
+      ],
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "proteinGramsDaily",
+      "label": "Proteínas Diarias Totales",
+      "label_en": "Total Daily Protein",
+      "expression": "dietProtocol == 'g_kg_sports' ? min(weightKg * 2.0, (dailyCalories * 0.45) / 4) : (dietProtocol == 'high_protein' ? (dailyCalories * 0.40) / 4 : (dietProtocol == 'balanced' ? (dailyCalories * 0.30) / 4 : (dietProtocol == 'endurance' ? (dailyCalories * 0.20) / 4 : (dailyCalories * 0.25) / 4)))",
+      "unit": "g/día",
+      "unit_en": "g/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "proteinGramsDaily", "op": ">", "value": 0 }, "label": "Proteína Calculada", "label_en": "Target Protein Target", "tone": "info", "text": "Gramos de proteína diarios para sintesis muscular y recuperación.", "text_en": "Target daily protein grams required for muscle protein synthesis and recovery." }
+      ]
+    },
+    {
+      "id": "fatGramsDaily",
+      "label": "Grasas Saludables Diarias",
+      "label_en": "Total Daily Healthy Fats",
+      "expression": "dietProtocol == 'g_kg_sports' ? (weightKg * 0.9) : (dietProtocol == 'high_protein' ? (dailyCalories * 0.25) / 9 : (dietProtocol == 'balanced' ? (dailyCalories * 0.30) / 9 : (dietProtocol == 'endurance' ? (dailyCalories * 0.20) / 9 : (dailyCalories * 0.70) / 9)))",
+      "unit": "g/día",
+      "unit_en": "g/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "carbGramsDaily",
+      "label": "Carbohidratos Diarios",
+      "label_en": "Total Daily Carbohydrates",
+      "expression": "dietProtocol == 'g_kg_sports' ? max((dailyCalories - (proteinGramsDaily * 4) - (fatGramsDaily * 9)) / 4, 20) : (dietProtocol == 'high_protein' ? (dailyCalories * 0.35) / 4 : (dietProtocol == 'balanced' ? (dailyCalories * 0.40) / 4 : (dietProtocol == 'endurance' ? (dailyCalories * 0.60) / 4 : (dailyCalories * 0.05) / 4)))",
+      "unit": "g/día",
+      "unit_en": "g/day",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "proteinPerKg",
+      "label": "Proteína por kg de peso corporal",
+      "label_en": "Protein Intensity Ratio",
+      "expression": "proteinGramsDaily / weightKg",
+      "unit": "g/kg",
+      "unit_en": "g/kg",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "proteinPerMeal",
+      "label": "Proteína Recomendada por Comida",
+      "label_en": "Protein Target Per Meal",
+      "expression": "proteinGramsDaily / mealsCount",
+      "unit": "g/comida",
+      "unit_en": "g/meal",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "carbsPerMeal",
+      "label": "Carbohidratos por Comida",
+      "label_en": "Carbs Target Per Meal",
+      "expression": "carbGramsDaily / mealsCount",
+      "unit": "g/comida",
+      "unit_en": "g/meal",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "fatsPerMeal",
+      "label": "Grasas por Comida",
+      "label_en": "Fats Target Per Meal",
+      "expression": "fatGramsDaily / mealsCount",
+      "unit": "g/comida",
+      "unit_en": "g/meal",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "calorie-calculator", "type": "static", "message": "Calcula tus calorías objetivo diarias", "message_en": "Calculate target daily calories", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Especialista en Macronutrientes y Nutrición Deportiva",
+    "role_en": "Sports Nutrition & Macronutrient Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y orientador",
+    "includeData": ["proteinGramsDaily", "carbGramsDaily", "fatGramsDaily", "proteinPerKg", "proteinPerMeal"],
+    "instructions": [
+      "Sintetiza los gramos diarios de proteína, carbohidratos y grasas, la dosis de proteína g/kg y la cantidad por comida en 2-3 frases concisas.",
+      "Destaca que la ingesta de proteína dividida uniformemente entre las comidas optimiza la síntesis proteica muscular."
+    ],
+    "instructions_en": [
+      "Summarize daily protein, carb, fat grams, g/kg protein ratio, and per-meal distribution in 2-3 concise sentences.",
+      "Highlight that evenly distributing protein across meals optimizes muscle protein synthesis."
+    ],
+    "maxLengthWords": 100,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Macronutrientes (Proteínas, Carbos y Grasas) | CalculadoraHub",
+    "metaTitle_en": "Macronutrient Calculator (Body-Weight Based & Ratios) | CalculadoraHub",
+    "metaDescription": "Calcula los gramos diarios de proteína, carbohidratos y grasas por peso corporal (g/kg). Gratis e instantáneo.",
+    "metaDescription_en": "Calculate daily grams of protein, carbs, and fats based on body weight (g/kg). Free, instant results.",
+    "keywords": ["macro calculator", "macronutrientes", "proteina g-kg", "dieta deportiva", "macros culturismo"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

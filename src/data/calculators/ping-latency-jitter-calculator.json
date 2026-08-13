@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "ping-latency-jitter-calculator",
+    "title": "Calculadora de Latencia de Red, Jitter y Calidad MOS (VoIP/Gaming)",
+    "title_en": "Network Ping Latency, Jitter & MOS Score Calculator",
+    "slug": "calculadora-de-latencia-de-red-ping-jitter-calidad-mos",
+    "category": "technology",
+    "subcategory": "internet",
+    "tags": ["latencia", "ping", "jitter", "perdida-de-paquetes", "mos-score", "voip", "gaming", "redes", "tecnologia"],
+    "tags_en": ["latency", "ping", "jitter", "packet-loss", "mos-score", "voip", "gaming", "networks", "technology"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la puntuación MOS de calidad de llamada de voz VoIP (escala 1.0 a 4.5) y rendimiento en gaming a partir del Ping, Jitter y pérdida de paquetes.",
+    "shortDescription_en": "Calculate VoIP MOS call quality score (scale 1.0 to 4.5) and gaming responsiveness from Ping, Jitter, and Packet Loss.",
+    "longDescription": "Herramienta de redes, telecomunicaciones y juegos en línea. Evalúa la degradación de la experiencia de usuario (QoE) en comunicaciones en tiempo real.",
+    "longDescription_en": "Networking, telecoms, and online gaming tool. Evaluates user experience degradation (QoE) in real-time communications.",
+    "howToUse": [
+      "Ingresa la Latencia Promedio / Ping (ms, ej. 25 ms).",
+      "Ingresa la Variación de Latencia / Jitter (ms, ej. 3 ms).",
+      "Ingresa el Porcentaje de Pérdida de Paquetes (%, ej. 0.5%).",
+      "Consulta el Factor R Calculado, la Puntuación MOS (1 a 4.5) y el Diagnóstico de Calidad."
+    ],
+    "howToUse_en": [
+      "Enter Average Latency / Ping (ms, e.g. 25 ms).",
+      "Enter Latency Variation / Jitter (ms, e.g. 3 ms).",
+      "Enter Packet Loss Percentage (%, e.g. 0.5%).",
+      "View Calculated R-Factor, MOS Score (1 to 4.5), and Quality Rating."
+    ],
+    "methodology": "Factor R = 93.2 - (Ping/40) - (Jitter*2) - (PacketLoss*2.5). MOS = 1 + (0.035 * R) + (R * (R-60) * (100-R) * 0.000007).",
+    "methodology_en": "R-Factor = 93.2 - (Ping/40) - (Jitter*2) - (PacketLoss*2.5). MOS = 1 + (0.035 * R) + (R * (R-60) * (100-R) * 0.000007)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Redes de Telecomunicaciones y Calidad de Servicio (QoS)",
+    "role_en": "Telecom Networks & Quality of Service (QoS) Specialist Assistant",
+    "includeData": ["mosScoreResult", "rFactorScoreResult"],
+    "instructions": [
+      "Interpreta la puntuación MOS (Mean Opinion Score) obtenida (4.0+ Excelente, 3.5-4.0 Aceptable, <3.5 Mala).",
+      "Explica la enorme sensibilidad del tráfico en tiempo real (VoIP y juegos competitivos) frente al Jitter y pérdida de paquetes.",
+      "Muestra recomendaciones para optimizar la conexión (usar cable Ethernet RJ45 en lugar de Wi-Fi, configurar QoS en el router)."
+    ],
+    "instructions_en": [
+      "Interpret calculated MOS (Mean Opinion Score) rating (4.0+ Excellent, 3.5-4.0 Acceptable, <3.5 Poor).",
+      "Explain high sensitivity of real-time traffic (VoIP & competitive gaming) to Jitter and packet loss.",
+      "Show optimization recommendations (use wired Ethernet RJ45 over Wi-Fi, configure QoS router prioritization)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "plj-guide",
+      "icon": "📶",
+      "title": "MOS Score Quality Ratings Scale",
+      "title_es": "Escala de Calidad de Puntuación MOS",
+      "content_html_en": "<p><b>4.3 - 4.5 MOS:</b> Crystal Clear HD Audio (No noticeable delay).</p><p><b>4.0 - 4.2 MOS:</b> Standard Landline Quality (Satisfactory).</p><p><b>&lt; 3.6 MOS:</b> Frequent dropouts and robotic voice sound.</p>",
+      "content_html": "<p><b>4.3 - 4.5 MOS:</b> Audio Cristalino HD (Sin retraso perceptible).</p><p><b>4.0 - 4.2 MOS:</b> Calidad de Línea Fija Estándar (Satisfactoria).</p><p><b>&lt; 3.6 MOS:</b> Entre-cortes frecuentes y voz robótica.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "pingLatencyMs",
+      "label": "Latencia Promedio / Ping (ms)",
+      "label_en": "Average Latency / Ping (ms)",
+      "type": "number",
+      "default": 30,
+      "min": 1,
+      "max": 2000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "jitterMsVal",
+      "label": "Jitter / Variación de Latencia (ms)",
+      "label_en": "Jitter / Latency Variation (ms)",
+      "type": "number",
+      "default": 4,
+      "min": 0,
+      "max": 500,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "packetLossPercentVal",
+      "label": "Pérdida de Paquetes (%)",
+      "label_en": "Packet Loss Percentage (%)",
+      "type": "number",
+      "default": 0.5,
+      "min": 0,
+      "max": 100,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "rFactorScoreResult",
+      "label": "Factor R de Calidad de Red (R-Factor)",
+      "label_en": "Network Quality R-Factor",
+      "expression": "max(0, min(93.2, 93.2 - (pingLatencyMs / 40) - (jitterMsVal * 2) - (packetLossPercentVal * 2.5)))",
+      "unit": "",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "mosScoreResult",
+      "label": "Puntuación MOS de Calidad (Escala 1.0 a 4.5)",
+      "label_en": "MOS Quality Score (Scale 1.0 to 4.5)",
+      "expression": "rFactorScoreResult < 0 ? 1.0 : min(4.5, 1 + (0.035 * rFactorScoreResult) + (rFactorScoreResult * (rFactorScoreResult - 60) * (100 - rFactorScoreResult) * 0.000007))",
+      "unit": "MOS",
+      "unit_en": "MOS",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "mosScoreResult", "op": ">=", "value": 4.0 }, "label": "Calidad Excelente (MOS ≥ 4.0)", "label_en": "Excellent Quality (MOS ≥ 4.0)", "tone": "success", "text": "Conexión fluida apta para gaming y VoIP HD.", "text_en": "Smooth connection suitable for gaming & HD VoIP." },
+        { "when": { "field": "mosScoreResult", "op": "between", "value": [3.5, 4.0] }, "label": "Calidad Aceptable (3.5 - 4.0)", "label_en": "Acceptable Quality (3.5 - 4.0)", "tone": "info", "text": "Rendimiento normal con ligeros retrasos.", "text_en": "Normal performance with minor delays." },
+        { "when": { "field": "mosScoreResult", "op": "<", "value": 3.5 }, "label": "Calidad Deficiente (MOS < 3.5)", "label_en": "Poor Quality (MOS < 3.5)", "tone": "warning", "text": "Voz robótica y desincronización en juegos.", "text_en": "Robotic audio and desync in gaming." }
+      ]
+    }
+  ]
+}

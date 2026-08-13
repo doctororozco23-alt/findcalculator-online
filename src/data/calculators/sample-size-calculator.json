@@ -1,0 +1,148 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "sample-size-calculator",
+    "title": "Calculadora de Tamaño de Muestra para Encuestas e Investigaciones",
+    "title_en": "Sample Size Calculator for Surveys & Research",
+    "slug": "calculadora-de-tamano-de-muestra-encuestas",
+    "category": "statistics",
+    "subcategory": "probability",
+    "tags": ["tamano-de-muestra", "encuestas", "investigacion", "margen-de-error", "nivel-de-confianza", "estadistica"],
+    "tags_en": ["sample-size", "surveys", "research", "margin-of-error", "confidence-level", "statistics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "BarChart3"
+  },
+  "content": {
+    "shortDescription": "Calcula el tamaño muestral necesario ($n$) para investigaciones y encuestas según el tamaño de la población ($N$), Margen de Error ($e$) y Nivel de Confianza.",
+    "shortDescription_en": "Compute required sample size ($n$) for research and surveys based on Population size ($N$), Margin of Error ($e$), and Confidence Level.",
+    "longDescription": "Herramienta de muestreo estadístico basada en la fórmula de Cochram. Determina cuántos participantes o encuestados se requieren para garantizar significancia estadística con un nivel de confianza deseado (90%, 95% o 99%).",
+    "longDescription_en": "Statistical sampling tool based on Cochran's formula. Determines required respondents for statistical significance.",
+    "howToUse": [
+      "Ingresa el Tamaño de la Población ($N$) (dejar en 100,000 para población infinita).",
+      "Selecciona el Nivel de Confianza (90%, 95% o 99%).",
+      "Ingresa el Margen de Error tolerado ($e$ %).",
+      "Consulta el Tamaño de Muestra Mínimo Recomendado ($n$)."
+    ],
+    "howToUse_en": [
+      "Enter Population Size ($N$) (use 100,000 for infinite population).",
+      "Select Confidence Level (90%, 95%, or 99%).",
+      "Enter tolerated Margin of Error ($e$ %).",
+      "View Minimum Recommended Sample Size ($n$)."
+    ],
+    "methodology": "Fórmula de Cochran: n = (Z² * p * (1-p)) / e². Ajuste población finita: n_adj = n / (1 + (n-1)/N).",
+    "methodology_en": "Cochran's Formula: n = (Z² * p * (1-p)) / e². Finite adjustment: n_adj = n / (1 + (n-1)/N)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Muestreo Estadístico e Investigaciones",
+    "role_en": "Statistical Sampling & Research Specialist Assistant",
+    "includeData": ["recommendedSampleSize", "cochranN", "zValNum"],
+    "instructions": [
+      "Explica la aplicación de la fórmula de Cochran con el nivel de confianza seleccionado.",
+      "Justifica la reducción del tamaño de muestra por ajuste de población finita N.",
+      "Recomienda estrategias para mitigar el sesgo de no respuesta."
+    ],
+    "instructions_en": [
+      "Explain Cochran formula application with selected confidence level.",
+      "Justify sample size reduction by finite population adjustment N.",
+      "Recommend strategies to mitigate non-response bias."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ss-guide",
+      "icon": "👥",
+      "title": "Sampling & Confidence Levels",
+      "title_es": "Muestreo y Niveles de Confianza",
+      "content_html_en": "<p><b>95% Confidence (Z = 1.96):</b> Standard benchmark in scientific and social research.</p><p><b>Margin of Error (e = 5%):</b> Represents maximum expected error between sample estimate and true population value.</p>",
+      "content_html": "<p><b>Confianza del 95% (Z = 1.96):</b> Estándar en la investigación científica y estudios de mercado.</p><p><b>Margen de Error (e = 5%):</b> Error máximo esperado entre la estimación muestral y el valor real de la población.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "popN",
+      "label": "Tamaño de la Población (N)",
+      "label_en": "Population Size (N)",
+      "type": "number",
+      "default": 10000,
+      "min": 10,
+      "max": 10000000,
+      "step": 100,
+      "required": true
+    },
+    {
+      "id": "zLevel",
+      "label": "Nivel de Confianza",
+      "label_en": "Confidence Level",
+      "type": "select",
+      "default": "1.96",
+      "options": [
+        { "value": "1.645", "label": "90% de Confianza (Z = 1.645)", "label_en": "90% Confidence (Z = 1.645)" },
+        { "value": "1.96", "label": "95% de Confianza (Z = 1.96)", "label_en": "95% Confidence (Z = 1.96)" },
+        { "value": "2.576", "label": "99% de Confianza (Z = 2.576)", "label_en": "99% Confidence (Z = 2.576)" }
+      ]
+    },
+    {
+      "id": "marginErrorPercent",
+      "label": "Margen de Error Aceptado (e %)",
+      "label_en": "Accepted Margin of Error (e %)",
+      "type": "number",
+      "default": 5,
+      "min": 0.5,
+      "max": 20,
+      "step": 0.5,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.5, 20], "message": "Margen de error entre 0.5% y 20%", "message_en": "Margin of error between 0.5% and 20%" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "zValNum",
+      "label": "Valor Z Seleccionado",
+      "label_en": "Selected Z Value",
+      "expression": "zLevel == '1.645' ? 1.645 : (zLevel == '1.96' ? 1.96 : 2.576)",
+      "unit": "",
+      "precision": 3,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "marginErrorDecimal",
+      "label": "Margen de Error Decimal",
+      "label_en": "Decimal Margin of Error",
+      "expression": "marginErrorPercent / 100",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "cochranN",
+      "label": "Muestra Población Infinita (n₀)",
+      "label_en": "Infinite Population Sample (n₀)",
+      "expression": "(zValNum^2 * 0.25) / (marginErrorDecimal^2)",
+      "unit": "personas",
+      "unit_en": "people",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "recommendedSampleSize",
+      "label": "Tamaño de Muestra Mínimo Recomendado (n)",
+      "label_en": "Minimum Recommended Sample Size (n)",
+      "expression": "ceil(cochranN / (1 + ((cochranN - 1) / popN)))",
+      "unit": "encuestados",
+      "unit_en": "respondents",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "recommendedSampleSize", "op": ">=", "value": 1 }, "label": "Tamaño de Muestra Calculado", "label_en": "Sample Size Computed", "tone": "success", "text": "Muestra mínima estadísticamente representativa.", "text_en": "Minimum statistically representative sample." }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "dti-ratio-calculator",
+    "title": "Calculadora de Ratio de Endeudamiento (DTI)",
+    "title_en": "Debt-to-Income (DTI) Ratio Calculator",
+    "slug": "ratio-endeudamiento-dti",
+    "category": "finance",
+    "subcategory": "mortgages",
+    "tags": ["deuda", "dti", "credito"],
+    "tags_en": ["debt", "dti", "credit"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Percent"
+  },
+  "content": {
+    "shortDescription": "Mide tu porcentaje de ratio de endeudamiento sobre ingresos (DTI) y verifica si calificas para préstamos o hipotecas.",
+    "shortDescription_en": "Measure your Debt-to-Income (DTI) ratio percentage and check if you qualify for bank loans or mortgages.",
+    "longDescription": "Calcula el porcentaje de tus ingresos brutos mensuales destinado a saldar deudas recurrentes (hipoteca, coche, tarjetas, préstamos). Evaluado directamente por entidades bancarias.",
+    "longDescription_en": "Calculate the percentage of gross monthly income spent on recurring monthly debt payments (mortgage, auto loans, credit cards, student debt).",
+    "howToUse": [
+      "Ingresa tu ingreso bruto mensual.",
+      "Añade la cuota de vivienda (alquiler o hipoteca).",
+      "Suma otros pagos mensuales de deudas (autos, tarjetas, préstamos).",
+      "Consulta tu ratio DTI % y la calificación de riesgo crediticio."
+    ],
+    "howToUse_en": [
+      "Enter your gross monthly income.",
+      "Add monthly housing payment (rent or mortgage).",
+      "Add other recurring debt payments (auto, credit cards, student loans).",
+      "View your DTI % ratio and lender risk assessment rating."
+    ],
+    "methodology": "Fórmula DTI: Ratio DTI (%) = (Pagos Mensuales Totales de Deuda / Ingreso Mensual Bruto) × 100.",
+    "methodology_en": "DTI Formula: DTI Ratio (%) = (Total Monthly Debt Payments / Gross Monthly Income) × 100."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "⚖️",
+      "title": "What is Debt-to-Income (DTI) Ratio?",
+      "title_es": "¿Qué es el Ratio de Endeudamiento DTI?",
+      "content_html_en": "<p>DTI is a personal finance measure comparing an individual's monthly debt payment to their gross monthly income. Lenders use it to assess borrowing risk.</p>",
+      "content_html": "<p>El DTI compara tus pagos mensuales de deuda con tu ingreso bruto. Es el indicador clave que usan los bancos para aprobar créditos.</p>"
+    },
+    {
+      "id": "dti_thresholds",
+      "icon": "📊",
+      "title": "DTI Benchmark Thresholds",
+      "title_es": "Rangos de Evaluación DTI",
+      "content_html_en": "<ul><li><b>Under 36%:</b> Healthy debt level. Qualified for most competitive loan rates.</li><li><b>36% - 43%:</b> Manageable, but approaching risk limits.</li><li><b>Over 43%:</b> High risk. Difficult to qualify for traditional mortgages.</li></ul>",
+      "content_html": "<ul><li><b>Menos de 36%:</b> Endeudamiento saludable. Aprobación bancaria fácil.</li><li><b>36% - 43%:</b> Manejable pero cercano al límite.</li><li><b>Más de 43%:</b> Alto riesgo de sobreendeudamiento.</li></ul>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "grossMonthlyIncome",
+      "label": "Ingreso bruto mensual del hogar",
+      "label_en": "Gross Monthly Household Income",
+      "type": "currency",
+      "default": 5000,
+      "min": 500,
+      "max": 100000,
+      "step": 100,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": [{ "rule": "between", "params": [500, 100000], "message": "Ingreso entre 500 y 100.000", "message_en": "Income between 500 and 100,000" }]
+    },
+    {
+      "id": "housingPayment",
+      "label": "Pago mensual de vivienda (Alquiler o Hipoteca)",
+      "label_en": "Monthly Housing Payment (Rent or Mortgage)",
+      "type": "currency",
+      "default": 1200,
+      "min": 0,
+      "max": 50000,
+      "step": 50,
+      "unit": { "follows": "grossMonthlyIncome" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "otherDebts",
+      "label": "Otros pagos mensuales de deuda (auto, tarjetas, préstamos)",
+      "label_en": "Other Monthly Debt Payments (auto, cards, loans)",
+      "type": "currency",
+      "default": 400,
+      "min": 0,
+      "max": 50000,
+      "step": 50,
+      "unit": { "follows": "grossMonthlyIncome" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "totalMonthlyDebt",
+      "label": "Total de pagos mensuales de deuda",
+      "label_en": "Total Monthly Debt Payments",
+      "expression": "housingPayment + otherDebts",
+      "unit": { "follows": "grossMonthlyIncome" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "dtiRatioPercent",
+      "label": "Ratio de Endeudamiento (DTI %)",
+      "label_en": "Debt-to-Income Ratio (DTI %)",
+      "expression": "(totalMonthlyDebt / grossMonthlyIncome) * 100",
+      "unit": "%",
+      "precision": 1,
+      "format": "percent",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "dtiRatioPercent", "op": "<=", "value": 36 }, "label": "Endeudamiento Saludable", "label_en": "Healthy Debt Ratio", "tone": "success", "text": "Excelente perfil crediticio para préstamos.", "text_en": "Excellent credit profile for borrowing." },
+        { "when": { "and": [{ "field": "dtiRatioPercent", "op": ">", "value": 36 }, { "field": "dtiRatioPercent", "op": "<=", "value": 43 }] }, "label": "Riesgo Moderado", "label_en": "Moderate Risk", "tone": "warning", "text": "Nivel de deuda cercano al límite bancario.", "text_en": "Debt level near lender threshold." },
+        { "when": { "field": "dtiRatioPercent", "op": ">", "value": 43 }, "label": "Alto Riesgo Crediticio", "label_en": "High Debt Risk", "tone": "error", "text": "Alto nivel de deuda. Se sugiere reducir compromisos antes de solicitar más crédito.", "text_en": "High debt load. Consider paying down debt before applying for new loans." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "house-affordability-calculator", "type": "static", "message": "Calcula tu presupuesto máximo de compra de vivienda", "message_en": "Calculate max home purchase budget", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Riesgo Crediticio y DTI",
+    "role_en": "Credit Risk & DTI Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y directo",
+    "includeData": ["dtiRatioPercent", "totalMonthlyDebt", "grossMonthlyIncome"],
+    "instructions": [
+      "Sintetiza el porcentaje DTI % y la calificación de riesgo crediticio en 2 frases concisas.",
+      "Recuerda que mantener el DTI por debajo del 36% facilita obtener mejores tasas bancarias."
+    ],
+    "instructions_en": [
+      "Summarize DTI % ratio and credit risk rating in 2 concise sentences.",
+      "Emphasize keeping DTI under 36% to secure best loan approval rates."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Ratio de Endeudamiento (DTI) | CalculadoraHub",
+    "metaTitle_en": "Debt-to-Income (DTI) Ratio Calculator | CalculadoraHub",
+    "metaDescription": "Calcula tu porcentaje de ratio de endeudamiento sobre ingresos (DTI %). Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your Debt-to-Income (DTI %) ratio. Free, instant results.",
+    "keywords": ["dti ratio calculator", "ratio endeudamiento", "capacidad de pago", "credito"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

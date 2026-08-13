@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "flooring-plank-calculator",
+    "title": "Calculadora de Tarima Flotante, Suelo Laminado y Cajas",
+    "title_en": "Laminate & Hardwood Flooring Box Calculator",
+    "slug": "calculadora-de-tarima-flotante-suelo-laminado-cajas-desperdicio",
+    "category": "construction",
+    "subcategory": "remodeling",
+    "tags": ["tarima-flotante", "suelo-laminado", "parquet", "pisos", "cajas-de-piso", "desperdicio-de-corte", "reformas"],
+    "tags_en": ["laminate-flooring", "hardwood-flooring", "flooring", "flooring-boxes", "cutting-waste", "remodeling"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la cantidad de cajas de tarima flotante o suelo laminado ($m^2$ por caja) agregando el porcentaje de desperdicio por cortes.",
+    "shortDescription_en": "Calculate boxes of laminate or hardwood flooring ($m^2$ per box) adding cutting waste percentage.",
+    "longDescription": "Herramienta de acabado de interiores y remodelación de suelos. Determina la cantidad exacta de cajas de pavimento flotante o vinílico LVT a comprar.",
+    "longDescription_en": "Interior finishing and flooring remodeling tool. Determines exact boxes of laminate, hardwood, or LVT vinyl flooring to purchase.",
+    "howToUse": [
+      "Ingresa el Área Total de la Habitación / Suelo (m² o pies²).",
+      "Selecciona la Cobertura por Caja del Fabricante (ej. 2.15 m² o 23 ft² por caja).",
+      "Selecciona el Margen de Desperdicio por Cortes (10% en instalación recta, 15% en diagonal).",
+      "Consulta las Cajas Totales a Comprar y la Superficie Total Facturable."
+    ],
+    "howToUse_en": [
+      "Enter Total Room / Floor Area (m² or sq ft).",
+      "Select Manufacturer Box Coverage (e.g. 2.15 m² or 23 sq ft per box).",
+      "Select Cutting Waste Margin (10% straight installation, 15% diagonal).",
+      "View Total Boxes to Purchase and Total Billable Coverage Area."
+    ],
+    "methodology": "Área Total Ajustada = ÁreaHabitacion * (1 + Desperdicio/100). Cajas = ceil(ÁreaAjustada / CoberturaCaja).",
+    "methodology_en": "Total Adjusted Area = RoomArea * (1 + Waste/100). Boxes = ceil(AdjustedArea / BoxCoverage)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Pavimentos y Revestimientos de Suelos",
+    "role_en": "Flooring & Floor Coverings Specialist Assistant",
+    "includeData": ["flooringBoxesCountResult", "totalCoveragePurchasedM2Result"],
+    "instructions": [
+      "Interpreta las cajas de suelo laminado calculadas para la habitación.",
+      "Explica la importancia de dejar una junta de dilatación perimetral (8 a 10 mm) bajo el rodapié / zócalo.",
+      "Recomienda aclimatar las cajas de madera o laminado en la habitación durante 48 horas antes de la colocación."
+    ],
+    "instructions_en": [
+      "Interpret calculated flooring boxes count for the room.",
+      "Explain importance of perimeter expansion gap (8 to 10 mm) hidden by baseboards.",
+      "Recommend acclimating flooring boxes in room for 48 hours prior to installation."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "flp-guide",
+      "icon": "🪵",
+      "title": "Flooring Waste Margins Guidelines",
+      "title_es": "Guía de Márgenes de Desperdicio en Suelos",
+      "content_html_en": "<p><b>Straight Installation:</b> Add 10% for cuts and end-of-row fitting.</p><p><b>Diagonal Installation:</b> Add 15% for angle cuts.</p><p><b>Herringbone Pattern:</b> Add 15% to 20% waste margin.</p>",
+      "content_html": "<p><b>Instalación Recta:</b> Añadir 10% por cortes y remates de fila.</p><p><b>Instalación Diagonal:</b> Añadir 15% por cortes en ángulo.</p><p><b>Patrón Espiga / Herringbone:</b> Añadir 15% a 20% de desperdicio.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "roomFloorAreaM2",
+      "label": "Área Total de la Habitación (m²)",
+      "label_en": "Total Room Area (m²)",
+      "type": "number",
+      "default": 45,
+      "min": 1,
+      "max": 10000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "boxCoverageM2Val",
+      "label": "Cobertura de Superficie por Caja (m²/caja)",
+      "label_en": "Box Surface Coverage (m²/box)",
+      "type": "number",
+      "default": 2.15,
+      "min": 0.5,
+      "max": 10,
+      "step": 0.05,
+      "required": true
+    },
+    {
+      "id": "wasteMarginPercentVal",
+      "label": "Margen de Desperdicio por Cortes",
+      "label_en": "Cutting Waste Margin",
+      "type": "select",
+      "default": "1.10",
+      "options": [
+        { "value": "1.10", "label": "10% Desperdicio (Instalación Recta Estándar)", "label_en": "10% Waste (Standard Straight Pattern)" },
+        { "value": "1.15", "label": "15% Desperdicio (Instalación Diagonal / Espiga)", "label_en": "15% Waste (Diagonal / Herringbone Pattern)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "adjustedSurfaceWithWasteM2",
+      "label": "Superficie Total Ajustada con Desperdicio (m²)",
+      "label_en": "Total Adjusted Surface with Waste (m²)",
+      "expression": "roomFloorAreaM2 * wasteMarginPercentVal",
+      "unit": "m²",
+      "unit_en": "m²",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "flooringBoxesCountResult",
+      "label": "Número Total de Cajas a Comprar",
+      "label_en": "Total Boxes to Purchase Count",
+      "expression": "boxCoverageM2Val > 0 ? ceil(adjustedSurfaceWithWasteM2 / boxCoverageM2Val) : 0",
+      "unit": "cajas",
+      "unit_en": "boxes",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "flooringBoxesCountResult", "op": ">=", "value": 0 }, "label": "Cajas Calculadas", "label_en": "Boxes Computed", "tone": "success", "text": "Número total de cajas de tarima cuantificado.", "text_en": "Total flooring boxes count quantified." }
+      ]
+    },
+    {
+      "id": "totalCoveragePurchasedM2Result",
+      "label": "Superficie Total Facturada Comprada (m²)",
+      "label_en": "Total Purchased Surface Coverage (m²)",
+      "expression": "flooringBoxesCountResult * boxCoverageM2Val",
+      "unit": "m²",
+      "unit_en": "m²",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

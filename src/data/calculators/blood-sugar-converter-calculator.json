@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "blood-sugar-converter-calculator",
+    "title": "Calculadora de Conversión Glucemia HbA1c a Glucosa eAG (Estándar ADA)",
+    "title_en": "HbA1c to Estimated Average Glucose Calculator (eAG - ADA Standards)",
+    "slug": "hba1c-glucosa-promedio-eag",
+    "category": "health",
+    "subcategory": "health-indicators",
+    "tags": ["hba1c", "eag", "glucosa", "diabetes", "ada", "glucemia"],
+    "tags_en": ["hba1c", "eag", "glucose", "diabetes", "ada", "glycemia"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Activity"
+  },
+  "content": {
+    "shortDescription": "Convierte tu porcentaje de Hemoglobina Glicosilada (HbA1c %) a Glucosa Promedio Estimada (eAG en mg/dL y mmol/L) según la Asociación Americana de Diabetes (ADA).",
+    "shortDescription_en": "Convert Glycated Hemoglobin (HbA1c %) to Estimated Average Glucose (eAG in mg/dL & mmol/L) under ADA clinical standards.",
+    "longDescription": "Auditoría metabólica de control glucémico. La fórmula oficial ADAG de la Asociación Americana de Diabetes (ADA) convierte la HbA1c de laboratorio en el promedio real de azúcar en sangre (mg/dL) mantenido durante los últimos 3 meses.",
+    "longDescription_en": "Metabolic glycemic control audit. The official ADA ADAG formula translates laboratory HbA1c % into actual estimated average blood glucose (mg/dL) maintained over the prior 3 months.",
+    "howToUse": [
+      "Ingresa tu porcentaje de Hemoglobina Glicosilada (HbA1c %) obtenido en el análisis de sangre.",
+      "Consulta la Glucosa Promedio Estimada (eAG en mg/dL y mmol/L).",
+      "Revisa la categoría clínica de la ADA (Normal, Prediabetes o Criterio de Diabetes)."
+    ],
+    "howToUse_en": [
+      "Enter Glycated Hemoglobin percentage (HbA1c %) from lab results.",
+      "View Estimated Average Glucose (eAG in mg/dL and mmol/L).",
+      "Review official ADA clinical tier (Normal, Prediabetes, or Diabetes Criteria)."
+    ],
+    "methodology": "Ecuación ADA ADAG: eAG (mg/dL) = 28.7 × HbA1c (%) - 46.7. Umbrales ADA: Normal (<5.7%), Prediabetes (5.7%-6.4%), Diabetes (≥6.5%), Meta Diabéticos (<7.0%).",
+    "methodology_en": "ADA ADAG Formula: eAG (mg/dL) = 28.7 × HbA1c (%) - 46.7. ADA Tiers: Normal (<5.7%), Prediabetes (5.7%-6.4%), Diabetes (≥6.5%), Diabetic Target (<7.0%)."
+  },
+  "guideSections": [
+    {
+      "id": "ada-hba1c-table",
+      "icon": "🩸",
+      "title": "ADA Clinical Glycemic Diagnostic Thresholds",
+      "title_es": "Umbrales Diagnósticos de Glucemia Clínica ADA",
+      "content_html_en": "<p><b>Normal:</b> HbA1c < 5.7% (eAG < 117 mg/dL).</p><p><b>Prediabetes:</b> HbA1c 5.7% to 6.4% (eAG 117 to 137 mg/dL).</p><p><b>Diabetes Diagnostic Threshold:</b> HbA1c ≥ 6.5% (eAG ≥ 140 mg/dL).</p><p><b>ADA Target for Diabetic Adults:</b> HbA1c < 7.0% (eAG < 154 mg/dL).</p>",
+      "content_html": "<p><b>Normal:</b> HbA1c < 5.7% (eAG < 117 mg/dL).</p><p><b>Prediabetes:</b> HbA1c 5.7% a 6.4% (eAG 117 a 137 mg/dL).</p><p><b>Umbral Diagnóstico Diabetes:</b> HbA1c ≥ 6.5% (eAG ≥ 140 mg/dL).</p><p><b>Meta ADA en Pacientes Diabéticos:</b> HbA1c < 7.0% (eAG < 154 mg/dL).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "hba1cPercent",
+      "label": "Hemoglobina Glicosilada (HbA1c % de laboratorio)",
+      "label_en": "Glycated Hemoglobin (HbA1c % from lab test)",
+      "type": "number",
+      "default": 5.5,
+      "min": 4.0,
+      "max": 16.0,
+      "step": 0.1,
+      "unit": "%",
+      "unit_en": "%",
+      "required": true,
+      "validation": [{ "rule": "between", "params": [4.0, 16.0], "message": "HbA1c entre 4.0% y 16.0%", "message_en": "HbA1c between 4.0% and 16.0%" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "eAgMgDl",
+      "label": "Glucosa Promedio Estimada (eAG)",
+      "label_en": "Estimated Average Glucose (eAG)",
+      "expression": "28.7 * hba1cPercent - 46.7",
+      "unit": "mg/dL",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "hba1cPercent", "op": "<", "value": 5.7 }, "label": "Glucemia Normal (< 5.7% HbA1c)", "label_en": "Normal Glycemia (< 5.7% HbA1c)", "tone": "success", "text": "Nivel medio de glucemia dentro del rango saludable normal.", "text_en": "Average blood glucose level within normal healthy range." },
+        { "when": { "field": "hba1cPercent", "op": "between", "value": [5.7, 6.4] }, "label": "Prediabetes (5.7% - 6.4% HbA1c)", "label_en": "Prediabetes (5.7% - 6.4% HbA1c)", "tone": "warning", "text": "Nivel medio de glucosa ligeramente elevado. Requiere intervención en estilo de vida.", "text_en": "Slightly elevated average glucose level. Lifestyle intervention recommended." },
+        { "when": { "field": "hba1cPercent", "op": ">=", "value": 6.5 }, "label": "Criterio de Diabetes (≥ 6.5% HbA1c)", "label_en": "Diabetes Criteria (≥ 6.5% HbA1c)", "tone": "warning", "text": "Promedio glucémico en umbral clínico de diabetes según criterios de la ADA.", "text_en": "Average glucose meets ADA diagnostic criteria for diabetes." }
+      ]
+    },
+    {
+      "id": "eAgMmolL",
+      "label": "Glucosa Promedio Estimada en mmol/L",
+      "label_en": "Estimated Average Glucose in mmol/L",
+      "expression": "(28.7 * hba1cPercent - 46.7) / 18.0155",
+      "unit": "mmol/L",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "carbohydrate-calculator", "type": "static", "message": "Gestiona tu ingesta diaria de carbohidratos", "message_en": "Manage daily carbohydrate intake", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Endocrinólogo y Diabetólogo Clínico",
+    "role_en": "Clinical Endocrinologist & Diabetologist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y orientador",
+    "includeData": ["eAgMgDl", "eAgMmolL", "hba1cPercent"],
+    "instructions": [
+      "Sintetiza la Glucosa Promedio Estimada eAG en mg/dL, el valor de HbA1c % y la categoría clínica ADA en 2 frases concisas.",
+      "Destaca que la HbA1c refleja el control glucémico promedio de los últimos 90 días."
+    ],
+    "instructions_en": [
+      "Summarize Estimated Average Glucose (eAG) in mg/dL, HbA1c %, and ADA clinical tier in 2 concise sentences.",
+      "Highlight that HbA1c reflects average blood glucose control over the prior 90 days."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Conversión HbA1c a Glucosa (ADA) | CalculadoraHub",
+    "metaTitle_en": "HbA1c to Estimated Average Glucose Calculator (eAG) | CalculadoraHub",
+    "metaDescription": "Convierte tu HbA1c % a Glucosa Promedio Estimada eAG (mg/dL) con la fórmula de la ADA. Gratis e instantáneo.",
+    "metaDescription_en": "Convert HbA1c % to Estimated Average Glucose (eAG in mg/dL) under ADA guidelines. Free, instant results.",
+    "keywords": ["hba1c to eag calculator", "convertir hba1c a glucosa", "promedio glucemia diabetes", "ada hba1c"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

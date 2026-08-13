@@ -1,0 +1,123 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "lcm-calculator",
+    "title": "Calculadora de Mínimo Común Múltiplo (MCM / LCM)",
+    "title_en": "Least Common Multiple Calculator (LCM)",
+    "slug": "calculadora-de-minimo-comun-multiplo-mcm",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["mcm", "lcm", "minimo-comun-multiplo", "divisibilidad", "aritmetica", "matematicas"],
+    "tags_en": ["lcm", "mcm", "least-common-multiple", "divisibility", "arithmetic", "math"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el Mínimo Común Múltiplo (MCM) de dos números enteros enteros positivos mediante el algoritmo del producto y MCD.",
+    "shortDescription_en": "Calculate the Least Common Multiple (LCM) of numbers using the product and GCD relationship algorithm.",
+    "longDescription": "Herramienta matemática para encontrar el menor número entero positivo que es múltiplo de dos números enteros dados. Utiliza la relación fundamental entre el MCM y el Máximo Común Divisor (MCD): $MCM(a, b) = \\frac{|a \\times b|}{MCD(a, b)}$.",
+    "longDescription_en": "Mathematical tool for finding the smallest positive integer divisible by two given numbers using the identity $LCM(a,b) = \\frac{|a \\times b|}{GCD(a,b)}$.",
+    "howToUse": [
+      "Ingresa el primer número entero positivo (a).",
+      "Ingresa el segundo número entero positivo (b).",
+      "Consulta el MCM calculado y el MCD correspondiente."
+    ],
+    "howToUse_en": [
+      "Enter the first positive integer (a).",
+      "Enter the second positive integer (b).",
+      "View calculated LCM and corresponding GCD."
+    ],
+    "methodology": "Fórmula: MCM(a, b) = (|a * b|) / MCD(a, b).",
+    "methodology_en": "Formula: LCM(a, b) = (|a * b|) / GCD(a, b)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Experto en Divisibilidad y Teoría de Números",
+    "role_en": "Divisibility & Number Theory Assistant",
+    "includeData": ["lcmResult", "gcdAB", "productAB"],
+    "instructions": [
+      "Explica la relación fundamental MCM(a,b) * MCD(a,b) = a * b.",
+      "Identifica los factores primos del MCM.",
+      "Analiza la aplicación del MCM en suma de fracciones con distinto denominador."
+    ],
+    "instructions_en": [
+      "Explain the fundamental relationship LCM(a,b) * GCD(a,b) = a * b.",
+      "Identify the prime factors of the LCM.",
+      "Analyze LCM application in adding fractions with different denominators."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "lcm-guide",
+      "icon": "🔢",
+      "title": "LCM Definition & Methods",
+      "title_es": "Definición del MCM y Métodos",
+      "content_html_en": "<p><b>Least Common Multiple (LCM):</b> The smallest positive integer that is divisible by each of the numbers.</p><p><b>Prime Factorization Method:</b> Multiply the highest power of each prime factor involved.</p><p><b>GCD Formula:</b> LCM(a, b) = (a × b) / GCD(a, b).</p>",
+      "content_html": "<p><b>Mínimo Común Múltiplo (MCM):</b> El menor número entero positivo que es divisible exactamente por cada uno de los números.</p><p><b>Método de Factorización Prima:</b> Se multiplican los factores primos comunes y no comunes al mayor exponente.</p><p><b>Fórmula por MCD:</b> MCM(a, b) = (a × b) / MCD(a, b).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "numA",
+      "label": "Primer Número (a)",
+      "label_en": "First Number (a)",
+      "type": "number",
+      "default": 12,
+      "min": 1,
+      "max": 1000000,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1, 1000000], "message": "Ingresa un número entero entre 1 y 1,000,000", "message_en": "Enter an integer between 1 and 1,000,000" }]
+    },
+    {
+      "id": "numB",
+      "label": "Segundo Número (b)",
+      "label_en": "Second Number (b)",
+      "type": "number",
+      "default": 18,
+      "min": 1,
+      "max": 1000000,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [1, 1000000], "message": "Ingresa un número entero entre 1 y 1,000,000", "message_en": "Enter an integer between 1 and 1,000,000" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "gcdAB",
+      "label": "Máximo Común Divisor (MCD)",
+      "label_en": "Greatest Common Divisor (GCD)",
+      "expression": "gcd(numA, numB)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "lcmResult",
+      "label": "Mínimo Común Múltiplo (MCM)",
+      "label_en": "Least Common Multiple (LCM)",
+      "expression": "lcm(numA, numB)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "lcmResult", "op": ">=", "value": 1 }, "label": "MCM Calculado Correctamente", "label_en": "LCM Computed Successfully", "tone": "success", "text": "Mínimo común múltiplo obtenido.", "text_en": "Least common multiple computed successfully." }
+      ]
+    },
+    {
+      "id": "productAB",
+      "label": "Producto de los Números (a × b)",
+      "label_en": "Product of Numbers (a × b)",
+      "expression": "numA * numB",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

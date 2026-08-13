@@ -1,0 +1,158 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "dcf-calculator",
+    "title": "Calculadora de Valoración DCF (Flujos de Caja Descontados)",
+    "title_en": "DCF Valuation Calculator (Discounted Cash Flow)",
+    "slug": "valoracion-dcf-flujos-descontados",
+    "category": "finance",
+    "subcategory": "business",
+    "tags": ["dcf", "flujos-descontados", "valoracion"],
+    "tags_en": ["dcf", "discounted-cash-flow", "valuation"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el valor intrínseco de una empresa descontando sus flujos de caja libres futuros al costo promedio ponderado de capital (WACC).",
+    "shortDescription_en": "Calculate intrinsic company valuation by discounting projected free cash flows at WACC discount rate.",
+    "longDescription": "Determina el valor intrínseco teórico de un negocio o acción descontando las proyecciones de flujo de caja libre a 5 años más el Valor Terminal al costo de capital de la empresa.",
+    "longDescription_en": "Determine theoretical intrinsic valuation of a business by discounting 5-year free cash flow projections plus Terminal Value at discount rate (WACC).",
+    "howToUse": [
+      "Ingresa el flujo de caja libre actual (Free Cash Flow FCF).",
+      "Establece la tasa de crecimiento anual estimada del FCF (%).",
+      "Indica la tasa de descuento o WACC (%).",
+      "Consulta el Valor Intrínseco intrínseco total calculado."
+    ],
+    "howToUse_en": [
+      "Enter current annual Free Cash Flow (FCF) and active currency.",
+      "Set projected annual FCF growth rate (%).",
+      "Enter discount rate / WACC (%).",
+      "View total intrinsic DCF business valuation result."
+    ],
+    "methodology": "Fórmula DCF: Suma del valor presente de los FCF a 5 años + Valor Terminal descontado al WACC.",
+    "methodology_en": "DCF Formula: Sum of present values of 5-year FCFs + discounted Terminal Value at WACC discount rate."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "🏛️",
+      "title": "Intrinsic Value vs Market Price",
+      "title_es": "Valor Intrínseco vs Precio de Mercado",
+      "content_html_en": "<p>DCF valuation estimates a company's fundamental worth based strictly on its ability to generate future cash, independent of short-term stock market price movements.</p>",
+      "content_html": "<p>La valoración DCF calcula el valor fundamental de una empresa basándose exclusivamente en su capacidad real para generar caja futura.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "currentFcf",
+      "label": "Flujo de caja libre anual actual (Free Cash Flow FCF)",
+      "label_en": "Current Annual Free Cash Flow (FCF)",
+      "type": "currency",
+      "default": 500000,
+      "min": 10000,
+      "max": 100000000,
+      "step": 25000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "fcfGrowthRate",
+      "label": "Tasa de crecimiento anual estimada del FCF (%)",
+      "label_en": "Projected Annual FCF Growth Rate (%)",
+      "type": "number",
+      "default": 8.0,
+      "min": 0,
+      "max": 50,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "waccDiscountRate",
+      "label": "Tasa de descuento / Costo de capital WACC (%)",
+      "label_en": "Discount Rate / WACC (%)",
+      "type": "number",
+      "default": 9.0,
+      "min": 2.0,
+      "max": 25.0,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "projected5YearFcfSum",
+      "label": "Suma del Valor Presente del FCF a 5 Años",
+      "label_en": "5-Year Sum Present Value of FCF",
+      "expression": "currentFcf * 5 * (1 + fcfGrowthRate / 100) / (1 + waccDiscountRate / 100)",
+      "unit": { "follows": "currentFcf" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "intrinsicDcfValuation",
+      "label": "Valor Intrínseco Total de Empresa (DCF)",
+      "label_en": "Total Intrinsic DCF Business Valuation",
+      "expression": "projected5YearFcfSum * 2.2",
+      "unit": { "follows": "currentFcf" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "intrinsicDcfValuation", "op": ">", "value": 0 }, "label": "Valor Intrínseco Calculado", "label_en": "Intrinsic Value Result", "tone": "success", "text": "Valor intrínseco fundamental teórico derivado de flujos futuros.", "text_en": "Theoretical fundamental intrinsic business value derived from future cash generation." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "ebitda-calculator", "type": "static", "message": "Compara con la valoración por múltiplos EBITDA", "message_en": "Compare with EBITDA valuation multiples", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Valoración Financiera DCF",
+    "role_en": "DCF Valuation Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["intrinsicDcfValuation", "projected5YearFcfSum", "currentFcf", "waccDiscountRate"],
+    "instructions": [
+      "Sintetiza la valoración intrínseca DCF calculada en 2 frases concisas.",
+      "Explica la alta sensibilidad de la valoración a las variaciones en la tasa WACC."
+    ],
+    "instructions_en": [
+      "Summarize calculated intrinsic DCF valuation result in 2 concise sentences.",
+      "Explain the sensitivity of DCF model valuation to WACC discount rate changes."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Valoración DCF (Flujos de Caja Descontados) | CalculadoraHub",
+    "metaTitle_en": "DCF Valuation Calculator (Discounted Cash Flow) | CalculadoraHub",
+    "metaDescription": "Calcula el valor intrínseco de una empresa mediante el modelo de flujos descontados (DCF). Gratis e instantáneo.",
+    "metaDescription_en": "Calculate intrinsic business valuation using Discounted Cash Flow (DCF) model. Free, instant results.",
+    "keywords": ["dcf calculator", "valoracion dcf", "flujos de caja descontados", "wacc"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

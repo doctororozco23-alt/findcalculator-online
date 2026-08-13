@@ -1,0 +1,158 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "confidence-interval-calculator",
+    "title": "Calculadora de Intervalo de Confianza para la Media",
+    "title_en": "Confidence Interval Calculator for the Mean",
+    "slug": "calculadora-de-intervalo-de-confianza-media",
+    "category": "statistics",
+    "subcategory": "probability",
+    "tags": ["intervalo-de-confianza", "media", "margen-de-error", "estimacion-puntual", "estadistica-inferencial"],
+    "tags_en": ["confidence-interval", "mean", "margin-of-error", "point-estimate", "inferential-statistics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "BarChart3"
+  },
+  "content": {
+    "shortDescription": "Calcula el Intervalo de Confianza ( $IC = \\bar{x} \\pm Z \\frac{s}{\\sqrt{n}}$ ) y el Margen de Error ($ME$) para estimar la media poblacional.",
+    "shortDescription_en": "Compute Confidence Interval ( $CI = \\bar{x} \\pm Z \\frac{s}{\\sqrt{n}}$ ) and Margin of Error ($ME$) for population mean.",
+    "longDescription": "Herramienta de inferencia estadística. Construye el rango de valores plausible para el parámetro poblacional $\\mu$ con un nivel de confianza del 90%, 95% o 99%.",
+    "longDescription_en": "Inferential statistics tool. Builds plausible range for population parameter $\\mu$ with 90%, 95%, or 99% confidence level.",
+    "howToUse": [
+      "Ingresa la Media Muestral ($\\bar{x}$).",
+      "Ingresa la Desviación Estándar Muestral ($s > 0$).",
+      "Ingresa el Tamaño de la Muestra ($n \\ge 2$).",
+      "Selecciona el Nivel de Confianza (90%, 95% o 99%).",
+      "Consulta el Límite Inferior y Límite Superior del Intervalo de Confianza."
+    ],
+    "howToUse_en": [
+      "Enter Sample Mean ($\\bar{x}$).",
+      "Enter Sample Standard Deviation ($s > 0$).",
+      "Enter Sample Size ($n \\ge 2$).",
+      "Select Confidence Level (90%, 95%, or 99%).",
+      "View Lower Limit and Upper Limit of the Confidence Interval."
+    ],
+    "methodology": "Margen de Error ME = Z * (s / √n). Límite Inferior = x̄ - ME. Límite Superior = x̄ + ME.",
+    "methodology_en": "Margin of Error ME = Z * (s / √n). Lower Bound = x̄ - ME. Upper Bound = x̄ + ME."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Inferencia Estadística e Intervalos",
+    "role_en": "Inferential Statistics & Intervals Specialist Assistant",
+    "includeData": ["ciLowerBound", "ciUpperBound", "marginOfErrorME"],
+    "instructions": [
+      "Interpreta el intervalo de confianza [Límite Inferior, Límite Superior].",
+      "Explica la relación entre tamaño de muestra n y ancho del intervalo.",
+      "Demuestra el efecto de incrementar el nivel de confianza (95% -> 99%)."
+    ],
+    "instructions_en": [
+      "Interpret confidence interval range [Lower Bound, Upper Bound].",
+      "Explain relationship between sample size n and interval width.",
+      "Demonstrate effect of increasing confidence level (95% -> 99%)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ci-guide",
+      "icon": "📊",
+      "title": "Confidence Intervals & Margin of Error",
+      "title_es": "Intervalos de Confianza y Margen de Error",
+      "content_html_en": "<p><b>Confidence Level (95%):</b> If we repeated sampling 100 times, 95 of the intervals would contain the true population mean μ.</p><p><b>Margin of Error (ME):</b> ME = Z × (s / √n). Larger n reduces ME.</p>",
+      "content_html": "<p><b>Nivel de Confianza (95%):</b> Si repitiéramos el muestreo 100 veces, 95 de los intervalos contendrían la verdadera media poblacional μ.</p><p><b>Margen de Error (ME):</b> ME = Z × (s / √n). Un tamaño muestral n mayor reduce el ME.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "sampleMeanX",
+      "label": "Media Muestral (x̄)",
+      "label_en": "Sample Mean (x̄)",
+      "type": "number",
+      "default": 100,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "sampleSD",
+      "label": "Desviación Estándar Muestral (s)",
+      "label_en": "Sample Standard Deviation (s)",
+      "type": "number",
+      "default": 15,
+      "min": 0.001,
+      "max": 10000,
+      "step": 0.1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.001, 10000], "message": "La desviación debe ser > 0", "message_en": "Standard deviation must be > 0" }]
+    },
+    {
+      "id": "sampleN",
+      "label": "Tamaño de la Muestra (n)",
+      "label_en": "Sample Size (n)",
+      "type": "number",
+      "default": 30,
+      "min": 2,
+      "max": 100000,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [2, 100000], "message": "n debe ser ≥ 2", "message_en": "n must be ≥ 2" }]
+    },
+    {
+      "id": "confidenceChoice",
+      "label": "Nivel de Confianza",
+      "label_en": "Confidence Level",
+      "type": "select",
+      "default": "1.96",
+      "options": [
+        { "value": "1.645", "label": "90% de Confianza (Z = 1.645)", "label_en": "90% Confidence (Z = 1.645)" },
+        { "value": "1.96", "label": "95% de Confianza (Z = 1.96)", "label_en": "95% Confidence (Z = 1.96)" },
+        { "value": "2.576", "label": "99% de Confianza (Z = 2.576)", "label_en": "99% Confidence (Z = 2.576)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "zFactorNum",
+      "label": "Factor Z",
+      "label_en": "Z Factor",
+      "expression": "confidenceChoice == '1.645' ? 1.645 : (confidenceChoice == '1.96' ? 1.96 : 2.576)",
+      "unit": "",
+      "precision": 3,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "marginOfErrorME",
+      "label": "Margen de Error (ME = Z × s / √n)",
+      "label_en": "Margin of Error (ME = Z × s / √n)",
+      "expression": "zFactorNum * (sampleSD / sqrt(sampleN))",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "ciLowerBound",
+      "label": "Límite Inferior del Intervalo",
+      "label_en": "Confidence Interval Lower Bound",
+      "expression": "sampleMeanX - marginOfErrorME",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "ciLowerBound", "op": "<=", "value": "sampleMeanX" }, "label": "Intervalo de Confianza Construido", "label_en": "Confidence Interval Constructed", "tone": "success", "text": "Rango de estimación plausible para la media poblacional.", "text_en": "Plausible estimation range for population mean." }
+      ]
+    },
+    {
+      "id": "ciUpperBound",
+      "label": "Límite Superior del Intervalo",
+      "label_en": "Confidence Interval Upper Bound",
+      "expression": "sampleMeanX + marginOfErrorME",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

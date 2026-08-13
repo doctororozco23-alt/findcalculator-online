@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "ph-calculator",
+    "title": "Calculadora de pH, pOH y Concentración de Iones Hidrónio [H⁺]",
+    "title_en": "pH, pOH & Hydronium Ion Concentration [H⁺] Calculator",
+    "slug": "calculadora-de-ph-poh-concentracion-de-hidronio-acidez",
+    "category": "chemistry",
+    "subcategory": "solutions",
+    "tags": ["ph", "poh", "acidez", "alcalinidad", "hidronio", "hidroxilo", "quimica-analitica", "soluciones"],
+    "tags_en": ["ph", "poh", "acidity", "alkalinity", "hydronium", "hydroxide", "analytical-chemistry", "solutions"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el pH ($pH = -\\log_{10}[H^+]$), pOH y concentración de hidróxido $[OH^-]$ a partir de la concentración molar de iones hidrónio.",
+    "shortDescription_en": "Calculate pH ($pH = -\\log_{10}[H^+]$), pOH, and hydroxide $[OH^-]$ from molar hydronium ion concentration.",
+    "longDescription": "Herramienta de química acuosa y equilibrio ácido-base. Determina la acidez o alcalinidad de una solución en la escala de 0 a 14.",
+    "longDescription_en": "Aqueous chemistry and acid-base equilibrium tool. Determines solution acidity or alkalinity on 0 to 14 scale.",
+    "howToUse": [
+      "Ingresa la Concentración Molar de Iones Hidrónio ($[H^+]$ en mol/L o M).",
+      "Consulta el valor de pH, pOH ($14 - pH$) y la clasificación (Ácido, Neutro o Básico)."
+    ],
+    "howToUse_en": [
+      "Enter Hydronium Ion Molar Concentration ($[H^+]$ in mol/L or M).",
+      "View pH value, pOH ($14 - pH$), and classification (Acidic, Neutral, or Basic)."
+    ],
+    "methodology": "pH = -log10([H+]). pOH = 14 - pH. [OH-] = 10^(-pOH). Kw = 1.0 x 10^-14 a 25°C.",
+    "methodology_en": "pH = -log10([H+]). pOH = 14 - pH. [OH-] = 10^(-pOH). Kw = 1.0 x 10^-14 at 25°C."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Química Analítica y Equilibrio Ácido-Base",
+    "role_en": "Analytical Chemistry & Acid-Base Equilibrium Specialist Assistant",
+    "includeData": ["phValueResult", "pohValueResult"],
+    "instructions": [
+      "Interpreta el valor de pH obtenido (pH < 7 ácido, pH = 7 neutro, pH > 7 básico).",
+      "Explica la escala logarítmica base 10: un cambio de 1 unidad de pH representa una diferencia de 10 veces en acidez.",
+      "Proporciona ejemplos de sustancias de referencia (jugo gástrico pH ~1.5, café pH ~5.0, agua pura pH 7.0, lejía pH ~13.0)."
+    ],
+    "instructions_en": [
+      "Interpret calculated pH value (pH < 7 acidic, pH = 7 neutral, pH > 7 basic).",
+      "Explain base-10 logarithmic scale: 1 pH unit shift represents a 10-fold change in acidity.",
+      "Provide reference substances examples (gastric acid pH ~1.5, coffee pH ~5.0, pure water pH 7.0, bleach pH ~13.0)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "ph-guide",
+      "icon": "🧪",
+      "title": "pH & pOH Logarithmic Scale",
+      "title_es": "Escala Logarítmica de pH y pOH",
+      "content_html_en": "<p><b>Formula:</b> pH = -log₁₀[H⁺]</p><p><b>Equilibrium Relation:</b> pH + pOH = 14 (at 25°C)</p>",
+      "content_html": "<p><b>Fórmula:</b> pH = -log₁₀[H⁺]</p><p><b>Relación de Equilibrio:</b> pH + pOH = 14 (a 25°C)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "hConcentrationMolar",
+      "label": "Concentración de Iones Hidrónio [H⁺] (mol/L - M)",
+      "label_en": "Hydronium Ion Concentration [H⁺] (mol/L - M)",
+      "type": "number",
+      "default": 0.0001,
+      "min": 0.00000000000001,
+      "max": 1,
+      "step": 0.0001,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "phValueResult",
+      "label": "pH Calculado de la Solución",
+      "label_en": "Calculated Solution pH",
+      "expression": "-log10(hConcentrationMolar)",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "phValueResult", "op": "<", "value": 7 }, "label": "Solución Ácida (pH < 7)", "label_en": "Acidic Solution (pH < 7)", "tone": "warning", "text": "Predominio de iones hidrónio [H⁺].", "text_en": "Hydronium ion [H⁺] dominance." },
+        { "when": { "field": "phValueResult", "op": "==", "value": 7 }, "label": "Solución Neutra (pH = 7)", "label_en": "Neutral Solution (pH = 7)", "tone": "success", "text": "Equilibrio entre [H⁺] y [OH⁻].", "text_en": "Equilibrium between [H⁺] and [OH⁻]." },
+        { "when": { "field": "phValueResult", "op": ">", "value": 7 }, "label": "Solución Básica / Alcalina (pH > 7)", "label_en": "Basic / Alkaline Solution (pH > 7)", "tone": "info", "text": "Predominio de iones hidróxido [OH⁻].", "text_en": "Hydroxide ion [OH⁻] dominance." }
+      ]
+    },
+    {
+      "id": "pohValueResult",
+      "label": "pOH Calculado de la Solución",
+      "label_en": "Calculated Solution pOH",
+      "expression": "14 - phValueResult",
+      "unit": "",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

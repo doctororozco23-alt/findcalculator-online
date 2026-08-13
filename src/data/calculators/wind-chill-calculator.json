@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "wind-chill-calculator",
+    "title": "Calculadora de Sensación Térmica por Viento (Wind Chill)",
+    "title_en": "Wind Chill Calculator (Wind Temperature & Velocity)",
+    "slug": "calculadora-de-sensacion-termica-por-viento-wind-chill",
+    "category": "physics",
+    "subcategory": "atmosphere",
+    "tags": ["sensacion-termica", "wind-chill", "temperatura", "viento", "clima", "meteorologia", "congelacion"],
+    "tags_en": ["wind-chill", "feels-like", "temperature", "wind-speed", "weather", "meteorology", "frostbite"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la sensación térmica real que percibe la piel humana debido al viento y la temperatura del aire.",
+    "shortDescription_en": "Calculate actual felt temperature (Wind Chill) on human skin based on air temperature and wind speed.",
+    "longDescription": "Herramienta de meteorología y física atmosférica. Aplica la ecuación oficial del Servicio Meteorológico Nacional (NWS) para determinar el enfriamiento por viento y el riesgo de congelación.",
+    "longDescription_en": "Meteorology and atmospheric physics tool. Applies National Weather Service (NWS) official formula to determine wind cooling and frostbite risk.",
+    "howToUse": [
+      "Ingresa la Temperatura del Aire en grados Fahrenheit (°F) o Celsius (°C).",
+      "Ingresa la Velocidad del Viento en millas por hora (mph) o km/h.",
+      "Consulta la Sensación Térmica Calculada y el nivel de riesgo térmico."
+    ],
+    "howToUse_en": [
+      "Enter Air Temperature in Fahrenheit (°F) or Celsius (°C).",
+      "Enter Wind Speed in miles per hour (mph) or km/h.",
+      "View Calculated Wind Chill and thermal risk level."
+    ],
+    "methodology": "Fórmula NWS: Wind Chill (°F) = 35.74 + 0.6215*T - 35.75*V^0.16 + 0.4275*T*V^0.16 (válida para T ≤ 50°F y V ≥ 3 mph).",
+    "methodology_en": "NWS Formula: Wind Chill (°F) = 35.74 + 0.6215*T - 35.75*V^0.16 + 0.4275*T*V^0.16 (valid for T ≤ 50°F and V ≥ 3 mph)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Meteorología y Riesgos de Exposición Térmica",
+    "role_en": "Meteorology & Thermal Exposure Risk Specialist Assistant",
+    "includeData": ["windChillResultFahrenheit", "windChillResultCelsius"],
+    "instructions": [
+      "Interpreta la sensación térmica calculada en la piel expuesta.",
+      "Identifica el riesgo de hipotermia o tiempo de congelación del tejido cutáneo (ej. < -15°F riesgo de congelación en 30 min).",
+      "Recomienda vestimenta adecuada por capas para bajas temperaturas."
+    ],
+    "instructions_en": [
+      "Interpret calculated wind chill temperature felt on exposed skin.",
+      "Identify hypothermia risk or skin frostbite exposure time (e.g. < -15°F frostbite in 30 min).",
+      "Recommend proper layered clothing for cold weather conditions."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "wch-guide",
+      "icon": "🥶",
+      "title": "NWS Wind Chill Formula & Frostbite Chart",
+      "title_es": "Fórmula de Sensación Térmica NWS y Riesgo de Congelación",
+      "content_html_en": "<p><b>NWS Formula:</b> 35.74 + 0.6215(T) - 35.75(V^0.16) + 0.4275(T)(V^0.16).</p><p><b>Frostbite Threshold:</b> Wind Chill below -18°F (-28°C) can cause frostbite on exposed skin within 30 minutes.</p>",
+      "content_html": "<p><b>Fórmula NWS:</b> 35.74 + 0.6215(T) - 35.75(V^0.16) + 0.4275(T)(V^0.16).</p><p><b>Umbral de Congelación:</b> Sensación térmica por debajo de -18°F (-28°C) puede provocar congelación en piel expuesta en 30 minutos.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "airTempFahrenheit",
+      "label": "Temperatura del Aire (°F)",
+      "label_en": "Air Temperature (°F)",
+      "type": "number",
+      "default": 25,
+      "min": -50,
+      "max": 50,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "windSpeedMph",
+      "label": "Velocidad del Viento (mph)",
+      "label_en": "Wind Speed (mph)",
+      "type": "number",
+      "default": 15,
+      "min": 3,
+      "max": 100,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "windChillResultFahrenheit",
+      "label": "Sensación Térmica Calculada (°F)",
+      "label_en": "Calculated Wind Chill (°F)",
+      "expression": "35.74 + (0.6215 * airTempFahrenheit) - (35.75 * (windSpeedMph ^ 0.16)) + (0.4275 * airTempFahrenheit * (windSpeedMph ^ 0.16))",
+      "unit": "°F",
+      "unit_en": "°F",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "windChillResultFahrenheit", "op": ">=", "value": 32 }, "label": "Frío Moderado (≥ 32°F)", "label_en": "Moderate Cold (≥ 32°F)", "tone": "info", "text": "Usar abrigo ligero o chaqueta.", "text_en": "Wear light coat or jacket." },
+        { "when": { "field": "windChillResultFahrenheit", "op": "between", "value": [0, 31.9] }, "label": "Frío Severo (0°F a 31°F)", "label_en": "Severe Cold (0°F to 31°F)", "tone": "warning", "text": "Riesgo de hipotermia con exposición prolongada. Usar guantes y gorro.", "text_en": "Hypothermia risk with prolonged exposure. Wear gloves and hat." },
+        { "when": { "field": "windChillResultFahrenheit", "op": "<", "value": 0 }, "label": "Frío Extremo (< 0°F)", "label_en": "Extreme Cold (< 0°F)", "tone": "warning", "text": "Peligro de congelación en piel expuesta.", "text_en": "Danger of frostbite on exposed skin." }
+      ]
+    },
+    {
+      "id": "windChillResultCelsius",
+      "label": "Sensación Térmica en Grados Celsius (°C)",
+      "label_en": "Wind Chill Equivalent in Celsius (°C)",
+      "expression": "(windChillResultFahrenheit - 32) * (5 / 9)",
+      "unit": "°C",
+      "unit_en": "°C",
+      "precision": 1,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

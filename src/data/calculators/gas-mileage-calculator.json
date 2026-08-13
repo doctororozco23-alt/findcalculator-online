@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "gas-mileage-calculator",
+    "title": "Calculadora de Rendimiento de Gasolina (MPG y L/100km)",
+    "title_en": "Gas Mileage Calculator (MPG & L/100km)",
+    "slug": "calculadora-de-rendimiento-de-gasolina-mpg-l100km",
+    "category": "transport",
+    "subcategory": "fuel",
+    "tags": ["rendimiento", "mpg", "litros-por-100km", "gasolina", "consumo-de-combustible", "automotriz"],
+    "tags_en": ["gas-mileage", "mpg", "liters-per-100km", "gasoline", "fuel-consumption", "automotive"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el rendimiento de combustible de tu auto en Millas por Galón ($MPG$) y su conversión a Litros cada 100 km ($L/100km$).",
+    "shortDescription_en": "Calculate your vehicle's fuel efficiency in Miles Per Gallon ($MPG$) and conversion to Liters per 100 km ($L/100km$).",
+    "longDescription": "Herramienta automotriz de diagnóstico de consumo. Determina la eficiencia real del motor al comparar las millas recorridas entre repostajes completos y los galones surtidos.",
+    "longDescription_en": "Automotive consumption diagnostic tool. Determines actual engine fuel efficiency comparing miles driven between tank fill-ups and gallons added.",
+    "howToUse": [
+      "Ingresa las Millas Recorridas desde el último llenado del tanque.",
+      "Ingresa los Galones Surtidos para volver a llenar el tanque.",
+      "Consulta el Rendimiento en MPG y el equivalente métrico en L/100km."
+    ],
+    "howToUse_en": [
+      "Enter Miles Driven since last full tank fill-up.",
+      "Enter Gallons Added to refill the tank.",
+      "View Fuel Efficiency in MPG and metric equivalent in L/100km."
+    ],
+    "methodology": "MPG = Millas / Galones. Conversión L/100km = 235.215 / MPG.",
+    "methodology_en": "MPG = Miles / Gallons. Metric Conversion L/100km = 235.215 / MPG."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Diagnóstico y Rendimiento Automotriz",
+    "role_en": "Automotive Performance & Fuel Diagnostic Assistant",
+    "includeData": ["mpgResultVal", "metricLitersPer100km"],
+    "instructions": [
+      "Interpreta la eficiencia del vehículo en MPG y L/100km.",
+      "Clasifica el consumo (Excelente > 35 MPG, Promedio 25-35 MPG, Alto consumo < 20 MPG).",
+      "Sugiere revisiones mecánicas si el consumo ha aumentado repentinamente (presión de neumáticos, filtro de aire)."
+    ],
+    "instructions_en": [
+      "Interpret vehicle efficiency in MPG and L/100km.",
+      "Classify fuel economy (Excellent > 35 MPG, Average 25-35 MPG, Poor < 20 MPG).",
+      "Suggest maintenance checks if fuel consumption suddenly increases (tire pressure, air filter)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "gml-guide",
+      "icon": "🚗",
+      "title": "MPG vs L/100km Conversion",
+      "title_es": "Conversión entre MPG y L/100km",
+      "content_html_en": "<p><b>Miles Per Gallon (MPG):</b> Higher number is better efficiency.</p><p><b>Liters per 100 km (L/100km):</b> Lower number is better efficiency (metric standard).</p><p><b>Conversion Identity:</b> L/100km = 235.215 / MPG.</p>",
+      "content_html": "<p><b>Millas por Galón (MPG):</b> Un número mayor indica mejor eficiencia.</p><p><b>Litros por 100 km (L/100km):</b> Un número menor indica mejor eficiencia (estándar métrico).</p><p><b>Identidad de Conversión:</b> L/100km = 235.215 / MPG.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "milesDriven",
+      "label": "Millas Recorridas (odómetro)",
+      "label_en": "Miles Driven (odometer)",
+      "type": "number",
+      "default": 320,
+      "min": 1,
+      "max": 10000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "gallonsUsed",
+      "label": "Galones Consumidos / Surtidos",
+      "label_en": "Gallons Used / Added",
+      "type": "number",
+      "default": 11.5,
+      "min": 0.1,
+      "max": 500,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "mpgResultVal",
+      "label": "Rendimiento Obtenido (MPG)",
+      "label_en": "Fuel Economy Achieved (MPG)",
+      "expression": "gallonsUsed > 0 ? (milesDriven / gallonsUsed) : 0",
+      "unit": "MPG",
+      "unit_en": "MPG",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "mpgResultVal", "op": ">=", "value": 30 }, "label": "Excelente Eficiencia (≥ 30 MPG)", "label_en": "Excellent Efficiency (≥ 30 MPG)", "tone": "success", "text": "Vehículo altamente eficiente.", "text_en": "Highly fuel efficient vehicle." },
+        { "when": { "field": "mpgResultVal", "op": "between", "value": [20, 29.9] }, "label": "Eficiencia Promedio (20 - 30 MPG)", "label_en": "Average Efficiency (20 - 30 MPG)", "tone": "info", "text": "Rendimiento promedio dentro de la norma.", "text_en": "Average performance within standard norm." },
+        { "when": { "field": "mpgResultVal", "op": "<", "value": 20 }, "label": "Consumo Elevado (< 20 MPG)", "label_en": "High Consumption (< 20 MPG)", "tone": "warning", "text": "Elevado gasto de combustible.", "text_en": "High fuel consumption." }
+      ]
+    },
+    {
+      "id": "metricLitersPer100km",
+      "label": "Consumo en Litros cada 100 km (L/100km)",
+      "label_en": "Consumption in Liters per 100 km (L/100km)",
+      "expression": "mpgResultVal > 0 ? (235.215 / mpgResultVal) : 0",
+      "unit": "L/100km",
+      "unit_en": "L/100km",
+      "precision": 2,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

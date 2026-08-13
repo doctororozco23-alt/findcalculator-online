@@ -1,0 +1,161 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "roofing-calculator",
+    "title": "Calculadora de Techos y Materiales de Techado (Tejas y Cuadros)",
+    "title_en": "Roofing Calculator (Roof Area, Pitch & Shingle Squares)",
+    "slug": "calculadora-de-techos-tejas-cuadros-materiales",
+    "category": "construction",
+    "subcategory": "materials",
+    "tags": ["techos", "tejas", "cuadros-de-techado", "pendiente", "materiales-de-construccion", "shingles"],
+    "tags_en": ["roofing", "shingles", "roof-squares", "pitch", "building-materials", "roof-calculator"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el área real del techo considerando la pendiente (Roof Pitch), el número de Cuadros (Squares) y paquetes de tejas (Bundles).",
+    "shortDescription_en": "Calculate actual roof area considering Roof Pitch multiplier, number of Squares, and Shingle Bundles required.",
+    "longDescription": "Herramienta de estimación de techado y cubiertas. Ajusta la superficie plana de la vivienda multiplicándola por el factor de inclinación o pendiente del techo (pitch: /12), determinando la cantidad exacta de cuadros de techado (1 square = 100 ft²) y paquetes de tejas de asfalto.",
+    "longDescription_en": "Roofing estimation tool. Multiplies flat footprint area by pitch factor (pitch: /12) to compute roof squares (100 sq ft) and asphalt shingle bundles.",
+    "howToUse": [
+      "Ingresa el Largo del plano de la casa (pies).",
+      "Ingresa el Ancho del plano de la casa (pies).",
+      "Selecciona la Pendiente del Techo (Roof Pitch: 4/12, 6/12, 8/12, etc.).",
+      "Consulta el Área Real del Techo en $ft^2$, los Cuadros de Techado (Squares) y los Paquetes de Tejas."
+    ],
+    "howToUse_en": [
+      "Enter House Footprint Length (feet).",
+      "Enter House Footprint Width (feet).",
+      "Select Roof Pitch slope (4/12, 6/12, 8/12, etc.).",
+      "View Actual Roof Area in $ft^2$, Roofing Squares, and Shingle Bundles required."
+    ],
+    "methodology": "Factor de Pendiente F = √(1 + (Pitch/12)²). Área Techo = Largo * Ancho * F. Cuadros (Squares) = ceil(Área Techo / 100). Paquetes = Cuadros * 3.",
+    "methodology_en": "Pitch Factor F = √(1 + (Pitch/12)²). Roof Area = Length * Width * F. Squares = ceil(Roof Area / 100). Bundles = Squares * 3."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Cubiertas y Techos de Edificación",
+    "role_en": "Roofing & Building Envelopes Specialist Assistant",
+    "includeData": ["actualRoofAreaSqFt", "roofingSquaresCount", "shingleBundlesCount"],
+    "instructions": [
+      "Interpreta el área de superficie ajustada por la inclinación o pendiente del techo.",
+      "Explica la conversión a cuadros de techado (1 square = 100 pies cuadrados = 3 paquetes de tejas).",
+      "Recomienda agregar entre 10% y 15% de margen de desperdicio por remates y cumbreras."
+    ],
+    "instructions_en": [
+      "Interpret surface area adjusted for roof slope pitch factor.",
+      "Explain conversion to roofing squares (1 square = 100 sq ft = 3 shingle bundles).",
+      "Recommend adding 10% to 15% waste margin for hips, valleys, and ridges."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "roof-guide",
+      "icon": "🏠",
+      "title": "Roof Pitch & Shingle Estimation Rules",
+      "title_es": "Pendiente de Techo y Reglas de Estimación de Tejas",
+      "content_html_en": "<p><b>Roof Pitch (e.g. 6/12):</b> Rises 6 inches vertically for every 12 inches of horizontal run.</p><p><b>1 Roofing Square:</b> Equal to 100 square feet of roof surface area.</p><p><b>3 Bundles per Square:</b> Standard 3-tab or architectural asphalt shingles require 3 bundles per square.</p>",
+      "content_html": "<p><b>Pendiente del Techo (ej. 6/12):</b> Eleva 6 pulgadas verticalmente por cada 12 pulgadas de recorrido horizontal.</p><p><b>1 Cuadro de Techado (Square):</b> Equivale a 100 pies cuadrados de superficie de techo.</p><p><b>3 Paquetes por Cuadro:</b> Las tejas de asfalto estándar de 3 solapas o arquitectónicas requieren 3 paquetes por cuadro.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "houseLengthFt",
+      "label": "Largo de la Casa / Plano (pies)",
+      "label_en": "House Footprint Length (feet)",
+      "type": "number",
+      "default": 40,
+      "min": 10,
+      "max": 500,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "houseWidthFt",
+      "label": "Ancho de la Casa / Plano (pies)",
+      "label_en": "House Footprint Width (feet)",
+      "type": "number",
+      "default": 30,
+      "min": 10,
+      "max": 500,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "roofPitchNum",
+      "label": "Pendiente del Techo (Rise / 12)",
+      "label_en": "Roof Pitch (Rise / 12)",
+      "type": "select",
+      "default": "6",
+      "options": [
+        { "value": "3", "label": "3/12 (Baja Pendiente - Factor 1.03)", "label_en": "3/12 (Low Slope - Factor 1.03)" },
+        { "value": "4", "label": "4/12 (Pendiente Estándar - Factor 1.05)", "label_en": "4/12 (Standard Slope - Factor 1.05)" },
+        { "value": "6", "label": "6/12 (Pendiente Media - Factor 1.12)", "label_en": "6/12 (Medium Slope - Factor 1.12)" },
+        { "value": "8", "label": "8/12 (Pendiente Pronunciada - Factor 1.20)", "label_en": "8/12 (Steep Slope - Factor 1.20)" },
+        { "value": "12", "label": "12/12 (45° Inclinación - Factor 1.41)", "label_en": "12/12 (45° Steep - Factor 1.41)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "footprintAreaSqFt",
+      "label": "Área Plana de la Base (ft²)",
+      "label_en": "Flat Footprint Area (ft²)",
+      "expression": "houseLengthFt * houseWidthFt",
+      "unit": "ft²",
+      "unit_en": "ft²",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "pitchMultiplier",
+      "label": "Factor Multiplicador de Pendiente",
+      "label_en": "Pitch Multiplier Factor",
+      "expression": "sqrt(1 + (roofPitchNum / 12)^2)",
+      "unit": "",
+      "precision": 3,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "actualRoofAreaSqFt",
+      "label": "Área Real Inclinada del Techo (ft²)",
+      "label_en": "Actual Sloped Roof Area (ft²)",
+      "expression": "footprintAreaSqFt * pitchMultiplier",
+      "unit": "ft²",
+      "unit_en": "ft²",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "actualRoofAreaSqFt", "op": ">=", "value": 0 }, "label": "Superficie de Techo Calculada", "label_en": "Roof Surface Computed", "tone": "success", "text": "Superficie de techo inclinada cuantificada.", "text_en": "Sloped roof surface area quantified." }
+      ]
+    },
+    {
+      "id": "roofingSquaresCount",
+      "label": "Cuadros de Techado Requeridos (Squares = 100 ft²)",
+      "label_en": "Required Roofing Squares (100 sq ft)",
+      "expression": "ceil(actualRoofAreaSqFt / 100)",
+      "unit": "squares",
+      "unit_en": "squares",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "shingleBundlesCount",
+      "label": "Paquetes de Tejas de Asfalto (Bundles)",
+      "label_en": "Shingle Bundles Needed",
+      "expression": "roofingSquaresCount * 3",
+      "unit": "paquetes",
+      "unit_en": "bundles",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

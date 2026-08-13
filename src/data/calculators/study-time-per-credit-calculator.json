@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "study-time-per-credit-calculator",
+    "title": "Calculadora de Horas de Estudio Semanales por Crédito Universitario",
+    "title_en": "Study Time per College Credit Hour Calculator",
+    "slug": "calculadora-de-horas-de-estudio-semanales-por-credito-universitario",
+    "category": "education",
+    "subcategory": "grades",
+    "tags": ["horas-de-estudio", "creditos-universitarios", "planificacion-academica", "carga-lectiva", "universidad", "educacion"],
+    "tags_en": ["study-hours", "college-credits", "academic-planning", "course-load", "university", "education"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el total de horas semanales de estudio autónomo recomendadas fuera del aula según la carga de créditos matriculados.",
+    "shortDescription_en": "Calculate total weekly independent study hours recommended outside the classroom based on enrolled credit hours.",
+    "longDescription": "Herramienta de planificación del tiempo de estudio universitario. Aplica la regla estándar de 2 a 3 horas de estudio personal por cada crédito lectivo.",
+    "longDescription_en": "College time management and study planning tool. Applies standard rule of 2 to 3 out-of-class study hours per credit.",
+    "howToUse": [
+      "Ingresa el Total de Créditos Matriculados en el Semestre (ej. 15 créditos).",
+      "Selecciona la Dificultad o Exigencia de la Carrera (Estándar: 2h/crédito, Alta Exigencia STEM: 3h/crédito).",
+      "Consulta las Horas Semanales de Estudio Autónomo Recomendadas y el Total de Carga Lectiva (Clase + Estudio)."
+    ],
+    "howToUse_en": [
+      "Enter Total Enrolled Semester Credits (e.g. 15 credits).",
+      "Select Course Difficulty Level (Standard: 2h/credit, High Demand STEM: 3h/credit).",
+      "View Recommended Out-of-Class Weekly Study Hours and Total Academic Load (Class + Study)."
+    ],
+    "methodology": "HorasEstudioFuera = Créditos * FactorEstudio (2 a 3h). CargaTotalSemanat = Créditos + HorasEstudioFuera.",
+    "methodology_en": "OutClassStudyHours = Credits * StudyFactor (2 to 3h). TotalWeeklyLoad = Credits + OutClassStudyHours."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Gestión del Tiempo Universitario y Métodos de Estudio",
+    "role_en": "College Time Management & Study Methods Specialist Assistant",
+    "includeData": ["recommendedWeeklyStudyHoursResult", "totalAcademicWeeklyLoadResult"],
+    "instructions": [
+      "Interpreta las horas de estudio autónomo semanales recomendadas.",
+      "Compara la carga lectiva total contra una jornada laboral completa (40 horas semanales).",
+      "Proporciona estrategias de distribución del tiempo de estudio usando técnicas como Pomodoro o bloques de estudio profundo."
+    ],
+    "instructions_en": [
+      "Interpret recommended weekly out-of-class study hours.",
+      "Compare total academic workload against a full-time 40-hour job.",
+      "Provide time distribution strategies using techniques like Pomodoro or deep study blocks."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "stp-guide",
+      "icon": "⏰",
+      "title": "College Credit Study Hours Rule of Thumb",
+      "title_es": "Regla Práctica de Horas de Estudio por Crédito",
+      "content_html_en": "<p><b>1 Credit:</b> 1 Hour in Class + 2 to 3 Hours of Study per Week.</p><p><b>15 Credits (Full-Time):</b> 15 Hours Class + 30 to 45 Hours Study = 45 to 60 Total Weekly Workload.</p>",
+      "content_html": "<p><b>1 Crédito:</b> 1 Hora en Clase + 2 a 3 Horas de Estudio por Semana.</p><p><b>15 Créditos (Tiempo Completo):</b> 15 Horas Clase + 30 a 45 Horas Estudio = 45 a 60 Horas Semanales Totales.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "enrolledSemesterCreditsNum",
+      "label": "Total de Créditos Matriculados en el Semestre",
+      "label_en": "Total Enrolled Semester Credits",
+      "type": "number",
+      "default": 15,
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "courseDifficultyFactorVal",
+      "label": "Dificultad de las Asignaturas",
+      "label_en": "Course Difficulty Level",
+      "type": "select",
+      "default": "2.0",
+      "options": [
+        { "value": "1.5", "label": "Baja Exigencia (1.5 horas de estudio por crédito)", "label_en": "Light Demand (1.5 study hours per credit)" },
+        { "value": "2.0", "label": "Estándar Universitario (2.0 horas de estudio por crédito)", "label_en": "Standard College (2.0 study hours per credit)" },
+        { "value": "3.0", "label": "Alta Exigencia STEM / Medicina (3.0 horas de estudio por crédito)", "label_en": "High Demand STEM / Med (3.0 study hours per credit)" }
+      ]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "recommendedWeeklyStudyHoursResult",
+      "label": "Horas Semanales de Estudio Autónomo Recomendadas",
+      "label_en": "Recommended Weekly Out-of-Class Study Hours",
+      "expression": "enrolledSemesterCreditsNum * courseDifficultyFactorVal",
+      "unit": "h/semana",
+      "unit_en": "h/week",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "recommendedWeeklyStudyHoursResult", "op": ">=", "value": 0 }, "label": "Estudio Calculado", "label_en": "Study Hours Computed", "tone": "success", "text": "Horas semanales de estudio independiente cuantificadas.", "text_en": "Weekly independent study hours quantified." }
+      ]
+    },
+    {
+      "id": "totalAcademicWeeklyLoadResult",
+      "label": "Carga Lectiva Semanal Total (Clases + Estudio)",
+      "label_en": "Total Weekly Academic Load (Class + Study)",
+      "expression": "enrolledSemesterCreditsNum + recommendedWeeklyStudyHoursResult",
+      "unit": "h/semana",
+      "unit_en": "h/week",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "time-calculator",
+    "title": "Calculadora de Tiempo (Suma y Resta de Horas y Minutos)",
+    "title_en": "Time Calculator (Add & Subtract Hours & Minutes)",
+    "slug": "calculadora-de-tiempo-suma-resta-horas-minutos",
+    "category": "datetime",
+    "subcategory": "time",
+    "tags": ["tiempo", "horas", "minutos", "segundos", "sumar-horas", "restar-horas", "reloj"],
+    "tags_en": ["time", "hours", "minutes", "seconds", "add-hours", "subtract-hours", "clock"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Clock"
+  },
+  "content": {
+    "shortDescription": "Suma o resta horas, minutos y segundos acumulados, convirtiendo totales a horas decimales y días.",
+    "shortDescription_en": "Add or subtract accumulated hours, minutes, and seconds, converting totals to decimal hours and days.",
+    "longDescription": "Calculadora de aritmética sexagesimal. Facilita la adición o sustracción de lapsos de tiempo expresados en horas, minutos y segundos.",
+    "longDescription_en": "Sexagesimal arithmetic calculator. Solves addition and subtraction of time lapses in hours, minutes, and seconds.",
+    "howToUse": [
+      "Ingresa las Horas, Minutos y Segundos del Tiempo 1.",
+      "Selecciona la Operación (+ ó -).",
+      "Ingresa las Horas, Minutos y Segundos del Tiempo 2.",
+      "Consulta el resultado en formato HH:MM:SS y horas decimales."
+    ],
+    "howToUse_en": [
+      "Enter Hours, Minutes, and Seconds for Time 1.",
+      "Select Operation (+ or -).",
+      "Enter Hours, Minutes, and Seconds for Time 2.",
+      "View result in HH:MM:SS format and decimal hours."
+    ],
+    "methodology": "Convertir tiempos a segundos totales: T = H*3600 + M*60 + S. Operar T1 ± T2 y reconvertir.",
+    "methodology_en": "Convert times to total seconds: T = H*3600 + M*60 + S. Operate T1 ± T2 and convert back."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Tiempo y Horarios",
+    "role_en": "Time & Schedule Specialist Assistant",
+    "includeData": ["totalHoursDecimal", "totalMinutesResult"],
+    "instructions": [
+      "Explica la conversión de formato sexagesimal (horas, minutos) a horas decimales.",
+      "Muestra la equivalencia en días completos si el tiempo total supera 24 horas.",
+      "Verifica la precisión de la suma/resta acumulada."
+    ],
+    "instructions_en": [
+      "Explain conversion from sexagesimal format to decimal hours.",
+      "Show equivalent full days if total time exceeds 24 hours.",
+      "Verify accuracy of accumulated addition/subtraction."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "time-guide",
+      "icon": "⏰",
+      "title": "Sexagesimal System & Decimal Conversion",
+      "title_es": "Sistema Sexagesimal y Conversión Decimal",
+      "content_html_en": "<p><b>Sexagesimal Base 60:</b> 1 hour = 60 minutes = 3,600 seconds.</p><p><b>Decimal Hours:</b> 1 hour 30 minutes = 1.5 decimal hours (30 mins / 60 = 0.5).</p>",
+      "content_html": "<p><b>Base Sexagesimal 60:</b> 1 hora = 60 minutos = 3,600 segundos.</p><p><b>Horas Decimales:</b> 1 hora 30 minutos = 1.5 horas decimales (30 mins / 60 = 0.5).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "h1",
+      "label": "Tiempo 1: Horas",
+      "label_en": "Time 1: Hours",
+      "type": "number",
+      "default": 8,
+      "min": 0,
+      "max": 10000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "m1",
+      "label": "Tiempo 1: Minutos",
+      "label_en": "Time 1: Minutes",
+      "type": "number",
+      "default": 45,
+      "min": 0,
+      "max": 59,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "timeOperator",
+      "label": "Operación",
+      "label_en": "Operation",
+      "type": "select",
+      "default": "add",
+      "options": [
+        { "value": "add", "label": "Suma (+)", "label_en": "Addition (+)" },
+        { "value": "sub", "label": "Resta (-)", "label_en": "Subtraction (-)" }
+      ]
+    },
+    {
+      "id": "h2",
+      "label": "Tiempo 2: Horas",
+      "label_en": "Time 2: Hours",
+      "type": "number",
+      "default": 4,
+      "min": 0,
+      "max": 10000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "m2",
+      "label": "Tiempo 2: Minutos",
+      "label_en": "Time 2: Minutes",
+      "type": "number",
+      "default": 30,
+      "min": 0,
+      "max": 59,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "secs1",
+      "label": "Segundos Tiempo 1",
+      "label_en": "Time 1 Seconds",
+      "expression": "h1 * 3600 + m1 * 60",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "secs2",
+      "label": "Segundos Tiempo 2",
+      "label_en": "Time 2 Seconds",
+      "expression": "h2 * 3600 + m2 * 60",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalSecs",
+      "label": "Segundos Totales Operados",
+      "label_en": "Total Operated Seconds",
+      "expression": "timeOperator == 'add' ? (secs1 + secs2) : max(0, secs1 - secs2)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "totalHoursDecimal",
+      "label": "Horas Totales Decimales",
+      "label_en": "Total Decimal Hours",
+      "expression": "totalSecs / 3600",
+      "unit": "hrs",
+      "unit_en": "hrs",
+      "precision": 2,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "totalHoursDecimal", "op": ">=", "value": 0 }, "label": "Tiempo Calculado", "label_en": "Time Computed", "tone": "success", "text": "Aritmética de tiempo calculada con éxito.", "text_en": "Time arithmetic evaluated successfully." }
+      ]
+    },
+    {
+      "id": "totalMinutesResult",
+      "label": "Minutos Totales Acumulados",
+      "label_en": "Total Accumulated Minutes",
+      "expression": "totalSecs / 60",
+      "unit": "min",
+      "unit_en": "min",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

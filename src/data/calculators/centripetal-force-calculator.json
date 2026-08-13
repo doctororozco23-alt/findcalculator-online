@@ -1,0 +1,126 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "centripetal-force-calculator",
+    "title": "Calculadora de Fuerza y Aceleración Centrípes (F_c = m v² / r)",
+    "title_en": "Centripetal Force & Acceleration Calculator (F_c = m v² / r)",
+    "slug": "calculadora-de-fuerza-centripeta-aceleracion-radio-curva",
+    "category": "physics",
+    "subcategory": "mechanics",
+    "tags": ["fuerza-centripeta", "aceleracion-centripeta", "radio", "curva", "movimiento-circular", "newton", "mecanica"],
+    "tags_en": ["centripetal-force", "centripetal-acceleration", "radius", "curve", "circular-motion", "newton", "mechanics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la fuerza centrípesa ($F_c = \\frac{m v^2}{r}$) y la aceleración centrípesa en trayectorias circulares o curvas.",
+    "shortDescription_en": "Calculate centripetal force ($F_c = \\frac{m v^2}{r}$) and centripetal acceleration in circular motion and curved paths.",
+    "longDescription": "Herramienta de dinámica de movimiento circular uniformemente variado. Evalúa la fuerza requerida orientada hacia el centro del radio de curvatura para mantener un objeto en giro.",
+    "longDescription_en": "Circular motion dynamics tool. Evaluates force directed towards center of curvature radius required to keep body turning.",
+    "howToUse": [
+      "Ingresa la Masa del Objeto En Giro ($m$ en kg).",
+      "Ingresa la Velocidad Tangencial de Giro ($v$ en m/s).",
+      "Ingresa el Radio de la Curva o Circunferencia ($r$ en metros).",
+      "Consulta la Fuerza Centrípesa (N) y la Aceleración Centrípesa ($m/s^2$)."
+    ],
+    "howToUse_en": [
+      "Enter Turning Object Mass ($m$ in kg).",
+      "Enter Tangential Velocity ($v$ in m/s).",
+      "Enter Radius of Curvature ($r$ in meters).",
+      "View Centripetal Force (N) and Centripetal Acceleration ($m/s^2$)."
+    ],
+    "methodology": "Aceleración Centrípesa a_c = v² / r. Fuerza Centrípesa F_c = m * a_c.",
+    "methodology_en": "Centripetal Acceleration a_c = v² / r. Centripetal Force F_c = m * a_c."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Dinámica de Movimiento Circular",
+    "role_en": "Circular Motion Dynamics Specialist Assistant",
+    "includeData": ["centripetalForceNewtonsResult", "centripetalAccelerationMps2Result"],
+    "instructions": [
+      "Interpreta la fuerza centrípesa requerida para mantener la trayectoria en curva.",
+      "Explica la diferencia entre fuerza centrípesa (fuerza real hacia el centro) y la fuerza centrífuga percibida (inercia ficticia).",
+      "Muestra aplicaciones prácticas en diseño de carreteras con peralte, vehículos en curvas y satélites en órbita."
+    ],
+    "instructions_en": [
+      "Interpret centripetal force required to sustain curved trajectory.",
+      "Explain difference between centripetal force (real inward force) and perceived centrifugal force (fictitious inertia).",
+      "Show practical applications in banked highway design, vehicle cornering, and orbiting satellites."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "cf-guide",
+      "icon": "🔄",
+      "title": "Centripetal Force & Motion Formulas",
+      "title_es": "Fórmulas de Fuerza y Movimiento Centrípedo",
+      "content_html_en": "<p><b>Centripetal Acceleration:</b> a_c = v² / r</p><p><b>Centripetal Force:</b> F_c = m × (v² / r)</p>",
+      "content_html": "<p><b>Aceleración Centrípesa:</b> a_c = v² / r</p><p><b>Fuerza Centrípesa:</b> F_c = m × (v² / r)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "massRotatingKg",
+      "label": "Masa del Objeto (m en kg)",
+      "label_en": "Object Mass (m in kg)",
+      "type": "number",
+      "default": 1000,
+      "min": 0.001,
+      "max": 1000000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "tangentialVelocityMps",
+      "label": "Velocidad Tangencial (v en m/s)",
+      "label_en": "Tangential Velocity (v in m/s)",
+      "type": "number",
+      "default": 20,
+      "min": 0.1,
+      "max": 30000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "curveRadiusMeters",
+      "label": "Radio de Curvatura (r en metros)",
+      "label_en": "Radius of Curvature (r in meters)",
+      "type": "number",
+      "default": 50,
+      "min": 0.1,
+      "max": 100000,
+      "step": 0.5,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "centripetalAccelerationMps2Result",
+      "label": "Aceleración Centrípesa (a_c en m/s²)",
+      "label_en": "Centripetal Acceleration (a_c in m/s²)",
+      "expression": "curveRadiusMeters > 0 ? ((tangentialVelocityMps ^ 2) / curveRadiusMeters) : 0",
+      "unit": "m/s²",
+      "unit_en": "m/s²",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "centripetalForceNewtonsResult",
+      "label": "Fuerza Centrípesa Necesaria (F_c en Newtons)",
+      "label_en": "Required Centripetal Force (F_c in Newtons)",
+      "expression": "massRotatingKg * centripetalAccelerationMps2Result",
+      "unit": "N",
+      "unit_en": "N",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "centripetalForceNewtonsResult", "op": ">=", "value": 0 }, "label": "Fuerza Centrípesa Calculada", "label_en": "Centripetal Force Computed", "tone": "success", "text": "Fuerza de atracción radial evaluada.", "text_en": "Radial inward force evaluated." }
+      ]
+    }
+  ]
+}

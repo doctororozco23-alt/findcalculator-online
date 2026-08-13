@@ -1,0 +1,120 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "rounding-calculator",
+    "title": "Calculadora de Redondeo de Números (Decimales, Ceil y Floor)",
+    "title_en": "Rounding Calculator (Decimals, Ceil & Floor)",
+    "slug": "calculadora-de-redondeo-decimales-ceil-floor",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["redondeo", "decimales", "ceil", "floor", "cifras-significativas", "aritmetica"],
+    "tags_en": ["rounding", "decimals", "ceil", "floor", "significant-figures", "arithmetic"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Redondea cualquier número decimal a la cantidad deseada de posiciones decimales, entero más cercano, piso (Floor) o techo (Ceil).",
+    "shortDescription_en": "Round any decimal number to specified decimal places, nearest integer, Floor, or Ceil.",
+    "longDescription": "Herramienta matemática para aproximación y redondeo numérico. Aplica las reglas estándar de redondeo al entero/decimal más cercano (redondeo simétrico a la mitad hacia arriba) y funciones de truncamiento.",
+    "longDescription_en": "Mathematical tool for numerical rounding and truncation. Applies standard half-up rounding rules, Floor, and Ceil functions.",
+    "howToUse": [
+      "Ingresa el Número decimal a redondear.",
+      "Ingresa la Cantidad de posiciones decimales deseadas.",
+      "Consulta el número redondeado, el valor Techo (Ceil) y el valor Piso (Floor)."
+    ],
+    "howToUse_en": [
+      "Enter Decimal Number to round.",
+      "Enter desired Decimal Places count.",
+      "View rounded number, Ceil value, and Floor value."
+    ],
+    "methodology": "Redondeo a d decimales: round(x, d). Techo (Ceil): ceil(x). Piso (Floor): floor(x).",
+    "methodology_en": "Round to d places: round(x, d). Ceil: ceil(x). Floor: floor(x)."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente de Aproximación Numérica y Redondeo",
+    "role_en": "Numerical Approximation & Rounding Assistant",
+    "includeData": ["roundedResult", "floorVal", "ceilVal"],
+    "instructions": [
+      "Explica la regla de redondeo al decimal más cercano (Half-Up).",
+      "Distingue la función Piso (Floor - entero menor) de Techo (Ceil - entero mayor).",
+      "Analiza el impacto del redondeo en la precisión del cálculo acumulado."
+    ],
+    "instructions_en": [
+      "Explain nearest decimal rounding rule (Half-Up).",
+      "Distinguish Floor (lower integer) from Ceil (upper integer) functions.",
+      "Analyze rounding impact on accumulated calculation precision."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "round-guide",
+      "icon": "🔢",
+      "title": "Rounding Rules & Truncation",
+      "title_es": "Reglas de Redondeo y Truncamiento",
+      "content_html_en": "<p><b>Round (Nearest):</b> If next digit ≥ 5, round up. Otherwise, round down.</p><p><b>Floor (Piso):</b> Rounds down to nearest integer (less than or equal to x).</p><p><b>Ceil (Techo):</b> Rounds up to nearest integer (greater than or equal to x).</p>",
+      "content_html": "<p><b>Redondeo (Más Cercano):</b> Si el siguiente dígito es ≥ 5, se redondea hacia arriba. De lo contrario, hacia abajo.</p><p><b>Piso (Floor):</b> Redondea hacia abajo al entero menor o igual más cercano.</p><p><b>Techo (Ceil):</b> Redondea hacia arriba al entero mayor o igual más cercano.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "numberVal",
+      "label": "Número Decimal a Redondear",
+      "label_en": "Decimal Number to Round",
+      "type": "number",
+      "default": 3.14159265,
+      "step": 0.0001,
+      "required": true
+    },
+    {
+      "id": "decimalPlaces",
+      "label": "Posiciones Decimales",
+      "label_en": "Decimal Places",
+      "type": "number",
+      "default": 2,
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0, 10], "message": "Decimales entre 0 y 10", "message_en": "Decimals between 0 and 10" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "roundedResult",
+      "label": "Número Redondeado",
+      "label_en": "Rounded Number",
+      "expression": "round(numberVal, decimalPlaces)",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "roundedResult", "op": ">=", "value": 0 }, "label": "Número Redondeado Correctamente", "label_en": "Number Rounded Successfully", "tone": "success", "text": "Aproximación numérica completada.", "text_en": "Numerical approximation completed." }
+      ]
+    },
+    {
+      "id": "floorVal",
+      "label": "Valor Piso (Floor — Entero Menor)",
+      "label_en": "Floor Value (Lower Integer)",
+      "expression": "floor(numberVal)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "ceilVal",
+      "label": "Valor Techo (Ceil — Entero Mayor)",
+      "label_en": "Ceil Value (Upper Integer)",
+      "expression": "ceil(numberVal)",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

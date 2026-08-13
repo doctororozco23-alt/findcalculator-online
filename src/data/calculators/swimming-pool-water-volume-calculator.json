@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "swimming-pool-water-volume-calculator",
+    "title": "Calculadora de Volumen de Agua de Piscinas y Cloro",
+    "title_en": "Swimming Pool Water Volume & Chlorination Calculator",
+    "slug": "calculadora-de-volumen-de-agua-de-piscinas-litros-cloro",
+    "category": "home",
+    "subcategory": "energy",
+    "tags": ["piscina", "volumen-de-agua-piscina", "litros-piscina", "cloracion", "tratamiento-de-agua", "mantenimiento-piscina", "hogar"],
+    "tags_en": ["swimming-pool", "pool-water-volume", "pool-gallons", "chlorination", "water-treatment", "pool-maintenance", "home"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula los litros, metros cúbicos ($m^3$) o galones de agua de una piscina (rectangular, circular u ovalada) y dosis de cloro shock.",
+    "shortDescription_en": "Calculate pool water liters, cubic meters ($m^3$), or gallons for rectangular, circular, or oval pools and shock chlorine dosage.",
+    "longDescription": "Herramienta de mantenimiento del hogar y piscinas. Determina el volumen exacto de agua según la profundidad media para calcular la dosificación de productos químicos.",
+    "longDescription_en": "Home maintenance and pool care tool. Determines exact water volume based on average depth for precise chemical dosing.",
+    "howToUse": [
+      "Selecciona la Forma de la Piscina (Rectangular, Circular u Ovalada).",
+      "Ingresa la Longitud y Anchura (o Diámetro) en metros.",
+      "Ingresa la Profundidad Menor (zona somera) y Mayor (zona profunda) en metros.",
+      "Consulta los Litros Totales, Metros Cúbicos (m³), Galones US y Gramos de Cloro de Choque."
+    ],
+    "howToUse_en": [
+      "Select Pool Shape (Rectangular, Circular, or Oval).",
+      "Enter Length and Width (or Diameter) in meters.",
+      "Enter Shallow End and Deep End Depths in meters.",
+      "View Total Liters, Cubic Meters (m³), US Gallons, and Shock Chlorine Granules Weight."
+    ],
+    "methodology": "Profundidad Media = (ProfShallow + ProfDeep) / 2. VolRect = L * W * ProfMedia. VolCirc = π * (D/2)² * ProfMedia. 1 m³ = 1000 Litros. Cloro Shock ≈ 15 g/m³.",
+    "methodology_en": "Avg Depth = (ShallowDepth + DeepDepth) / 2. VolRect = L * W * AvgDepth. VolCirc = π * (D/2)² * AvgDepth. 1 m³ = 1000 Liters. Shock Chlorine ≈ 15 g/m³."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Mantenimiento de Piscinas y Tratamiento de Agua",
+    "role_en": "Pool Care & Water Treatment Specialist Assistant",
+    "includeData": ["poolVolumeLitersResult", "shockChlorineGramsResult"],
+    "instructions": [
+      "Interpreta el volumen total de agua en m³ y litros de la piscina.",
+      "Explica la dosis de choque de cloro (15 a 20 g de dicloro/tricloro por m³ de agua).",
+      "Recomienda mantener el rango óptimo de pH (7.2 a 7.6) para asegurar la eficacia del desinfectante."
+    ],
+    "instructions_en": [
+      "Interpret total pool water volume in m³ and liters.",
+      "Explain shock chlorination dosage (15 to 20 g of dichlor/trichlor per m³ water).",
+      "Recommend keeping optimal pH range (7.2 to 7.6) for disinfectant efficiency."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "spv-guide",
+      "icon": "🏊",
+      "title": "Pool Water Chemistry Targets",
+      "title_es": "Valores Objetivo de Química de Piscina",
+      "content_html_en": "<p><b>Free Chlorine:</b> 1.0 to 3.0 ppm.</p><p><b>pH Level:</b> 7.2 to 7.6.</p><p><b>Total Alkalinity:</b> 80 to 120 ppm.</p>",
+      "content_html": "<p><b>Cloro Libre:</b> 1.0 a 3.0 ppm.</p><p><b>Nivel de pH:</b> 7.2 a 7.6.</p><p><b>Alcalinidad Total:</b> 80 a 120 ppm.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "poolLengthMeters",
+      "label": "Longitud de la Piscina (metros)",
+      "label_en": "Pool Length (meters)",
+      "type": "number",
+      "default": 8.0,
+      "min": 1,
+      "max": 100,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "poolWidthMeters",
+      "label": "Anchura de la Piscina (metros)",
+      "label_en": "Pool Width (meters)",
+      "type": "number",
+      "default": 4.0,
+      "min": 1,
+      "max": 50,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "shallowDepthMeters",
+      "label": "Profundidad Zona Somera / Poco Profunda (m)",
+      "label_en": "Shallow End Depth (m)",
+      "type": "number",
+      "default": 1.0,
+      "min": 0.2,
+      "max": 10,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "deepEndDepthMeters",
+      "label": "Profundidad Zona Profunda (m)",
+      "label_en": "Deep End Depth (m)",
+      "type": "number",
+      "default": 2.0,
+      "min": 0.2,
+      "max": 10,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "avgDepthMetersResult",
+      "label": "Profundidad Media Calculada (m)",
+      "label_en": "Calculated Average Depth (m)",
+      "expression": "(shallowDepthMeters + deepEndDepthMeters) / 2",
+      "unit": "m",
+      "unit_en": "m",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "poolVolumeM3Result",
+      "label": "Volumen de Agua (m³)",
+      "label_en": "Water Volume (m³)",
+      "expression": "poolLengthMeters * poolWidthMeters * avgDepthMetersResult",
+      "unit": "m³",
+      "unit_en": "m³",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "poolVolumeM3Result", "op": ">=", "value": 0 }, "label": "Volumen Calculado", "label_en": "Volume Computed", "tone": "success", "text": "Volumen de agua de piscina cuantificado.", "text_en": "Pool water volume quantified." }
+      ]
+    },
+    {
+      "id": "poolVolumeLitersResult",
+      "label": "Volumen Total en Litros (L)",
+      "label_en": "Total Volume in Liters (L)",
+      "expression": "poolVolumeM3Result * 1000",
+      "unit": "L",
+      "unit_en": "L",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "shockChlorineGramsResult",
+      "label": "Dosis de Cloro de Choque Inicial (Gramos - g)",
+      "label_en": "Initial Shock Chlorine Dosage (Grams - g)",
+      "expression": "poolVolumeM3Result * 15",
+      "unit": "g",
+      "unit_en": "g",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "right-triangle-calculator",
+    "title": "Calculadora de Triángulos Rectángulos (SOH-CAH-TOA y Trigonometría)",
+    "title_en": "Right Triangle Calculator (SOH-CAH-TOA & Trigonometry)",
+    "slug": "calculadora-de-triangulos-rectangulos-soh-cah-toa",
+    "category": "math",
+    "subcategory": "geometry",
+    "tags": ["triangulo-rectangulo", "hipotenusa", "catetos", "soh-cah-toa", "trigonometria", "seno-coseno"],
+    "tags_en": ["right-triangle", "hypotenuse", "legs", "soh-cah-toa", "trigonometry", "sine-cosine"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Resuelve triángulos rectángulos conociendo los dos catetos ($a, b$): calcula la Hipotenusa ($c$), los Ángulos agudos ($\\alpha, \\beta$) y el Área.",
+    "shortDescription_en": "Solve right triangles given two legs ($a, b$): computes Hypotenuse ($c$), acute Angles ($\\alpha, \\beta$), and Area.",
+    "longDescription": "Herramienta trigonométrica fundamental. Dados los catetos opuesto $a$ y adyacente $b$, calcula la hipotenusa $c = \\sqrt{a^2 + b^2}$, el Área $A = \\frac{a \\times b}{2}$, y las razones trigonométricas $\\tan(\\alpha) = a/b$.",
+    "longDescription_en": "Fundamental trigonometry tool. Given legs $a$ and $b$, computes hypotenuse $c = \\sqrt{a^2 + b^2}$, Area $A = \\frac{a \\times b}{2}$, and angles via SOH-CAH-TOA.",
+    "howToUse": [
+      "Ingresa el Cateto a (vertical).",
+      "Ingresa el Cateto b (horizontal).",
+      "Consulta la Hipotenusa c, el Área y los Ángulos agudos $\\alpha$ y $\\beta$ en grados."
+    ],
+    "howToUse_en": [
+      "Enter Leg a (vertical).",
+      "Enter Leg b (horizontal).",
+      "View Hypotenuse c, Area, and acute Angles $\\alpha$ and $\\beta$ in degrees."
+    ],
+    "methodology": "Hipotenusa: c = √(a² + b²). Área: A = (a * b) / 2. Ángulo α = atan(a / b) * (180/π). Ángulo β = 90° - α.",
+    "methodology_en": "Hypotenuse: c = √(a² + b²). Area: A = (a * b) / 2. Angle α = atan(a / b) * (180/π). Angle β = 90° - α."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Trigonometría Rectángula",
+    "role_en": "Right Trigonometry Specialist Assistant",
+    "includeData": ["hypotenuseC", "rightArea", "angleAlpha", "angleBeta"],
+    "instructions": [
+      "Explica la aplicación del Teorema de Pitágoras para la hipotenusa.",
+      "Demuestra la resolución trigonométrica de ángulos α y β vía SOH-CAH-TOA.",
+      "Verifica la suma de ángulos internos (α + β + 90° = 180°)."
+    ],
+    "instructions_en": [
+      "Explain Pythagorean Theorem application for hypotenuse.",
+      "Demonstrate trigonometric resolution of acute angles α and β via SOH-CAH-TOA.",
+      "Verify internal angle sum (α + β + 90° = 180°)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "rt-guide",
+      "icon": "📐",
+      "title": "SOH-CAH-TOA Trigonometric Ratios",
+      "title_es": "Razones Trigonométricas SOH-CAH-TOA",
+      "content_html_en": "<p><b>Sine (sin):</b> Opposite / Hypotenuse (SOH).</p><p><b>Cosine (cos):</b> Adjacent / Hypotenuse (CAH).</p><p><b>Tangent (tan):</b> Opposite / Adjacent (TOA).</p>",
+      "content_html": "<p><b>Seno (sen):</b> Cateto Opuesto / Hipotenusa (SOH).</p><p><b>Coseno (cos):</b> Cateto Adyacente / Hipotenusa (CAH).</p><p><b>Tangente (tan):</b> Cateto Opuesto / Cateto Adyacente (TOA).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "legA",
+      "label": "Cateto a",
+      "label_en": "Leg a",
+      "type": "number",
+      "default": 3,
+      "min": 0.1,
+      "max": 10000,
+      "step": 0.1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.1, 10000], "message": "El cateto debe ser mayor a cero", "message_en": "Leg must be > 0" }]
+    },
+    {
+      "id": "legB",
+      "label": "Cateto b",
+      "label_en": "Leg b",
+      "type": "number",
+      "default": 4,
+      "min": 0.1,
+      "max": 10000,
+      "step": 0.1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [0.1, 10000], "message": "El cateto debe ser mayor a cero", "message_en": "Leg must be > 0" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "hypotenuseC",
+      "label": "Hipotenusa (c = √(a² + b²))",
+      "label_en": "Hypotenuse (c = √(a² + b²))",
+      "expression": "sqrt(legA^2 + legB^2)",
+      "unit": "unidades",
+      "unit_en": "units",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "hypotenuseC", "op": ">", "value": 0 }, "label": "Triángulo Rectángulo Resuelto", "label_en": "Right Triangle Solved", "tone": "success", "text": "Hipotenusa y ángulos agudos calculados.", "text_en": "Hypotenuse and acute angles calculated." }
+      ]
+    },
+    {
+      "id": "rightArea",
+      "label": "Área del Triángulo (A = ½ a × b)",
+      "label_en": "Triangle Area (A = ½ a × b)",
+      "expression": "(legA * legB) / 2",
+      "unit": "unidades²",
+      "unit_en": "units²",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "angleAlpha",
+      "label": "Ángulo α (opuesto al cateto a)",
+      "label_en": "Angle α (opposite leg a)",
+      "expression": "atan(legA / legB) * (180 / pi)",
+      "unit": "°",
+      "unit_en": "°",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "angleBeta",
+      "label": "Ángulo β (opuesto al cateto b)",
+      "label_en": "Angle β (opposite leg b)",
+      "expression": "90 - angleAlpha",
+      "unit": "°",
+      "unit_en": "°",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

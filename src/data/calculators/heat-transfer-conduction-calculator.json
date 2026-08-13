@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "heat-transfer-conduction-calculator",
+    "title": "Calculadora de Transferencia de Calor por Conducción (Ley de Fourier)",
+    "title_en": "Conduction Heat Transfer Calculator (Fourier's Law)",
+    "slug": "calculadora-de-transferencia-de-calor-conduccion-fourier",
+    "category": "engineering",
+    "subcategory": "materials",
+    "tags": ["conduccion-termica", "ley-de-fourier", "transferencia-de-calor", "conductividad-termica", "aislamiento", "vatios", "ingenieria"],
+    "tags_en": ["conduction", "fouriers-law", "heat-transfer", "thermal-conductivity", "insulation", "watts", "engineering"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el flujo de calor por conducción ($q = (k \\cdot A \\cdot (T_1 - T_2)) / L$) a través de paredes y capas aislantes térmicas.",
+    "shortDescription_en": "Calculate conduction heat transfer rate ($q = (k \\cdot A \\cdot (T_1 - T_2)) / L$) through solid walls and thermal insulation.",
+    "longDescription": "Herramienta de termodinámica técnica y diseño HVAC. Aplica la Ley de Fourier para cuantificar las pérdidas o ganancias de energía térmica a través de barreras sólidas.",
+    "longDescription_en": "Thermal engineering and HVAC design tool. Applies Fourier's Law to quantify heat energy loss or gain across solid barriers.",
+    "howToUse": [
+      "Ingresa o Selecciona la Conductividad Térmica del Material ($k$ en W/(m·K), ej. Hormigón = 1.4, Lana de Vidrio = 0.04).",
+      "Ingresa el Área de la Superficie ($A$ en m²).",
+      "Ingresa la Temperatura de la Cara Caliente ($T_1$ en °C).",
+      "Ingresa la Temperatura de la Cara Fría ($T_2$ en °C).",
+      "Ingresa el Espesor de la Pared / Aislante ($L$ en metros o cm).",
+      "Consulta la Tasa de Transferencia de Calor Calculada en Watts / Vatios (W) y BTU/h."
+    ],
+    "howToUse_en": [
+      "Enter or Select Material Thermal Conductivity ($k$ in W/(m·K), e.g. Concrete = 1.4, Fiberglass = 0.04).",
+      "Enter Surface Area ($A$ in m²).",
+      "Enter Hot Side Temperature ($T_1$ in °C).",
+      "Enter Cold Side Temperature ($T_2$ in °C).",
+      "Enter Wall / Insulation Thickness ($L$ in meters).",
+      "View Calculated Heat Transfer Rate in Watts (W) and BTU/h."
+    ],
+    "methodology": "Ley de Fourier: q = (k * A * (T1 - T2)) / L. 1 Watt = 3.41214 BTU/h.",
+    "methodology_en": "Fourier's Law: q = (k * A * (T1 - T2)) / L. 1 Watt = 3.41214 BTU/h."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Termodinámica Técnica y Aislamiento Térmico",
+    "role_en": "Technical Thermodynamics & Thermal Insulation Specialist Assistant",
+    "includeData": ["heatTransferWattsResult", "heatTransferBtuResult"],
+    "instructions": [
+      "Interpreta la pérdida o ganancia de calor por conducción expresada en Watts.",
+      "Explica la Resistencia Térmica R ($R = L / k$) y su impacto en la eficiencia energética de edificios.",
+      "Muestra la drástica reducción de flujo de calor al añadir una capa aislante de bajo $k$."
+    ],
+    "instructions_en": [
+      "Interpret conduction heat loss or gain expressed in Watts.",
+      "Explain Thermal Resistance R ($R = L / k$) and its impact on building energy efficiency.",
+      "Show dramatic heat flow reduction by adding a low-$k$ insulation layer."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "htc-guide",
+      "icon": "🔥",
+      "title": "Fourier's Law of Conduction",
+      "title_es": "Ley de Conducción de Fourier",
+      "content_html_en": "<p><b>Formula:</b> q = (k × A × ΔT) / L</p><p><b>Copper:</b> k ≈ 400 W/(m·K) (High Conductor)</p><p><b>Concrete:</b> k ≈ 1.4 W/(m·K)</p><p><b>Fiberglass Insulation:</b> k ≈ 0.04 W/(m·K) (High Insulator)</p>",
+      "content_html": "<p><b>Fórmula:</b> q = (k × A × ΔT) / L</p><p><b>Cobre:</b> k ≈ 400 W/(m·K) (Alta Conductividad)</p><p><b>Hormigón:</b> k ≈ 1.4 W/(m·K)</p><p><b>Lana de Vidrio:</b> k ≈ 0.04 W/(m·K) (Alto Aislante)</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "thermalConductivityK",
+      "label": "Conductividad Térmica del Material (k en W/(m·K))",
+      "label_en": "Material Thermal Conductivity (k in W/(m·K))",
+      "type": "select",
+      "default": "1.4",
+      "options": [
+        { "value": "1.4", "label": "Hormigón / Concreto (k = 1.4 W/(m·K))", "label_en": "Concrete (k = 1.4 W/(m·K))" },
+        { "value": "0.7", "label": "Ladrillo Macizo (k = 0.7 W/(m·K))", "label_en": "Solid Brick (k = 0.7 W/(m·K))" },
+        { "value": "0.13", "label": "Madera (k = 0.13 W/(m·K))", "label_en": "Wood (k = 0.13 W/(m·K))" },
+        { "value": "0.04", "label": "Aislante Lana de Vidrio / Poliestireno (k = 0.04 W/(m·K))", "label_en": "Fiberglass / EPS Insulation (k = 0.04 W/(m·K))" },
+        { "value": "400", "label": "Cobre Metal (k = 400 W/(m·K))", "label_en": "Copper Metal (k = 400 W/(m·K))" }
+      ]
+    },
+    {
+      "id": "surfaceAreaM2",
+      "label": "Área de la Superficie (A en m²)",
+      "label_en": "Surface Area (A in m²)",
+      "type": "number",
+      "default": 20,
+      "min": 0.1,
+      "max": 10000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "tempHotFaceC",
+      "label": "Temperatura Cara Caliente (T₁ en °C)",
+      "label_en": "Hot Side Temperature (T₁ in °C)",
+      "type": "number",
+      "default": 35,
+      "min": -50,
+      "max": 1500,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "tempColdFaceC",
+      "label": "Temperatura Cara Fría (T₂ en °C)",
+      "label_en": "Cold Side Temperature (T₂ in °C)",
+      "type": "number",
+      "default": 20,
+      "min": -50,
+      "max": 1500,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "wallThicknessMeters",
+      "label": "Espesor del Muro / Aislante (L en metros)",
+      "label_en": "Wall / Insulation Thickness (L in meters)",
+      "type": "number",
+      "default": 0.20,
+      "min": 0.001,
+      "max": 10,
+      "step": 0.01,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "heatTransferWattsResult",
+      "label": "Flujo de Calor por Conducción (q en Watts - W)",
+      "label_en": "Conduction Heat Transfer Rate (q in Watts - W)",
+      "expression": "wallThicknessMeters > 0 ? ((thermalConductivityK * surfaceAreaM2 * (tempHotFaceC - tempColdFaceC)) / wallThicknessMeters) : 0",
+      "unit": "W",
+      "unit_en": "W",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "heatTransferWattsResult", "op": ">=", "value": 0 }, "label": "Flujo Térmico Calculado", "label_en": "Heat Flow Computed", "tone": "success", "text": "Tasa de transferencia de calor por conducción evaluada.", "text_en": "Conduction heat transfer rate evaluated." }
+      ]
+    },
+    {
+      "id": "heatTransferBtuResult",
+      "label": "Flujo de Calor Equivalente (BTU/h)",
+      "label_en": "Heat Transfer Equivalent (BTU/h)",
+      "expression": "heatTransferWattsResult * 3.41214",
+      "unit": "BTU/h",
+      "unit_en": "BTU/h",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

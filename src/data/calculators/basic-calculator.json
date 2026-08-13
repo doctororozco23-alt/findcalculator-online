@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "basic-calculator",
+    "title": "Calculadora Básica Estándar (Aritmética y Porcentaje)",
+    "title_en": "Standard Basic Calculator (Arithmetic & Percentage)",
+    "slug": "calculadora-basica-estandar-operaciones",
+    "Category": "math",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["basica", "estandar", "suma", "resta", "multiplicacion", "division", "aritmetica"],
+    "tags_en": ["basic", "standard", "addition", "subtraction", "multiplication", "division", "arithmetic"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calculadora aritmética elemental para operaciones básicas de suma ($+$), resta ($-$), multiplicación ($\\times$) y división ($\\div$).",
+    "shortDescription_en": "Elementary arithmetic calculator for standard operations: addition ($+$), subtraction ($-$), multiplication ($\\times$), and division ($\\div$).",
+    "longDescription": "Herramienta cotidiana rápida y accesible para resolver operaciones aritméticas básicas entre dos números reales.",
+    "longDescription_en": "Fast accessible daily tool for solving basic arithmetic operations between two real numbers.",
+    "howToUse": [
+      "Ingresa el Primer Número (a).",
+      "Selecciona la Operación Aritmética (+, -, ×, ÷).",
+      "Ingresa el Segundo Número (b).",
+      "Consulta el resultado inmediato de la operación."
+    ],
+    "howToUse_en": [
+      "Enter First Number (a).",
+      "Select Arithmetic Operation (+, -, ×, ÷).",
+      "Enter Second Number (b).",
+      "View immediate calculation result."
+    ],
+    "methodology": "Suma: a+b. Resta: a-b. Multiplicación: a*b. División: a/b.",
+    "methodology_en": "Addition: a+b. Subtraction: a-b. Multiplication: a*b. Division: a/b."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Aritmético Elemental",
+    "role_en": "Elementary Arithmetic Assistant",
+    "includeData": ["basicCalcResult"],
+    "instructions": [
+      "Verifica la corrección de la operación básica.",
+      "Comprueba la regla de división por cero si aplica.",
+      "Explica la aplicación en transacciones cotidianas."
+    ],
+    "instructions_en": [
+      "Verify basic operation correctness.",
+      "Check division by zero rule if applicable.",
+      "Explain daily transaction applications."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "basic-guide",
+      "icon": "➕",
+      "title": "Basic Arithmetic Operations",
+      "title_es": "Operaciones Aritméticas Básicas",
+      "content_html_en": "<p><b>Addition (+):</b> Sums two numbers together.</p><p><b>Subtraction (-):</b> Calculates difference.</p><p><b>Multiplication (×):</b> Repeated addition.</p><p><b>Division (÷):</b> Equal partitioning.</p>",
+      "content_html": "<p><b>Suma (+):</b> Junta dos números.</p><p><b>Resta (-):</b> Calcula la diferencia.</p><p><b>Multiplicación (×):</b> Suma repetida.</p><p><b>División (÷):</b> Partición equitativa.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "val1",
+      "label": "Primer Número (a)",
+      "label_en": "First Number (a)",
+      "type": "number",
+      "default": 25,
+      "step": 0.01,
+      "required": true
+    },
+    {
+      "id": "opSelect",
+      "label": "Operador",
+      "label_en": "Operator",
+      "type": "select",
+      "default": "add",
+      "options": [
+        { "value": "add", "label": "Suma (+)", "label_en": "Addition (+)" },
+        { "value": "sub", "label": "Resta (-)", "label_en": "Subtraction (-)" },
+        { "value": "mul", "label": "Multiplicación (×)", "label_en": "Multiplication (×)" },
+        { "value": "div", "label": "División (÷)", "label_en": "Division (÷)" }
+      ]
+    },
+    {
+      "id": "val2",
+      "label": "Segundo Número (b)",
+      "label_en": "Second Number (b)",
+      "type": "number",
+      "default": 15,
+      "step": 0.01,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "basicCalcResult",
+      "label": "Resultado Aritmético",
+      "label_en": "Arithmetic Result",
+      "expression": "opSelect == 'add' ? (val1 + val2) : (opSelect == 'sub' ? (val1 - val2) : (opSelect == 'mul' ? (val1 * val2) : (val2 != 0 ? (val1 / val2) : 0)))",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "basicCalcResult", "op": ">=", "value": 0 }, "label": "Operación Aritmética Resuelta", "label_en": "Arithmetic Solved", "tone": "success", "text": "Resultado elemental calculado.", "text_en": "Elementary result computed." }
+      ]
+    }
+  ]
+}

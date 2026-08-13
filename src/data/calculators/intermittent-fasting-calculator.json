@@ -1,0 +1,152 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "intermittent-fasting-calculator",
+    "title": "Calculadora de Ayuno Intermitente (16:8, 18:6 & Autofagia Circadiana)",
+    "title_en": "Intermittent Fasting Calculator (16:8, 18:6 & Autophagy Timeline)",
+    "slug": "ayuno-intermitente-16-8-autofagia",
+    "category": "food",
+    "subcategory": "diets",
+    "tags": ["ayuno-intermitente", "16-8", "autofagia", "ventanas-comida", "fasting"],
+    "tags_en": ["intermittent-fasting", "16-8", "autophagy", "eating-window", "fasting"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Clock"
+  },
+  "content": {
+    "shortDescription": "Calcula tus horarios exactos de ayuno e ingesta para protocolos 16:8, 18:6 o 20:4 y sigue la cronología de activación de la autofagia celular.",
+    "shortDescription_en": "Calculate exact fasting and eating window schedules for 16:8, 18:6, or 20:4 protocols and track cellular autophagy timeline.",
+    "longDescription": "Auditoría de ayuno intermitente y sensibilidad a la insulina. Planifica tu ventana de alimentación y ayuno ajustada a tu ritmo circadiano y descubre cuándo se activan la autofagia celular, el vaciado de glucógeno y la hormona de crecimiento.",
+    "longDescription_en": "Intermittent fasting and insulin sensitivity audit. Plan your eating and fasting windows aligned with your circadian rhythm and track glycogen depletion, autophagy, and growth hormone surges.",
+    "howToUse": [
+      "Selecciona el protocolo de ayuno deseado (16:8, 18:6, 20:4 o 14:10).",
+      "Ingresa la hora en la que realizas tu primera comida o rompes el ayuno (ej. 12:00 PM).",
+      "Consulta la hora exacta de cierre de la ventana de alimentación y la hora de activación de la autofagia."
+    ],
+    "howToUse_en": [
+      "Select your fasting protocol (16:8, 18:6, 20:4, or 14:10).",
+      "Enter the time you break your fast / have your first meal (e.g. 12:00 PM).",
+      "View exact eating window closing time and cellular autophagy activation hour."
+    ],
+    "methodology": "Cronobiología Circadiana: Protocolo 16:8 (16 horas ayuno / 8 horas comida). Cronología metabólica: 0-4h Estado Post-prandial, 12-16h Agotamiento de Glucógeno, 16-24h Pico de Autofagia Celular.",
+    "methodology_en": "Circadian Chronobiology: 16:8 Protocol (16 hours fasting / 8 hours eating). Metabolic timeline: 0-4h Fed State, 12-16h Glycogen Depletion, 16-24h Peak Cellular Autophagy."
+  },
+  "guideSections": [
+    {
+      "id": "fasting-stages-guide",
+      "icon": "⏱️",
+      "title": "Metabolic Stages of Intermittent Fasting",
+      "title_es": "Etapas Metabólicas del Ayuno Intermitente",
+      "content_html_en": "<p><b>12 Hours:</b> Insulin drops, fat burning (lipolysis) increases significantly.</p><p><b>14 Hours:</b> Shift to ketone bodies for brain energy metabolism.</p><p><b>16 Hours (Autophagy Threshold):</b> Lysosomal degradation and recycling of damaged cellular proteins (Autophagy - Nobel Prize 2016).</p>",
+      "content_html": "<p><b>12 Horas:</b> La insulina cae a niveles mínimos y aumenta la lipólisis (quema de grasa).</p><p><b>14 Horas:</b> Transición a cuerpos cetónicos para suministro metabólico cerebral.</p><p><b>16 Horas (Umbral de Autofagia):</b> Reciclaje celular de proteínas dañadas (Autofagia - Premio Nobel 2016).</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "fastingProtocol",
+      "label": "Protocolo de ayuno intermitente",
+      "label_en": "Intermittent Fasting Protocol",
+      "type": "select",
+      "default": "16_8",
+      "options": [
+        { "value": "16_8", "label": "Protocolo 16:8 (16h Ayuno / 8h Ventana de Comida - Recomendado)", "label_en": "16:8 Protocol (16h Fasting / 8h Eating Window - Recommended)" },
+        { "value": "18_6", "label": "Protocolo 18:6 (18h Ayuno / 6h Ventana de Comida - Autofagia Avanzada)", "label_en": "18:6 Protocol (18h Fasting / 6h Eating Window - Advanced Autophagy)" },
+        { "value": "20_4", "label": "Protocolo 20:4 Guerrero (20h Ayuno / 4h Ventana de Comida)", "label_en": "20:4 Warrior Protocol (20h Fasting / 4h Eating Window)" },
+        { "value": "14_10", "label": "Protocolo 14:10 Suave (14h Ayuno / 10h Ventana de Comida)", "label_en": "14:10 Gentle Protocol (14h Fasting / 10h Eating Window)" }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "firstMealHour",
+      "label": "Hora a la que realizas tu primera comida (0 a 23h)",
+      "label_en": "Time you have your first meal / break fast (0 to 23h)",
+      "type": "slider",
+      "default": 12,
+      "min": 0,
+      "max": 23,
+      "step": 1,
+      "unit": ":00 h",
+      "unit_en": ":00 h",
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "eatingWindowDurationHours",
+      "label": "Duración de la Ventana de Alimentación",
+      "label_en": "Eating Window Duration",
+      "expression": "fastingProtocol == '18_6' ? 6 : (fastingProtocol == '20_4' ? 4 : (fastingProtocol == '14_10' ? 10 : 8))",
+      "unit": "horas",
+      "unit_en": "hours",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "eatingWindowEndHour",
+      "label": "Hora de Cierre de la Ventana de Comida (Última Comida)",
+      "label_en": "Eating Window Closing Hour (Last Meal)",
+      "expression": "(firstMealHour + eatingWindowDurationHours) % 24",
+      "unit": ":00 h",
+      "unit_en": ":00 h",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "eatingWindowEndHour", "op": ">=", "value": 0 }, "label": "Límite de Ingesta Diaria", "label_en": "Eating Window Cut-off", "tone": "success", "text": "Hora máxima recomendada para finalizar la última comida del día.", "text_en": "Recommended deadline to finish your final meal of the day." }
+      ]
+    },
+    {
+      "id": "autophagyStartHour",
+      "label": "Hora de Inicio Estimada de Autofagia Celular",
+      "label_en": "Estimated Cellular Autophagy Onset Hour",
+      "expression": "(eatingWindowEndHour + 14) % 24",
+      "unit": ":00 h",
+      "unit_en": ":00 h",
+      "precision": 0,
+      "format": "number",
+      "type": "primary"
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "chronotype-sleep-calculator", "type": "static", "message": "Sincroniza tus comidas con tu cronotipo circadiano", "message_en": "Sync meals with circadian sleep chronotype", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Especialista en Ayuno Intermitente y Cronobiología",
+    "role_en": "Intermittent Fasting & Chronobiology Specialist",
+    "analysisType": "interpretation",
+    "detailLevel": "advanced",
+    "tone": "profesional y motivador",
+    "includeData": ["eatingWindowEndHour", "autophagyStartHour", "eatingWindowDurationHours", "firstMealHour", "fastingProtocol"],
+    "instructions": [
+      "Sintetiza la hora de cierre de la ventana de comida, el inicio del ayuno y la hora de autofagia celular en 2 frases concisas.",
+      "Aconseja hidratarse adecuadamente con agua, té e infusiones sin azúcar durante las horas de ayuno."
+    ],
+    "instructions_en": [
+      "Summarize eating window closing time, fasting onset, and cellular autophagy hour in 2 concise sentences.",
+      "Advise staying well-hydrated with plain water, black coffee, and unsweetened tea during fasting hours."
+    ],
+    "maxLengthWords": 90,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Ayuno Intermitente (16:8 & Autofagia) | CalculadoraHub",
+    "metaTitle_en": "Intermittent Fasting Calculator (16:8 & Autophagy) | CalculadoraHub",
+    "metaDescription": "Calcula tus horarios de ayuno 16:8, 18:6 y sigue la cronología de la autofagia celular. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate your 16:8 and 18:6 fasting schedules and track cellular autophagy onset. Free, instant results.",
+    "keywords": ["intermittent fasting calculator", "calculadora ayuno intermitente", "ayuno 16 8 horarios", "autofagia ayuno"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "npv-calculator",
+    "title": "Calculadora de Valor Actual Neto (NPV / VAN)",
+    "title_en": "Net Present Value (NPV / VAN) Calculator",
+    "slug": "valor-actual-neto-npv-van",
+    "category": "finance",
+    "subcategory": "investments",
+    "tags": ["npv", "van", "valor-actual-neto"],
+    "tags_en": ["npv", "net-present-value", "capital-budgeting"],
+    "priority": "P1",
+    "status": "published",
+    "version": "1.0.0",
+    "icon": "TrendingUp"
+  },
+  "content": {
+    "shortDescription": "Calcula el Valor Actual Neto (NPV / VAN) de un proyecto evaluando si crea o destruye valor financiero.",
+    "shortDescription_en": "Calculate Net Present Value (NPV) of a project cash flow stream to evaluate value creation.",
+    "longDescription": "Evalúa la viabilidad financiera de una inversión descontando todos los flujos de caja futuros al costo de oportunidad del capital (Tasa de Descuento %) menos el desembolso inicial.",
+    "longDescription_en": "Evaluate project financial viability by discounting projected annual cash flows at hurdle discount rate (%) minus initial cash outlay.",
+    "howToUse": [
+      "Ingresa el desembolso inicial de la inversión.",
+      "Establece la tasa de descuento anual (%).",
+      "Indica los flujos de caja esperados para los Años 1, 2 y 3.",
+      "Consulta el Valor Actual Neto (NPV / VAN) resultante."
+    ],
+    "howToUse_en": [
+      "Enter initial cash investment outlay and active currency.",
+      "Set annual discount rate (%).",
+      "Enter projected cash flow inflows for Year 1, Year 2, and Year 3.",
+      "View calculated Net Present Value (NPV)."
+    ],
+    "methodology": "Fórmula NPV: NPV = -InversiónInicial + Suma[ Flujo_t / (1 + TasaDescuento)^t ].",
+    "methodology_en": "NPV Formula: NPV = -InitialOutlay + Sum[ CashFlow_t / (1 + DiscountRate)^t ]."
+  },
+  "guideSections": [
+    {
+      "id": "overview",
+      "icon": "📊",
+      "title": "NPV Decision Rule",
+      "title_es": "Regla de Decisión del VAN / NPV",
+      "content_html_en": "<p>If NPV > 0, the project creates net economic value and should be accepted. If NPV < 0, the project destroys value and should be rejected.</p>",
+      "content_html": "<p>Si el VAN > 0, el proyecto genera valor neto y debe ser aceptado. Si el VAN < 0, destruye valor y debe rechazarse.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "initialOutlay",
+      "label": "Inversión inicial desembolsada",
+      "label_en": "Initial Investment Outlay",
+      "type": "currency",
+      "default": 100000,
+      "min": 1000,
+      "max": 10000000,
+      "step": 5000,
+      "unit": "USD",
+      "units": [
+        { "id": "USD", "label": "$ USD", "toBase": 1 },
+        { "id": "EUR", "label": "€ EUR", "toBase": 1 },
+        { "id": "GBP", "label": "£ GBP", "toBase": 1 },
+        { "id": "MXN", "label": "MX$ MXN", "toBase": 1 },
+        { "id": "CAD", "label": "C$ CAD", "toBase": 1 }
+      ],
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "discountRate",
+      "label": "Tasa de descuento anual (%)",
+      "label_en": "Annual Discount Rate (%)",
+      "type": "number",
+      "default": 10.0,
+      "min": 0.1,
+      "max": 30,
+      "step": 0.5,
+      "unit": "%",
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "year1CashFlow",
+      "label": "Flujo de caja del Año 1",
+      "label_en": "Year 1 Cash Inflow",
+      "type": "currency",
+      "default": 35000,
+      "min": 0,
+      "max": 10000000,
+      "step": 1000,
+      "unit": { "follows": "initialOutlay" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "year2CashFlow",
+      "label": "Flujo de caja del Año 2",
+      "label_en": "Year 2 Cash Inflow",
+      "type": "currency",
+      "default": 45000,
+      "min": 0,
+      "max": 10000000,
+      "step": 1000,
+      "unit": { "follows": "initialOutlay" },
+      "required": true,
+      "validation": []
+    },
+    {
+      "id": "year3CashFlow",
+      "label": "Flujo de caja del Año 3",
+      "label_en": "Year 3 Cash Inflow",
+      "type": "currency",
+      "default": 55000,
+      "min": 0,
+      "max": 10000000,
+      "step": 1000,
+      "unit": { "follows": "initialOutlay" },
+      "required": true,
+      "validation": []
+    }
+  ],
+  "calculations": [
+    {
+      "id": "pvCashFlows",
+      "label": "Valor Presente de los Flujos de Caja Entrantes",
+      "label_en": "Present Value of Future Cash Inflows",
+      "expression": "(year1CashFlow / (1 + discountRate / 100)) + (year2CashFlow / ((1 + discountRate / 100) ^ 2)) + (year3CashFlow / ((1 + discountRate / 100) ^ 3))",
+      "unit": { "follows": "initialOutlay" },
+      "precision": 0,
+      "format": "currency",
+      "type": "secondary"
+    },
+    {
+      "id": "netPresentValue",
+      "label": "Valor Actual Neto (NPV / VAN)",
+      "label_en": "Net Present Value (NPV)",
+      "expression": "pvCashFlows - initialOutlay",
+      "unit": { "follows": "initialOutlay" },
+      "precision": 0,
+      "format": "currency",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "netPresentValue", "op": ">", "value": 0 }, "label": "Proyecto Viable (Crea Valor)", "label_en": "Viable Value-Creating Project", "tone": "success", "text": "El proyecto genera una rentabilidad superior a la tasa de descuento exigida.", "text_en": "Project generates return exceeding hurdle discount rate." }
+      ]
+    }
+  ],
+  "tables": [],
+  "charts": [],
+  "suggestions": [
+    { "target": "irr-calculator", "type": "static", "message": "Calcula la Tasa Interna de Retorno IRR", "message_en": "Calculate Internal Rate of Return IRR", "priority": 1 }
+  ],
+  "ai": {
+    "enabled": true,
+    "role": "Analista de Presupuestación de Capital VAN / NPV",
+    "role_en": "NPV Capital Budgeting Analyst",
+    "analysisType": "interpretation",
+    "detailLevel": "standard",
+    "tone": "profesional y analítico",
+    "includeData": ["netPresentValue", "pvCashFlows", "initialOutlay", "discountRate"],
+    "instructions": [
+      "Sintetiza el Valor Actual Neto (NPV / VAN) y la viabilidad del proyecto en 2 frases concisas.",
+      "Recomienda la aceptación del proyecto solo si el VAN es positivo."
+    ],
+    "instructions_en": [
+      "Summarize Net Present Value (NPV) result and project viability in 2 concise sentences.",
+      "Recommend project acceptance only if NPV is strictly positive."
+    ],
+    "maxLengthWords": 80,
+    "showAutoSuggestions": true,
+    "disclaimer": true
+  },
+  "seo": {
+    "metaTitle": "Calculadora de Valor Actual Neto (NPV / VAN) | CalculadoraHub",
+    "metaTitle_en": "Net Present Value (NPV / VAN) Calculator | CalculadoraHub",
+    "metaDescription": "Calcula el Valor Actual Neto (NPV / VAN) de un proyecto de inversión. Gratis e instantáneo.",
+    "metaDescription_en": "Calculate Net Present Value (NPV) of project cash flows. Free, instant results.",
+    "keywords": ["npv calculator", "van calculator", "valor actual neto", "capital budgeting"]
+  },
+  "persistence": {
+    "enabled": true,
+    "ttlMinutes": 60,
+    "save": { "inputs": true, "units": true, "lastResult": true },
+    "notifyOnRestore": true
+  }
+}

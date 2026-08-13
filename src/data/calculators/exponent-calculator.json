@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "exponent-calculator",
+    "title": "Calculadora de Exponentes y Potencias (x^y)",
+    "title_en": "Exponent & Power Calculator (x^y)",
+    "slug": "calculadora-de-exponentes-y-potencias",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["exponentes", "potencias", "algebra", "base", "exponente", "matematicas"],
+    "tags_en": ["exponents", "powers", "algebra", "base", "exponent", "math"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula potencias con bases y exponentes enteros, decimales o negativos ($x^y$), aplicando las leyes de los exponentes.",
+    "shortDescription_en": "Calculate powers with integer, decimal, or negative bases and exponents ($x^y$) using exponent rules.",
+    "longDescription": "Herramienta matemática para calcular la potencia de una base elevada a cualquier exponente real. Aplica propiedades como exponentes negativos ($x^{-n} = 1/x^n$) y exponentes cero ($x^0 = 1$).",
+    "longDescription_en": "Math tool for evaluating powers with real bases and exponents. Handles negative exponents ($x^{-n} = 1/x^n$) and zero exponent rules ($x^0 = 1$).",
+    "howToUse": [
+      "Ingresa el valor de la Base ($x$).",
+      "Ingresa el valor del Exponente ($y$).",
+      "Consulta el resultado de la potencia ($x^y$), la expresión inversa y el análisis de signo."
+    ],
+    "howToUse_en": [
+      "Enter Base value ($x$).",
+      "Enter Exponent value ($y$).",
+      "View calculated power ($x^y$), inverse expression, and sign analysis."
+    ],
+    "methodology": "Potenciación: x^y. Exponente negativo: x^(-y) = 1 / (x^y). Exponente 0: x^0 = 1.",
+    "methodology_en": "Powering: x^y. Negative exponent: x^(-y) = 1 / (x^y). Zero exponent: x^0 = 1."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Matemático de Potenciación y Leyes Algebraicas",
+    "role_en": "Powering & Exponent Laws Math Assistant",
+    "includeData": ["powerResult", "reciprocalPower"],
+    "instructions": [
+      "Explica la ley del exponente aplicado (producto, cociente o recíproco).",
+      "Analiza el comportamiento para exponentes negativos (x^-n = 1/x^n).",
+      "Muestra la forma simplificada del resultado."
+    ],
+    "instructions_en": [
+      "Explain the applied exponent law (product, quotient, or reciprocal).",
+      "Analyze behavior for negative exponents (x^-n = 1/x^n).",
+      "Show simplified form of the result."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "exponent-guide",
+      "icon": "x²",
+      "title": "Exponent Laws & Rules",
+      "title_es": "Leyes de los Exponentes y Reglas",
+      "content_html_en": "<p><b>Product Rule:</b> xᵃ · xᵇ = xᵃ⁺ᵇ</p><p><b>Quotient Rule:</b> xᵃ / xᵇ = xᵃ⁻ᵇ</p><p><b>Power of a Power:</b> (xᵃ)ᵇ = xᵃᵇ</p><p><b>Negative Exponent:</b> x⁻ᵃ = 1 / xᵃ</p>",
+      "content_html": "<p><b>Regla del Producto:</b> xᵃ · xᵇ = xᵃ⁺ᵇ</p><p><b>Regla del Cociente:</b> xᵃ / xᵇ = xᵃ⁻ᵇ</p><p><b>Potencia de una Potencia:</b> (xᵃ)ᵇ = xᵃᵇ</p><p><b>Exponente Negativo:</b> x⁻ᵃ = 1 / xᵃ</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "baseVal",
+      "label": "Base (x)",
+      "label_en": "Base (x)",
+      "type": "number",
+      "default": 2,
+      "step": 0.1,
+      "required": true
+    },
+    {
+      "id": "exponentVal",
+      "label": "Exponente (y)",
+      "label_en": "Exponent (y)",
+      "type": "number",
+      "default": 10,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "powerResult",
+      "label": "Resultado de la Potencia (x^y)",
+      "label_en": "Calculated Power (x^y)",
+      "expression": "baseVal ^ exponentVal",
+      "unit": "",
+      "precision": 6,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "powerResult", "op": ">=", "value": 0 }, "label": "Potencia Calculada", "label_en": "Power Evaluated", "tone": "success", "text": "Potenciación matemática calculada correctamente.", "text_en": "Mathematical power evaluated successfully." }
+      ]
+    },
+    {
+      "id": "reciprocalPower",
+      "label": "Recíproco / Exponente Negativo (1 / x^y)",
+      "label_en": "Reciprocal / Negative Exponent (1 / x^y)",
+      "expression": "powerResult != 0 ? (1 / powerResult) : 0",
+      "unit": "",
+      "precision": 6,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

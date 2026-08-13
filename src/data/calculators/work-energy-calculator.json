@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "work-energy-calculator",
+    "title": "Calculadora de Trabajo Mecánico y Potencia (W = F d cos θ)",
+    "title_en": "Mechanical Work & Power Calculator (W = F d cos θ)",
+    "slug": "calculadora-de-trabajo-mecanico-potencia-fuerza-distancia",
+    "category": "physics",
+    "subcategory": "mechanics",
+    "tags": ["trabajo-mecanico", "potencia", "vatios", "fuerza", "desplazamiento", "julios", "mecanica-clasica"],
+    "tags_en": ["mechanical-work", "power", "watts", "force", "displacement", "joules", "classical-physics"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula el Trabajo Mecánico ($W = F \\cdot d \\cdot \\cos\\theta$) en Joules y la Potencia disipada en Watts / Vatios ($P = W / t$).",
+    "shortDescription_en": "Calculate Mechanical Work ($W = F \\cdot d \\cdot \\cos\\theta$) in Joules and Power rating ($P = W / t$) in Watts.",
+    "longDescription": "Herramienta de dinámica newtoniana y termodinámica. Cuantifica la energía transferida a un objeto al desplazarlo mediante una fuerza constante orientada a un ángulo $\\theta$.",
+    "longDescription_en": "Newtonian dynamics and thermodynamics tool. Quantifies energy transferred to an object displaced by constant force at angle $\\theta$.",
+    "howToUse": [
+      "Ingresa la Fuerza Aplicada ($F$ en Newtons).",
+      "Ingresa la Distancia de Desplazamiento ($d$ en metros).",
+      "Ingresa el Ángulo entre la Fuerza y el Desplazamiento ($\u03b8$ en grados °).",
+      "Ingresa el Tiempo de Transcurso ($t$ en segundos).",
+      "Consulta el Trabajo Realizado (J) y la Potencia Desarrollada (W)."
+    ],
+    "howToUse_en": [
+      "Enter Applied Force ($F$ in Newtons).",
+      "Enter Displacement Distance ($d$ in meters).",
+      "Enter Angle between Force and Displacement ($\u03b8$ in degrees °).",
+      "Enter Time Elapsed ($t$ in seconds).",
+      "View Work Performed (J) and Developed Power (W)."
+    ],
+    "methodology": "Trabajo W = F * d * cos(θ). Potencia P = W / t. 1 Watt = 1 Joule / segundo.",
+    "methodology_en": "Work W = F * d * cos(θ). Power P = W / t. 1 Watt = 1 Joule / second."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Mecánica Clásica y Transferencia de Energía",
+    "role_en": "Classical Mechanics & Energy Transfer Specialist Assistant",
+    "includeData": ["workJoulesResult", "powerWattsResult"],
+    "instructions": [
+      "Interpreta el trabajo realizado y la potencia promedio desarrollada.",
+      "Explica la significación del ángulo: trabajo máximo a 0° (cos(0) = 1) vs trabajo nulo a 90° (cos(90) = 0).",
+      "Muestra la conversión de Potencia en Watts a Caballos de Fuerza (HP)."
+    ],
+    "instructions_en": [
+      "Interpret work done and developed average power.",
+      "Explain angle significance: max work at 0° (cos(0) = 1) vs zero work at 90° (cos(90) = 0).",
+      "Show Power conversion from Watts to Horsepower (HP)."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "wrk-guide",
+      "icon": "🏋️",
+      "title": "Mechanical Work & Power Formulas",
+      "title_es": "Fórmulas de Trabajo Mecánico y Potencia",
+      "content_html_en": "<p><b>Work:</b> W = F × d × cos(θ)</p><p><b>Power:</b> P = W / t</p><p><b>1 HP:</b> Equals 745.7 Watts.</p>",
+      "content_html": "<p><b>Trabajo:</b> W = F × d × cos(θ)</p><p><b>Potencia:</b> P = W / t</p><p><b>1 HP:</b> Equivale a 745.7 Vatios / Watts.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "appliedForceNewtons",
+      "label": "Fuerza Aplicada (F en Newtons)",
+      "label_en": "Applied Force (F in Newtons)",
+      "type": "number",
+      "default": 250,
+      "min": 0.01,
+      "max": 1000000,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "displacementMeters",
+      "label": "Distancia de Desplazamiento (d en metros)",
+      "label_en": "Displacement Distance (d in meters)",
+      "type": "number",
+      "default": 10,
+      "min": 0.01,
+      "max": 100000,
+      "step": 0.5,
+      "required": true
+    },
+    {
+      "id": "forceAngleDegrees",
+      "label": "Ángulo de la Fuerza (θ en grados °)",
+      "label_en": "Force Angle (θ in degrees °)",
+      "type": "number",
+      "default": 0,
+      "min": 0,
+      "max": 180,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "elapsedTimeSeconds",
+      "label": "Tiempo de Transcurso (t en segundos)",
+      "label_en": "Elapsed Time (t in seconds)",
+      "type": "number",
+      "default": 5,
+      "min": 0.01,
+      "max": 100000,
+      "step": 0.1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "workJoulesResult",
+      "label": "Trabajo Mecánico Realizado (Joules - J)",
+      "label_en": "Mechanical Work Done (Joules - J)",
+      "expression": "appliedForceNewtons * displacementMeters * cos(forceAngleDegrees * deg)",
+      "unit": "J",
+      "unit_en": "J",
+      "precision": 1,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "workJoulesResult", "op": ">=", "value": 0 }, "label": "Trabajo Calculado", "label_en": "Work Computed", "tone": "success", "text": "Energía mecánica transferida evaluada.", "text_en": "Transferred mechanical energy evaluated." }
+      ]
+    },
+    {
+      "id": "powerWattsResult",
+      "label": "Potencia Mecánica Desarrollada (Watts - W)",
+      "label_en": "Developed Mechanical Power (Watts - W)",
+      "expression": "elapsedTimeSeconds > 0 ? (workJoulesResult / elapsedTimeSeconds) : 0",
+      "unit": "W",
+      "unit_en": "W",
+      "precision": 1,
+      "format": "number",
+      "type": "primary"
+    },
+    {
+      "id": "powerHorsepowerResult",
+      "label": "Potencia Equivalente en Caballos (HP)",
+      "label_en": "Power Equivalent in Horsepower (HP)",
+      "expression": "powerWattsResult / 745.7",
+      "unit": "HP",
+      "unit_en": "HP",
+      "precision": 2,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

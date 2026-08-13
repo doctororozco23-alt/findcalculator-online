@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "long-division-calculator",
+    "title": "Calculadora de División Larga con Residuo y Cociente Decimal",
+    "title_en": "Long Division Calculator with Remainder & Decimal Quotient",
+    "slug": "calculadora-de-division-larga-con-residuo",
+    "category": "math",
+    "subcategory": "arithmetic",
+    "tags": ["division-larga", "dividendo", "divisor", "cociente", "residuo", "aritmetica"],
+    "tags_en": ["long-division", "dividend", "divisor", "quotient", "remainder", "arithmetic"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.0.0",
+    "icon": "Calculator"
+  },
+  "content": {
+    "shortDescription": "Calcula la división entera con cociente y residuo ( $D = d \\times q + r$ ), así como el cociente decimal con precisión.",
+    "shortDescription_en": "Compute long division with integer quotient and remainder ( $D = d \\times q + r$ ) and decimal quotient.",
+    "longDescription": "Herramienta educativa y aritmética para resolver divisiones de cualquier dividendo entre un divisor no nulo, mostrando la forma entera con resto y el equivalente decimal exacto.",
+    "longDescription_en": "Educational arithmetic tool for solving division problems, showing integer quotient with remainder and exact decimal value.",
+    "howToUse": [
+      "Ingresa el Dividendo (D).",
+      "Ingresa el Divisor (d) (distinto de cero).",
+      "Consulta el Cociente entero, el Residuo (Resto) y el Cociente decimal."
+    ],
+    "howToUse_en": [
+      "Enter Dividend (D).",
+      "Enter Divisor (d) (non-zero).",
+      "View integer quotient, remainder, and decimal quotient."
+    ],
+    "methodology": "Algoritmo de la División: D = d * q + r, donde 0 <= r < d. Cociente entero q = floor(D / d). Residuo r = D mod d.",
+    "methodology_en": "Division Algorithm: D = d * q + r, where 0 <= r < d. Integer quotient q = floor(D / d). Remainder r = D mod d."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Aritmética y Algoritmo de División",
+    "role_en": "Division Algorithm & Arithmetic Specialist Assistant",
+    "includeData": ["integerQuotient", "remainderVal", "decimalQuotient"],
+    "instructions": [
+      "Verifica la identidad fundamental de la división D = d * q + r.",
+      "Explica la presencia del residuo r y su conversión a fracción decimal.",
+      "Valida que el divisor d no sea cero."
+    ],
+    "instructions_en": [
+      "Verify the fundamental division identity D = d * q + r.",
+      "Explain the presence of remainder r and conversion to decimal fraction.",
+      "Validate that divisor d is non-zero."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "division-guide",
+      "icon": "➗",
+      "title": "Division Algorithm & Terms",
+      "title_es": "Algoritmo de la División y Términos",
+      "content_html_en": "<p><b>Dividend (D):</b> The number being divided.</p><p><b>Divisor (d):</b> The number dividing by.</p><p><b>Quotient (q):</b> The integer result of division.</p><p><b>Remainder (r):</b> The amount left over after division.</p>",
+      "content_html": "<p><b>Dividendo (D):</b> El número que se va a dividir.</p><p><b>Divisor (d):</b> El número por el que se divide.</p><p><b>Cociente (q):</b> El resultado entero de la división.</p><p><b>Residuo / Resto (r):</b> La cantidad que sobra tras la división.</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "dividend",
+      "label": "Dividendo (D)",
+      "label_en": "Dividend (D)",
+      "type": "number",
+      "default": 487,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "divisor",
+      "label": "Divisor (d)",
+      "label_en": "Divisor (d)",
+      "type": "number",
+      "default": 12,
+      "step": 1,
+      "required": true,
+      "validation": [{ "rule": "between", "params": [-1000000, 1000000], "message": "El divisor no puede ser cero", "message_en": "Divisor cannot be zero" }]
+    }
+  ],
+  "calculations": [
+    {
+      "id": "integerQuotient",
+      "label": "Cociente Entero (q)",
+      "label_en": "Integer Quotient (q)",
+      "expression": "divisor != 0 ? floor(dividend / divisor) : 0",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "integerQuotient", "op": ">=", "value": 0 }, "label": "División Calculada", "label_en": "Division Evaluated", "tone": "success", "text": "División entera y residuo calculados.", "text_en": "Integer division and remainder computed." }
+      ]
+    },
+    {
+      "id": "remainderVal",
+      "label": "Residuo / Resto (r)",
+      "label_en": "Remainder (r)",
+      "expression": "divisor != 0 ? (dividend mod divisor) : 0",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "secondary"
+    },
+    {
+      "id": "decimalQuotient",
+      "label": "Cociente Decimal Exacto",
+      "label_en": "Exact Decimal Quotient",
+      "expression": "divisor != 0 ? (dividend / divisor) : 0",
+      "unit": "",
+      "precision": 4,
+      "format": "number",
+      "type": "secondary"
+    }
+  ]
+}

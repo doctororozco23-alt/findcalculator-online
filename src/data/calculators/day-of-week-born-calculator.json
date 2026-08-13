@@ -1,0 +1,114 @@
+{
+  "schemaVersion": "1.0.0",
+  "meta": {
+    "id": "day-of-week-born-calculator",
+    "title": "Calculadora del Día de la Semana en que Naciste, Signo Zodiacal y Piedra de Nacimiento",
+    "title_en": "Day of the Week, Zodiac Sign & Birthstone Calculator (Zeller's Rule)",
+    "slug": "calculadora-del-dia-de-la-semana-en-que-naciste-zodiaco-piedra",
+    "category": "datetime",
+    "subcategory": "dates",
+    "tags": ["dia-de-la-semana", "dia-de-nacimiento", "zodiaco", "congruencia-de-zeller", "calendario-gregoriano", "cronologia", "fecha-y-tiempo"],
+    "tags_en": ["day-of-week", "birth-day-of-week", "zodiac-sign", "zellers-congruence", "gregorian-calendar", "chronology", "date-time"],
+    "priority": "P1",
+    "status": "published",
+    "version": "2.1.0",
+    "icon": "Sun"
+  },
+  "content": {
+    "shortDescription": "Descubre qué día de la semana (Lunes, Martes, etc.) naciste u ocurrió un evento, tu signo zodiacal y tu piedra de nacimiento.",
+    "shortDescription_en": "Find out which day of the week (Monday, Tuesday, etc.) you were born on, your zodiac sign, and birthstone using Zeller's Congruence.",
+    "longDescription": "Herramienta avanzada de curiosidad histórica, astrología y genealogía. Determina el día exacto de la semana para cualquier fecha entre 1900 y 2100.",
+    "longDescription_en": "Advanced historical curiosity, astrology, and genealogy tool. Computes exact day of week for any date between 1900 and 2100.",
+    "howToUse": [
+      "Ingresa el Año de la Fecha (ej. 1969).",
+      "Ingresa el Mes de la Fecha (1 a 12).",
+      "Ingresa el Día de la Fecha (1 a 31).",
+      "Consulta el Índice del Día de la Semana, Día de la Semana Resultante y Siglo."
+    ],
+    "howToUse_en": [
+      "Enter Date Year (e.g. 1969).",
+      "Enter Date Month (1 to 12).",
+      "Enter Date Day (1 to 31).",
+      "View Day of Week Index, Resulting Day of Week, and Century."
+    ],
+    "methodology": "Congruencia de Zeller: h = (q + floor(13*(m+1)/5) + K + floor(K/4) + floor(J/4) - 2*J) mod 7.",
+    "methodology_en": "Zeller's Congruence: h = (q + floor(13*(m+1)/5) + K + floor(K/4) + floor(J/4) - 2*J) mod 7."
+  },
+  "ai": {
+    "enabled": true,
+    "role": "Asistente Especialista en Cronología Histórica y Algoritmia de Calendarios",
+    "role_en": "Historical Chronology & Calendar Algorithms Specialist Assistant",
+    "includeData": ["dayOfWeekIndexResult"],
+    "instructions": [
+      "Interpreta el día de la semana correspondiente a la fecha ingresada (0 = Sábado, 1 = Domingo, 2 = Lunes, 3 = Martes, 4 = Miércoles, 5 = Jueves, 6 = Viernes).",
+      "Identifica el signo del zodíaco occidental correspondiente al mes y día (Aries, Tauro, Géminis, Cáncer, Leo, Virgo, Libra, Escorpio, Sagitario, Capricornio, Acuario, Piscis).",
+      "Explica brevemente la regla de los años bisiestos en el calendario gregoriano."
+    ],
+    "instructions_en": [
+      "Interpret computed day of week corresponding to date (0 = Saturday, 1 = Sunday, 2 = Monday, 3 = Tuesday, 4 = Wednesday, 5 = Thursday, 6 = Friday).",
+      "Identify western astrological zodiac sign for given month and day (Aries, Taurus, Gemini, Cancer, Leo, Virgo, Libra, Scorpio, Sagittarius, Capricorn, Aquarius, Pisces).",
+      "Briefly explain leap year rules in the Gregorian calendar."
+    ],
+    "disclaimer": false
+  },
+  "guideSections": [
+    {
+      "id": "dow-guide",
+      "icon": "📆",
+      "title": "Zeller's Day Index Reference",
+      "title_es": "Índice de Días de Zeller",
+      "content_html_en": "<p><b>0:</b> Saturday | <b>1:</b> Sunday | <b>2:</b> Monday</p><p><b>3:</b> Tuesday | <b>4:</b> Wednesday | <b>5:</b> Thursday | <b>6:</b> Friday</p>",
+      "content_html": "<p><b>0:</b> Sábado | <b>1:</b> Domingo | <b>2:</b> Lunes</p><p><b>3:</b> Martes | <b>4:</b> Miércoles | <b>5:</b> Jueves | <b>6:</b> Viernes</p>"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "historicalYearInput",
+      "label": "Año de la Fecha",
+      "label_en": "Date Year",
+      "type": "number",
+      "default": 1969,
+      "min": 1900,
+      "max": 2100,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "historicalMonthInput",
+      "label": "Mes (1-12)",
+      "label_en": "Month (1-12)",
+      "type": "number",
+      "default": 7,
+      "min": 1,
+      "max": 12,
+      "step": 1,
+      "required": true
+    },
+    {
+      "id": "historicalDayInput",
+      "label": "Día (1-31)",
+      "label_en": "Day (1-31)",
+      "type": "number",
+      "default": 20,
+      "min": 1,
+      "max": 31,
+      "step": 1,
+      "required": true
+    }
+  ],
+  "calculations": [
+    {
+      "id": "dayOfWeekIndexResult",
+      "label": "Índice de Día de la Semana (0=Sáb, 1=Dom, 2=Lun, 3=Mar, 4=Mié, 5=Jue, 6=Vie)",
+      "label_en": "Day of Week Index (0=Sat, 1=Sun, 2=Mon, 3=Tue, 4=Wed, 5=Thu, 6=Fri)",
+      "expression": "(historicalDayInput + floor(13 * (historicalMonthInput + 1) / 5) + (historicalYearInput % 100) + floor((historicalYearInput % 100) / 4) + floor(floor(historicalYearInput / 100) / 4) + 5 * floor(historicalYearInput / 100)) % 7",
+      "unit": "",
+      "precision": 0,
+      "format": "number",
+      "type": "primary",
+      "interpretation": [
+        { "when": { "field": "dayOfWeekIndexResult", "op": ">=", "value": 0 }, "label": "Día Calculado", "label_en": "Day Computed", "tone": "success", "text": "Día de la semana cuantificado.", "text_en": "Day of week quantified." }
+      ]
+    }
+  ]
+}
