@@ -677,8 +677,11 @@ export default function App() {
       setActiveCategory(null);
       setActiveCalculatorRaw(null);
       setLegalModal(null);
-    } else if (parts[0] === 'privacy' || parts[0] === 'terms' || parts[0] === 'about') {
+    } else if (['privacy', 'terms', 'about'].includes(parts[0])) {
       setLegalModal(parts[0]);
+      setViewMode('legal');
+      setActiveCategory(null);
+      setActiveCalculatorRaw(null);
     } else if (parts.length === 1) {
       const catId = parts[0];
       setActiveCategory(catId);
@@ -697,6 +700,7 @@ export default function App() {
       } else {
         setActiveCategory(catId);
         setViewMode('category');
+        setLegalModal(null);
       }
     }
   };
@@ -777,6 +781,9 @@ export default function App() {
       window.history.pushState({}, '', `/${type}`);
     }
     setLegalModal(type);
+    setViewMode('legal');
+    setActiveCategory(null);
+    setActiveCalculatorRaw(null);
   };
 
   const handleCloseLegal = () => {
