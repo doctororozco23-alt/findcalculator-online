@@ -24,319 +24,254 @@ import mortgagePayoffCalculatorSchema from './data/calculators/mortgage-payoff-c
 import houseAffordabilityCalculatorSchema from './data/calculators/house-affordability-calculator.json';
 import rentCalculatorSchema from './data/calculators/rent-calculator.json';
 import dtiRatioCalculatorSchema from './data/calculators/dti-ratio-calculator.json';
-import realEstateCalculatorSchema from './data/calculators/real-estate-calculator.json';
-import refinanceCalculatorSchema from './data/calculators/refinance-calculator.json';
-import rentalPropertyCalculatorSchema from './data/calculators/rental-property-calculator.json';
-import aprCalculatorSchema from './data/calculators/apr-calculator.json';
-import fhaLoanCalculatorSchema from './data/calculators/fha-loan-calculator.json';
-import vaMortgageCalculatorSchema from './data/calculators/va-mortgage-calculator.json';
-import homeEquityCalculatorSchema from './data/calculators/home-equity-calculator.json';
-import helocCalculatorSchema from './data/calculators/heloc-calculator.json';
-import downPaymentCalculatorSchema from './data/calculators/down-payment-calculator.json';
-import rentVsBuyCalculatorSchema from './data/calculators/rent-vs-buy-calculator.json';
-import autoLeaseCalculatorSchema from './data/calculators/auto-lease-calculator.json';
-import cashbackVsLowInterestCalculatorSchema from './data/calculators/cashback-vs-low-interest-calculator.json';
+import debtSnowballCalculatorSchema from './data/calculators/debt-snowball-calculator.json';
+import creditCardPayoffCalculatorSchema from './data/calculators/credit-card-payoff-calculator.json';
+import studentLoanPayoffCalculatorSchema from './data/calculators/student-loan-payoff-calculator.json';
+import personalLoanCalculatorSchema from './data/calculators/personal-loan-calculator.json';
+import inflationCalculatorSchema from './data/calculators/inflation-calculator.json';
+import emergencyFundCalculatorSchema from './data/calculators/emergency-fund-calculator.json';
 import simpleInterestCalculatorSchema from './data/calculators/simple-interest-calculator.json';
-import investmentCalculatorSchema from './data/calculators/investment-calculator.json';
-import cdCalculatorSchema from './data/calculators/cd-calculator.json';
-import bondCalculatorSchema from './data/calculators/bond-calculator.json';
-import mutualFundCalculatorSchema from './data/calculators/mutual-fund-calculator.json';
-import averageReturnCalculatorSchema from './data/calculators/average-return-calculator.json';
-import irrCalculatorSchema from './data/calculators/irr-calculator.json';
-import paybackPeriodCalculatorSchema from './data/calculators/payback-period-calculator.json';
+import netWorthCalculatorSchema from './data/calculators/net-worth-calculator.json';
+import investmentReturnCalculatorSchema from './data/calculators/investment-return-calculator.json';
+import dividendYieldCalculatorSchema from './data/calculators/dividend-yield-calculator.json';
+import stockProfitCalculatorSchema from './data/calculators/stock-profit-calculator.json';
+import cryptoProfitCalculatorSchema from './data/calculators/crypto-profit-calculator.json';
+import cagrCalculatorSchema from './data/calculators/cagr-calculator.json';
+import ruleOf72CalculatorSchema from './data/calculators/rule-of-72-calculator.json';
 import presentValueCalculatorSchema from './data/calculators/present-value-calculator.json';
 import futureValueCalculatorSchema from './data/calculators/future-value-calculator.json';
-import savingsCalculatorSchema from './data/calculators/savings-calculator.json';
-import pensionCalculatorSchema from './data/calculators/pension-calculator.json';
-import annuityPayoutCalculatorSchema from './data/calculators/annuity-payout-calculator.json';
-import rothIraCalculatorSchema from './data/calculators/roth-ira-calculator.json';
-import iraCalculatorSchema from './data/calculators/ira-calculator.json';
-import rmdCalculatorSchema from './data/calculators/rmd-calculator.json';
-import socialSecurityCalculatorSchema from './data/calculators/social-security-calculator.json';
-import fireCalculatorSchema from './data/calculators/fire-calculator.json';
-import estateTaxCalculatorSchema from './data/calculators/estate-tax-calculator.json';
-import inflationCalculatorSchema from './data/calculators/inflation-calculator.json';
-import salesTaxCalculatorSchema from './data/calculators/sales-tax-calculator.json';
-import creditCardPayoffCalculatorSchema from './data/calculators/credit-card-payoff-calculator.json';
-import personalLoanCalculatorSchema from './data/calculators/personal-loan-calculator.json';
-import studentLoanCalculatorSchema from './data/calculators/student-loan-calculator.json';
-import debtPayoffCalculatorSchema from './data/calculators/debt-payoff-calculator.json';
-import balanceTransferCalculatorSchema from './data/calculators/balance-transfer-calculator.json';
-import breakEvenCalculatorSchema from './data/calculators/break-even-calculator.json';
-import marginCalculatorSchema from './data/calculators/margin-calculator.json';
-import ebitdaCalculatorSchema from './data/calculators/ebitda-calculator.json';
-import dcfCalculatorSchema from './data/calculators/dcf-calculator.json';
-import businessLoanCalculatorSchema from './data/calculators/business-loan-calculator.json';
-import commissionCalculatorSchema from './data/calculators/commission-calculator.json';
 import npvCalculatorSchema from './data/calculators/npv-calculator.json';
-import workingCapitalCalculatorSchema from './data/calculators/working-capital-calculator.json';
-import burnRateCalculatorSchema from './data/calculators/burn-rate-calculator.json';
-import financialRatiosCalculatorSchema from './data/calculators/financial-ratios-calculator.json';
+import irrCalculatorSchema from './data/calculators/irr-calculator.json';
+import salesTaxCalculatorSchema from './data/calculators/sales-tax-calculator.json';
+import vatCalculatorSchema from './data/calculators/vat-calculator.json';
+import capitalGainsTaxCalculatorSchema from './data/calculators/capital-gains-tax-calculator.json';
+import propertyTaxCalculatorSchema from './data/calculators/property-tax-calculator.json';
 
-// Lote 1 Salud / Fitness / Nutrición
-import calorieCalculatorSchema from './data/calculators/calorie-calculator.json';
-import bodyFatCalculatorSchema from './data/calculators/body-fat-calculator.json';
+// Importaciones de Salud y Nutrición
+import calorieNeedsSchema from './data/calculators/calorie-needs.json';
+import macroNutrientSchema from './data/calculators/macronutrient-split.json';
+import bodyFatSchema from './data/calculators/body-fat-percentage.json';
 import bmrCalculatorSchema from './data/calculators/bmr-calculator.json';
-import macroCalculatorSchema from './data/calculators/macro-calculator.json';
-import idealWeightCalculatorSchema from './data/calculators/ideal-weight-calculator.json';
-
-// Lote 2 Salud / Fitness / Nutrición
-import pregnancyCalculatorSchema from './data/calculators/pregnancy-calculator.json';
-import pregnancyWeightGainCalculatorSchema from './data/calculators/pregnancy-weight-gain-calculator.json';
-import pregnancyConceptionCalculatorSchema from './data/calculators/pregnancy-conception-calculator.json';
-import dueDateCalculatorSchema from './data/calculators/due-date-calculator.json';
-import paceCalculatorSchema from './data/calculators/pace-calculator.json';
-import pregnancyUltrasoundCalculatorSchema from './data/calculators/pregnancy-ultrasound-calculator.json';
-
-// Lote 3 Salud / Fitness / Nutrición
-import armyBodyFatCalculatorSchema from './data/calculators/army-body-fat-calculator.json';
-import carbohydrateCalculatorSchema from './data/calculators/carbohydrate-calculator.json';
-import leanBodyMassCalculatorSchema from './data/calculators/lean-body-mass-calculator.json';
-import healthyWeightCalculatorSchema from './data/calculators/healthy-weight-calculator.json';
-import caloriesBurnedCalculatorSchema from './data/calculators/calories-burned-calculator.json';
-
-// Lote 4 Salud / Fitness / Nutrición
-import oneRepMaxCalculatorSchema from './data/calculators/one-rep-max-calculator.json';
-import targetHeartRateCalculatorSchema from './data/calculators/target-heart-rate-calculator.json';
-import proteinCalculatorSchema from './data/calculators/protein-calculator.json';
-import fatIntakeCalculatorSchema from './data/calculators/fat-intake-calculator.json';
 import tdeeCalculatorSchema from './data/calculators/tdee-calculator.json';
-
-// Lote 5 Salud / Fitness / Nutrición
-import waterIntakeCalculatorSchema from './data/calculators/water-intake-calculator.json';
-import bmiPrimeCalculatorSchema from './data/calculators/bmi-prime-calculator.json';
-import bodyAdiposityIndexCalculatorSchema from './data/calculators/body-adiposity-index-calculator.json';
-import waistToHeightRatioCalculatorSchema from './data/calculators/waist-to-height-ratio-calculator.json';
+import idealBodyWeightCalculatorSchema from './data/calculators/ideal-body-weight-calculator.json';
+import leanBodyMassCalculatorSchema from './data/calculators/lean-body-mass-calculator.json';
 import waistToHipRatioCalculatorSchema from './data/calculators/waist-to-hip-ratio-calculator.json';
+import waistToHeightRatioCalculatorSchema from './data/calculators/waist-to-height-ratio-calculator.json';
+import bodySurfaceAreaCalculatorSchema from './data/calculators/body-surface-area-calculator.json';
 
-// Lote 6 Salud / Fitness / Nutrición
-import sleepCalculatorSchema from './data/calculators/sleep-calculator.json';
-import pediatricBmiCalculatorSchema from './data/calculators/pediatric-bmi-calculator.json';
-import targetWeightCalculatorSchema from './data/calculators/target-weight-calculator.json';
+import waterIntakeCalculatorSchema from './data/calculators/water-intake-calculator.json';
+import targetHeartRateCalculatorSchema from './data/calculators/target-heart-rate-calculator.json';
 import vo2MaxCalculatorSchema from './data/calculators/vo2-max-calculator.json';
-import runningRacePredictorCalculatorSchema from './data/calculators/running-race-predictor-calculator.json';
+import oneRepMaxCalculatorSchema from './data/calculators/one-rep-max-calculator.json';
+import paceCalculatorSchema from './data/calculators/pace-calculator.json';
+import caloriesBurnedRunningCalculatorSchema from './data/calculators/calories-burned-running-calculator.json';
+import caloriesBurnedWalkingCalculatorSchema from './data/calculators/calories-burned-walking-calculator.json';
+import caloriesBurnedCyclingCalculatorSchema from './data/calculators/calories-burned-cycling-calculator.json';
+import caloriesBurnedSwimmingCalculatorSchema from './data/calories-burned-swimming-calculator.json';
+import stepsToMilesKmCalculatorSchema from './data/calculators/steps-to-miles-km-calculator.json';
 
-// Lote 7 Salud (Expansión Categoría Health)
-import ovulationCalculatorSchema from './data/calculators/ovulation-calculator.json';
-import bloodPressureCalculatorSchema from './data/calculators/blood-pressure-calculator.json';
-import bloodSugarConverterCalculatorSchema from './data/calculators/blood-sugar-converter-calculator.json';
-import chronotypeSleepCalculatorSchema from './data/calculators/chronotype-sleep-calculator.json';
-import childHeightPredictorCalculatorSchema from './data/calculators/child-height-predictor-calculator.json';
+import pregnancyDueDateCalculatorSchema from './data/calculators/pregnancy-due-date-calculator.json';
+import ovulationFertilityCalculatorSchema from './data/calculators/ovulation-fertility-calculator.json';
+import periodTrackerCycleCalculatorSchema from './data/calculators/period-tracker-cycle-calculator.json';
+import bloodPressureCategoryCalculatorSchema from './data/calculators/blood-pressure-category-calculator.json';
+import bloodSugarA1cConverterSchema from './data/calculators/blood-sugar-a1c-converter.json';
+import gfrKidneyFunctionCalculatorSchema from './data/calculators/gfr-kidney-function-calculator.json';
+import cholesterolRatiosCalculatorSchema from './data/calculators/cholesterol-ratios-calculator.json';
+import meanArterialPressureCalculatorSchema from './data/calculators/mean-arterial-pressure-calculator.json';
+import ivDripRateCalculatorSchema from './data/calculators/iv-drip-rate-calculator.json';
+import pediatricDosageByWeightCalculatorSchema from './data/calculators/pediatric-dosage-by-weight-calculator.json';
 
-// Lote 8 Fitness (Expansión Categoría Fitness)
-import ffmiCalculatorSchema from './data/calculators/ffmi-calculator.json';
-import wilksCalculatorSchema from './data/calculators/wilks-calculator.json';
-import creatineDosingCalculatorSchema from './data/calculators/creatine-dosing-calculator.json';
-import heartRateRunningZonesCalculatorSchema from './data/calculators/heart-rate-running-zones-calculator.json';
-import treadmillInclineCalculatorSchema from './data/calculators/treadmill-incline-calculator.json';
-
-// Lote 9 Nutrición (Expansión Categoría Food)
-import glycemicIndexLoadCalculatorSchema from './data/calculators/glycemic-index-load-calculator.json';
-import electrolyteIntakeCalculatorSchema from './data/calculators/electrolyte-intake-calculator.json';
-import ketoCalculatorSchema from './data/calculators/keto-calculator.json';
-import intermittentFastingCalculatorSchema from './data/calculators/intermittent-fasting-calculator.json';
-import cookingUnitsConverterCalculatorSchema from './data/calculators/cooking-units-converter-calculator.json';
-
-// Lote 10 Médica / Nefrología (Expansión Health Indicators)
-import egfrCkdEpiCalculatorSchema from './data/calculators/egfr-ckd-epi-calculator.json';
-import creatinineClearanceCockcroftGaultCalculatorSchema from './data/calculators/creatinine-clearance-cockcroft-gault-calculator.json';
-import fenaFractionalExcretionSodiumCalculatorSchema from './data/calculators/fena-fractional-excretion-sodium-calculator.json';
-import anionGapCorrectedCalculatorSchema from './data/calculators/anion-gap-corrected-calculator.json';
-import correctedCalciumAlbuminCalculatorSchema from './data/calculators/corrected-calcium-albumin-calculator.json';
-
-// Lote 11 Médica / Cardiología & Urgencias (Expansión Health Indicators)
-import chads2VascScoreCalculatorSchema from './data/calculators/chads2-vasc-score-calculator.json';
-import hasBledScoreCalculatorSchema from './data/calculators/has-bled-score-calculator.json';
-import heartScoreCardiacRiskCalculatorSchema from './data/calculators/heart-score-cardiac-risk-calculator.json';
-import qtcIntervalCalculatorSchema from './data/calculators/qtc-interval-calculator.json';
-import astrupBloodGasInterpreterCalculatorSchema from './data/calculators/astrup-blood-gas-interpreter-calculator.json';
-
-// Lote 12 Urgencias, Hepatología y Neurología Intensiva (Expansión Health Indicators)
-import wellsScoreDvtPeCalculatorSchema from './data/calculators/wells-score-dvt-pe-calculator.json';
-import curb65PneumoniaSeverityCalculatorSchema from './data/calculators/curb-65-pneumonia-severity-calculator.json';
-import childPughScoreCalculatorSchema from './data/calculators/child-pugh-score-calculator.json';
-import meldScoreCalculatorSchema from './data/calculators/meld-score-calculator.json';
-import glasgowComaScaleGcsCalculatorSchema from './data/calculators/glasgow-coma-scale-gcs-calculator.json';
-
-// Lote 13 Sepsis, Pediatría y Fluidoterapia Hospitalaria (Expansión Health Indicators)
-import sofaScoreSepsisCalculatorSchema from './data/calculators/sofa-score-sepsis-calculator.json';
-import pao2Fio2RatioPafiCalculatorSchema from './data/calculators/pao2-fio2-ratio-pafi-calculator.json';
-import hollidaySegarMaintenanceFluidsCalculatorSchema from './data/calculators/holliday-segar-maintenance-fluids-calculator.json';
-import apgarScoreCalculatorSchema from './data/calculators/apgar-score-calculator.json';
-import pediatricDosingWeightCalculatorSchema from './data/calculators/pediatric-dosing-weight-calculator.json';
-
-// Lote 1 Matemáticas & Aritmética Fundamental
+// Importaciones de Matemáticas y Geometría
 import fractionCalculatorSchema from './data/calculators/fraction-calculator.json';
-import ratioCalculatorSchema from './data/calculators/ratio-calculator.json';
-import rootCalculatorSchema from './data/calculators/root-calculator.json';
-import exponentCalculatorSchema from './data/calculators/exponent-calculator.json';
-import logCalculatorSchema from './data/calculators/log-calculator.json';
+import scientificNotationCalculatorSchema from './data/calculators/scientific-notation-calculator.json';
+import matrixMultiplicationCalculatorSchema from './data/calculators/matrix-multiplication-calculator.json';
+import quadraticEquationSolverSchema from './data/calculators/quadratic-equation-solver.json';
 
-// Lote 2 Teoría de Números y Divisibilidad
-import lcmCalculatorSchema from './data/calculators/lcm-calculator.json';
-import gcfCalculatorSchema from './data/calculators/gcf-calculator.json';
-import factorCalculatorSchema from './data/calculators/factor-calculator.json';
-import primeFactorizationCalculatorSchema from './data/calculators/prime-factorization-calculator.json';
-import longDivisionCalculatorSchema from './data/calculators/long-division-calculator.json';
-
-// Lote 3 Álgebra, Ecuaciones y Funciones
-import quadraticFormulaCalculatorSchema from './data/calculators/quadratic-formula-calculator.json';
-import slopeCalculatorSchema from './data/calculators/slope-calculator.json';
-import matrixCalculatorSchema from './data/calculators/matrix-calculator.json';
-import numberSequenceCalculatorSchema from './data/calculators/number-sequence-calculator.json';
-import percentErrorCalculatorSchema from './data/calculators/percent-error-calculator.json';
-
-// Lote 4 Geometría Plana y Trigonometría
-import triangleCalculatorSchema from './data/calculators/triangle-calculator.json';
-import rightTriangleCalculatorSchema from './data/calculators/right-triangle-calculator.json';
-import pythagoreanTheoremCalculatorSchema from './data/calculators/pythagorean-theorem-calculator.json';
-import circleCalculatorSchema from './data/calculators/circle-calculator.json';
-import distanceCalculatorSchema from './data/calculators/distance-calculator.json';
-
-// Lote 5 Geometría 3D, Áreas, Volúmenes y Cálculo Científico
 import areaCalculatorSchema from './data/calculators/area-calculator.json';
 import volumeCalculatorSchema from './data/calculators/volume-calculator.json';
-import surfaceAreaCalculatorSchema from './data/calculators/surface-area-calculator.json';
-import scientificCalculatorSchema from './data/calculators/scientific-calculator.json';
-import roundingCalculatorSchema from './data/calculators/rounding-calculator.json';
 
-// Lote 6 Estadística Descriptiva y Promedios
-import meanMedianModeRangeCalculatorSchema from './data/calculators/mean-median-mode-range-calculator.json';
-import standardDeviationCalculatorSchema from './data/calculators/standard-deviation-calculator.json';
-import averageCalculatorSchema from './data/calculators/average-calculator.json';
-import zScoreCalculatorSchema from './data/calculators/z-score-calculator.json';
-import statisticsCalculatorSchema from './data/calculators/statistics-calculator.json';
-
-// Lote 7 Probabilidad, Combinatoria e Inferencia
-import probabilityCalculatorSchema from './data/calculators/probability-calculator.json';
-import permutationAndCombinationCalculatorSchema from './data/calculators/permutation-and-combination-calculator.json';
-import sampleSizeCalculatorSchema from './data/calculators/sample-size-calculator.json';
-import confidenceIntervalCalculatorSchema from './data/calculators/confidence-interval-calculator.json';
-import pValueCalculatorSchema from './data/calculators/p-value-calculator.json';
-
-// Lote 8 Sistemas Numéricos y Notación Científica
-import binaryCalculatorSchema from './data/calculators/binary-calculator.json';
-import hexCalculatorSchema from './data/calculators/hex-calculator.json';
-import scientificNotationCalculatorSchema from './data/calculators/scientific-notation-calculator.json';
-import bigNumberCalculatorSchema from './data/calculators/big-number-calculator.json';
-import randomNumberGeneratorSchema from './data/calculators/random-number-generator.json';
-
-// Lote 9 Física-Química Nuclear, Porcentaje Avanzado y Hub de Matemáticas
-import halfLifeCalculatorSchema from './data/calculators/half-life-calculator.json';
-import commonFactorCalculatorSchema from './data/calculators/common-factor-calculator.json';
-import basicCalculatorSchema from './data/calculators/basic-calculator.json';
-import percentageCalculatorAdvancedSchema from './data/calculators/percentage-calculator-advanced.json';
-import mathCalculatorsHubSchema from './data/calculators/math-calculators-hub.json';
-
-// Nuevo Lote 1 Tiempo, Fechas y Vida Cotidiana
-import ageCalculatorSchema from './data/calculators/age-calculator.json';
-import dateCalculatorSchema from './data/calculators/date-calculator.json';
-import timeCalculatorSchema from './data/calculators/time-calculator.json';
-import hoursCalculatorSchema from './data/calculators/hours-calculator.json';
-import timeDurationCalculatorSchema from './data/calculators/time-duration-calculator.json';
-import dayCounterSchema from './data/calculators/day-counter.json';
-
-// Nuevo Lote 2 Educación, Estilo de Vida & Entretenimiento
-import dayOfTheWeekCalculatorSchema from './data/calculators/day-of-the-week-calculator.json';
-import gpaCalculatorSchema from './data/calculators/gpa-calculator.json';
-import gradeCalculatorSchema from './data/calculators/grade-calculator.json';
-import heightCalculatorSchema from './data/calculators/height-calculator.json';
-import braSizeCalculatorSchema from './data/calculators/bra-size-calculator.json';
-import loveCalculatorSchema from './data/calculators/love-calculator.json';
-
-// Nuevo Lote 3 Construcción & Vivienda
-import concreteCalculatorSchema from './data/calculators/concrete-calculator.json';
-import squareFootageCalculatorSchema from './data/calculators/square-footage-calculator.json';
-import stairCalculatorSchema from './data/calculators/stair-calculator.json';
-import roofingCalculatorSchema from './data/calculators/roofing-calculator.json';
-import tileCalculatorSchema from './data/calculators/tile-calculator.json';
-import mulchCalculatorSchema from './data/calculators/mulch-calculator.json';
-
-// Nuevo Lote 4 Jardinería, Ingeniería & Utilidades
-import gravelCalculatorSchema from './data/calculators/gravel-calculator.json';
-import btuCalculatorSchema from './data/calculators/btu-calculator.json';
-import electricityCalculatorSchema from './data/calculators/electricity-calculator.json';
-import fuelCostCalculatorSchema from './data/calculators/fuel-cost-calculator.json';
-import gasMileageCalculatorSchema from './data/calculators/gas-mileage-calculator.json';
-import mileageCalculatorSchema from './data/calculators/mileage-calculator.json';
-
-// Nuevo Lote 5 Automotriz & Ingeniería Eléctrica
-import horsepowerCalculatorSchema from './data/calculators/horsepower-calculator.json';
-import engineHorsepowerCalculatorSchema from './data/calculators/engine-horsepower-calculator.json';
-import tireSizeCalculatorSchema from './data/calculators/tire-size-calculator.json';
-import voltageDropCalculatorSchema from './data/calculators/voltage-drop-calculator.json';
-import ohmsLawCalculatorSchema from './data/calculators/ohms-law-calculator.json';
-import resistorCalculatorSchema from './data/calculators/resistor-calculator.json';
-
-// Nuevo Lote 6 Ciencias Físicas & Química
-import densityCalculatorSchema from './data/calculators/density-calculator.json';
-import massCalculatorSchema from './data/calculators/mass-calculator.json';
-import weightCalculatorSchema from './data/calculators/weight-calculator.json';
-import speedCalculatorSchema from './data/calculators/speed-calculator.json';
-import molarityCalculatorSchema from './data/calculators/molarity-calculator.json';
-import molecularWeightCalculatorSchema from './data/calculators/molecular-weight-calculator.json';
-
-// Nuevo Lote 7 Meteorología, Salud & Deportes
-import windChillCalculatorSchema from './data/calculators/wind-chill-calculator.json';
-import heatIndexCalculatorSchema from './data/calculators/heat-index-calculator.json';
-import dewPointCalculatorSchema from './data/calculators/dew-point-calculator.json';
-import sleepCycleCalculatorSchema from './data/calculators/sleep-calculator.json';
-import golfHandicapCalculatorSchema from './data/calculators/golf-handicap-calculator.json';
-import shoeSizeConversionSchema from './data/calculators/shoe-size-conversion.json';
-
-// Nuevo Lote 8 Tecnología, Redes & Seguridad
-import ipSubnetCalculatorSchema from './data/calculators/ip-subnet-calculator.json';
-import bandwidthCalculatorSchema from './data/calculators/bandwidth-calculator.json';
-import passwordGeneratorSchema from './data/calculators/password-generator.json';
-import base64EncodeDecodeSchema from './data/calculators/base64-encode-decode.json';
-import urlEncodeDecodeSchema from './data/calculators/url-encode-decode.json';
-import diceRollerSchema from './data/calculators/dice-roller.json';
-
-// Nuevo Lote 9 Economía, Conversores & Hub Central de Herramientas
-import gdpCalculatorSchema from './data/calculators/gdp-calculator.json';
-import tipCalculatorSchema from './data/calculators/tip-calculator.json';
-import conversionCalculatorSchema from './data/calculators/conversion-calculator.json';
-import romanNumeralConverterSchema from './data/calculators/roman-numeral-converter.json';
-import timeCardCalculatorSchema from './data/calculators/time-card-calculator.json';
-import timeZoneCalculatorSchema from './data/calculators/time-zone-calculator.json';
-import otherCalculatorsHubSchema from './data/calculators/other-calculators-hub.json';
-
-// Expansión Física (Bloque 1)
-import projectileMotionCalculatorSchema from './data/calculators/projectile-motion-calculator.json';
+// Importaciones de Ciencia y Física
+import speedVelocityCalculatorSchema from './data/calculators/speed-velocity-calculator.json';
+import accelerationCalculatorSchema from './data/calculators/acceleration-calculator.json';
+import forceMassAccelerationCalculatorSchema from './data/calculators/force-mass-acceleration-calculator.json';
+import workEnergyCalculatorSchema from './data/calculators/work-energy-calculator.json';
 import kineticEnergyCalculatorSchema from './data/calculators/kinetic-energy-calculator.json';
 import potentialEnergyCalculatorSchema from './data/calculators/potential-energy-calculator.json';
-import centripetalForceCalculatorSchema from './data/calculators/centripetal-force-calculator.json';
-import frictionCalculatorSchema from './data/calculators/friction-calculator.json';
-import workEnergyCalculatorSchema from './data/calculators/work-energy-calculator.json';
-import freeFallCalculatorSchema from './data/calculators/free-fall-calculator.json';
-import pendulumCalculatorSchema from './data/calculators/pendulum-calculator.json';
-import snellsLawCalculatorSchema from './data/calculators/snells-law-calculator.json';
-import waveSpeedCalculatorSchema from './data/calculators/wave-speed-calculator.json';
+import powerWorkTimeCalculatorSchema, { meta } from './data/calculators/power-work-time-calculator.json';
+import momentumMassVelocityCalculatorSchema from './data/calculators/momentum-mass-velocity-calculator.json';
+import torqueForceDistanceCalculatorSchema from './data/calculators/torque-force-distance-calculator.json';
+import pressureForceAreaCalculatorSchema from './data/calculators/pressure-force-area-calculator.json';
 
-// Expansión Química (Bloque 2)
-import phCalculatorSchema from './data/calculators/ph-calculator.json';
+import densityMassVolumeCalculatorSchema from './data/calculators/density-mass-volume-calculator.json';
 import idealGasLawCalculatorSchema from './data/calculators/ideal-gas-law-calculator.json';
-import solutionDilutionCalculatorSchema from './data/calculators/solution-dilution-calculator.json';
-import halfLifeDecayCalculatorSchema from './data/calculators/half-life-calculator.json';
 import boylesLawCalculatorSchema from './data/calculators/boyles-law-calculator.json';
-import charlesLawCalculatorSchema from './data/calculators/charles-law-calculator.json';
-import percentYieldCalculatorSchema from './data/calculators/percent-yield-calculator.json';
-import massPercentCalculatorSchema from './data/calculators/mass-percent-calculator.json';
-import combustionStoichiometricCalculatorSchema from './data/calculators/combustion-stoichiometric-calculator.json';
-import bufferSolutionCalculatorSchema from './data/calculators/buffer-solution-calculator.json';
 
-// Expansión Ingeniería (Bloque 3)
+import ohmsLawCalculatorSchema from './data/calculators/ohms-law-calculator.json';
+
+// Importaciones de Estadística y Probabilidad
+import meanMedianModeSchema from './data/calculators/mean-median-mode.json';
+import standardDeviationCalculatorSchema from './data/calculators/standard-deviation-calculator.json';
+import zScoreCalculatorSchema from './data/calculators/z-score-calculator.json';
+import confidenceIntervalCalculatorSchema from './data/calculators/confidence-interval-calculator.json';
+import marginOfErrorCalculatorSchema from './data/calculators/margin-of-error-calculator.json';
+import sampleSizeCalculatorSchema from './data/calculators/sample-size-calculator.json';
+import pValueCalculatorSchema from './data/calculators/p-value-calculator.json';
+
+import simpleProbabilityCalculatorSchema from './data/calculators/simple-probability-calculator.json';
+import combinationsPermutationsCalculatorSchema from './data/calculators/combinations-permutations-calculator.json';
+import coinFlipProbabilityCalculatorSchema from './data/calculators/coin-flip-probability-calculator.json';
+import diceRollProbabilityCalculatorSchema from './data/calculators/dice-roll-probability-calculator.json';
+
+// Importaciones de Ingeniería y Construcción
+import concreteVolumeCalculatorSchema from './data/calculators/concrete-volume-calculator.json';
+
 import beamDeflectionCalculatorSchema from './data/calculators/beam-deflection-calculator.json';
-import pipeFlowHydraulicCalculatorSchema from './data/calculators/pipe-flow-hydraulic-calculator.json';
-import reynoldsNumberCalculatorSchema from './data/calculators/reynolds-number-calculator.json';
-import heatTransferConductionCalculatorSchema from './data/calculators/heat-transfer-conduction-calculator.json';
-import stressStrainCalculatorSchema from './data/calculators/stress-strain-calculator.json';
-import hydraulicCylinderForceCalculatorSchema from './data/calculators/hydraulic-cylinder-force-calculator.json';
-import gearRatioSpeedCalculatorSchema from './data/calculators/gear-ratio-speed-calculator.json';
-import thermalExpansionLinearCalculatorSchema from './data/calculators/thermal-expansion-linear-calculator.json';
-import transformerTurnsRatioCalculatorSchema from './data/calculators/transformer-turns-ratio-calculator.json';
-import airDuctSizingCalculatorSchema from './data/calculators/air-duct-sizing-calculator.json';
 
+import pipeFlowRateCalculatorSchema from './data/calculators/pipe-flow-rate-calculator.json';
+
+import heatLossCalculatorSchema from './data/calculators/heat-loss-calculator.json';
+
+// Expansión Ciencia y Química
+import molesToGramsCalculatorSchema from './data/calculators/moles-to-grams-calculator.json';
+import molarityCalculatorSchema from './data/calculators/molarity-calculator.json';
+import solutionDilutionCalculatorSchema from './data/calculators/solution-dilution-calculator.json';
+import phCalculatorSchema from './data/calculators/ph-calculator.json';
+import halfLifeCalculatorSchema from './data/calculators/half-life-calculator.json';
+import radioactiveDecayCalculatorSchema from './data/calculators/radioactive-decay-calculator.json';
+import stoichiometryCalculatorSchema from './data/calculators/stoichiometry-calculator.json';
+import percentYieldCalculatorSchema from './data/calculators/percent-yield-calculator.json';
+import empiricalFormulaCalculatorSchema from './data/calculators/empirical-formula-calculator.json';
+import gasLawCombinedCalculatorSchema from './data/calculators/gas-law-combined-calculator.json';
+// Expansión Física Adicional
+import pendulumPeriodCalculatorSchema from './data/calculators/pendulum-period-calculator.json';
+import snellsLawRefractionCalculatorSchema from './data/calculators/snells-law-refraction-calculator.json';
+import projectileMotionCalculatorSchema from './data/calculators/projectile-motion-calculator.json';
+import dopplerEffectCalculatorSchema from './data/calculators/doppler-effect-calculator.json';
+import gravitationalForceCalculatorSchema from './data/calculators/gravitational-force-calculator.json';
+import coulombLawCalculatorSchema from './data/calculators/coulomb-law-calculator.json';
+import waveSpeedCalculatorSchema from './data/calculators/wave-speed-calculator.json';
+import bernoulliPressureCalculatorSchema from './data/calculators/bernoulli-pressure-calculator.json';
+import CarnotEfficiencyCalculatorSchema from './data/calculators/carnot-efficiency-calculator.json';
+import photonEnergyCalculatorSchema from './data/calculators/photon-energy-calculator.json';
+// Expansión Estadística Adicional
+import varianceCalculatorSchema from './data/calculators/variance-calculator.json';
+import interquartileRangeIqrCalculatorSchema from './data/calculators/interquartile-range-iqr-calculator.json';
+import percentileRankCalculatorSchema from './data/calculators/percentile-rank-calculator.json';
+import linearRegressionCalculatorSchema from './data/calculators/linear-regression-calculator.json';
+import chiSquareTestCalculatorSchema from './data/calculators/chi-square-test-calculator.json';
+import tTestOneSampleCalculatorSchema from './data/calculators/t-test-one-sample-calculator.json';
+import binomialDistributionCalculatorSchema from './data/calculators/binomial-distribution-calculator.json';
+import poissonDistributionCalculatorSchema from './data/calculators/poisson-distribution-calculator.json';
+import normalDistributionCdfCalculatorSchema from './data/calculators/normal-distribution-cdf-calculator.json';
+import bayesTheoremCalculatorSchema from './data/calculators/bayes-theorem-calculator.json';
+// Expansión Matemáticas Adicional
+import logarithmCalculatorSchema from './data/calculators/logarithm-calculator.json';
+import exponentPowerCalculatorSchema from './data/calculators/exponent-power-calculator.json';
+import factorCalculatorSchema from './data/calculators/factor-calculator.json';
+import gcdLcmCalculatorSchema from './data/calculators/gcd-lcm-calculator.json';
+import primeFactorizationCalculatorSchema from './data/calculators/prime-factorization-calculator.json';
+import percentageDifferenceCalculatorSchema from './data/calculators/percentage-difference-calculator.json';
+import percentageChangeCalculatorSchema from './data/calculators/percentage-change-calculator.json';
+import ratioCalculatorSchema from './data/calculators/ratio-calculator.json';
+import ruleOfThreeCalculatorSchema from './data/calculators/rule-of-three-calculator.json';
+import averageCalculatorSchema from './data/calculators/average-calculator.json';
+// Expansión Geometría Adicional
+import pythagoreanTheoremCalculatorSchema from './data/calculators/pythagorean-theorem-calculator.json';
+import circleCalculatorSchema from './data/calculators/circle-calculator.json';
+import triangleCalculatorSchema from './data/calculators/triangle-calculator.json';
+import rectangleCalculatorSchema from './data/calculators/rectangle-calculator.json';
+import cylinderVolumeAreaCalculatorSchema from './data/calculators/cylinder-volume-area-calculator.json';
+import sphereVolumeAreaCalculatorSchema from './data/calculators/sphere-volume-area-calculator.json';
+import coneVolumeAreaCalculatorSchema from './data/calculators/cone-volume-area-calculator.json';
+import distanceBetweenTwoPointsCalculatorSchema from './data/calculators/distance-between-two-points-calculator.json';
+import midpointCalculatorSchema from './data/calculators/midpoint-calculator.json';
+import slopeOfLineCalculatorSchema from './data/calculators/slope-of-line-calculator.json';
+// Expansión Salud y Medicina Avanzada (Bloque 1)
+import kidneyStoneRecurrenceScoreCalculatorSchema from './data/calculators/kidney-stone-recurrence-score-calculator.json';
+import glasgowComaScaleCalculatorSchema from './data/calculators/glasgow-coma-scale-calculator.json';
+import apgarScoreCalculatorSchema from './data/calculators/apgar-score-calculator.json';
+import chadsvascScoreCalculatorSchema from './data/calculators/chadsvasc-score-calculator.json';
+import meldScoreCalculatorSchema from './data/calculators/meld-score-calculator.json';
+import childPughScoreCalculatorSchema from './data/calculators/child-pugh-score-calculator.json';
+import wellsScoreDvtPeCalculatorSchema from './data/calculators/wells-score-dvt-pe-calculator.json';
+import curb65PneumoniaScoreCalculatorSchema from './data/calculators/curb65-pneumonia-score-calculator.json';
+import hasBledBleedingRiskCalculatorSchema from './data/calculators/has-bled-bleeding-risk-calculator.json';
+import graceAcuteCoronaryScoreCalculatorSchema from './data/calculators/grace-acute-coronary-score-calculator.json';
+import timiRiskScoreCalculatorSchema from './data/calculators/timi-risk-score-calculator.json';
+import apacheIiSeverityCalculatorSchema from './data/calculators/apache-ii-severity-calculator.json';
+import sofaOrganFailureCalculatorSchema from './data/calculators/sofa-organ-failure-calculator.json';
+import qsofaSepsisCalculatorSchema from './data/calculators/qsofa-sepsis-calculator.json';
+import nihssStrokeScaleCalculatorSchema from './data/calculators/nihss-stroke-scale-calculator.json';
+// Expansión Nutrición y Fitness (Bloque 2)
+import ketoMacronutrientCalculatorSchema from './data/calculators/keto-macronutrient-calculator.json';
+import intermittentFastingWindowCalculatorSchema from './data/calculators/intermittent-fasting-window-calculator.json';
+import proteinIntakeBySportCalculatorSchema from './data/calculators/protein-intake-by-sport-calculator.json';
+import carbCyclingPlanCalculatorSchema from './data/calculators/carb-cycling-plan-calculator.json';
+import glycemicLoadCalculatorSchema from './data/calculators/glycemic-load-calculator.json';
+import wilksCalculatorSchema from './data/calculators/wilks-calculator.json';
+import rpeLoadCalculatorSchema from './data/calculators/rpe-load-calculator.json';
+import marathonPaceSplitsCalculatorSchema from './data/calculators/marathon-pace-splits-calculator.json';
+import ftpCyclingPowerCalculatorSchema from './data/calculators/ftp-cycling-power-calculator.json';
+import heartRateZoneCalculatorSchema from './data/calculators/heart-rate-zone-calculator.json';
+import ffmiFatFreeMassCalculatorSchema from './data/calculators/ffmi-fat-free-mass-calculator.json';
+import bodyAdiposityIndexCalculatorSchema from './data/calculators/body-adiposity-index-calculator.json';
+import waistToHeightRatioRiskCalculatorSchema from './data/calculators/waist-to-height-ratio-risk-calculator.json';
+import somatotypeCalculatorSchema from './data/calculators/somatotype-calculator.json';
+import electrolyteReplenishmentCalculatorSchema from './data/calculators/electrolyte-replenishment-calculator.json';
+// Expansión Finanzas Avanzadas (Bloque 1)
+import roicCalculatorSchema from './data/calculators/roic-calculator.json';
+import waccCalculatorSchema from './data/calculators/wacc-calculator.json';
+import dupontAnalysisCalculatorSchema from './data/calculators/dupont-analysis-calculator.json';
+import dcfValuationCalculatorSchema from './data/calculators/dcf-valuation-calculator.json';
+import evEbitdaMultipleCalculatorSchema from './data/calculators/ev-ebitda-multiple-calculator.json';
+import blackScholesOptionCalculatorSchema from './data/calculators/black-scholes-option-calculator.json';
+import sharpeRatioCalculatorSchema from './data/calculators/sharpe-ratio-calculator.json';
+import sortinoRatioCalculatorSchema from './data/calculators/sortino-ratio-calculator.json';
+import betaStockCalculatorSchema from './data/calculators/beta-stock-calculator.json';
+import bondYieldToMaturityCalculatorSchema from './data/calculators/bond-yield-to-maturity-calculator.json';
+import bondDurationConvexityCalculatorSchema from './data/calculators/bond-duration-convexity-calculator.json';
+import capmRequiredReturnCalculatorSchema from './data/calculators/capm-required-return-calculator.json';
+import freeCashFlowCalculatorSchema from './data/calculators/free-cash-flow-calculator.json';
+import workingCapitalCalculatorSchema from './data/calculators/working-capital-calculator.json';
+import altmanZScoreCalculatorSchema from './data/calculators/altman-z-score-calculator.json';
+// Expansión Hipotecas y Créditos (Bloque 2)
+import fhaMortgageCalculatorSchema from './data/calculators/fha-mortgage-calculator.json';
+import vaMortgageCalculatorSchema from './data/calculators/va-mortgage-calculator.json';
+import usdaMortgageCalculatorSchema from './data/calculators/usda-mortgage-calculator.json';
+import jumboMortgageCalculatorSchema from './data/calculators/jumbo-mortgage-calculator.json';
+import helocPaymentCalculatorSchema from './data/calculators/heloc-payment-calculator.json';
+import reverseMortgageCalculatorSchema from './data/calculators/reverse-mortgage-calculator.json';
+import biweeklyMortgageCalculatorSchema from './data/calculators/biweekly-mortgage-calculator.json';
+import interestOnlyMortgageCalculatorSchema from './data/calculators/interest-only-mortgage-calculator.json';
+import balloonLoanCalculatorSchema from './data/calculators/balloon-loan-calculator.json';
+import commercialRealEstateLoanCalculatorSchema from './data/calculators/commercial-real-estate-loan-calculator.json';
+import leaseVsBuyCarCalculatorSchema from './data/calculators/lease-vs-buy-car-calculator.json';
+import autoRefinanceSavingsCalculatorSchema from './data/calculators/auto-refinance-savings-calculator.json';
+import debtConsolidationCalculatorSchema from './data/calculators/debt-consolidation-calculator.json';
+import paydayLoanAprCalculatorSchema from './data/calculators/payday-loan-apr-calculator.json';
+import loanOriginationFeeCalculatorSchema from './data/calculators/loan-origination-fee-calculator.json';
+// Expansión Ingeniería Eléctrica (Bloque 1)
+import voltageDropCalculatorSchema from './data/calculators/voltage-drop-calculator.json';
+import wireGaugeAmpacityCalculatorSchema from './data/calculators/wire-gauge-ampacity-calculator.json';
+import threePhasePowerCalculatorSchema from './data/calculators/three-phase-power-calculator.json';
+import powerFactorCorrectionCalculatorSchema from './data/calculators/power-factor-correction-calculator.json';
+import transformerSizingCalculatorSchema from './data/calculators/transformer-sizing-calculator.json';
+import kvaToKwCalculatorSchema from './data/calculators/kva-to-kw-calculator.json';
+import conduitFillCalculatorSchema from './data/calculators/conduit-fill-calculator.json';
+import shortCircuitCurrentCalculatorSchema from './data/calculators/short-circuit-current-calculator.json';
+import resLcrResonanceCalculatorSchema from './data/calculators/res-lcr-resonance-calculator.json';
+import batteryBankSizingCalculatorSchema from './data/calculators/battery-bank-sizing-calculator.json';
+// Expansión Ingeniería Mecánica y Fluidos (Bloque 2)
+import reynoldsNumberCalculatorSchema from './data/calculators/reynolds-number-calculator.json';
+import darcyWeisbachFrictionCalculatorSchema from './data/calculators/darcy-weisbach-friction-calculator.json';
+import hydraulicCylinderForceCalculatorSchema from './data/calculators/hydraulic-cylinder-force-calculator.json';
+import pumpHeadHorsepowerCalculatorSchema from './data/calculators/pump-head-horsepower-calculator.json';
+import gearRatioSpeedCalculatorSchema from './data/calculators/gear-ratio-speed-calculator.json';
+import beltLengthPulleyCalculatorSchema from './data/calculators/belt-length-pulley-calculator.json';
+import thermalExpansionCalculatorSchema from './data/calculators/thermal-expansion-calculator.json';
+import hvacBtuCoolingCalculatorSchema from './data/calculators/hvac-btu-cooling-calculator.json';
+import psychrometricAirCalculatorSchema from './data/calculators/psychrometric-air-calculator.json';
+import airDuctSizingCalculatorSchema from './data/calculators/air-duct-sizing-calculator.json';
 // Expansión Construcción y Reformas (Bloque 1)
 import wallFramingStudsCalculatorSchema from './data/calculators/wall-framing-studs-calculator.json';
 import drywallSheetsCalculatorSchema from './data/calculators/drywall-sheets-calculator.json';
@@ -348,7 +283,6 @@ import insulationBattCalculatorSchema from './data/calculators/insulation-batt-c
 import pavingAsphaltCalculatorSchema from './data/calculators/paving-asphalt-calculator.json';
 import fenceMaterialsCalculatorSchema from './data/calculators/fence-materials-calculator.json';
 import retainingWallCalculatorSchema from './data/calculators/retaining-wall-calculator.json';
-
 // Expansión Hogar y Vida Cotidiana (Bloque 2)
 import solarPanelPaybackCalculatorSchema from './data/calculators/solar-panel-payback-calculator.json';
 import applianceEnergyCostCalculatorSchema from './data/calculators/appliance-energy-cost-calculator.json';
@@ -359,8 +293,7 @@ import raffleTicketProbabilityCalculatorSchema from './data/calculators/raffle-t
 import pokerHandProbabilityCalculatorSchema from './data/calculators/poker-hand-probability-calculator.json';
 import boardGameScoreCalculatorSchema from './data/calculators/board-game-score-calculator.json';
 import waterHeaterEnergyCalculatorSchema from './data/calculators/water-heater-energy-calculator.json';
-import compostCnRatioCalculatorSchema from './data/calculators/compost-c-n-ratio-calculator.json';
-
+import compostCnRatioCalculatorSchema from './data/calculators/compost-cn-ratio-calculator.json';
 // Expansión Tecnología y Electrónica (Bloque 3)
 import ledResistorCalculatorSchema from './data/calculators/led-resistor-calculator.json';
 import batteryLifeRuntimeCalculatorSchema from './data/calculators/battery-life-runtime-calculator.json';
@@ -372,7 +305,6 @@ import binaryHexConverterCalculatorSchema from './data/calculators/binary-hex-co
 import pcbTraceCurrentWidthCalculatorSchema from './data/calculators/pcb-trace-current-width-calculator.json';
 import attenuatorDbCalculatorSchema from './data/calculators/attenuator-db-calculator.json';
 import raidStorageCapacityCalculatorSchema from './data/calculators/raid-storage-capacity-calculator.json';
-
 // Expansión Conversores (Bloque 1)
 import lengthDistanceConverterSchema from './data/calculators/length-distance-converter.json';
 import massWeightConverterSchema from './data/calculators/mass-weight-converter.json';
@@ -389,7 +321,6 @@ import fuelEconomyConverterSchema from './data/calculators/fuel-economy-converte
 import currencyExchangeRateConverterSchema from './data/calculators/currency-exchange-rate-converter.json';
 import dataTransferRateConverterSchema from './data/calculators/data-transfer-rate-converter.json';
 import cookingLiquidMeasurementConverterSchema from './data/calculators/cooking-liquid-measurement-converter.json';
-
 // Expansión Fecha y Tiempo (Bloque 2)
 import exactAgeCalculatorSchema from './data/calculators/exact-age-calculator.json';
 import dateDifferenceDaysCalculatorSchema from './data/calculators/date-difference-days-calculator.json';
@@ -398,23 +329,11 @@ import businessWorkingDaysCalculatorSchema from './data/calculators/business-wor
 import workHoursTimesheetCalculatorSchema from './data/calculators/work-hours-timesheet-calculator.json';
 import timeDurationAdditionCalculatorSchema from './data/calculators/time-duration-addition-calculator.json';
 import timeZoneDifferenceCalculatorSchema from './data/calculators/time-zone-difference-calculator.json';
+import timeZoneCalculatorSchema from './data/calculators/time-zone-calculator.json';
 import pregnancyDueDateCalendarCalculatorSchema from './data/calculators/pregnancy-due-date-calendar-calculator.json';
 import dayOfWeekBornCalculatorSchema from './data/calculators/day-of-week-born-calculator.json';
-import chronologicalAgeMonthsCalculatorSchema from './data/calculators/chronological-age-months-calculator.json';
-
-// Expansión Educación y Universidad (Bloque 3)
-import gpaWeightedCalculatorSchema from './data/calculators/gpa-weighted-calculator.json';
-import finalGradeRequiredCalculatorSchema from './data/calculators/final-grade-required-calculator.json';
-import gradePercentageLetterConverterSchema from './data/calculators/grade-percentage-letter-converter.json';
-import weightedClassGradeCalculatorSchema from './data/calculators/weighted-class-grade-calculator.json';
-import highSchoolGpaUnweightedCalculatorSchema from './data/calculators/high-school-gpa-unweighted-calculator.json';
-import collegeCreditsCompletionCalculatorSchema from './data/calculators/college-credits-completion-calculator.json';
-import testScorePercentageCalculatorSchema from './data/calculators/test-score-percentage-calculator.json';
-import gpaScaleConverterCalculatorSchema from './data/calculators/gpa-scale-converter-calculator.json';
-import studyTimePerCreditCalculatorSchema from './data/calculators/study-time-per-credit-calculator.json';
-import quizWrongAnswersPenaltyCalculatorSchema from './data/calculators/quiz-wrong-answers-penalty-calculator.json';
-
-// Expansión Transporte y Vehículos (Lote Final de 10)
+import chronologicalAgeMonthsCalculatorSchema from './data/calculators/chronologicalAgeMonths-calculator.json';
+// Expansión Transporte y Vehículos (Bloque 3)
 import worldCitiesFlightDistanceCalculatorSchema from './data/calculators/world-cities-flight-distance-calculator.json';
 import tripFuelCostCalculatorSchema from './data/calculators/trip-fuel-cost-calculator.json';
 import gasMileageMpgL100kmCalculatorSchema from './data/calculators/gas-mileage-mpg-l100km-calculator.json';
@@ -441,285 +360,223 @@ const RAW_CALCULATORS = [
   houseAffordabilityCalculatorSchema,
   rentCalculatorSchema,
   dtiRatioCalculatorSchema,
-  realEstateCalculatorSchema,
-  refinanceCalculatorSchema,
-  rentalPropertyCalculatorSchema,
-  aprCalculatorSchema,
-  fhaLoanCalculatorSchema,
-  vaMortgageCalculatorSchema,
-  homeEquityCalculatorSchema,
-  helocCalculatorSchema,
-  downPaymentCalculatorSchema,
-  rentVsBuyCalculatorSchema,
-  autoLeaseCalculatorSchema,
-  cashbackVsLowInterestCalculatorSchema,
+  debtSnowballCalculatorSchema,
+  creditCardPayoffCalculatorSchema,
+  studentLoanPayoffCalculatorSchema,
+  personalLoanCalculatorSchema,
+  inflationCalculatorSchema,
+  emergencyFundCalculatorSchema,
   simpleInterestCalculatorSchema,
-  investmentCalculatorSchema,
-  cdCalculatorSchema,
-  bondCalculatorSchema,
-  mutualFundCalculatorSchema,
-  averageReturnCalculatorSchema,
-  irrCalculatorSchema,
-  paybackPeriodCalculatorSchema,
+  netWorthCalculatorSchema,
+  investmentReturnCalculatorSchema,
+  dividendYieldCalculatorSchema,
+  stockProfitCalculatorSchema,
+  cryptoProfitCalculatorSchema,
+  cagrCalculatorSchema,
+  ruleOf72CalculatorSchema,
   presentValueCalculatorSchema,
   futureValueCalculatorSchema,
-  savingsCalculatorSchema,
-  pensionCalculatorSchema,
-  annuityPayoutCalculatorSchema,
-  rothIraCalculatorSchema,
-  iraCalculatorSchema,
-  rmdCalculatorSchema,
-  socialSecurityCalculatorSchema,
-  fireCalculatorSchema,
-  estateTaxCalculatorSchema,
-  inflationCalculatorSchema,
-  salesTaxCalculatorSchema,
-  creditCardPayoffCalculatorSchema,
-  personalLoanCalculatorSchema,
-  studentLoanCalculatorSchema,
-  debtPayoffCalculatorSchema,
-  balanceTransferCalculatorSchema,
-  breakEvenCalculatorSchema,
-  marginCalculatorSchema,
-  ebitdaCalculatorSchema,
-  dcfCalculatorSchema,
-  businessLoanCalculatorSchema,
-  commissionCalculatorSchema,
   npvCalculatorSchema,
-  workingCapitalCalculatorSchema,
-  burnRateCalculatorSchema,
-  financialRatiosCalculatorSchema,
-  // Lote 1 Salud / Fitness / Nutrición
-  calorieCalculatorSchema,
-  bodyFatCalculatorSchema,
+  irrCalculatorSchema,
+  salesTaxCalculatorSchema,
+  vatCalculatorSchema,
+  capitalGainsTaxCalculatorSchema,
+  propertyTaxCalculatorSchema,
+  calorieNeedsSchema,
+  macroNutrientSchema,
+  bodyFatSchema,
   bmrCalculatorSchema,
-  macroCalculatorSchema,
-  idealWeightCalculatorSchema,
-  // Lote 2 Salud / Fitness / Nutrición
-  pregnancyCalculatorSchema,
-  pregnancyWeightGainCalculatorSchema,
-  pregnancyConceptionCalculatorSchema,
-  dueDateCalculatorSchema,
-  paceCalculatorSchema,
-  pregnancyUltrasoundCalculatorSchema,
-  // Lote 3 Salud / Fitness / Nutrición
-  armyBodyFatCalculatorSchema,
-  carbohydrateCalculatorSchema,
-  leanBodyMassCalculatorSchema,
-  healthyWeightCalculatorSchema,
-  caloriesBurnedCalculatorSchema,
-  // Lote 4 Salud / Fitness / Nutrición
-  oneRepMaxCalculatorSchema,
-  targetHeartRateCalculatorSchema,
-  proteinCalculatorSchema,
-  fatIntakeCalculatorSchema,
   tdeeCalculatorSchema,
-  // Lote 5 Salud / Fitness / Nutrición
-  waterIntakeCalculatorSchema,
-  bmiPrimeCalculatorSchema,
-  bodyAdiposityIndexCalculatorSchema,
-  waistToHeightRatioCalculatorSchema,
+  idealBodyWeightCalculatorSchema,
+  leanBodyMassCalculatorSchema,
   waistToHipRatioCalculatorSchema,
-  // Lote 6 Salud / Fitness / Nutrición
-  sleepCalculatorSchema,
-  pediatricBmiCalculatorSchema,
-  targetWeightCalculatorSchema,
+  waistToHeightRatioCalculatorSchema,
+  bodySurfaceAreaCalculatorSchema,
+  waterIntakeCalculatorSchema,
+  targetHeartRateCalculatorSchema,
   vo2MaxCalculatorSchema,
-  runningRacePredictorCalculatorSchema,
-  // Lote 7 Salud (Expansión Categoría Health)
-  ovulationCalculatorSchema,
-  bloodPressureCalculatorSchema,
-  bloodSugarConverterCalculatorSchema,
-  chronotypeSleepCalculatorSchema,
-  childHeightPredictorCalculatorSchema,
-  // Lote 8 Fitness (Expansión Categoría Fitness)
-  ffmiCalculatorSchema,
-  wilksCalculatorSchema,
-  creatineDosingCalculatorSchema,
-  heartRateRunningZonesCalculatorSchema,
-  treadmillInclineCalculatorSchema,
-  // Lote 9 Nutrición (Expansión Categoría Food)
-  glycemicIndexLoadCalculatorSchema,
-  electrolyteIntakeCalculatorSchema,
-  ketoCalculatorSchema,
-  intermittentFastingCalculatorSchema,
-  cookingUnitsConverterCalculatorSchema,
-  // Lote 10 Médica / Nefrología (Expansión Health Indicators)
-  egfrCkdEpiCalculatorSchema,
-  creatinineClearanceCockcroftGaultCalculatorSchema,
-  fenaFractionalExcretionSodiumCalculatorSchema,
-  anionGapCorrectedCalculatorSchema,
-  correctedCalciumAlbuminCalculatorSchema,
-  // Lote 11 Médica / Cardiología & Urgencias (Expansión Health Indicators)
-  chads2VascScoreCalculatorSchema,
-  hasBledScoreCalculatorSchema,
-  heartScoreCardiacRiskCalculatorSchema,
-  qtcIntervalCalculatorSchema,
-  astrupBloodGasInterpreterCalculatorSchema,
-  // Lote 12 Urgencias, Hepatología y Neurología Intensiva (Expansión Health Indicators)
-  wellsScoreDvtPeCalculatorSchema,
-  curb65PneumoniaSeverityCalculatorSchema,
-  childPughScoreCalculatorSchema,
-  meldScoreCalculatorSchema,
-  glasgowComaScaleGcsCalculatorSchema,
-  // Lote 13 Sepsis, Pediatría y Fluidoterapia Hospitalaria (Expansión Health Indicators)
-  sofaScoreSepsisCalculatorSchema,
-  pao2Fio2RatioPafiCalculatorSchema,
-  hollidaySegarMaintenanceFluidsCalculatorSchema,
-  apgarScoreCalculatorSchema,
-  pediatricDosingWeightCalculatorSchema,
-  // Lote 1 Matemáticas & Aritmética Fundamental
+  oneRepMaxCalculatorSchema,
+  paceCalculatorSchema,
+  caloriesBurnedRunningCalculatorSchema,
+  caloriesBurnedWalkingCalculatorSchema,
+  caloriesBurnedCyclingCalculatorSchema,
+  caloriesBurnedSwimmingCalculatorSchema,
+  stepsToMilesKmCalculatorSchema,
+  pregnancyDueDateCalculatorSchema,
+  ovulationFertilityCalculatorSchema,
+  periodTrackerCycleCalculatorSchema,
+  bloodPressureCategoryCalculatorSchema,
+  bloodSugarA1cConverterSchema,
+  gfrKidneyFunctionCalculatorSchema,
+  cholesterolRatiosCalculatorSchema,
+  meanArterialPressureCalculatorSchema,
+  ivDripRateCalculatorSchema,
+  pediatricDosageByWeightCalculatorSchema,
   fractionCalculatorSchema,
-  ratioCalculatorSchema,
-  rootCalculatorSchema,
-  exponentCalculatorSchema,
-  logCalculatorSchema,
-  // Lote 2 Teoría de Números y Divisibilidad
-  lcmCalculatorSchema,
-  gcfCalculatorSchema,
-  factorCalculatorSchema,
-  primeFactorizationCalculatorSchema,
-  longDivisionCalculatorSchema,
-  // Lote 3 Álgebra, Ecuaciones y Funciones
-  quadraticFormulaCalculatorSchema,
-  slopeCalculatorSchema,
-  matrixCalculatorSchema,
-  numberSequenceCalculatorSchema,
-  percentErrorCalculatorSchema,
-  // Lote 4 Geometría Plana y Trigonometría
-  triangleCalculatorSchema,
-  rightTriangleCalculatorSchema,
-  pythagoreanTheoremCalculatorSchema,
-  circleCalculatorSchema,
-  distanceCalculatorSchema,
-  // Lote 5 Geometría 3D, Áreas, Volúmenes y Cálculo Científico
+  scientificNotationCalculatorSchema,
+  matrixMultiplicationCalculatorSchema,
+  quadraticEquationSolverSchema,
   areaCalculatorSchema,
   volumeCalculatorSchema,
-  surfaceAreaCalculatorSchema,
-  scientificCalculatorSchema,
-  roundingCalculatorSchema,
-  // Lote 6 Estadística Descriptiva y Promedios
-  meanMedianModeRangeCalculatorSchema,
-  standardDeviationCalculatorSchema,
-  averageCalculatorSchema,
-  zScoreCalculatorSchema,
-  statisticsCalculatorSchema,
-  // Lote 7 Probabilidad, Combinatoria e Inferencia
-  probabilityCalculatorSchema,
-  permutationAndCombinationCalculatorSchema,
-  sampleSizeCalculatorSchema,
-  confidenceIntervalCalculatorSchema,
-  pValueCalculatorSchema,
-  // Lote 8 Sistemas Numéricos y Notación Científica
-  binaryCalculatorSchema,
-  hexCalculatorSchema,
-  scientificNotationCalculatorSchema,
-  bigNumberCalculatorSchema,
-  randomNumberGeneratorSchema,
-  // Lote 9 Física-Química Nuclear, Porcentaje Avanzado y Hub de Matemáticas
-  halfLifeCalculatorSchema,
-  commonFactorCalculatorSchema,
-  basicCalculatorSchema,
-  percentageCalculatorAdvancedSchema,
-  mathCalculatorsHubSchema,
-  // Nuevo Lote 1 Tiempo, Fechas y Vida Cotidiana
-  ageCalculatorSchema,
-  dateCalculatorSchema,
-  timeCalculatorSchema,
-  hoursCalculatorSchema,
-  timeDurationCalculatorSchema,
-  dayCounterSchema,
-  // Nuevo Lote 2 Educación, Estilo de Vida & Entretenimiento
-  dayOfTheWeekCalculatorSchema,
-  gpaCalculatorSchema,
-  gradeCalculatorSchema,
-  heightCalculatorSchema,
-  braSizeCalculatorSchema,
-  loveCalculatorSchema,
-  // Nuevo Lote 3 Construcción & Vivienda
-  concreteCalculatorSchema,
-  squareFootageCalculatorSchema,
-  stairCalculatorSchema,
-  roofingCalculatorSchema,
-  tileCalculatorSchema,
-  mulchCalculatorSchema,
-  // Nuevo Lote 4 Jardinería, Ingeniería & Utilidades
-  gravelCalculatorSchema,
-  btuCalculatorSchema,
-  electricityCalculatorSchema,
-  fuelCostCalculatorSchema,
-  gasMileageCalculatorSchema,
-  mileageCalculatorSchema,
-  // Nuevo Lote 5 Automotriz & Ingeniería Eléctrica
-  horsepowerCalculatorSchema,
-  engineHorsepowerCalculatorSchema,
-  tireSizeCalculatorSchema,
-  voltageDropCalculatorSchema,
-  ohmsLawCalculatorSchema,
-  resistorCalculatorSchema,
-  // Nuevo Lote 6 Ciencias Físicas & Química
-  densityCalculatorSchema,
-  massCalculatorSchema,
-  weightCalculatorSchema,
-  speedCalculatorSchema,
-  molarityCalculatorSchema,
-  molecularWeightCalculatorSchema,
-  // Nuevo Lote 7 Meteorología, Salud & Deportes
-  windChillCalculatorSchema,
-  heatIndexCalculatorSchema,
-  dewPointCalculatorSchema,
-  sleepCycleCalculatorSchema,
-  golfHandicapCalculatorSchema,
-  shoeSizeConversionSchema,
-  // Nuevo Lote 8 Tecnología, Redes & Seguridad
-  ipSubnetCalculatorSchema,
-  bandwidthCalculatorSchema,
-  passwordGeneratorSchema,
-  base64EncodeDecodeSchema,
-  urlEncodeDecodeSchema,
-  diceRollerSchema,
-  // Nuevo Lote 9 Economía, Conversores & Hub Central de Herramientas
-  gdpCalculatorSchema,
-  tipCalculatorSchema,
-  conversionCalculatorSchema,
-  romanNumeralConverterSchema,
-  timeCardCalculatorSchema,
-  timeZoneCalculatorSchema,
-  otherCalculatorsHubSchema,
-  // Expansión Física (Bloque 1)
-  projectileMotionCalculatorSchema,
+  speedVelocityCalculatorSchema,
+  accelerationCalculatorSchema,
+  forceMassAccelerationCalculatorSchema,
+  workEnergyCalculatorSchema,
   kineticEnergyCalculatorSchema,
   potentialEnergyCalculatorSchema,
-  centripetalForceCalculatorSchema,
-  frictionCalculatorSchema,
-  workEnergyCalculatorSchema,
-  freeFallCalculatorSchema,
-  pendulumCalculatorSchema,
-  snellsLawCalculatorSchema,
-  waveSpeedCalculatorSchema,
-  // Expansión Química (Bloque 2)
-  phCalculatorSchema,
+  powerWorkTimeCalculatorSchema,
+  momentumMassVelocityCalculatorSchema,
+  torqueForceDistanceCalculatorSchema,
+  pressureForceAreaCalculatorSchema,
+  densityMassVolumeCalculatorSchema,
   idealGasLawCalculatorSchema,
-  solutionDilutionCalculatorSchema,
-  halfLifeDecayCalculatorSchema,
   boylesLawCalculatorSchema,
-  charlesLawCalculatorSchema,
-  percentYieldCalculatorSchema,
-  massPercentCalculatorSchema,
-  combustionStoichiometricCalculatorSchema,
-  bufferSolutionCalculatorSchema,
-  // Expansión Ingeniería (Bloque 3)
+  ohmsLawCalculatorSchema,
+  meanMedianModeSchema,
+  standardDeviationCalculatorSchema,
+  zScoreCalculatorSchema,
+  confidenceIntervalCalculatorSchema,
+  marginOfErrorCalculatorSchema,
+  sampleSizeCalculatorSchema,
+  pValueCalculatorSchema,
+  simpleProbabilityCalculatorSchema,
+  combinationsPermutationsCalculatorSchema,
+  coinFlipProbabilityCalculatorSchema,
+  diceRollProbabilityCalculatorSchema,
+  concreteVolumeCalculatorSchema,
   beamDeflectionCalculatorSchema,
-  pipeFlowHydraulicCalculatorSchema,
+  pipeFlowRateCalculatorSchema,
+  heatLossCalculatorSchema,
+  molesToGramsCalculatorSchema,
+  molarityCalculatorSchema,
+  solutionDilutionCalculatorSchema,
+  phCalculatorSchema,
+  halfLifeCalculatorSchema,
+  radioactiveDecayCalculatorSchema,
+  stoichiometryCalculatorSchema,
+  percentYieldCalculatorSchema,
+  empiricalFormulaCalculatorSchema,
+  gasLawCombinedCalculatorSchema,
+  pendulumPeriodCalculatorSchema,
+  snellsLawRefractionCalculatorSchema,
+  projectileMotionCalculatorSchema,
+  dopplerEffectCalculatorSchema,
+  gravitationalForceCalculatorSchema,
+  coulombLawCalculatorSchema,
+  waveSpeedCalculatorSchema,
+  bernoulliPressureCalculatorSchema,
+  CarnotEfficiencyCalculatorSchema,
+  photonEnergyCalculatorSchema,
+  varianceCalculatorSchema,
+  interquartileRangeIqrCalculatorSchema,
+  percentileRankCalculatorSchema,
+  linearRegressionCalculatorSchema,
+  chiSquareTestCalculatorSchema,
+  tTestOneSampleCalculatorSchema,
+  binomialDistributionCalculatorSchema,
+  poissonDistributionCalculatorSchema,
+  normalDistributionCdfCalculatorSchema,
+  bayesTheoremCalculatorSchema,
+  logarithmCalculatorSchema,
+  exponentPowerCalculatorSchema,
+  factorCalculatorSchema,
+  gcdLcmCalculatorSchema,
+  primeFactorizationCalculatorSchema,
+  percentageDifferenceCalculatorSchema,
+  percentageChangeCalculatorSchema,
+  ratioCalculatorSchema,
+  ruleOfThreeCalculatorSchema,
+  averageCalculatorSchema,
+  pythagoreanTheoremCalculatorSchema,
+  circleCalculatorSchema,
+  triangleCalculatorSchema,
+  rectangleCalculatorSchema,
+  cylinderVolumeAreaCalculatorSchema,
+  sphereVolumeAreaCalculatorSchema,
+  coneVolumeAreaCalculatorSchema,
+  distanceBetweenTwoPointsCalculatorSchema,
+  midpointCalculatorSchema,
+  slopeOfLineCalculatorSchema,
+  kidneyStoneRecurrenceScoreCalculatorSchema,
+  glasgowComaScaleCalculatorSchema,
+  apgarScoreCalculatorSchema,
+  chadsvascScoreCalculatorSchema,
+  meldScoreCalculatorSchema,
+  childPughScoreCalculatorSchema,
+  wellsScoreDvtPeCalculatorSchema,
+  curb65PneumoniaScoreCalculatorSchema,
+  hasBledBleedingRiskCalculatorSchema,
+  graceAcuteCoronaryScoreCalculatorSchema,
+  timiRiskScoreCalculatorSchema,
+  apacheIiSeverityCalculatorSchema,
+  sofaOrganFailureCalculatorSchema,
+  qsofaSepsisCalculatorSchema,
+  nihssStrokeScaleCalculatorSchema,
+  ketoMacronutrientCalculatorSchema,
+  intermittentFastingWindowCalculatorSchema,
+  proteinIntakeBySportCalculatorSchema,
+  carbCyclingPlanCalculatorSchema,
+  glycemicLoadCalculatorSchema,
+  wilksCalculatorSchema,
+  rpeLoadCalculatorSchema,
+  marathonPaceSplitsCalculatorSchema,
+  ftpCyclingPowerCalculatorSchema,
+  heartRateZoneCalculatorSchema,
+  ffmiFatFreeMassCalculatorSchema,
+  bodyAdiposityIndexCalculatorSchema,
+  waistToHeightRatioRiskCalculatorSchema,
+  somatotypeCalculatorSchema,
+  electrolyteReplenishmentCalculatorSchema,
+  roicCalculatorSchema,
+  waccCalculatorSchema,
+  dupontAnalysisCalculatorSchema,
+  dcfValuationCalculatorSchema,
+  evEbitdaMultipleCalculatorSchema,
+  blackScholesOptionCalculatorSchema,
+  sharpeRatioCalculatorSchema,
+  sortinoRatioCalculatorSchema,
+  betaStockCalculatorSchema,
+  bondYieldToMaturityCalculatorSchema,
+  bondDurationConvexityCalculatorSchema,
+  capmRequiredReturnCalculatorSchema,
+  freeCashFlowCalculatorSchema,
+  workingCapitalCalculatorSchema,
+  altmanZScoreCalculatorSchema,
+  fhaMortgageCalculatorSchema,
+  vaMortgageCalculatorSchema,
+  usdaMortgageCalculatorSchema,
+  jumboMortgageCalculatorSchema,
+  helocPaymentCalculatorSchema,
+  reverseMortgageCalculatorSchema,
+  biweeklyMortgageCalculatorSchema,
+  interestOnlyMortgageCalculatorSchema,
+  balloonLoanCalculatorSchema,
+  commercialRealEstateLoanCalculatorSchema,
+  leaseVsBuyCarCalculatorSchema,
+  autoRefinanceSavingsCalculatorSchema,
+  debtConsolidationCalculatorSchema,
+  paydayLoanAprCalculatorSchema,
+  loanOriginationFeeCalculatorSchema,
+  voltageDropCalculatorSchema,
+  wireGaugeAmpacityCalculatorSchema,
+  threePhasePowerCalculatorSchema,
+  powerFactorCorrectionCalculatorSchema,
+  transformerSizingCalculatorSchema,
+  kvaToKwCalculatorSchema,
+  conduitFillCalculatorSchema,
+  shortCircuitCurrentCalculatorSchema,
+  resLcrResonanceCalculatorSchema,
+  batteryBankSizingCalculatorSchema,
   reynoldsNumberCalculatorSchema,
-  heatTransferConductionCalculatorSchema,
-  stressStrainCalculatorSchema,
+  darcyWeisbachFrictionCalculatorSchema,
   hydraulicCylinderForceCalculatorSchema,
+  pumpHeadHorsepowerCalculatorSchema,
   gearRatioSpeedCalculatorSchema,
-  thermalExpansionLinearCalculatorSchema,
-  transformerTurnsRatioCalculatorSchema,
+  beltLengthPulleyCalculatorSchema,
+  thermalExpansionCalculatorSchema,
+  hvacBtuCoolingCalculatorSchema,
+  psychrometricAirCalculatorSchema,
   airDuctSizingCalculatorSchema,
-  // Expansión Construcción y Reformas (Bloque 1)
   wallFramingStudsCalculatorSchema,
   drywallSheetsCalculatorSchema,
   paintCoverageCalculatorSchema,
@@ -730,7 +587,6 @@ const RAW_CALCULATORS = [
   pavingAsphaltCalculatorSchema,
   fenceMaterialsCalculatorSchema,
   retainingWallCalculatorSchema,
-  // Expansión Hogar y Vida Cotidiana (Bloque 2)
   solarPanelPaybackCalculatorSchema,
   applianceEnergyCostCalculatorSchema,
   lawnMowingAreaCalculatorSchema,
@@ -741,7 +597,6 @@ const RAW_CALCULATORS = [
   boardGameScoreCalculatorSchema,
   waterHeaterEnergyCalculatorSchema,
   compostCnRatioCalculatorSchema,
-  // Expansión Tecnología y Electrónica (Bloque 3)
   ledResistorCalculatorSchema,
   batteryLifeRuntimeCalculatorSchema,
   capacitorEnergyChargeCalculatorSchema,
@@ -752,7 +607,6 @@ const RAW_CALCULATORS = [
   pcbTraceCurrentWidthCalculatorSchema,
   attenuatorDbCalculatorSchema,
   raidStorageCapacityCalculatorSchema,
-  // Expansión Conversores (Bloque 1)
   lengthDistanceConverterSchema,
   massWeightConverterSchema,
   volumeLiquidConverterSchema,
@@ -768,7 +622,6 @@ const RAW_CALCULATORS = [
   currencyExchangeRateConverterSchema,
   dataTransferRateConverterSchema,
   cookingLiquidMeasurementConverterSchema,
-  // Expansión Fecha y Tiempo (Bloque 2)
   exactAgeCalculatorSchema,
   dateDifferenceDaysCalculatorSchema,
   dateAddSubtractDaysCalculatorSchema,
@@ -776,21 +629,10 @@ const RAW_CALCULATORS = [
   workHoursTimesheetCalculatorSchema,
   timeDurationAdditionCalculatorSchema,
   timeZoneDifferenceCalculatorSchema,
+  timeZoneCalculatorSchema,
   pregnancyDueDateCalendarCalculatorSchema,
   dayOfWeekBornCalculatorSchema,
   chronologicalAgeMonthsCalculatorSchema,
-  // Expansión Educación y Universidad (Bloque 3)
-  gpaWeightedCalculatorSchema,
-  finalGradeRequiredCalculatorSchema,
-  gradePercentageLetterConverterSchema,
-  weightedClassGradeCalculatorSchema,
-  highSchoolGpaUnweightedCalculatorSchema,
-  collegeCreditsCompletionCalculatorSchema,
-  testScorePercentageCalculatorSchema,
-  gpaScaleConverterCalculatorSchema,
-  studyTimePerCreditCalculatorSchema,
-  quizWrongAnswersPenaltyCalculatorSchema,
-  // Expansión Transporte y Vehículos (Lote Final de 10)
   worldCitiesFlightDistanceCalculatorSchema,
   tripFuelCostCalculatorSchema,
   gasMileageMpgL100kmCalculatorSchema,
@@ -824,16 +666,61 @@ export default function App() {
     return translateSchema(activeCalculatorRaw, lang);
   }, [activeCalculatorRaw, lang]);
 
+  // Sincronizar estado de la App con la URL del navegador y soporte de Botón Atrás (popstate)
+  const syncRouteFromUrl = () => {
+    const path = window.location.pathname.replace(/\/$/, '') || '/';
+    const parts = path.split('/').filter(Boolean);
+
+    if (parts.length === 0) {
+      setViewMode('home');
+      setActiveCategory(null);
+      setActiveCalculatorRaw(null);
+      setLegalModal(null);
+    } else if (parts[0] === 'privacy' || parts[0] === 'terms' || parts[0] === 'about') {
+      setLegalModal(parts[0]);
+    } else if (parts.length === 1) {
+      const catId = parts[0];
+      setActiveCategory(catId);
+      setViewMode('category');
+      setActiveCalculatorRaw(null);
+      setLegalModal(null);
+    } else if (parts.length === 2) {
+      const catId = parts[0];
+      const calcSlug = parts[1];
+      const found = RAW_CALCULATORS.find((c) => c.meta.slug === calcSlug || c.meta.id === calcSlug);
+      if (found) {
+        setActiveCategory(catId);
+        setActiveCalculatorRaw(found);
+        setViewMode('calculator');
+        setLegalModal(null);
+      } else {
+        setActiveCategory(catId);
+        setViewMode('category');
+      }
+    }
+  };
+
+  useEffect(() => {
+    syncRouteFromUrl();
+    const handlePopState = () => {
+      syncRouteFromUrl();
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
   // Actualizar document.title y Meta SEO dinámicamente
   useEffect(() => {
     if (viewMode === 'calculator' && activeCalculator) {
-      document.title = `${activeCalculator.meta.title} — CalculadoraHub`;
+      document.title = `${activeCalculator.meta.title} — FindCalculator`;
     } else if (viewMode === 'category' && activeCategory) {
-      document.title = `${activeCategory.toUpperCase()} Calculators — CalculadoraHub`;
+      document.title = `${activeCategory.toUpperCase()} Calculators — FindCalculator`;
+    } else if (legalModal) {
+      document.title = `${legalModal.toUpperCase()} — FindCalculator`;
     } else {
-      document.title = `CalculadoraHub — Fast & Precise Online Calculators`;
+      document.title = `FindCalculator — 330+ Calculadoras Gratis en Tiempo Real`;
     }
-  }, [viewMode, activeCalculator, activeCategory, lang]);
+  }, [viewMode, activeCalculator, activeCategory, legalModal, lang]);
 
   // Toggle de Idioma EN <-> ES
   const toggleLang = () => {
@@ -850,23 +737,61 @@ export default function App() {
     }
   };
 
-  const handleGoHome = () => {
+  const handleGoHome = (pushUrl = true) => {
+    if (pushUrl && window.location.pathname !== '/') {
+      window.history.pushState({}, '', '/');
+    }
     setViewMode('home');
     setActiveCategory(null);
     setActiveCalculatorRaw(null);
+    setLegalModal(null);
     setSearchQuery('');
   };
 
-  const handleSelectCategory = (catId) => {
+  const handleSelectCategory = (catId, pushUrl = true) => {
+    if (pushUrl && window.location.pathname !== `/${catId}`) {
+      window.history.pushState({}, '', `/${catId}`);
+    }
     setActiveCategory(catId);
     setViewMode('category');
     setActiveCalculatorRaw(null);
+    setLegalModal(null);
   };
 
-  const handleSelectCalculator = (calc) => {
+  const handleSelectCalculator = (calc, pushUrl = true) => {
     const original = RAW_CALCULATORS.find((c) => c.meta.id === calc.meta.id) || calc;
+    const cat = original.meta.category || 'herramientas';
+    const slug = original.meta.slug || original.meta.id;
+
+    if (pushUrl && window.location.pathname !== `/${cat}/${slug}`) {
+      window.history.pushState({}, '', `/${cat}/${slug}`);
+    }
     setActiveCalculatorRaw(original);
     setViewMode('calculator');
+    setLegalModal(null);
+  };
+
+  const handleOpenLegal = (type, pushUrl = true) => {
+    if (pushUrl && window.location.pathname !== `/${type}`) {
+      window.history.pushState({}, '', `/${type}`);
+    }
+    setLegalModal(type);
+  };
+
+  const handleCloseLegal = () => {
+    setLegalModal(null);
+    if (['/privacy', '/terms', '/about'].includes(window.location.pathname)) {
+      window.history.back();
+    }
+  };
+
+  // Función al presionar el botón de Atrás en la interfaz
+  const handleBackToCategoryOrHome = () => {
+    if (viewMode === 'calculator' && activeCategory) {
+      handleSelectCategory(activeCategory);
+    } else {
+      handleGoHome();
+    }
   };
 
   return (
@@ -892,8 +817,8 @@ export default function App() {
           {viewMode === 'calculator' && activeCalculator ? (
             <div>
               <div style={{ maxWidth: '1200px', margin: '16px auto 0', padding: '0 16px' }}>
-                <button onClick={handleGoHome} className="btn-secondary" style={{ height: '32px', fontSize: '0.8125rem' }}>
-                  {t.nav.backToCatalog}
+                <button onClick={handleBackToCategoryOrHome} className="btn-secondary" style={{ height: '32px', fontSize: '0.8125rem' }}>
+                  ← {t.nav.backToCatalog}
                 </button>
               </div>
 
@@ -920,10 +845,10 @@ export default function App() {
         </main>
 
         {/* Footer global */}
-        <Footer lang={lang} onOpenLegal={(type) => setLegalModal(type)} />
+        <Footer lang={lang} onOpenLegal={(type) => handleOpenLegal(type)} />
 
-        {/* Modal de Páginas Legales Requeridas por Google AdSense */}
-        <LegalPages type={legalModal} onClose={() => setLegalModal(null)} lang={lang} />
+        {/* Modal/Páginas Legales Requeridas por Google AdSense */}
+        <LegalPages type={legalModal} onClose={handleCloseLegal} lang={lang} />
       </div>
     </ErrorBoundary>
   );
