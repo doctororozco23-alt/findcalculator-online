@@ -5,11 +5,6 @@ import { i18n } from '../data/i18n';
 export default function Footer({ lang }) {
   const t = i18n[lang] || i18n.en;
 
-  const navigateTo = (e, url) => {
-    e.preventDefault();
-    window.location.href = url;
-  };
-
   return (
     <footer
       style={{
@@ -72,24 +67,24 @@ export default function Footer({ lang }) {
           <div style={{ display: 'flex', gap: '20px' }}>
             <a
               href="/privacy.html"
-              onClick={(e) => navigateTo(e, '/privacy.html')}
-              style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)' }}
+              target="_self"
+              style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)', fontWeight: 600 }}
             >
-              {t.footer.privacy}
+              Privacy Policy
             </a>
             <a
               href="/terms.html"
-              onClick={(e) => navigateTo(e, '/terms.html')}
-              style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)' }}
+              target="_self"
+              style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)', fontWeight: 600 }}
             >
-              {t.footer.terms}
+              Terms of Use
             </a>
             <a
               href="/about.html"
-              onClick={(e) => navigateTo(e, '/about.html')}
-              style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)' }}
+              target="_self"
+              style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)', fontWeight: 600 }}
             >
-              {t.footer.about}
+              About Us
             </a>
           </div>
         </div>
