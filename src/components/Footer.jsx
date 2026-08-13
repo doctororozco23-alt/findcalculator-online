@@ -5,6 +5,11 @@ import { i18n } from '../data/i18n';
 export default function Footer({ lang }) {
   const t = i18n[lang] || i18n.en;
 
+  const navigateTo = (e, url) => {
+    e.preventDefault();
+    window.location.href = url;
+  };
+
   return (
     <footer
       style={{
@@ -66,19 +71,22 @@ export default function Footer({ lang }) {
           </div>
           <div style={{ display: 'flex', gap: '20px' }}>
             <a
-              href="/privacy/"
+              href="/privacy.html"
+              onClick={(e) => navigateTo(e, '/privacy.html')}
               style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)' }}
             >
               {t.footer.privacy}
             </a>
             <a
-              href="/terms/"
+              href="/terms.html"
+              onClick={(e) => navigateTo(e, '/terms.html')}
               style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)' }}
             >
               {t.footer.terms}
             </a>
             <a
-              href="/about/"
+              href="/about.html"
+              onClick={(e) => navigateTo(e, '/about.html')}
               style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)' }}
             >
               {t.footer.about}
