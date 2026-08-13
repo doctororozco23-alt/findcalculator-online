@@ -2,7 +2,7 @@ import React from 'react';
 import { ShieldCheck, Cpu, Clock } from 'lucide-react';
 import { i18n } from '../data/i18n';
 
-export default function Footer({ lang }) {
+export default function Footer({ lang, onOpenLegal }) {
   const t = i18n[lang] || i18n.en;
 
   return (
@@ -62,12 +62,27 @@ export default function Footer({ lang }) {
           }}
         >
           <div>
-            © {new Date().getFullYear()} <strong>CalculadoraHub v1.0</strong>. {t.footer.rights}
+            © {new Date().getFullYear()} <strong>FindCalculator — findcalculator.online</strong>. {t.footer.rights}
           </div>
           <div style={{ display: 'flex', gap: '20px' }}>
-            <span style={{ cursor: 'pointer' }}>{t.footer.privacy}</span>
-            <span style={{ cursor: 'pointer' }}>{t.footer.terms}</span>
-            <span style={{ cursor: 'pointer' }}>{t.footer.about}</span>
+            <span
+              onClick={() => onOpenLegal && onOpenLegal('privacy')}
+              style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)' }}
+            >
+              {t.footer.privacy}
+            </span>
+            <span
+              onClick={() => onOpenLegal && onOpenLegal('terms')}
+              style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)' }}
+            >
+              {t.footer.terms}
+            </span>
+            <span
+              onClick={() => onOpenLegal && onOpenLegal('about')}
+              style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)' }}
+            >
+              {t.footer.about}
+            </span>
           </div>
         </div>
       </div>

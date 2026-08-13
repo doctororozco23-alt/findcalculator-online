@@ -5,6 +5,7 @@ import CalculatorRenderer from './components/CalculatorRenderer';
 import HomeInteractive from './components/HomeInteractive';
 import CategoryView from './components/CategoryView';
 import ErrorBoundary from './components/ErrorBoundary';
+import LegalPages from './components/LegalPages';
 import { translateSchema } from './engine/translatorEngine';
 import { i18n } from './data/i18n';
 
@@ -809,6 +810,7 @@ export default function App() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCalculatorRaw, setActiveCalculatorRaw] = useState(null);
+  const [legalModal, setLegalModal] = useState(null); // 'privacy' | 'terms' | 'about'
 
   const t = i18n[lang] || i18n.en;
 
@@ -918,7 +920,10 @@ export default function App() {
         </main>
 
         {/* Footer global */}
-        <Footer lang={lang} />
+        <Footer lang={lang} onOpenLegal={(type) => setLegalModal(type)} />
+
+        {/* Modal de Páginas Legales Requeridas por Google AdSense */}
+        <LegalPages type={legalModal} onClose={() => setLegalModal(null)} lang={lang} />
       </div>
     </ErrorBoundary>
   );
