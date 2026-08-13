@@ -6,6 +6,7 @@ import HomeInteractive from './components/HomeInteractive';
 import CategoryView from './components/CategoryView';
 import ErrorBoundary from './components/ErrorBoundary';
 import LegalPages from './components/LegalPages';
+import LegalView from './components/LegalView';
 import { translateSchema } from './engine/translatorEngine';
 import { i18n } from './data/i18n';
 
@@ -814,7 +815,10 @@ export default function App() {
 
         {/* Contenido Principal según el Modo de Vista */}
         <main style={{ flex: 1 }}>
-          {viewMode === 'calculator' && activeCalculator ? (
+          {legalModal ? (
+            /* PÁGINAS LEÍBLES DEDICADAS (Privacy Policy, Terms of Use, About Us) */
+            <LegalView type={legalModal} onBackHome={handleGoHome} lang={lang} />
+          ) : viewMode === 'calculator' && activeCalculator ? (
             <div>
               <div style={{ maxWidth: '1200px', margin: '16px auto 0', padding: '0 16px' }}>
                 <button onClick={handleBackToCategoryOrHome} className="btn-secondary" style={{ height: '32px', fontSize: '0.8125rem' }}>

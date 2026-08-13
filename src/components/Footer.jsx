@@ -5,6 +5,13 @@ import { i18n } from '../data/i18n';
 export default function Footer({ lang, onOpenLegal }) {
   const t = i18n[lang] || i18n.en;
 
+  const handleLegalClick = (e, type) => {
+    e.preventDefault();
+    if (onOpenLegal) {
+      onOpenLegal(type);
+    }
+  };
+
   return (
     <footer
       style={{
@@ -65,24 +72,27 @@ export default function Footer({ lang, onOpenLegal }) {
             © {new Date().getFullYear()} <strong>FindCalculator — findcalculator.online</strong>. {t.footer.rights}
           </div>
           <div style={{ display: 'flex', gap: '20px' }}>
-            <span
-              onClick={() => onOpenLegal && onOpenLegal('privacy')}
+            <a
+              href="/privacy"
+              onClick={(e) => handleLegalClick(e, 'privacy')}
               style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)' }}
             >
               {t.footer.privacy}
-            </span>
-            <span
-              onClick={() => onOpenLegal && onOpenLegal('terms')}
+            </a>
+            <a
+              href="/terms"
+              onClick={(e) => handleLegalClick(e, 'terms')}
               style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)' }}
             >
               {t.footer.terms}
-            </span>
-            <span
-              onClick={() => onOpenLegal && onOpenLegal('about')}
+            </a>
+            <a
+              href="/about"
+              onClick={(e) => handleLegalClick(e, 'about')}
               style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)' }}
             >
               {t.footer.about}
-            </span>
+            </a>
           </div>
         </div>
       </div>
