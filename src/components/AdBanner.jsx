@@ -5,9 +5,10 @@ import React, { useEffect } from 'react';
  * Soporta modo vista previa (desarrollo) y producción real cuando introduzcas tu Client ID y Slot ID.
  */
 export default function AdBanner({
-  adClient = 'ca-pub-1369999948195621', // ID de Cliente de AdSense
-  adSlot = '9916108334',                 // ID de Bloque de Anuncio Horizontal de findcalculator.online
-  format = 'autorelaxed',
+  adClient = 'ca-pub-1369999948195621',
+  adSlot = '9916108334',
+  format = 'auto',
+  layout = '',
   responsive = 'true',
   style = { display: 'block', margin: '24px 0', textAlign: 'center' }
 }) {
@@ -46,16 +47,22 @@ export default function AdBanner({
     );
   }
 
+  const insProps = {
+    className: 'adsbygoogle',
+    style: { display: 'block', textAlign: 'center' },
+    'data-ad-client': adClient,
+    'data-ad-slot': adSlot,
+    'data-ad-format': format,
+    'data-full-width-responsive': responsive
+  };
+
+  if (layout) {
+    insProps['data-ad-layout'] = layout;
+  }
+
   return (
     <div style={style}>
-      <ins
-        className="adsbygoogle"
-        style={{ display: 'block' }}
-        data-ad-client={adClient}
-        data-ad-slot={adSlot}
-        data-ad-format={format}
-        data-full-width-responsive={responsive}
-      />
+      <ins {...insProps} />
     </div>
   );
 }

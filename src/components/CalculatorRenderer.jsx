@@ -197,8 +197,8 @@ export default function CalculatorRenderer({ schema, lang = 'en' }) {
           {schema.content.shortDescription}
         </p>
 
-        {/* Anuncio Superior AdSense */}
-        <AdBanner />
+        {/* Anuncio Superior AdSense (Horizontal) */}
+        <AdBanner adSlot="9916108334" format="autorelaxed" />
       </div>
 
       {/* Grid de Cálculo */}
@@ -264,8 +264,8 @@ export default function CalculatorRenderer({ schema, lang = 'en' }) {
         <TableRenderer tableDef={schema.tables[0]} rows={tableData} activeCurrency={activeCurrency} />
       )}
 
-      {/* Anuncio Intermedio AdSense */}
-      <AdBanner />
+      {/* Anuncio Intermedio AdSense (In-Article) */}
+      <AdBanner adSlot="2364921374" format="fluid" layout="in-article" />
 
       {/* Guía Educativa Profunda Adaptable por Calculadora (Pestañas por Dominio) */}
       <InDepthGuide guideSections={schema.guideSections} lang={lang} />
