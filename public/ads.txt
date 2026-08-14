@@ -1,3 +1,1 @@
-# Google AdSense Authorized Digital Sellers for findcalculator.online
-# Reemplazar pub-XXXXXXXXXXXXXXXX con tu ID de Publisher de AdSense (ej. pub-1234567890123456)
-google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+google.com, pub-1369999948195621, DIRECT, f08c47fec0942fa0

@@ -5,8 +5,8 @@ import React, { useEffect } from 'react';
  * Soporta modo vista previa (desarrollo) y producción real cuando introduzcas tu Client ID y Slot ID.
  */
 export default function AdBanner({
-  adClient = 'ca-pub-XXXXXXXXXXXXXXXX', // Reemplazar con tu ID de Cliente de AdSense al ser aprobado
-  adSlot = '',                          // Reemplazar con tu ID de Bloque de Anuncio
+  adClient = 'ca-pub-1369999948195621', // ID de Cliente de AdSense de findcalculator.online
+  adSlot = '',                          // Reemplazar con tu ID de Bloque de Anuncio si deseas bloques específicos
   format = 'auto',
   responsive = 'true',
   style = { display: 'block', margin: '24px 0', textAlign: 'center' }
