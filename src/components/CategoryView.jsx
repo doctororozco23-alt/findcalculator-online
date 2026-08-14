@@ -56,7 +56,7 @@ export default function CategoryView({ categoryId, lang = 'en', calculators, onS
         <span>Subcategories & Tools in {catName}</span>
       </h2>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '20px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
         {category.subcategories.map((sub) => {
           const subName = isEn ? sub.name_en || sub.name : sub.name;
           const subDesc = isEn ? sub.description_en || sub.description : sub.description;

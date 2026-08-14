@@ -202,7 +202,7 @@ export default function CalculatorRenderer({ schema, lang = 'en' }) {
       </div>
 
       {/* Grid de Cálculo */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px', alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', alignItems: 'start' }}>
         <div className="card">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
             <h3 style={{ fontSize: '1.125rem', fontWeight: 600 }}>{t.calculator.inputParameters}</h3>

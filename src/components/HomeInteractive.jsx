@@ -45,7 +45,7 @@ export default function HomeInteractive({ lang = 'en', calculators, onSelectCalc
             Results for "{searchQuery}" ({filteredCalculators.length})
           </h2>
           {filteredCalculators.length > 0 ? (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '20px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px' }}>
               {filteredCalculators.map((calc) => (
                 <div key={calc.meta.id} className="card" onClick={() => onSelectCalculator(calc)} style={{ cursor: 'pointer' }}>
                   <div style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
@@ -77,7 +77,7 @@ export default function HomeInteractive({ lang = 'en', calculators, onSelectCalc
             </span>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
             {taxonomy.categories.map((cat) => {
               const isExpanded = expandedCategory === cat.id;
               const catName = isEn ? cat.name_en || cat.name : cat.name;

@@ -171,8 +171,8 @@ export default function Header({
           </div>
         </div>
 
-        {/* Buscador Instantáneo Flotante Global */}
-        <div ref={searchContainerRef} style={{ flex: 1, maxWidth: '380px', position: 'relative' }}>
+        {/* Buscador Instantáneo Flotante Global (Desktop) */}
+        <div ref={searchContainerRef} style={{ flex: 1, maxWidth: '380px', position: 'relative' }} className="desktop-only">
           <Search size={16} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-disabled)' }} />
           <input
             type="text"
@@ -292,19 +292,69 @@ export default function Header({
           }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {/* Buscador Móvil Integrado */}
+            <div style={{ position: 'relative', width: '100%' }}>
+              <Search size={16} style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-disabled)' }} />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={t.nav.searchPlaceholder}
+                className="input-field"
+                style={{ paddingLeft: '38px', height: '44px', fontSize: '1rem' }}
+              />
+
+              {searchQuery.trim() && searchResults.length > 0 && (
+                <div
+                  style={{
+                    marginTop: '8px',
+                    backgroundColor: 'var(--surface-alt)',
+                    borderRadius: '8px',
+                    padding: '6px',
+                    maxHeight: '240px',
+                    overflowY: 'auto'
+                  }}
+                >
+                  {searchResults.map((calc) => (
+                    <div
+                      key={calc.meta.id}
+                      onClick={() => {
+                        onSelectCalculator(calc);
+                        setMobileMenuOpen(false);
+                      }}
+                      style={{
+                        padding: '10px',
+                        borderBottom: '1px solid var(--border)',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                      }}
+                    >
+                      <div>
+                        <div style={{ fontWeight: 600, fontSize: '0.875rem' }}>{calc.meta.title}</div>
+                        <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{calc.meta.category}</div>
+                      </div>
+                      <ArrowRight size={14} color="var(--primary)" />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <button
               onClick={() => {
                 onGoHome();
                 setMobileMenuOpen(false);
               }}
               className="btn-primary"
-              style={{ width: '100%', justifyContent: 'center', gap: '8px' }}
+              style={{ width: '100%', justifyContent: 'center', gap: '8px', height: '44px' }}
             >
               <Home size={18} />
               <span>{t.nav.home}</span>
             </button>
 
-            <h4 style={{ fontSize: '0.875rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-secondary)', marginTop: '12px' }}>
+            <h4 style={{ fontSize: '0.875rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--text-secondary)', marginTop: '8px' }}>
               {t.nav.categories}
             </h4>
 
@@ -320,18 +370,20 @@ export default function Header({
                       setMobileMenuOpen(false);
                     }}
                     style={{
-                      padding: '12px 14px',
+                      padding: '14px 16px',
                       borderRadius: '8px',
                       backgroundColor: 'var(--surface-alt)',
                       fontWeight: 600,
                       fontSize: '0.9375rem',
                       display: 'flex',
                       justifyContent: 'space-between',
-                      alignItems: 'center'
+                      alignItems: 'center',
+                      minHeight: '48px',
+                      cursor: 'pointer'
                     }}
                   >
                     <span>{catName}</span>
-                    <ArrowRight size={14} color="var(--primary)" />
+                    <ArrowRight size={16} color="var(--primary)" />
                   </div>
                 );
               })}
