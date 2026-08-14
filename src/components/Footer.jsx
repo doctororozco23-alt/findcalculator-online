@@ -2,8 +2,15 @@ import React from 'react';
 import { ShieldCheck, Cpu, Clock } from 'lucide-react';
 import { i18n } from '../data/i18n';
 
-export default function Footer({ lang }) {
+export default function Footer({ lang, onOpenLegal }) {
   const t = i18n[lang] || i18n.en;
+
+  const handleLegalClick = (e, type) => {
+    if (onOpenLegal) {
+      e.preventDefault();
+      onOpenLegal(type);
+    }
+  };
 
   return (
     <footer
@@ -66,22 +73,22 @@ export default function Footer({ lang }) {
           </div>
           <div style={{ display: 'flex', gap: '20px' }}>
             <a
-              href="/privacy.html"
-              target="_self"
+              href="/privacy"
+              onClick={(e) => handleLegalClick(e, 'privacy')}
               style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)', fontWeight: 600 }}
             >
               Privacy Policy
             </a>
             <a
-              href="/terms.html"
-              target="_self"
+              href="/terms"
+              onClick={(e) => handleLegalClick(e, 'terms')}
               style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)', fontWeight: 600 }}
             >
               Terms of Use
             </a>
             <a
-              href="/about.html"
-              target="_self"
+              href="/about"
+              onClick={(e) => handleLegalClick(e, 'about')}
               style={{ cursor: 'pointer', textDecoration: 'underline', color: 'var(--primary)', fontWeight: 600 }}
             >
               About Us

@@ -45,8 +45,9 @@ export default function App() {
       setActiveCategory(null);
       setActiveCalculatorRaw(null);
       setLegalModal(null);
-    } else if (['privacy', 'terms', 'about'].includes(parts[0])) {
-      setLegalModal(parts[0]);
+    } else if (['privacy', 'terms', 'about', 'privacy.html', 'terms.html', 'about.html'].includes(parts[0])) {
+      const cleanType = parts[0].replace('.html', '');
+      setLegalModal(cleanType);
       setViewMode('legal');
       setActiveCategory(null);
       setActiveCalculatorRaw(null);
@@ -225,9 +226,6 @@ export default function App() {
 
         {/* Footer global */}
         <Footer lang={lang} onOpenLegal={(type) => handleOpenLegal(type)} />
-
-        {/* Modal/Páginas Legales Requeridas por Google AdSense */}
-        <LegalPages type={legalModal} onClose={handleCloseLegal} lang={lang} />
       </div>
     </ErrorBoundary>
   );

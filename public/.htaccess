@@ -2,12 +2,17 @@
   RewriteEngine On
   RewriteBase /
 
-  # Subdirectorios físicos reales (privacy, terms, about)
+  # Serve existing physical files or directories directly
   RewriteCond %{REQUEST_FILENAME} -f [OR]
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # Redirección SPA general
+  # Redirect /privacy, /terms, /about to physical .html pages if available
+  RewriteRule ^privacy$ privacy.html [L]
+  RewriteRule ^terms$ terms.html [L]
+  RewriteRule ^about$ about.html [L]
+
+  # SPA Fallback for all other routes
   RewriteRule ^ index.html [L]
 </IfModule>
 
