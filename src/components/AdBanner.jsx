@@ -5,23 +5,21 @@ import React, { useEffect } from 'react';
  * Soporta modo vista previa (desarrollo) y producción real cuando introduzcas tu Client ID y Slot ID.
  */
 export default function AdBanner({
-  adClient = 'ca-pub-1369999948195621', // ID de Cliente de AdSense de findcalculator.online
-  adSlot = '',                          // Reemplazar con tu ID de Bloque de Anuncio si deseas bloques específicos
-  format = 'auto',
+  adClient = 'ca-pub-1369999948195621', // ID de Cliente de AdSense
+  adSlot = '9916108334',                 // ID de Bloque de Anuncio Horizontal de findcalculator.online
+  format = 'autorelaxed',
   responsive = 'true',
   style = { display: 'block', margin: '24px 0', textAlign: 'center' }
 }) {
   const isDev = !adSlot || adClient.includes('XXXXXXXXXXXXXXXX');
 
   useEffect(() => {
-    if (!isDev) {
-      try {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-      } catch (e) {
-        console.error('AdSense Error:', e);
-      }
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {
+      console.error('AdSense Error:', e);
     }
-  }, [isDev]);
+  }, [adSlot]);
 
   if (isDev) {
     // Vista previa visual limpia durante desarrollo antes de la aprobación de AdSense
