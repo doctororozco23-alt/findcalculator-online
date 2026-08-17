@@ -7,6 +7,10 @@
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
+  # Direct file rewrite if .html exists (e.g., /finance/mortgage-calculator -> /finance/mortgage-calculator.html)
+  RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+  RewriteRule ^(.+?)/?$ $1.html [L]
+
   # Redirect /privacy, /terms, /about to physical .html pages if available
   RewriteRule ^privacy$ privacy.html [L]
   RewriteRule ^terms$ terms.html [L]
